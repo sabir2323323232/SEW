@@ -43,7 +43,6 @@
       color: var(--text-main);
     }
 
-    /* Soft Clean White Card */
     .auth-card {
       width: 100%;
       max-width: 520px;
@@ -80,7 +79,6 @@
       margin-top: 4px;
     }
 
-    /* Tab Switcher */
     .tab-switcher {
       display: flex;
       background: #f1f5f9;
@@ -108,7 +106,6 @@
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     }
 
-    /* Panel Animation */
     .form-panel {
       display: none;
       opacity: 0;
@@ -205,11 +202,6 @@
       transform: translateY(-1px);
     }
 
-    .submit-btn:active {
-      transform: translateY(0);
-    }
-
-    /* Google Sign-In Button Section */
     .divider {
       display: flex;
       align-items: center;
@@ -247,30 +239,27 @@
       transition: all 0.25s ease;
     }
 
-    .google-btn:hover {
-      background: #f8fafc;
-      border-color: #cbd5e1;
-    }
-
     .status-msg {
       font-size: 13px;
       margin-top: 10px;
       font-weight: 600;
       text-align: center;
       display: none;
-      padding: 8px;
+      padding: 10px;
       border-radius: 8px;
     }
 
     .status-msg.error {
       color: #ef4444;
       background: #fef2f2;
+      border: 1px solid #fee2e2;
       display: block;
     }
 
     .status-msg.success {
       color: #10b981;
       background: #ecfdf5;
+      border: 1px solid #d1fae5;
       display: block;
     }
 
@@ -289,7 +278,6 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* Mobile Clean Responsiveness */
     @media (max-width: 480px) {
       .auth-card {
         padding: 24px 18px;
@@ -301,9 +289,6 @@
       }
       .full-width {
         grid-column: span 1;
-      }
-      .brand-logo {
-        font-size: 32px;
       }
     }
   </style>
@@ -322,7 +307,7 @@
       <button class="tab-btn" id="loginTabBtn" onclick="switchTab('login')">Login</button>
     </div>
 
-    <!-- REGISTER -->
+    <!-- REGISTER FORM -->
     <div class="form-panel active" id="registerPanel">
       <form id="registerForm" onsubmit="handleRegister(event)">
         <div class="form-grid">
@@ -394,7 +379,7 @@
       </form>
     </div>
 
-    <!-- LOGIN -->
+    <!-- LOGIN FORM -->
     <div class="form-panel" id="loginPanel">
       <form id="loginForm" onsubmit="handleLogin(event)">
         
@@ -423,7 +408,6 @@
       </form>
     </div>
 
-    <!-- Google Login / Register Divider -->
     <div class="divider">
       <span>OR CONTINUE WITH</span>
     </div>
@@ -460,12 +444,12 @@
     const db = getDatabase(app);
     const auth = getAuth(app);
 
-    // Session Protection (Back button will not return to login screen)
+    // Session redirect check
     if (localStorage.getItem('sew_session')) {
       window.location.replace("dashboard.html");
     }
 
-    // Switch Tab Function
+    // Switch Tab
     window.switchTab = function(type) {
       const regTab = document.getElementById('registerTabBtn');
       const loginTab = document.getElementById('loginTabBtn');
@@ -481,7 +465,7 @@
       }
     };
 
-    // REGISTER HANDLER
+    // REGISTER WITH FIREBASE DUP-CHECK
     window.handleRegister = async function(e) {
       e.preventDefault();
       
@@ -497,24 +481,59 @@
       const regStatus = document.getElementById('regStatus');
 
       regSubmitBtn.disabled = true;
-      regSubmitBtn.innerHTML = `<span class="spinner"></span> Creating Account...`;
-
-      const userData = { fullName, username, mobile, email, country, city, password, createdAt: new Date().toISOString() };
+      regSubmitBtn.innerHTML = `<span class="spinner"></span> Checking details...`;
 
       try {
+        // 1. Check Username Duplicate in Realtime Database
+        const usernameCheck = await get(ref(db, 'users/' + username));
+        if (usernameCheck.exists()) {
+          showStatus(regStatus, "This Username is already taken! Try another.", "error");
+          resetRegBtn();
+          return;
+        }
+
+        // 2. Check Email Duplicate in Realtime Database
+        const emailQuery = query(ref(db, 'users'), orderByChild('email'), equalTo(email));
+        const emailCheck = await get(emailQuery);
+        if (emailCheck.exists()) {
+          showStatus(regStatus, "This Email is already registered! Please Login.", "error");
+          resetRegBtn();
+          return;
+        }
+
+        // 3. Save User Data directly to Firebase RTDB
+        const userData = { 
+          fullName, 
+          username, 
+          mobile, 
+          email, 
+          country, 
+          city, 
+          password, 
+          balance: "0.00", 
+          createdAt: new Date().toISOString() 
+        };
+
         await set(ref(db, 'users/' + username), userData);
+        
+        // Store Session Token
         localStorage.setItem('sew_session', JSON.stringify(userData));
 
-        showStatus(regStatus, "Account Created! Redirecting...", "success");
-        setTimeout(() => { window.location.replace("dashboard.html"); }, 500);
+        showStatus(regStatus, "Account Created Successfully! Redirecting...", "success");
+        setTimeout(() => { window.location.replace("dashboard.html"); }, 600);
+
       } catch (err) {
         showStatus(regStatus, "Firebase Error: " + err.message, "error");
+        resetRegBtn();
+      }
+
+      function resetRegBtn() {
         regSubmitBtn.disabled = false;
         regSubmitBtn.innerHTML = `<span>Create Account</span> <i class="fa-solid fa-arrow-right"></i>`;
       }
     };
 
-    // LOGIN HANDLER (Username OR Email)
+    // LOGIN VIA FIREBASE REALTIME DB
     window.handleLogin = async function(e) {
       e.preventDefault();
 
@@ -530,14 +549,14 @@
       try {
         let userData = null;
 
-        // Search by username
+        // Search by Username directly
         const cleanUsername = inputVal.replace(/[^a-z0-9]/g, "");
         const userSnap = await get(ref(db, 'users/' + cleanUsername));
 
         if (userSnap.exists()) {
           userData = userSnap.val();
         } else {
-          // Search by email query
+          // Search by Email in RTDB
           const emailQuery = query(ref(db, 'users'), orderByChild('email'), equalTo(inputVal));
           const querySnap = await get(emailQuery);
           if (querySnap.exists()) {
@@ -549,9 +568,9 @@
         if (userData && userData.password === password) {
           localStorage.setItem('sew_session', JSON.stringify(userData));
           showStatus(loginStatus, "Login Successful! Redirecting...", "success");
-          setTimeout(() => { window.location.replace("dashboard.html"); }, 500);
+          setTimeout(() => { window.location.replace("dashboard.html"); }, 600);
         } else {
-          showStatus(loginStatus, "Invalid Credentials!", "error");
+          showStatus(loginStatus, "Invalid Email/Username or Password!", "error");
           loginSubmitBtn.disabled = false;
           loginSubmitBtn.innerHTML = `<span>Login Now</span> <i class="fa-solid fa-right-to-bracket"></i>`;
         }
@@ -562,7 +581,7 @@
       }
     };
 
-    // GOOGLE SIGN-IN HANDLER
+    // GOOGLE SIGN-IN
     window.handleGoogleSignIn = async function() {
       const provider = new GoogleAuthProvider();
       try {
@@ -573,7 +592,7 @@
         const fullName = gUser.displayName || email.split('@')[0];
         const username = email.split('@')[0].replace(/[^a-z0-9]/g, "");
 
-        // Check if user already exists in RTDB
+        // Fetch User Data from Firebase Realtime DB
         const snap = await get(ref(db, 'users/' + username));
         let userData;
 
@@ -588,6 +607,7 @@
             country: "N/A",
             city: "N/A",
             password: "google_authenticated",
+            balance: "0.00",
             createdAt: new Date().toISOString()
           };
           await set(ref(db, 'users/' + username), userData);
@@ -597,7 +617,6 @@
         window.location.replace("dashboard.html");
 
       } catch (err) {
-        console.error("Google Auth Error:", err);
         alert("Google Sign-In Error: " + err.message);
       }
     };

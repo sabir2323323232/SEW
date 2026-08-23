@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SEW - User Dashboard & Market</title>
+  
+  <!-- Google Fonts & Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-body: #f8fafc;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-soft: #eff6ff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --accent-green: #10b981;
+      --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+      --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    /* TOP NAVBAR */
+    .navbar {
+      background: #ffffff;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.04);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .logout-btn {
+      background: #fef2f2;
+      color: #ef4444;
+      border: 1px solid #fee2e2;
+      padding: 8px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.25s ease;
+    }
+
+    .logout-btn:hover {
+      background: #ef4444;
+      color: #ffffff;
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 1px;
+    }
+
+    .profile-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--primary-soft);
+      padding: 6px 14px 6px 8px;
+      border-radius: 30px;
+      cursor: pointer;
+      border: 1px solid #dbeafe;
+      transition: all 0.25s ease;
+    }
+
+    .profile-pill:hover {
+      background: #dbeafe;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    .user-name-short {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 16px;
+    }
+
+    /* SECTION 1: EARNING DASHBOARD */
+    .earning-section {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid #ffffff;
+      margin-bottom: 30px;
+    }
+
+    .balance-card {
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      border-radius: 20px;
+      padding: 24px;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+    }
+
+    .balance-info p {
+      font-size: 13px;
+      opacity: 0.85;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .balance-amount {
+      font-size: 32px;
+      font-weight: 800;
+      margin-top: 4px;
+    }
+
+    .balance-icon {
+      font-size: 36px;
+      opacity: 0.9;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 14px;
+      border-radius: 16px;
+    }
+
+    /* EARNING BUTTONS GRID */
+    .earning-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 14px;
+    }
+
+    .earn-btn {
+      background: var(--bg-body);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 16px 12px;
+      text-decoration: none;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 13px;
+      transition: all 0.25s ease;
+    }
+
+    .earn-btn i {
+      font-size: 22px;
+      color: var(--primary);
+    }
+
+    .earn-btn:hover {
+      background: #ffffff;
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-card);
+    }
+
+    /* SECTION SEPARATOR / BANNER */
+    .market-banner {
+      background: linear-gradient(135deg, #0f172a, #1e293b);
+      color: #ffffff;
+      border-radius: 20px;
+      padding: 20px 24px;
+      margin: 35px 0 25px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.2);
+    }
+
+    .market-banner-text h2 {
+      font-size: 20px;
+      font-weight: 800;
+      color: #f59e0b;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .market-banner-text p {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+
+    .discount-badge {
+      background: #ef4444;
+      color: #ffffff;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+    }
+
+    /* SECTION 2: MARKETING & PRODUCTS */
+    .market-section {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid #ffffff;
+    }
+
+    /* SEARCH BAR */
+    .search-box {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 16px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 14px 16px 14px 48px;
+      background: var(--bg-body);
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      outline: none;
+      transition: all 0.25s ease;
+    }
+
+    .search-box input:focus {
+      background: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    /* PRODUCTS GRID */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 18px;
+      margin-bottom: 30px;
+    }
+
+    .product-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 18px;
+      padding: 12px;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-card);
+      border-color: #cbd5e1;
+    }
+
+    .product-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 12px;
+      background: #f1f5f9;
+    }
+
+    .product-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin: 10px 0 4px 0;
+      color: var(--text-main);
+    }
+
+    .product-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      line-height: 1.4;
+      flex-grow: 1;
+    }
+
+    .product-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 5px;
+    }
+
+    .product-price {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--accent-green);
+    }
+
+    .order-btn {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .order-btn:hover {
+      background: #1d4ed8;
+    }
+
+    /* CATEGORY BUTTONS AT BOTTOM */
+    .category-section-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+    }
+
+    .cat-btn {
+      background: #ffffff;
+      border: 1.5px solid var(--border-color);
+      padding: 12px;
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.25s ease;
+    }
+
+    .cat-btn i {
+      color: var(--primary);
+    }
+
+    .cat-btn:hover {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .cat-btn:hover i {
+      color: #ffffff;
+    }
+
+    /* PROFILE MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+      padding: 20px;
+    }
+
+    .profile-modal {
+      background: #ffffff;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      animation: modalSlideUp 0.3s ease;
+      position: relative;
+    }
+
+    @keyframes modalSlideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: #f1f5f9;
+      border: none;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--text-muted);
+    }
+
+    .modal-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-avatar {
+      width: 64px; height: 64px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 26px; font-weight: 800;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 10px auto;
+    }
+
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 13px;
+    }
+
+    .detail-label { color: var(--text-muted); font-weight: 600; }
+    .detail-val { font-weight: 700; color: var(--text-main); }
+
+    @media (max-width: 600px) {
+      .earning-grid { grid-template-columns: repeat(2, 1fr); }
+      .market-banner { flex-direction: column; text-align: center; gap: 12px; }
+      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+      .product-img { height: 120px; }
+      .category-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAVBAR -->
+  <header class="navbar">
+    <button class="logout-btn" onclick="handleLogout()">
+      <i class="fa-solid fa-right-from-bracket"></i>
+      <span>Logout</span>
+    </button>
+
+    <div class="brand-title">SEW</div>
+
+    <div class="profile-pill" onclick="openProfileModal()">
+      <div class="avatar" id="navAvatar">U</div>
+      <span class="user-name-short" id="navUserName">Loading...</span>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- 1. EARNING SECTION -->
+    <section class="earning-section">
+      <!-- Balance Card -->
+      <div class="balance-card">
+        <div class="balance-info">
+          <p>Total Balance</p>
+          <div class="balance-amount" id="userBalance">Rs. 0.00</div>
+        </div>
+        <div class="balance-icon">
+          <i class="fa-solid fa-wallet"></i>
+        </div>
+      </div>
+
+      <!-- Earning Buttons -->
+      <div class="earning-grid">
+        <a href="free-ads.html" class="earn-btn">
+          <i class="fa-solid fa-rectangle-ad"></i>
+          <span>Free Ads</span>
+        </a>
+
+        <a href="referral.html" class="earn-btn">
+          <i class="fa-solid fa-users"></i>
+          <span>Referral</span>
+        </a>
+
+        <a href="gmail-selling.html" class="earn-btn">
+          <i class="fa-solid fa-envelope-circle-check"></i>
+          <span>Gmail Selling</span>
+        </a>
+
+        <a href="withdraw.html" class="earn-btn">
+          <i class="fa-solid fa-money-bill-transfer"></i>
+          <span>Withdraw</span>
+        </a>
+
+        <a href="free-jobs.html" class="earn-btn">
+          <i class="fa-solid fa-briefcase"></i>
+          <span>Free Jobs</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SECTION SEPARATOR / BANNER -->
+    <div class="market-banner">
+      <div class="market-banner-text">
+        <h2><i class="fa-solid fa-bolt"></i> MEGA MARKET 50% OFF</h2>
+        <p>Order anything at the best discounted rates!</p>
+      </div>
+      <div class="discount-badge">50% OFF</div>
+    </div>
+
+    <!-- 2. MARKETING SECTION -->
+    <section class="market-section">
+      <!-- Search Input -->
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()" />
+      </div>
+
+      <!-- Dynamic Product List -->
+      <div class="product-grid" id="productGrid">
+        <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); font-size: 14px; padding: 20px;">
+          <i class="fa-solid fa-spinner fa-spin"></i> Loading Products from Firebase...
+        </p>
+      </div>
+
+      <!-- Market Categories at Bottom -->
+      <div class="category-section-title">Explore Categories</div>
+      <div class="category-grid">
+        <a href="clothes.html" class="cat-btn">
+          <i class="fa-solid fa-shirt"></i>
+          <span>Clothes</span>
+        </a>
+        <a href="tools.html" class="cat-btn">
+          <i class="fa-solid fa-screwdriver-wrench"></i>
+          <span>Tools</span>
+        </a>
+        <a href="mobiles.html" class="cat-btn">
+          <i class="fa-solid fa-mobile-screen-button"></i>
+          <span>Mobiles</span>
+        </a>
+        <a href="motors.html" class="cat-btn">
+          <i class="fa-solid fa-motorcycle"></i>
+          <span>Motors</span>
+        </a>
+        <a href="jewelry.html" class="cat-btn">
+          <i class="fa-solid fa-gem"></i>
+          <span>Jewelry</span>
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- PROFILE DETAILS MODAL -->
+  <div class="modal-overlay" id="profileModal">
+    <div class="profile-modal">
+      <button class="close-modal" onclick="closeProfileModal()">✕</button>
+      
+      <div class="modal-header">
+        <div class="modal-avatar" id="modalAvatar">U</div>
+        <h3 id="modalFullName" style="font-size: 18px; font-weight: 800;">User Name</h3>
+        <p id="modalUsername" style="font-size: 13px; color: var(--text-muted);">@username</p>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">Mobile Number</span>
+        <span class="detail-val" id="modalMobile">-</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">Email Address</span>
+        <span class="detail-val" id="modalEmail">-</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">City</span>
+        <span class="detail-val" id="modalCity">-</span>
+      </div>
+
+      <div class="detail-item">
+        <span class="detail-label">Country</span>
+        <span class="detail-val" id="modalCountry">-</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Modular SDK Integration -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
+      authDomain: "newweb-d50af.firebaseapp.com",
+      databaseURL: "https://newweb-d50af-default-rtdb.firebaseio.com",
+      projectId: "newweb-d50af",
+      storageBucket: "newweb-d50af.firebasestorage.app",
+      messagingSenderId: "358603295768",
+      appId: "1:358603295768:web:82a9666514a7cb468c476d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // 1. Session Protection Check
+    const localSession = localStorage.getItem('sew_session');
+    if (!localSession) {
+      window.location.replace("index.html");
+    }
+
+    const sessionUser = JSON.parse(localSession);
+
+    // Fetch Live User Data from Firebase
+    async function loadUserData() {
+      try {
+        const userRef = ref(db, 'users/' + sessionUser.username);
+        const snapshot = await get(userRef);
+
+        let data = sessionUser;
+        if (snapshot.exists()) {
+          data = snapshot.val();
+        }
+
+        // Set Nav profile details
+        document.getElementById('navUserName').innerText = data.fullName || data.username;
+        const initial = (data.fullName || data.username).charAt(0).toUpperCase();
+        document.getElementById('navAvatar').innerText = initial;
+
+        // Set Balance
+        document.getElementById('userBalance').innerText = "Rs. " + (data.balance || "0.00");
+
+        // Set Modal details
+        document.getElementById('modalAvatar').innerText = initial;
+        document.getElementById('modalFullName').innerText = data.fullName || "N/A";
+        document.getElementById('modalUsername').innerText = "@" + data.username;
+        document.getElementById('modalMobile').innerText = data.mobile || "N/A";
+        document.getElementById('modalEmail').innerText = data.email || "N/A";
+        document.getElementById('modalCity').innerText = data.city || "N/A";
+        document.getElementById('modalCountry').innerText = data.country || "N/A";
+
+      } catch (err) {
+        console.error("Error loading profile:", err);
+      }
+    }
+
+    // 2. Fetch Live Products from Firebase Database ('products' node)
+    async function loadProducts() {
+      const grid = document.getElementById('productGrid');
+      try {
+        const productsRef = ref(db, 'products');
+        const snapshot = await get(productsRef);
+
+        if (snapshot.exists()) {
+          grid.innerHTML = "";
+          const productsObj = snapshot.val();
+          
+          Object.keys(productsObj).forEach(key => {
+            const item = productsObj[key];
+            grid.innerHTML += `
+              <div class="product-card" data-title="${item.name.toLowerCase()}">
+                <img src="${item.image || 'https://via.placeholder.com/200'}" class="product-img" alt="${item.name}" />
+                <div class="product-title">${item.name}</div>
+                <div class="product-desc">${item.details || 'High quality product available at discounted price.'}</div>
+                <div class="product-bottom">
+                  <div class="product-price">Rs. ${item.price}</div>
+                  <a href="order.html?id=${key}" class="order-btn">Buy Now</a>
+                </div>
+              </div>
+            `;
+          });
+        } else {
+          // Default Sample Products if Admin panel hasn't added products yet
+          grid.innerHTML = `
+            <div class="product-card" data-title="smart watch">
+              <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400" class="product-img" alt="Watch" />
+              <div class="product-title">Luxury Smart Watch</div>
+              <div class="product-desc">Ultra display, water resistant and long battery life.</div>
+              <div class="product-bottom">
+                <div class="product-price">Rs. 2,499</div>

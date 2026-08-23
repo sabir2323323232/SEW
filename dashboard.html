@@ -33,10 +33,9 @@
       background-color: var(--bg-body);
       color: var(--text-main);
       min-height: 100vh;
-      padding-bottom: 20px;
+      padding-bottom: 12px;
     }
 
-    /* COMPACT TOP NAVBAR */
     .navbar {
       background: #ffffff;
       padding: 8px 12px;
@@ -54,8 +53,8 @@
       background: #fef2f2;
       color: #ef4444;
       border: 1px solid #fee2e2;
-      padding: 6px 10px;
-      border-radius: 8px;
+      padding: 5px 10px;
+      border-radius: 6px;
       font-weight: 700;
       font-size: 11px;
       cursor: pointer;
@@ -76,7 +75,7 @@
       align-items: center;
       gap: 6px;
       background: var(--primary-soft);
-      padding: 4px 8px;
+      padding: 4px 10px;
       border-radius: 20px;
       cursor: pointer;
       border: 1px solid #dbeafe;
@@ -105,70 +104,68 @@
       text-overflow: ellipsis;
     }
 
-    /* MAIN CONTAINER (Mobile Fitted) */
     .container {
       max-width: 600px;
       margin: 0 auto;
-      padding: 10px;
+      padding: 8px;
     }
 
-    /* SECTION 1: EARNING (COMPACT) */
     .earning-section {
       background: #ffffff;
-      border-radius: 14px;
-      padding: 12px;
+      border-radius: 12px;
+      padding: 8px;
       border: 1px solid var(--border-color);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .balance-card {
       background: linear-gradient(135deg, #1e40af, #3b82f6);
       border-radius: 10px;
-      padding: 10px 14px;
+      padding: 10px 12px;
       color: #ffffff;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .balance-info p {
-      font-size: 10px;
+      font-size: 9px;
       opacity: 0.85;
       font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .balance-amount {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 800;
     }
 
     .balance-icon {
-      font-size: 20px;
+      font-size: 16px;
       background: rgba(255, 255, 255, 0.2);
       padding: 6px 10px;
       border-radius: 8px;
     }
 
-    /* 5 EARNING BUTTONS (TIGHT GRID) */
     .earning-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 6px;
+      gap: 4px;
     }
 
     .earn-btn {
       background: #f8fafc;
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      padding: 8px 2px;
+      padding: 6px 2px;
       text-decoration: none;
       color: var(--text-main);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       font-weight: 700;
       font-size: 9px;
       text-align: center;
@@ -176,7 +173,7 @@
     }
 
     .earn-btn i {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--primary);
     }
 
@@ -185,13 +182,12 @@
       border-color: var(--primary);
     }
 
-    /* MINI MARKET BANNER */
     .market-banner {
       background: #0f172a;
       color: #ffffff;
       border-radius: 10px;
       padding: 8px 12px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -203,29 +199,28 @@
       color: #f59e0b;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
     }
 
     .discount-badge {
       background: #ef4444;
       color: #ffffff;
-      padding: 3px 8px;
-      border-radius: 12px;
+      padding: 3px 7px;
+      border-radius: 10px;
       font-weight: 800;
-      font-size: 10px;
+      font-size: 9px;
     }
 
-    /* SECTION 2: MARKETING (COMPACT) */
     .market-section {
       background: #ffffff;
-      border-radius: 14px;
-      padding: 12px;
+      border-radius: 12px;
+      padding: 8px;
       border: 1px solid var(--border-color);
     }
 
     .search-box {
       position: relative;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .search-box i {
@@ -234,34 +229,39 @@
       top: 50%;
       transform: translateY(-50%);
       color: #94a3b8;
-      font-size: 12px;
+      font-size: 11px;
     }
 
     .search-box input {
       width: 100%;
-      padding: 8px 10px 8px 30px;
+      padding: 7px 10px 7px 28px;
       background: #f8fafc;
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      font-size: 12px;
+      font-size: 11px;
       outline: none;
     }
 
-    /* PRODUCT GRID (2 COLUMNS FIT) */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 8px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .product-card {
       background: #ffffff;
       border: 1px solid var(--border-color);
       border-radius: 10px;
-      padding: 8px;
+      padding: 6px;
       display: flex;
       flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 3px 10px rgba(0,0,0,0.06);
     }
 
     .product-img {
@@ -275,7 +275,7 @@
     .product-title {
       font-size: 11px;
       font-weight: 700;
-      margin: 6px 0 2px 0;
+      margin: 5px 0 2px 0;
       color: var(--text-main);
       white-space: nowrap;
       overflow: hidden;
@@ -286,7 +286,7 @@
       font-size: 9px;
       color: var(--text-muted);
       margin-bottom: 6px;
-      height: 24px;
+      height: 22px;
       overflow: hidden;
       line-height: 1.2;
     }
@@ -307,14 +307,14 @@
     .order-btn {
       background: var(--primary);
       color: #ffffff;
-      padding: 4px 8px;
+      border: none;
+      padding: 4px 10px;
       border-radius: 6px;
       font-size: 10px;
       font-weight: 700;
-      text-decoration: none;
+      cursor: pointer;
     }
 
-    /* CATEGORY BUTTONS (HORIZONTAL / SMALL CHIPS) */
     .category-section-title {
       font-size: 10px;
       font-weight: 700;
@@ -325,84 +325,208 @@
 
     .category-grid {
       display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 4px;
+      gap: 5px;
+      flex-wrap: wrap;
     }
 
     .cat-btn {
-      flex: 0 0 auto;
+      flex: 1 1 calc(33.333% - 5px);
       background: #f8fafc;
       border: 1px solid var(--border-color);
-      padding: 6px 10px;
-      border-radius: 8px;
+      padding: 6px;
+      border-radius: 6px;
       text-decoration: none;
       color: var(--text-main);
       font-weight: 700;
-      font-size: 10px;
+      font-size: 9.5px;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 4px;
+      white-space: nowrap;
     }
 
     .cat-btn i {
       color: var(--primary);
+      font-size: 10px;
     }
 
-    /* PROFILE MODAL */
+    /* Modal Overlay */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.4);
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(2px);
       display: none;
       justify-content: center;
       align-items: center;
       z-index: 200;
-      padding: 16px;
+      padding: 12px;
     }
 
+    /* Profile Modal */
     .profile-modal {
       background: #ffffff;
       width: 100%;
-      max-width: 340px;
-      border-radius: 16px;
-      padding: 20px;
+      max-width: 320px;
+      border-radius: 14px;
+      padding: 16px;
       position: relative;
     }
 
     .close-modal {
       position: absolute;
-      top: 14px; right: 14px;
+      top: 10px; right: 10px;
       background: #f1f5f9;
       border: none;
       width: 26px; height: 26px;
       border-radius: 50%;
       cursor: pointer;
       font-weight: 800;
+      font-size: 12px;
+      color: var(--text-muted);
     }
 
     .modal-avatar {
-      width: 48px; height: 48px;
+      width: 46px; height: 46px;
       background: var(--primary);
       color: #ffffff;
       font-size: 20px; font-weight: 800;
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 8px auto;
+      margin: 0 auto 6px auto;
     }
 
     .detail-item {
       display: flex;
       justify-content: space-between;
-      padding: 8px 0;
+      padding: 7px 0;
       border-bottom: 1px solid var(--border-color);
       font-size: 11px;
+    }
+
+    /* Product Order Modal */
+    .product-order-modal {
+      background: #ffffff;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 16px;
+      padding: 16px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-product-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 10px;
+      background: #f1f5f9;
+      margin-bottom: 10px;
+    }
+
+    .modal-product-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .modal-product-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .modal-price-tag {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--accent-green);
+      margin-bottom: 12px;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 11.5px;
+      outline: none;
+      background: #f8fafc;
+    }
+
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .qty-btn {
+      width: 32px; height: 32px;
+      border: 1px solid var(--border-color);
+      background: #ffffff;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .qty-input {
+      width: 50px !important;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .confirm-order-btn {
+      width: 100%;
+      background: var(--accent-green);
+      color: #ffffff;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .toast-msg {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #10b981;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      z-index: 300;
+      display: none;
     }
   </style>
 </head>
 <body>
 
-  <!-- TOP NAVBAR -->
   <header class="navbar">
     <button class="logout-btn" onclick="handleLogout()">
       <i class="fa-solid fa-right-from-bracket"></i> Logout
@@ -418,7 +542,6 @@
 
   <div class="container">
 
-    <!-- 1. EARNING SECTION -->
     <section class="earning-section">
       <div class="balance-card">
         <div class="balance-info">
@@ -430,7 +553,6 @@
         </div>
       </div>
 
-      <!-- 5 Compact Buttons -->
       <div class="earning-grid">
         <a href="free-ads.html" class="earn-btn">
           <i class="fa-solid fa-rectangle-ad"></i>
@@ -459,7 +581,6 @@
       </div>
     </section>
 
-    <!-- MINI SEPARATOR BANNER -->
     <div class="market-banner">
       <div class="market-banner-text">
         <h2><i class="fa-solid fa-bolt"></i> MEGA MARKET 50% OFF</h2>
@@ -467,37 +588,19 @@
       <div class="discount-badge">50% OFF</div>
     </div>
 
-    <!-- 2. MARKETING SECTION -->
     <section class="market-section">
       <div class="search-box">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()" />
       </div>
 
-      <!-- Compact Products Grid -->
       <div class="product-grid" id="productGrid">
-        <div class="product-card" data-title="smart watch">
-          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300" class="product-img" alt="Watch" />
-          <div class="product-title">Luxury Smart Watch</div>
-          <div class="product-desc">Ultra display, water resistant.</div>
-          <div class="product-bottom">
-            <div class="product-price">Rs. 2,499</div>
-            <a href="order.html?id=1" class="order-btn">Buy</a>
-          </div>
-        </div>
-
-        <div class="product-card" data-title="wireless earbuds">
-          <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300" class="product-img" alt="Earbuds" />
-          <div class="product-title">Airbuds Pro</div>
-          <div class="product-desc">Noise cancellation sound.</div>
-          <div class="product-bottom">
-            <div class="product-price">Rs. 1,850</div>
-            <a href="order.html?id=2" class="order-btn">Buy</a>
-          </div>
+        <!-- Products load dynamically from Firebase -->
+        <div style="grid-column: span 2; text-align: center; padding: 20px; font-size: 11px; color: var(--text-muted);">
+          <i class="fa-solid fa-spinner fa-spin"></i> Loading products from market...
         </div>
       </div>
 
-      <!-- Categories at bottom -->
       <div class="category-section-title">Categories</div>
       <div class="category-grid">
         <a href="clothes.html" class="cat-btn"><i class="fa-solid fa-shirt"></i> Clothes</a>
@@ -510,15 +613,14 @@
 
   </div>
 
-  <!-- PROFILE MODAL -->
   <div class="modal-overlay" id="profileModal">
     <div class="profile-modal">
       <button class="close-modal" onclick="closeProfileModal()">✕</button>
       
-      <div style="text-align: center; margin-bottom: 12px;">
+      <div style="text-align: center; margin-bottom: 10px;">
         <div class="modal-avatar" id="modalAvatar">U</div>
-        <h4 id="modalFullName" style="font-size: 15px; font-weight: 800;">User Name</h4>
-        <p id="modalUsername" style="font-size: 11px; color: var(--text-muted);">@username</p>
+        <h4 id="modalFullName" style="font-size: 14px; font-weight: 800;">User Name</h4>
+        <p id="modalUsername" style="font-size: 10.5px; color: var(--text-muted);">@username</p>
       </div>
 
       <div class="detail-item"><span style="color:var(--text-muted)">Mobile:</span> <strong id="modalMobile">-</strong></div>
@@ -528,10 +630,51 @@
     </div>
   </div>
 
-  <!-- Firebase & Sync Logic -->
+  <div class="modal-overlay" id="orderModal">
+    <div class="product-order-modal">
+      <button class="close-modal" onclick="closeOrderModal()">✕</button>
+      
+      <img id="orderModalImg" src="" class="modal-product-img" alt="Product Image" />
+      <h3 id="orderModalTitle" class="modal-product-title">Product Title</h3>
+      <div id="orderModalDesc" class="modal-product-desc">Product Description details...</div>
+      
+      <div class="modal-price-tag" id="orderModalPrice">Rs. 0</div>
+
+      <div class="form-group">
+        <label>Quantity (Kitne Legay):</label>
+        <div class="quantity-control">
+          <button type="button" class="qty-btn" onclick="changeQty(-1)">-</button>
+          <input type="number" id="orderQty" class="qty-input" value="1" min="1" readonly />
+          <button type="button" class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Your Phone Number (Rabta Number):</label>
+        <input type="text" id="orderPhone" placeholder="03xx-xxxxxxx" />
+      </div>
+
+      <div class="form-group">
+        <label>Delivery Address / Location:</label>
+        <textarea id="orderAddress" rows="2" placeholder="Full address (House #, City, Area)"></textarea>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; font-weight: 800; font-size: 13px; margin-top: 6px;">
+        <span>Total Price:</span>
+        <span id="orderTotalPrice" style="color: var(--primary);">Rs. 0</span>
+      </div>
+
+      <button class="confirm-order-btn" onclick="submitOrder()">
+        <i class="fa-solid fa-cart-shopping"></i> Confirm Order
+      </button>
+    </div>
+  </div>
+
+  <div class="toast-msg" id="toastMsg">Order submitted successfully!</div>
+
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, get, onValue, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
@@ -546,15 +689,17 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // 1. Instant Session Load (No Loading Screen Delay)
     const rawSession = localStorage.getItem('sew_session');
     if (!rawSession) {
       window.location.replace("index.html");
     }
 
-    const userData = JSON.parse(rawSession);
+    const userData = JSON.parse(rawSession || '{}');
+    let currentSelectedProduct = null;
+    let unitPrice = 0;
 
     function renderUserUI(data) {
+      if (!data) return;
       const displayTitle = data.fullName || data.username || "User";
       document.getElementById('navUserName').innerText = displayTitle;
       const initial = displayTitle.charAt(0).toUpperCase();
@@ -568,14 +713,18 @@
       document.getElementById('modalEmail').innerText = data.email || "N/A";
       document.getElementById('modalCity').innerText = data.city || "N/A";
       document.getElementById('modalCountry').innerText = data.country || "N/A";
+
+      // Pre-fill phone in order form
+      if (data.mobile) {
+        document.getElementById('orderPhone').value = data.mobile;
+      }
     }
 
-    // Render local data immediately!
     renderUserUI(userData);
 
-    // 2. Fetch Fresh Data from Realtime Database
-    async function syncFirebaseData() {
-      if (!userData.username) return;
+    // Sync User data in background
+    async function syncUserData() {
+      if (!userData || !userData.username) return;
       try {
         const userSnap = await get(ref(db, 'users/' + userData.username));
         if (userSnap.exists()) {
@@ -583,57 +732,18 @@
           renderUserUI(freshData);
           localStorage.setItem('sew_session', JSON.stringify(freshData));
         }
-
-        // Fetch custom products if admin added any
-        const prodSnap = await get(ref(db, 'products'));
-        if (prodSnap.exists()) {
-          const grid = document.getElementById('productGrid');
-          grid.innerHTML = "";
-          const pObj = prodSnap.val();
-          Object.keys(pObj).forEach(key => {
-            const p = pObj[key];
-            grid.innerHTML += `
-              <div class="product-card" data-title="${p.name.toLowerCase()}">
-                <img src="${p.image || 'https://via.placeholder.com/150'}" class="product-img" alt="${p.name}" />
-                <div class="product-title">${p.name}</div>
-                <div class="product-desc">${p.details || ''}</div>
-                <div class="product-bottom">
-                  <div class="product-price">Rs. ${p.price}</div>
-                  <a href="order.html?id=${key}" class="order-btn">Buy</a>
-                </div>
-              </div>
-            `;
-          });
-        }
       } catch (err) {
-        console.log("Firebase Background Sync Error:", err);
+        console.log("Firebase Session Sync Error:", err);
       }
     }
+    syncUserData();
 
-    syncFirebaseData();
+    // Realtime products listener from Admin Panel
+    const productsRef = ref(db, 'products');
+    onValue(productsRef, (snapshot) => {
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = "";
 
-    // Global Handlers
-    window.handleLogout = function() {
-      localStorage.removeItem('sew_session');
-      window.location.replace("index.html");
-    };
-
-    window.openProfileModal = function() {
-      document.getElementById('profileModal').style.display = 'flex';
-    };
-
-    window.closeProfileModal = function() {
-      document.getElementById('profileModal').style.display = 'none';
-    };
-
-    window.filterProducts = function() {
-      const q = document.getElementById('searchInput').value.toLowerCase();
-      const cards = document.querySelectorAll('.product-card');
-      cards.forEach(card => {
-        const title = card.getAttribute('data-title') || '';
-        card.style.display = title.includes(q) ? 'flex' : 'none';
-      });
-    };
-  </script>
-</body>
-</html>
+      if (snapshot.exists()) {
+        const pObj = snapshot.val();
+  

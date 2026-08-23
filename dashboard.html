@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>SEW - User Dashboard & Market</title>
+  <title>SEW - Dashboard & Market</title>
   
-  <!-- Google Fonts & Font Awesome Icons -->
+  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
     :root {
-      --bg-body: #f8fafc;
+      --bg-body: #f1f5f9;
       --card-bg: #ffffff;
       --primary: #2563eb;
       --primary-soft: #eff6ff;
@@ -19,8 +19,6 @@
       --text-muted: #64748b;
       --border-color: #e2e8f0;
       --accent-green: #10b981;
-      --shadow-soft: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
-      --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.03);
     }
 
     * {
@@ -35,45 +33,39 @@
       background-color: var(--bg-body);
       color: var(--text-main);
       min-height: 100vh;
-      padding-bottom: 40px;
+      padding-bottom: 20px;
     }
 
-    /* TOP NAVBAR */
+    /* COMPACT TOP NAVBAR */
     .navbar {
       background: #ffffff;
-      padding: 14px 20px;
+      padding: 8px 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.04);
       position: sticky;
       top: 0;
       z-index: 100;
       border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 1px 10px rgba(0, 0, 0, 0.03);
     }
 
     .logout-btn {
       background: #fef2f2;
       color: #ef4444;
       border: 1px solid #fee2e2;
-      padding: 8px 16px;
-      border-radius: 12px;
+      padding: 6px 10px;
+      border-radius: 8px;
       font-weight: 700;
-      font-size: 13px;
+      font-size: 11px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 6px;
-      transition: all 0.25s ease;
-    }
-
-    .logout-btn:hover {
-      background: #ef4444;
-      color: #ffffff;
+      gap: 4px;
     }
 
     .brand-title {
-      font-size: 22px;
+      font-size: 18px;
       font-weight: 800;
       color: var(--primary);
       letter-spacing: 1px;
@@ -82,22 +74,17 @@
     .profile-pill {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 6px;
       background: var(--primary-soft);
-      padding: 6px 14px 6px 8px;
-      border-radius: 30px;
+      padding: 4px 8px;
+      border-radius: 20px;
       cursor: pointer;
       border: 1px solid #dbeafe;
-      transition: all 0.25s ease;
-    }
-
-    .profile-pill:hover {
-      background: #dbeafe;
     }
 
     .avatar {
-      width: 32px;
-      height: 32px;
+      width: 24px;
+      height: 24px;
       background: var(--primary);
       color: #ffffff;
       border-radius: 50%;
@@ -105,241 +92,214 @@
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 14px;
+      font-size: 11px;
     }
 
     .user-name-short {
-      font-size: 13px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--primary);
+      max-width: 80px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    /* MAIN CONTAINER */
+    /* MAIN CONTAINER (Mobile Fitted) */
     .container {
-      max-width: 1100px;
+      max-width: 600px;
       margin: 0 auto;
-      padding: 20px 16px;
+      padding: 10px;
     }
 
-    /* SECTION 1: EARNING DASHBOARD */
+    /* SECTION 1: EARNING (COMPACT) */
     .earning-section {
       background: #ffffff;
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: var(--shadow-soft);
-      border: 1px solid #ffffff;
-      margin-bottom: 30px;
+      border-radius: 14px;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      margin-bottom: 10px;
     }
 
     .balance-card {
       background: linear-gradient(135deg, #1e40af, #3b82f6);
-      border-radius: 20px;
-      padding: 24px;
+      border-radius: 10px;
+      padding: 10px 14px;
       color: #ffffff;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 24px;
-      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+      margin-bottom: 10px;
     }
 
     .balance-info p {
-      font-size: 13px;
+      font-size: 10px;
       opacity: 0.85;
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
     .balance-amount {
-      font-size: 32px;
+      font-size: 20px;
       font-weight: 800;
-      margin-top: 4px;
     }
 
     .balance-icon {
-      font-size: 36px;
-      opacity: 0.9;
-      background: rgba(255, 255, 255, 0.15);
-      padding: 14px;
-      border-radius: 16px;
+      font-size: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 6px 10px;
+      border-radius: 8px;
     }
 
-    /* EARNING BUTTONS GRID */
+    /* 5 EARNING BUTTONS (TIGHT GRID) */
     .earning-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
     }
 
     .earn-btn {
-      background: var(--bg-body);
+      background: #f8fafc;
       border: 1px solid var(--border-color);
-      border-radius: 16px;
-      padding: 16px 12px;
+      border-radius: 8px;
+      padding: 8px 2px;
       text-decoration: none;
       color: var(--text-main);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: 4px;
       font-weight: 700;
-      font-size: 13px;
-      transition: all 0.25s ease;
+      font-size: 9px;
+      text-align: center;
+      transition: all 0.2s ease;
     }
 
     .earn-btn i {
-      font-size: 22px;
+      font-size: 14px;
       color: var(--primary);
     }
 
-    .earn-btn:hover {
-      background: #ffffff;
+    .earn-btn:active {
+      background: var(--primary-soft);
       border-color: var(--primary);
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-card);
     }
 
-    /* SECTION SEPARATOR / BANNER */
+    /* MINI MARKET BANNER */
     .market-banner {
-      background: linear-gradient(135deg, #0f172a, #1e293b);
+      background: #0f172a;
       color: #ffffff;
-      border-radius: 20px;
-      padding: 20px 24px;
-      margin: 35px 0 25px 0;
+      border-radius: 10px;
+      padding: 8px 12px;
+      margin-bottom: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      position: relative;
-      overflow: hidden;
-      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.2);
     }
 
     .market-banner-text h2 {
-      font-size: 20px;
+      font-size: 12px;
       font-weight: 800;
       color: #f59e0b;
       display: flex;
       align-items: center;
-      gap: 8px;
-    }
-
-    .market-banner-text p {
-      font-size: 13px;
-      color: #94a3b8;
-      margin-top: 4px;
-      font-weight: 500;
+      gap: 4px;
     }
 
     .discount-badge {
       background: #ef4444;
       color: #ffffff;
-      padding: 8px 16px;
-      border-radius: 30px;
+      padding: 3px 8px;
+      border-radius: 12px;
       font-weight: 800;
-      font-size: 14px;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+      font-size: 10px;
     }
 
-    /* SECTION 2: MARKETING & PRODUCTS */
+    /* SECTION 2: MARKETING (COMPACT) */
     .market-section {
       background: #ffffff;
-      border-radius: 24px;
-      padding: 24px;
-      box-shadow: var(--shadow-soft);
-      border: 1px solid #ffffff;
+      border-radius: 14px;
+      padding: 12px;
+      border: 1px solid var(--border-color);
     }
 
-    /* SEARCH BAR */
     .search-box {
       position: relative;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
     }
 
     .search-box i {
       position: absolute;
-      left: 16px;
+      left: 10px;
       top: 50%;
       transform: translateY(-50%);
       color: #94a3b8;
-      font-size: 16px;
+      font-size: 12px;
     }
 
     .search-box input {
       width: 100%;
-      padding: 14px 16px 14px 48px;
-      background: var(--bg-body);
-      border: 1.5px solid var(--border-color);
-      border-radius: 14px;
-      font-size: 14px;
-      font-weight: 600;
+      padding: 8px 10px 8px 30px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 12px;
       outline: none;
-      transition: all 0.25s ease;
     }
 
-    .search-box input:focus {
-      background: #ffffff;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
-    }
-
-    /* PRODUCTS GRID */
+    /* PRODUCT GRID (2 COLUMNS FIT) */
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 18px;
-      margin-bottom: 30px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
     }
 
     .product-card {
       background: #ffffff;
       border: 1px solid var(--border-color);
-      border-radius: 18px;
-      padding: 12px;
-      transition: all 0.25s ease;
+      border-radius: 10px;
+      padding: 8px;
       display: flex;
       flex-direction: column;
     }
 
-    .product-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-card);
-      border-color: #cbd5e1;
-    }
-
     .product-img {
       width: 100%;
-      height: 160px;
+      height: 90px;
       object-fit: cover;
-      border-radius: 12px;
+      border-radius: 6px;
       background: #f1f5f9;
     }
 
     .product-title {
-      font-size: 14px;
+      font-size: 11px;
       font-weight: 700;
-      margin: 10px 0 4px 0;
+      margin: 6px 0 2px 0;
       color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .product-desc {
-      font-size: 12px;
+      font-size: 9px;
       color: var(--text-muted);
-      margin-bottom: 10px;
-      line-height: 1.4;
-      flex-grow: 1;
+      margin-bottom: 6px;
+      height: 24px;
+      overflow: hidden;
+      line-height: 1.2;
     }
 
     .product-bottom {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 5px;
+      margin-top: auto;
     }
 
     .product-price {
-      font-size: 15px;
+      font-size: 11px;
       font-weight: 800;
       color: var(--accent-green);
     }
@@ -347,64 +307,46 @@
     .order-btn {
       background: var(--primary);
       color: #ffffff;
-      border: none;
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 10px;
       font-weight: 700;
-      cursor: pointer;
       text-decoration: none;
-      transition: all 0.2s ease;
     }
 
-    .order-btn:hover {
-      background: #1d4ed8;
-    }
-
-    /* CATEGORY BUTTONS AT BOTTOM */
+    /* CATEGORY BUTTONS (HORIZONTAL / SMALL CHIPS) */
     .category-section-title {
-      font-size: 14px;
+      font-size: 10px;
       font-weight: 700;
       color: var(--text-muted);
-      margin-bottom: 12px;
+      margin-bottom: 6px;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
     .category-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 10px;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
     }
 
     .cat-btn {
-      background: #ffffff;
-      border: 1.5px solid var(--border-color);
-      padding: 12px;
-      border-radius: 14px;
+      flex: 0 0 auto;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      padding: 6px 10px;
+      border-radius: 8px;
       text-decoration: none;
       color: var(--text-main);
       font-weight: 700;
-      font-size: 13px;
+      font-size: 10px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.25s ease;
+      gap: 4px;
     }
 
     .cat-btn i {
       color: var(--primary);
-    }
-
-    .cat-btn:hover {
-      background: var(--primary);
-      color: #ffffff;
-      border-color: var(--primary);
-    }
-
-    .cat-btn:hover i {
-      color: #ffffff;
     }
 
     /* PROFILE MODAL */
@@ -412,74 +354,49 @@
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: rgba(15, 23, 42, 0.4);
-      backdrop-filter: blur(4px);
       display: none;
       justify-content: center;
       align-items: center;
       z-index: 200;
-      padding: 20px;
+      padding: 16px;
     }
 
     .profile-modal {
       background: #ffffff;
       width: 100%;
-      max-width: 420px;
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-      animation: modalSlideUp 0.3s ease;
+      max-width: 340px;
+      border-radius: 16px;
+      padding: 20px;
       position: relative;
-    }
-
-    @keyframes modalSlideUp {
-      from { transform: translateY(20px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
     }
 
     .close-modal {
       position: absolute;
-      top: 20px; right: 20px;
+      top: 14px; right: 14px;
       background: #f1f5f9;
       border: none;
-      width: 32px; height: 32px;
+      width: 26px; height: 26px;
       border-radius: 50%;
       cursor: pointer;
       font-weight: 800;
-      color: var(--text-muted);
-    }
-
-    .modal-header {
-      text-align: center;
-      margin-bottom: 20px;
     }
 
     .modal-avatar {
-      width: 64px; height: 64px;
+      width: 48px; height: 48px;
       background: var(--primary);
       color: #ffffff;
-      font-size: 26px; font-weight: 800;
+      font-size: 20px; font-weight: 800;
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 10px auto;
+      margin: 0 auto 8px auto;
     }
 
     .detail-item {
       display: flex;
       justify-content: space-between;
-      padding: 12px 0;
+      padding: 8px 0;
       border-bottom: 1px solid var(--border-color);
-      font-size: 13px;
-    }
-
-    .detail-label { color: var(--text-muted); font-weight: 600; }
-    .detail-val { font-weight: 700; color: var(--text-main); }
-
-    @media (max-width: 600px) {
-      .earning-grid { grid-template-columns: repeat(2, 1fr); }
-      .market-banner { flex-direction: column; text-align: center; gap: 12px; }
-      .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-      .product-img { height: 120px; }
-      .category-grid { grid-template-columns: repeat(2, 1fr); }
+      font-size: 11px;
     }
   </style>
 </head>
@@ -488,15 +405,14 @@
   <!-- TOP NAVBAR -->
   <header class="navbar">
     <button class="logout-btn" onclick="handleLogout()">
-      <i class="fa-solid fa-right-from-bracket"></i>
-      <span>Logout</span>
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
     </button>
 
     <div class="brand-title">SEW</div>
 
     <div class="profile-pill" onclick="openProfileModal()">
       <div class="avatar" id="navAvatar">U</div>
-      <span class="user-name-short" id="navUserName">Loading...</span>
+      <span class="user-name-short" id="navUserName">User</span>
     </div>
   </header>
 
@@ -504,7 +420,6 @@
 
     <!-- 1. EARNING SECTION -->
     <section class="earning-section">
-      <!-- Balance Card -->
       <div class="balance-card">
         <div class="balance-info">
           <p>Total Balance</p>
@@ -515,7 +430,7 @@
         </div>
       </div>
 
-      <!-- Earning Buttons -->
+      <!-- 5 Compact Buttons -->
       <div class="earning-grid">
         <a href="free-ads.html" class="earn-btn">
           <i class="fa-solid fa-rectangle-ad"></i>
@@ -528,8 +443,8 @@
         </a>
 
         <a href="gmail-selling.html" class="earn-btn">
-          <i class="fa-solid fa-envelope-circle-check"></i>
-          <span>Gmail Selling</span>
+          <i class="fa-solid fa-envelope"></i>
+          <span>Gmail</span>
         </a>
 
         <a href="withdraw.html" class="earn-btn">
@@ -539,97 +454,81 @@
 
         <a href="free-jobs.html" class="earn-btn">
           <i class="fa-solid fa-briefcase"></i>
-          <span>Free Jobs</span>
+          <span>Jobs</span>
         </a>
       </div>
     </section>
 
-    <!-- SECTION SEPARATOR / BANNER -->
+    <!-- MINI SEPARATOR BANNER -->
     <div class="market-banner">
       <div class="market-banner-text">
         <h2><i class="fa-solid fa-bolt"></i> MEGA MARKET 50% OFF</h2>
-        <p>Order anything at the best discounted rates!</p>
       </div>
       <div class="discount-badge">50% OFF</div>
     </div>
 
     <!-- 2. MARKETING SECTION -->
     <section class="market-section">
-      <!-- Search Input -->
       <div class="search-box">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()" />
       </div>
 
-      <!-- Dynamic Product List -->
+      <!-- Compact Products Grid -->
       <div class="product-grid" id="productGrid">
-        <p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); font-size: 14px; padding: 20px;">
-          <i class="fa-solid fa-spinner fa-spin"></i> Loading Products from Firebase...
-        </p>
+        <div class="product-card" data-title="smart watch">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300" class="product-img" alt="Watch" />
+          <div class="product-title">Luxury Smart Watch</div>
+          <div class="product-desc">Ultra display, water resistant.</div>
+          <div class="product-bottom">
+            <div class="product-price">Rs. 2,499</div>
+            <a href="order.html?id=1" class="order-btn">Buy</a>
+          </div>
+        </div>
+
+        <div class="product-card" data-title="wireless earbuds">
+          <img src="https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300" class="product-img" alt="Earbuds" />
+          <div class="product-title">Airbuds Pro</div>
+          <div class="product-desc">Noise cancellation sound.</div>
+          <div class="product-bottom">
+            <div class="product-price">Rs. 1,850</div>
+            <a href="order.html?id=2" class="order-btn">Buy</a>
+          </div>
+        </div>
       </div>
 
-      <!-- Market Categories at Bottom -->
-      <div class="category-section-title">Explore Categories</div>
+      <!-- Categories at bottom -->
+      <div class="category-section-title">Categories</div>
       <div class="category-grid">
-        <a href="clothes.html" class="cat-btn">
-          <i class="fa-solid fa-shirt"></i>
-          <span>Clothes</span>
-        </a>
-        <a href="tools.html" class="cat-btn">
-          <i class="fa-solid fa-screwdriver-wrench"></i>
-          <span>Tools</span>
-        </a>
-        <a href="mobiles.html" class="cat-btn">
-          <i class="fa-solid fa-mobile-screen-button"></i>
-          <span>Mobiles</span>
-        </a>
-        <a href="motors.html" class="cat-btn">
-          <i class="fa-solid fa-motorcycle"></i>
-          <span>Motors</span>
-        </a>
-        <a href="jewelry.html" class="cat-btn">
-          <i class="fa-solid fa-gem"></i>
-          <span>Jewelry</span>
-        </a>
+        <a href="clothes.html" class="cat-btn"><i class="fa-solid fa-shirt"></i> Clothes</a>
+        <a href="tools.html" class="cat-btn"><i class="fa-solid fa-screwdriver-wrench"></i> Tools</a>
+        <a href="mobiles.html" class="cat-btn"><i class="fa-solid fa-mobile-screen-button"></i> Mobiles</a>
+        <a href="motors.html" class="cat-btn"><i class="fa-solid fa-motorcycle"></i> Motors</a>
+        <a href="jewelry.html" class="cat-btn"><i class="fa-solid fa-gem"></i> Jewelry</a>
       </div>
     </section>
 
   </div>
 
-  <!-- PROFILE DETAILS MODAL -->
+  <!-- PROFILE MODAL -->
   <div class="modal-overlay" id="profileModal">
     <div class="profile-modal">
       <button class="close-modal" onclick="closeProfileModal()">✕</button>
       
-      <div class="modal-header">
+      <div style="text-align: center; margin-bottom: 12px;">
         <div class="modal-avatar" id="modalAvatar">U</div>
-        <h3 id="modalFullName" style="font-size: 18px; font-weight: 800;">User Name</h3>
-        <p id="modalUsername" style="font-size: 13px; color: var(--text-muted);">@username</p>
+        <h4 id="modalFullName" style="font-size: 15px; font-weight: 800;">User Name</h4>
+        <p id="modalUsername" style="font-size: 11px; color: var(--text-muted);">@username</p>
       </div>
 
-      <div class="detail-item">
-        <span class="detail-label">Mobile Number</span>
-        <span class="detail-val" id="modalMobile">-</span>
-      </div>
-
-      <div class="detail-item">
-        <span class="detail-label">Email Address</span>
-        <span class="detail-val" id="modalEmail">-</span>
-      </div>
-
-      <div class="detail-item">
-        <span class="detail-label">City</span>
-        <span class="detail-val" id="modalCity">-</span>
-      </div>
-
-      <div class="detail-item">
-        <span class="detail-label">Country</span>
-        <span class="detail-val" id="modalCountry">-</span>
-      </div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Mobile:</span> <strong id="modalMobile">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Email:</span> <strong id="modalEmail">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">City:</span> <strong id="modalCity">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Country:</span> <strong id="modalCountry">-</strong></div>
     </div>
   </div>
 
-  <!-- Firebase Modular SDK Integration -->
+  <!-- Firebase & Sync Logic -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -647,78 +546,94 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // 1. Session Protection Check
-    const localSession = localStorage.getItem('sew_session');
-    if (!localSession) {
+    // 1. Instant Session Load (No Loading Screen Delay)
+    const rawSession = localStorage.getItem('sew_session');
+    if (!rawSession) {
       window.location.replace("index.html");
     }
 
-    const sessionUser = JSON.parse(localSession);
+    const userData = JSON.parse(rawSession);
 
-    // Fetch Live User Data from Firebase
-    async function loadUserData() {
-      try {
-        const userRef = ref(db, 'users/' + sessionUser.username);
-        const snapshot = await get(userRef);
+    function renderUserUI(data) {
+      const displayTitle = data.fullName || data.username || "User";
+      document.getElementById('navUserName').innerText = displayTitle;
+      const initial = displayTitle.charAt(0).toUpperCase();
+      document.getElementById('navAvatar').innerText = initial;
+      document.getElementById('userBalance').innerText = "Rs. " + (data.balance || "0.00");
 
-        let data = sessionUser;
-        if (snapshot.exists()) {
-          data = snapshot.val();
-        }
-
-        // Set Nav profile details
-        document.getElementById('navUserName').innerText = data.fullName || data.username;
-        const initial = (data.fullName || data.username).charAt(0).toUpperCase();
-        document.getElementById('navAvatar').innerText = initial;
-
-        // Set Balance
-        document.getElementById('userBalance').innerText = "Rs. " + (data.balance || "0.00");
-
-        // Set Modal details
-        document.getElementById('modalAvatar').innerText = initial;
-        document.getElementById('modalFullName').innerText = data.fullName || "N/A";
-        document.getElementById('modalUsername').innerText = "@" + data.username;
-        document.getElementById('modalMobile').innerText = data.mobile || "N/A";
-        document.getElementById('modalEmail').innerText = data.email || "N/A";
-        document.getElementById('modalCity').innerText = data.city || "N/A";
-        document.getElementById('modalCountry').innerText = data.country || "N/A";
-
-      } catch (err) {
-        console.error("Error loading profile:", err);
-      }
+      document.getElementById('modalAvatar').innerText = initial;
+      document.getElementById('modalFullName').innerText = data.fullName || "User";
+      document.getElementById('modalUsername').innerText = "@" + (data.username || "");
+      document.getElementById('modalMobile').innerText = data.mobile || "N/A";
+      document.getElementById('modalEmail').innerText = data.email || "N/A";
+      document.getElementById('modalCity').innerText = data.city || "N/A";
+      document.getElementById('modalCountry').innerText = data.country || "N/A";
     }
 
-    // 2. Fetch Live Products from Firebase Database ('products' node)
-    async function loadProducts() {
-      const grid = document.getElementById('productGrid');
-      try {
-        const productsRef = ref(db, 'products');
-        const snapshot = await get(productsRef);
+    // Render local data immediately!
+    renderUserUI(userData);
 
-        if (snapshot.exists()) {
+    // 2. Fetch Fresh Data from Realtime Database
+    async function syncFirebaseData() {
+      if (!userData.username) return;
+      try {
+        const userSnap = await get(ref(db, 'users/' + userData.username));
+        if (userSnap.exists()) {
+          const freshData = userSnap.val();
+          renderUserUI(freshData);
+          localStorage.setItem('sew_session', JSON.stringify(freshData));
+        }
+
+        // Fetch custom products if admin added any
+        const prodSnap = await get(ref(db, 'products'));
+        if (prodSnap.exists()) {
+          const grid = document.getElementById('productGrid');
           grid.innerHTML = "";
-          const productsObj = snapshot.val();
-          
-          Object.keys(productsObj).forEach(key => {
-            const item = productsObj[key];
+          const pObj = prodSnap.val();
+          Object.keys(pObj).forEach(key => {
+            const p = pObj[key];
             grid.innerHTML += `
-              <div class="product-card" data-title="${item.name.toLowerCase()}">
-                <img src="${item.image || 'https://via.placeholder.com/200'}" class="product-img" alt="${item.name}" />
-                <div class="product-title">${item.name}</div>
-                <div class="product-desc">${item.details || 'High quality product available at discounted price.'}</div>
+              <div class="product-card" data-title="${p.name.toLowerCase()}">
+                <img src="${p.image || 'https://via.placeholder.com/150'}" class="product-img" alt="${p.name}" />
+                <div class="product-title">${p.name}</div>
+                <div class="product-desc">${p.details || ''}</div>
                 <div class="product-bottom">
-                  <div class="product-price">Rs. ${item.price}</div>
-                  <a href="order.html?id=${key}" class="order-btn">Buy Now</a>
+                  <div class="product-price">Rs. ${p.price}</div>
+                  <a href="order.html?id=${key}" class="order-btn">Buy</a>
                 </div>
               </div>
             `;
           });
-        } else {
-          // Default Sample Products if Admin panel hasn't added products yet
-          grid.innerHTML = `
-            <div class="product-card" data-title="smart watch">
-              <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400" class="product-img" alt="Watch" />
-              <div class="product-title">Luxury Smart Watch</div>
-              <div class="product-desc">Ultra display, water resistant and long battery life.</div>
-              <div class="product-bottom">
-                <div class="product-price">Rs. 2,499</div>
+        }
+      } catch (err) {
+        console.log("Firebase Background Sync Error:", err);
+      }
+    }
+
+    syncFirebaseData();
+
+    // Global Handlers
+    window.handleLogout = function() {
+      localStorage.removeItem('sew_session');
+      window.location.replace("index.html");
+    };
+
+    window.openProfileModal = function() {
+      document.getElementById('profileModal').style.display = 'flex';
+    };
+
+    window.closeProfileModal = function() {
+      document.getElementById('profileModal').style.display = 'none';
+    };
+
+    window.filterProducts = function() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      const cards = document.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        const title = card.getAttribute('data-title') || '';
+        card.style.display = title.includes(q) ? 'flex' : 'none';
+      });
+    };
+  </script>
+</body>
+</html>

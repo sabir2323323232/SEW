@@ -427,7 +427,7 @@
   <!-- Firebase Modular SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, set, get, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
@@ -465,7 +465,7 @@
       }
     };
 
-    // REGISTER WITH FIREBASE DUP-CHECK
+    // REGISTER WITHOUT REQUIRING FIREBASE INDEX RULES
     window.handleRegister = async function(e) {
       e.preventDefault();
       
@@ -484,21 +484,26 @@
       regSubmitBtn.innerHTML = `<span class="spinner"></span> Checking details...`;
 
       try {
-        // 1. Check Username Duplicate in Realtime Database
-        const usernameCheck = await get(ref(db, 'users/' + username));
-        if (usernameCheck.exists()) {
-          showStatus(regStatus, "This Username is already taken! Try another.", "error");
-          resetRegBtn();
-          return;
-        }
+        // Fetch all users snapshot to avoid Index requirement error
+        const usersSnap = await get(ref(db, 'users'));
+        
+        if (usersSnap.exists()) {
+          const allUsers = usersSnap.val();
 
-        // 2. Check Email Duplicate in Realtime Database
-        const emailQuery = query(ref(db, 'users'), orderByChild('email'), equalTo(email));
-        const emailCheck = await get(emailQuery);
-        if (emailCheck.exists()) {
-          showStatus(regStatus, "This Email is already registered! Please Login.", "error");
-          resetRegBtn();
-          return;
+          // 1. Check Username Duplicate
+          if (allUsers[username]) {
+            showStatus(regStatus, "This Username is already taken! Try another.", "error");
+            resetRegBtn();
+            return;
+          }
+
+          // 2. Check Email Duplicate
+          const emailExists = Object.values(allUsers).some(u => u && u.email === email);
+          if (emailExists) {
+            showStatus(regStatus, "This Email is already registered! Please Login.", "error");
+            resetRegBtn();
+            return;
+          }
         }
 
         // 3. Save User Data directly to Firebase RTDB
@@ -548,20 +553,18 @@
 
       try {
         let userData = null;
-
-        // Search by Username directly
         const cleanUsername = inputVal.replace(/[^a-z0-9]/g, "");
-        const userSnap = await get(ref(db, 'users/' + cleanUsername));
 
-        if (userSnap.exists()) {
-          userData = userSnap.val();
-        } else {
-          // Search by Email in RTDB
-          const emailQuery = query(ref(db, 'users'), orderByChild('email'), equalTo(inputVal));
-          const querySnap = await get(emailQuery);
-          if (querySnap.exists()) {
-            const dataObj = querySnap.val();
-            userData = dataObj[Object.keys(dataObj)[0]];
+        const usersSnap = await get(ref(db, 'users'));
+
+        if (usersSnap.exists()) {
+          const allUsers = usersSnap.val();
+
+          // Match by username or email
+          if (allUsers[cleanUsername]) {
+            userData = allUsers[cleanUsername];
+          } else {
+            userData = Object.values(allUsers).find(u => u && u.email === inputVal);
           }
         }
 

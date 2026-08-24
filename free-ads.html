@@ -1,14 +1,555 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title></title>
-</head>
-
-<body>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SEW - Monetag Ads Station</title>
   
-</body>
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
+  <style>
+    :root {
+      --bg-body: #0b0f19;
+      --card-bg: #161f30;
+      --primary: #3b82f6;
+      --primary-glow: rgba(59, 130, 246, 0.4);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --accent-green: #10b981;
+      --accent-gold: #f59e0b;
+      --accent-purple: #8b5cf6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* TOP HEADER NAVBAR */
+    .navbar {
+      background: rgba(22, 31, 48, 0.8);
+      backdrop-filter: blur(12px);
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .back-btn:active {
+      transform: scale(0.95);
+      background: var(--primary);
+    }
+
+    .page-title {
+      font-size: 15px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #60a5fa, #a78bfa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 0.5px;
+    }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(59, 130, 246, 0.1);
+      padding: 4px 8px;
+      border-radius: 20px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .avatar {
+      width: 22px;
+      height: 22px;
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 11px;
+    }
+
+    .username-txt {
+      font-size: 11px;
+      font-weight: 700;
+      color: #93c5fd;
+      max-width: 80px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 480px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* ANIMATED BALANCE CARD */
+    .balance-card-animated {
+      position: relative;
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1d4ed8 100%);
+      border-radius: 16px;
+      padding: 16px;
+      color: #ffffff;
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .balance-card-animated::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
+      animation: rotateBg 8s linear infinite;
+    }
+
+    @keyframes rotateBg {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .balance-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .balance-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      opacity: 0.9;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .balance-val {
+      font-size: 24px;
+      font-weight: 800;
+      margin-top: 4px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+      letter-spacing: 0.5px;
+    }
+
+    .live-badge {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid #10b981;
+      color: #34d399;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      animation: pulseGlow 2s infinite;
+    }
+
+    .pulse-dot {
+      width: 6px;
+      height: 6px;
+      background: #34d399;
+      border-radius: 50%;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* MONETAG ADS CONTAINER */
+    .monetag-ad-wrapper {
+      background: var(--card-bg);
+      border: 1px dashed rgba(59, 130, 246, 0.4);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+      position: relative;
+    }
+
+    .ad-tag-label {
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+
+    .monetag-slot {
+      min-height: 80px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--text-muted);
+      font-size: 11px;
+    }
+
+    /* NEXT-LEVEL 3 ADS BUTTONS SECTION */
+    .ads-tier-section {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .section-heading {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tier-card {
+      position: relative;
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Shimmer Effect */
+    .tier-card::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -100%;
+      width: 50%;
+      height: 200%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      transform: rotate(25deg);
+      transition: all 0.6s;
+    }
+
+    .tier-card:hover::after, .tier-card:active::after {
+      left: 150%;
+    }
+
+    .tier-card:active {
+      transform: scale(0.97);
+    }
+
+    /* CARD 1: SIMPLE ADS */
+    .card-simple {
+      border-left: 4px solid var(--primary);
+    }
+
+    .card-simple .tier-icon-box {
+      background: rgba(59, 130, 246, 0.15);
+      color: var(--primary);
+    }
+
+    /* CARD 2: GOLDEN ADS */
+    .card-golden {
+      border-left: 4px solid var(--accent-gold);
+      background: linear-gradient(135deg, #161f30 0%, rgba(245, 158, 11, 0.05) 100%);
+    }
+
+    .card-golden .tier-icon-box {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--accent-gold);
+    }
+
+    /* CARD 3: PRO ADS */
+    .card-pro {
+      border-left: 4px solid var(--accent-purple);
+      background: linear-gradient(135deg, #161f30 0%, rgba(139, 92, 246, 0.08) 100%);
+    }
+
+    .card-pro .tier-icon-box {
+      background: rgba(139, 92, 246, 0.15);
+      color: var(--accent-purple);
+    }
+
+    .tier-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .tier-icon-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .tier-details h3 {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tier-details p {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .badge-tag {
+      font-size: 8px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .tag-simple { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+    .tag-golden { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .tag-pro { background: rgba(139, 92, 246, 0.2); color: #c084fc; }
+
+    .action-arrow {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+
+    .tier-card:active .action-arrow {
+      background: #ffffff;
+      color: #000000;
+      transform: translateX(3px);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <button class="back-btn" onclick="navigateTo('dashboard.html')">
+      <i class="fa-solid fa-arrow-left"></i> Dashboard
+    </button>
+    <div class="page-title">ADS STATION</div>
+    <div class="user-pill">
+      <div class="avatar" id="navAvatar">U</div>
+      <span class="username-txt" id="navUserName">User</span>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- REALTIME ANIMATED BALANCE CARD -->
+    <section class="balance-card-animated">
+      <div class="balance-content">
+        <div>
+          <div class="balance-label"><i class="fa-solid fa-wallet"></i> Realtime Balance</div>
+          <div class="balance-val" id="userBalance">Rs. 0.00</div>
+        </div>
+        <div class="live-badge">
+          <div class="pulse-dot"></div> LIVE SYNC
+        </div>
+      </div>
+    </section>
+
+    <!-- MONETAG AD PLACEHOLDER -->
+    <div class="monetag-ad-wrapper">
+      <div class="ad-tag-label"><i class="fa-solid fa-rectangle-ad"></i> Sponsored Monetag Ad</div>
+      <div class="monetag-slot" id="monetagSlot">
+        <!-- PASTE YOUR MONETAG AD SCRIPT / BANNER HERE -->
+        <i class="fa-solid fa-bullhorn" style="font-size: 20px; color: var(--primary)"></i>
+        <span>Monetag Ads Loaded Here</span>
+      </div>
+    </div>
+
+    <!-- 3 ANIMATED ADS BUTTONS (TIER SELECTION) -->
+    <section class="ads-tier-section">
+      <div class="section-heading">
+        <i class="fa-solid fa-play-circle" style="color:var(--primary)"></i> Choose Ad Category
+      </div>
+
+      <!-- 1. SIMPLE ADS BUTTON -->
+      <div class="tier-card card-simple" onclick="navigateTo('simple-ads.html')">
+        <div class="tier-left">
+          <div class="tier-icon-box">
+            <i class="fa-solid fa-feather"></i>
+          </div>
+          <div class="tier-details">
+            <h3>Simple Ads <span class="badge-tag tag-simple">Standard</span></h3>
+            <p>Watch quick Monetag short ads & earn balance</p>
+          </div>
+        </div>
+        <div class="action-arrow">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+
+      <!-- 2. GOLDEN ADS BUTTON -->
+      <div class="tier-card card-golden" onclick="navigateTo('golden-ads.html')">
+        <div class="tier-left">
+          <div class="tier-icon-box">
+            <i class="fa-solid fa-crown"></i>
+          </div>
+          <div class="tier-details">
+            <h3>Golden Ads <span class="badge-tag tag-golden">2X Bonus</span></h3>
+            <p>High reward ads with premium instant payout</p>
+          </div>
+        </div>
+        <div class="action-arrow">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+
+      <!-- 3. PRO ADS BUTTON -->
+      <div class="tier-card card-pro" onclick="navigateTo('pro-ads.html')">
+        <div class="tier-left">
+          <div class="tier-icon-box">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <div class="tier-details">
+            <h3>Pro Ads <span class="badge-tag tag-pro">Max Earnings</span></h3>
+            <p>Exclusive direct link ads for maximum profits</p>
+          </div>
+        </div>
+        <div class="action-arrow">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Global Navigation Handler -->
+  <script>
+    function navigateTo(pageUrl) {
+      if (!pageUrl) return;
+      try {
+        window.location.href = pageUrl;
+      } catch (e) {
+        window.location.assign(pageUrl);
+      }
+    }
+  </script>
+
+  <!-- Firebase Integration Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
+      authDomain: "newweb-d50af.firebaseapp.com",
+      databaseURL: "https://newweb-d50af-default-rtdb.firebaseio.com",
+      projectId: "newweb-d50af",
+      storageBucket: "newweb-d50af.firebasestorage.app",
+      messagingSenderId: "358603295768",
+      appId: "1:358603295768:web:82a9666514a7cb468c476d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Session Verification
+    const rawSession = localStorage.getItem('sew_session');
+    if (!rawSession) {
+      window.location.replace("index.html");
+    }
+
+    const userData = JSON.parse(rawSession || '{}');
+
+    function updateHeaderUI(data) {
+      if (!data) return;
+      const name = data.fullName || data.username || "User";
+      document.getElementById('navUserName').innerText = name;
+      document.getElementById('navAvatar').innerText = name.charAt(0).toUpperCase();
+      document.getElementById('userBalance').innerText = "Rs. " + (parseFloat(data.balance || 0).toFixed(2));
+    }
+
+    updateHeaderUI(userData);
+
+    // REALTIME DATABASE BALANCE SYNC
+    if (userData.username) {
+      onValue(ref(db, 'users/' + userData.username), (snapshot) => {
+        if (snapshot.exists()) {
+          const freshData = snapshot.val();
+          updateHeaderUI(freshData);
+          localStorage.setItem('sew_session', JSON.stringify(freshData));
+        }
+      });
+    }
+  </script>
+</body>
 </html>

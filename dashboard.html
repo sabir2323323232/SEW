@@ -19,6 +19,7 @@
       --text-muted: #64748b;
       --border-color: #e2e8f0;
       --accent-green: #10b981;
+      --accent-orange: #f59e0b;
     }
 
     * {
@@ -32,7 +33,7 @@
     html, body {
       height: 100%;
       width: 100%;
-      overflow-x: hidden; /* Website ko horizontal scroll hone se rokata hai */
+      overflow-x: hidden;
     }
 
     body {
@@ -271,15 +272,15 @@
       scroll-snap-type: x mandatory;
       padding-bottom: 4px;
       margin-bottom: 4px;
-      scrollbar-width: none; /* Firefox hide scrollbar */
+      scrollbar-width: none;
     }
 
     .product-grid::-webkit-scrollbar {
-      display: none; /* Chrome/Safari hide scrollbar */
+      display: none;
     }
 
     .product-card {
-      flex: 0 0 160px; /* Uniform width for horizontally sliding cards */
+      flex: 0 0 160px;
       scroll-snap-align: start;
       background: #ffffff;
       border: 1px solid var(--border-color);
@@ -379,6 +380,94 @@
       letter-spacing: 0.5px;
     }
 
+    /* MY ORDERS BOX SECTION */
+    .my-orders-box {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px;
+      margin-bottom: 8px;
+    }
+
+    .orders-header {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      text-transform: uppercase;
+    }
+
+    .my-orders-list {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    .my-orders-list::-webkit-scrollbar {
+      display: none;
+    }
+
+    .order-mini-card {
+      flex: 0 0 130px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+
+    .order-mini-card:active {
+      transform: scale(0.98);
+    }
+
+    .order-mini-name {
+      font-size: 9px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text-main);
+    }
+
+    .order-mini-qty {
+      font-size: 8px;
+      color: var(--text-muted);
+      margin: 2px 0;
+    }
+
+    .order-status-badge {
+      display: inline-block;
+      font-size: 8px;
+      font-weight: 800;
+      padding: 2px 5px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .status-ok {
+      background: #d1fae5;
+      color: #059669;
+    }
+
+    .no-orders-text {
+      font-size: 9px;
+      color: var(--text-muted);
+      text-align: center;
+      width: 100%;
+      padding: 6px 0;
+    }
+
     /* CATEGORIES AT BOTTOM WRAPPER */
     .categories-wrapper {
       margin-top: auto;
@@ -459,10 +548,10 @@
 
     .order-img {
       width: 100%;
-      height: 120px;
+      height: 110px;
       object-fit: cover;
       border-radius: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .order-title {
@@ -474,15 +563,15 @@
     .order-desc {
       font-size: 10px;
       color: var(--text-muted);
-      margin: 4px 0 10px 0;
+      margin: 3px 0 8px 0;
       line-height: 1.3;
     }
 
     .order-price-tag {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 800;
       color: var(--accent-green);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .form-group {
@@ -499,7 +588,7 @@
 
     .form-group input, .form-group textarea {
       width: 100%;
-      padding: 8px;
+      padding: 7px;
       background: #f8fafc;
       border: 1px solid var(--border-color);
       border-radius: 6px;
@@ -581,7 +670,7 @@
         </div>
       </div>
 
-      <!-- 5 EARNING BUTTONS -->
+      <!-- 5 EARNING BUTTONS (LINKED TO .HTML PAGES) -->
       <div class="earning-grid">
         <div class="earn-btn" onclick="navigateTo('free-ads.html')">
           <i class="fa-solid fa-rectangle-ad"></i>
@@ -618,7 +707,7 @@
       <div class="discount-badge">50% OFF</div>
     </div>
 
-    <!-- 2. MARKETING SECTION -->
+    <!-- 2. MARKETING & PRODUCTS SECTION -->
     <section class="market-section">
       <div class="search-box">
         <i class="fa-solid fa-magnifying-glass"></i>
@@ -630,7 +719,7 @@
         <!-- Loaded Realtime from Firebase -->
       </div>
 
-      <!-- PRODUCT SCROLL ARROWS (NECHE ARROWS) -->
+      <!-- PRODUCT SCROLL ARROWS -->
       <div class="product-arrows">
         <button type="button" class="arrow-btn" onclick="scrollProducts(-160)">
           <i class="fa-solid fa-chevron-left"></i>
@@ -641,7 +730,17 @@
         </button>
       </div>
 
-      <!-- CATEGORIES WRAPPER (ANCHORED TO BOTTOM) -->
+      <!-- MY ORDERS BOX (REALTIME ORDERED PRODUCTS) -->
+      <div class="my-orders-box">
+        <div class="orders-header">
+          <i class="fa-solid fa-box-open" style="color:var(--primary)"></i> My Placed Orders
+        </div>
+        <div class="my-orders-list" id="myOrdersList">
+          <div class="no-orders-text">Loading orders...</div>
+        </div>
+      </div>
+
+      <!-- CATEGORIES WRAPPER -->
       <div class="categories-wrapper">
         <div class="category-section-title">Categories</div>
         <div class="category-grid">
@@ -674,7 +773,7 @@
     </div>
   </div>
 
-  <!-- PRODUCT DETAIL & ORDER MODAL -->
+  <!-- PLACE ORDER MODAL -->
   <div class="modal-overlay" id="orderModal">
     <div class="modal-box">
       <button class="close-modal" onclick="closeOrderModal()">✕</button>
@@ -686,8 +785,8 @@
 
       <form id="orderForm" onsubmit="handlePlaceOrder(event)">
         <div class="form-group">
-          <label>Quantity (Kitne lene hain)</label>
-          <input type="number" id="orderQuantity" value="1" min="1" oninput="updateOrderTotal()" required />
+          <label>Full Name</label>
+          <input type="text" id="orderFullNameInput" placeholder="Your Name" required />
         </div>
 
         <div class="form-group">
@@ -696,8 +795,23 @@
         </div>
 
         <div class="form-group">
-          <label>Delivery Address / Location</label>
-          <textarea id="orderLocationInput" rows="2" placeholder="Full Address / City" required></textarea>
+          <label>WhatsApp Number</label>
+          <input type="tel" id="orderWhatsappInput" placeholder="03001234567" required />
+        </div>
+
+        <div class="form-group">
+          <label>City Name</label>
+          <input type="text" id="orderCityInput" placeholder="e.g. Lahore, Karachi" required />
+        </div>
+
+        <div class="form-group">
+          <label>Quantity (Kitne lene hain)</label>
+          <input type="number" id="orderQuantity" value="1" min="1" oninput="updateOrderTotal()" required />
+        </div>
+
+        <div class="form-group">
+          <label>Delivery Full Address</label>
+          <textarea id="orderLocationInput" rows="2" placeholder="House / Street / Area Details" required></textarea>
         </div>
 
         <div style="font-size: 11px; font-weight: 800; margin: 4px 0; color: var(--text-main);">
@@ -708,6 +822,27 @@
 
         <button type="submit" id="confirmOrderBtn" class="confirm-btn">Confirm Order</button>
       </form>
+    </div>
+  </div>
+
+  <!-- VIEW ORDER DETAILS MODAL (MY ORDERS CLICK POPUP) -->
+  <div class="modal-overlay" id="viewOrderDetailModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeViewOrderModal()">✕</button>
+      
+      <h3 style="font-size:13px; font-weight:800; text-transform:uppercase; margin-bottom:10px; color:var(--primary);">
+        <i class="fa-solid fa-file-invoice"></i> Order Details
+      </h3>
+
+      <div class="detail-item"><span style="color:var(--text-muted)">Product Name:</span> <strong id="vProductTitle">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Customer Name:</span> <strong id="vCustomerName">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Mobile Number:</span> <strong id="vMobile">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">WhatsApp Number:</span> <strong id="vWhatsapp">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">City:</span> <strong id="vCity">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Full Address:</span> <strong id="vLocation" style="max-width:180px; text-align:right;">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Kitne Lene Hain (Quantity):</span> <strong id="vQuantity">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Total Price:</span> <strong id="vTotalPrice" style="color:var(--accent-green);">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Order Status:</span> <strong id="vStatus">-</strong></div>
     </div>
   </div>
 
@@ -723,7 +858,6 @@
       }
     }
 
-    // Scroll Products Left / Right
     function scrollProducts(amount) {
       const grid = document.getElementById('productGrid');
       if (grid) {
@@ -758,6 +892,7 @@
 
     const userData = JSON.parse(rawSession || '{}');
     let selectedProduct = null;
+    let myUserOrdersMap = {};
 
     function renderUserUI(data) {
       if(!data) return;
@@ -778,7 +913,18 @@
 
     renderUserUI(userData);
 
-    // Fallback Products
+    // REALTIME USER BALANCE SYNC FROM FIREBASE
+    if (userData.username) {
+      onValue(ref(db, 'users/' + userData.username), (snapshot) => {
+        if (snapshot.exists()) {
+          const freshData = snapshot.val();
+          renderUserUI(freshData);
+          localStorage.setItem('sew_session', JSON.stringify(freshData));
+        }
+      });
+    }
+
+    // Default Fallback Products
     const defaultProducts = [
       {
         id: "p1",
@@ -796,7 +942,7 @@
       }
     ];
 
-    // Realtime Sync from Firebase
+    // REALTIME PRODUCTS SYNC
     onValue(ref(db, 'products'), (snapshot) => {
       const grid = document.getElementById('productGrid');
       grid.innerHTML = "";
@@ -826,27 +972,49 @@
           </div>
         `;
       });
-    }, (error) => {
-      console.log("Realtime product read error:", error);
     });
 
-    // Background User Sync
-    async function syncUserData() {
-      if (!userData.username) return;
-      try {
-        const userSnap = await get(ref(db, 'users/' + userData.username));
-        if (userSnap.exists()) {
-          const freshData = userSnap.val();
-          renderUserUI(freshData);
-          localStorage.setItem('sew_session', JSON.stringify(freshData));
-        }
-      } catch (err) {
-        console.log("User Sync Error:", err);
-      }
-    }
-    syncUserData();
+    // REALTIME ORDERS SYNC (MY ORDERS BOX & ADMIN STATUS UPDATE)
+    onValue(ref(db, 'orders'), (snapshot) => {
+      const ordersContainer = document.getElementById('myOrdersList');
+      ordersContainer.innerHTML = "";
+      myUserOrdersMap = {};
 
-    // Modal Operations
+      if (!snapshot.exists()) {
+        ordersContainer.innerHTML = `<div class="no-orders-text">No orders placed yet.</div>`;
+        return;
+      }
+
+      const allOrders = snapshot.val();
+      let userOrdersCount = 0;
+
+      Object.keys(allOrders).reverse().forEach(oKey => {
+        const ord = allOrders[oKey];
+        // Match order with current user
+        if (ord.username === userData.username || ord.customerEmail === userData.email) {
+          userOrdersCount++;
+          myUserOrdersMap[oKey] = ord;
+
+          const isOk = (ord.status || '').toLowerCase() === 'ok' || (ord.status || '').toLowerCase() === 'confirmed' || (ord.status || '').toLowerCase() === 'delivered';
+          const badgeClass = isOk ? 'status-ok' : 'status-pending';
+          const statusDisplay = isOk ? 'OK / Confirmed' : (ord.status || 'Pending');
+
+          ordersContainer.innerHTML += `
+            <div class="order-mini-card" onclick="openViewOrderModal('${oKey}')">
+              <div class="order-mini-name">${ord.productName || 'Product'}</div>
+              <div class="order-mini-qty">Qty: ${ord.quantity || 1} | Rs.${ord.totalPrice || 0}</div>
+              <span class="order-status-badge ${badgeClass}">${statusDisplay}</span>
+            </div>
+          `;
+        }
+      });
+
+      if (userOrdersCount === 0) {
+        ordersContainer.innerHTML = `<div class="no-orders-text">No orders placed yet.</div>`;
+      }
+    });
+
+    // OPEN PLACE ORDER MODAL
     window.openOrderModal = function(pId) {
       const pList = window.currentProducts || defaultProducts;
       selectedProduct = pList.find(item => item.id == pId) || pList[0];
@@ -858,9 +1026,12 @@
       document.getElementById('orderModalDesc').innerText = selectedProduct.details || 'No additional details.';
       document.getElementById('orderModalPrice').innerText = "Rs. " + selectedProduct.price;
 
-      document.getElementById('orderQuantity').value = 1;
+      document.getElementById('orderFullNameInput').value = userData.fullName || userData.username || '';
       document.getElementById('orderMobileInput').value = userData.mobile || '';
-      document.getElementById('orderLocationInput').value = (userData.city ? userData.city + ", " : "") + (userData.country || '');
+      document.getElementById('orderWhatsappInput').value = userData.mobile || '';
+      document.getElementById('orderCityInput').value = userData.city || '';
+      document.getElementById('orderQuantity').value = 1;
+      document.getElementById('orderLocationInput').value = userData.country || '';
       
       updateOrderTotal();
       document.getElementById('orderStatusAlert').className = "status-alert";
@@ -880,21 +1051,24 @@
       document.getElementById('orderTotalPrice').innerText = "Rs. " + total;
     };
 
-    // Firebase Order Submission
+    // FIREBASE PLACE ORDER SUBMISSION
     window.handlePlaceOrder = async function(e) {
       e.preventDefault();
 
       const btn = document.getElementById('confirmOrderBtn');
       const alertBox = document.getElementById('orderStatusAlert');
 
-      const quantity = parseInt(document.getElementById('orderQuantity').value) || 1;
+      const name = document.getElementById('orderFullNameInput').value.trim();
       const mobile = document.getElementById('orderMobileInput').value.trim();
+      const whatsapp = document.getElementById('orderWhatsappInput').value.trim();
+      const city = document.getElementById('orderCityInput').value.trim();
+      const quantity = parseInt(document.getElementById('orderQuantity').value) || 1;
       const location = document.getElementById('orderLocationInput').value.trim();
       const unitPrice = parseFloat(selectedProduct.price) || 0;
       const totalPrice = unitPrice * quantity;
 
-      if (!mobile || !location) {
-        alertBox.innerText = "Please fill mobile number and delivery location!";
+      if (!name || !mobile || !whatsapp || !city || !location) {
+        alertBox.innerText = "Please fill all details completely!";
         alertBox.className = "status-alert error";
         return;
       }
@@ -909,10 +1083,12 @@
           quantity: quantity,
           unitPrice: unitPrice,
           totalPrice: totalPrice,
-          customerName: userData.fullName || userData.username,
+          customerName: name,
           username: userData.username || 'N/A',
           customerEmail: userData.email || 'N/A',
           mobile: mobile,
+          whatsapp: whatsapp,
+          city: city,
           location: location,
           status: "Pending",
           createdAt: new Date().toISOString()
@@ -920,7 +1096,7 @@
 
         await push(ref(db, 'orders'), newOrder);
 
-        alertBox.innerText = "Order Placed Successfully! Admin will contact you soon.";
+        alertBox.innerText = "Order Placed Successfully! It will appear in 'My Orders'.";
         alertBox.className = "status-alert success";
 
         setTimeout(() => {
@@ -937,7 +1113,33 @@
       }
     };
 
-    // Global Action Handlers
+    // OPEN ORDER DETAILS MODAL (VIEW ORDERED PRODUCT DETAILS)
+    window.openViewOrderModal = function(orderId) {
+      const ord = myUserOrdersMap[orderId];
+      if (!ord) return;
+
+      document.getElementById('vProductTitle').innerText = ord.productName || 'Product';
+      document.getElementById('vCustomerName').innerText = ord.customerName || 'N/A';
+      document.getElementById('vMobile').innerText = ord.mobile || 'N/A';
+      document.getElementById('vWhatsapp').innerText = ord.whatsapp || 'N/A';
+      document.getElementById('vCity').innerText = ord.city || 'N/A';
+      document.getElementById('vLocation').innerText = ord.location || 'N/A';
+      document.getElementById('vQuantity').innerText = ord.quantity || 1;
+      document.getElementById('vTotalPrice').innerText = "Rs. " + (ord.totalPrice || 0);
+      
+      const isOk = (ord.status || '').toLowerCase() === 'ok' || (ord.status || '').toLowerCase() === 'confirmed' || (ord.status || '').toLowerCase() === 'delivered';
+      document.getElementById('vStatus').innerHTML = isOk 
+        ? `<span class="order-status-badge status-ok">OK / Confirmed</span>` 
+        : `<span class="order-status-badge status-pending">${ord.status || 'Pending'}</span>`;
+
+      document.getElementById('viewOrderDetailModal').style.display = 'flex';
+    };
+
+    window.closeViewOrderModal = function() {
+      document.getElementById('viewOrderDetailModal').style.display = 'none';
+    };
+
+    // GLOBAL ACTIONS
     window.handleLogout = function() {
       localStorage.removeItem('sew_session');
       window.location.replace("index.html");

@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SEW - Simple Ads (0.05 PKR)</title>
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-body: #0b0f19;
+      --card-bg: #161f30;
+      --primary: #3b82f6;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --accent-gold: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      background: rgba(22, 31, 48, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .page-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(59, 130, 246, 0.1);
+      padding: 4px 8px;
+      border-radius: 20px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .avatar {
+      width: 22px;
+      height: 22px;
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 11px;
+    }
+
+    .username-txt {
+      font-size: 11px;
+      font-weight: 700;
+      color: #93c5fd;
+      max-width: 80px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 500px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* REALTIME BALANCE CARD */
+    .balance-card {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      border-radius: 14px;
+      padding: 14px;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .balance-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    .balance-val {
+      font-size: 22px;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
+    .reward-tag {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--accent-green);
+      color: #34d399;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    /* ADS GRID (40 BUTTONS) */
+    .ads-header-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .ads-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .ad-btn-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .ad-btn-card:active {
+      transform: scale(0.97);
+    }
+
+    .ad-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ad-number {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .ad-payout {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--accent-green);
+      background: rgba(16, 185, 129, 0.1);
+      padding: 2px 6px;
+      border-radius: 6px;
+    }
+
+    .ad-status-txt {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* LOCKED STATE */
+    .ad-btn-card.locked {
+      opacity: 0.6;
+      cursor: not-allowed;
+      border-color: rgba(239, 68, 68, 0.3);
+      background: #111827;
+    }
+
+    .ad-btn-card.locked .ad-number {
+      color: var(--text-muted);
+    }
+
+    .ad-btn-card.locked .ad-payout {
+      color: var(--accent-red);
+      background: rgba(239, 68, 68, 0.1);
+    }
+
+    .timer-txt {
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--accent-gold);
+    }
+
+    /* MODAL WARNING / SUCCESS */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+      padding: 16px;
+    }
+
+    .modal-content {
+      background: #1e293b;
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 20px;
+      width: 100%;
+      max-width: 320px;
+      text-align: center;
+    }
+
+    .modal-icon {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .modal-icon.warning { color: var(--accent-red); }
+    .modal-icon.success { color: var(--accent-green); }
+
+    .modal-title {
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .modal-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+
+    .modal-close-btn {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 12px;
+      cursor: pointer;
+      color: #ffffff;
+    }
+
+    .btn-red { background: var(--accent-red); }
+    .btn-green { background: var(--accent-green); }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <button class="back-btn" onclick="navigateTo('free-ads.html')">
+      <i class="fa-solid fa-arrow-left"></i> Ads Menu
+    </button>
+    <div class="page-title">SIMPLE ADS</div>
+    <div class="user-pill">
+      <div class="avatar" id="navAvatar">U</div>
+      <span class="username-txt" id="navUserName">User</span>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- BALANCE CARD -->
+    <div class="balance-card">
+      <div>
+        <div class="balance-title"><i class="fa-solid fa-wallet"></i> Live Balance</div>
+        <div class="balance-val" id="userBalance">Rs. 0.00</div>
+      </div>
+      <div class="reward-tag">
+        <i class="fa-solid fa-coins"></i> +0.05 / Ad
+      </div>
+    </div>
+
+    <!-- INFO HEADER -->
+    <div class="ads-header-info">
+      <span><i class="fa-solid fa-list-check"></i> Available Ads (40)</span>
+      <span><i class="fa-solid fa-clock"></i> 10s Timer Rule</span>
+    </div>
+
+    <!-- 40 AD BUTTONS GRID -->
+    <div class="ads-grid" id="adsGrid">
+      <!-- Generated Dynamically -->
+    </div>
+
+  </div>
+
+  <!-- WARNING / SUCCESS POPUP MODAL -->
+  <div class="modal-overlay" id="alertModal">
+    <div class="modal-content">
+      <div class="modal-icon" id="modalIcon"><i class="fa-solid fa-circle-exclamation"></i></div>
+      <div class="modal-title" id="modalTitle">Warning!</div>
+      <div class="modal-desc" id="modalDesc">Message content...</div>
+      <button class="modal-close-btn" id="modalBtn" onclick="closeModal()">OK</button>
+    </div>
+  </div>
+
+  <!-- Global Nav Script -->
+  <script>
+    function navigateTo(url) {
+      if (url) window.location.href = url;
+    }
+  </script>
+
+  <!-- Firebase Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue, runTransaction, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
+      authDomain: "newweb-d50af.firebaseapp.com",
+      databaseURL: "https://newweb-d50af-default-rtdb.firebaseio.com",
+      projectId: "newweb-d50af",
+      storageBucket: "newweb-d50af.firebasestorage.app",
+      messagingSenderId: "358603295768",
+      appId: "1:358603295768:web:82a9666514a7cb468c476d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // 20 PROVIDED MONETAG LINKS (REPEATED TO MAKE 40 AD BUTTONS)
+    const monetagLinks = [
+      "https://omg10.com/4/10475294", "https://omg10.com/4/10475279",
+      "https://omg10.com/4/10475296", "https://omg10.com/4/10475282",
+      "https://omg10.com/4/10475278", "https://omg10.com/4/10475291",
+      "https://omg10.com/4/10475297", "https://omg10.com/4/10475280",
+      "https://omg10.com/4/10475284", "https://omg10.com/4/10475283",
+      "https://omg10.com/4/10475290", "https://omg10.com/4/10475295",
+      "https://omg10.com/4/10475281", "https://omg10.com/4/10475292",
+      "https://omg10.com/4/10475293", "https://omg10.com/4/10475299",
+      "https://omg10.com/4/10440633", "https://omg10.com/4/10475285",
+      "https://omg10.com/4/10475298", "https://omg10.com/4/10474554",
+      // Repeated for 21 to 40
+      "https://omg10.com/4/10475294", "https://omg10.com/4/10475279",
+      "https://omg10.com/4/10475296", "https://omg10.com/4/10475282",
+      "https://omg10.com/4/10475278", "https://omg10.com/4/10475291",
+      "https://omg10.com/4/10475297", "https://omg10.com/4/10475280",
+      "https://omg10.com/4/10475284", "https://omg10.com/4/10475283",
+      "https://omg10.com/4/10475290", "https://omg10.com/4/10475295",
+      "https://omg10.com/4/10475281", "https://omg10.com/4/10475292",
+      "https://omg10.com/4/10475293", "https://omg10.com/4/10475299",
+      "https://omg10.com/4/10440633", "https://omg10.com/4/10475285",
+      "https://omg10.com/4/10475298", "https://omg10.com/4/10474554"
+    ];
+
+    // Session Check
+    const rawSession = localStorage.getItem('sew_session');
+    if (!rawSession) {
+      window.location.replace("index.html");
+    }
+
+    const userData = JSON.parse(rawSession || '{}');
+    let userAdLocks = {};
+    let pendingAdIndex = null;
+    let adStartTime = null;
+
+    function renderUI(data) {
+      if (!data) return;
+      const name = data.fullName || data.username || "User";
+      document.getElementById('navUserName').innerText = name;
+      document.getElementById('navAvatar').innerText = name.charAt(0).toUpperCase();
+      document.getElementById('userBalance').innerText = "Rs. " + (parseFloat(data.balance || 0).toFixed(2));
+    }
+
+    renderUI(userData);
+
+    // REALTIME DATABASE LISTENERS
+    if (userData.username) {
+      // 1. Balance Listener
+      onValue(ref(db, 'users/' + userData.username), (snapshot) => {
+        if (snapshot.exists()) {
+          const fresh = snapshot.val();
+          renderUI(fresh);
+          localStorage.setItem('sew_session', JSON.stringify(fresh));
+        }
+      });
+
+      // 2. User 24h Ad Locks Listener
+      onValue(ref(db, 'users/' + userData.username + '/simpleAdLocks'), (snapshot) => {
+        userAdLocks = snapshot.exists() ? snapshot.val() : {};
+        renderAdButtons();
+      });
+    }
+
+    // RENDER 40 AD BUTTONS WITH LOCK TIMER
+    function renderAdButtons() {
+      const grid = document.getElementById('adsGrid');
+      grid.innerHTML = "";
+      const now = Date.now();
+
+      monetagLinks.forEach((link, idx) => {
+        const adId = "ad_" + (idx + 1);
+        const lockExpiry = userAdLocks[adId] || 0;
+        const isLocked = lockExpiry > now;
+
+        let statusHtml = "";
+        if (isLocked) {
+          const diffMs = lockExpiry - now;
+          const hours = Math.floor(diffMs / (1000 * 60 * 60));
+          const mins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+          statusHtml = `<span class="timer-txt"><i class="fa-solid fa-lock"></i> Locked (${hours}h ${mins}m)</span>`;
+        } else {
+          statusHtml = `<span class="ad-status-txt"><i class="fa-solid fa-play" style="color:var(--primary)"></i> Watch 10s</span>`;
+        }
+
+        const card = document.createElement('div');
+        card.className = `ad-btn-card ${isLocked ? 'locked' : ''}`;
+        card.innerHTML = `
+          <div class="ad-top-row">
+            <span class="ad-number">Simple Ad #${idx + 1}</span>
+            <span class="ad-payout">+Rs. 0.05</span>
+          </div>
+          <div>${statusHtml}</div>
+        `;
+
+        card.onclick = () => {
+          if (isLocked) {
+            showAlert("Ad Locked!", "Aap ye ad dekhe chuke hain. 24 hours bad dubara available hoga.", false);
+            return;
+          }
+          openAd(idx, link);
+        };
+
+        grid.appendChild(card);
+      });
+    }
+
+    // OPEN AD LINK AND TRACK TIMER
+    function openAd(idx, link) {
+      pendingAdIndex = idx;
+      adStartTime = Date.now();
+
+      // Open Monetag link in new tab
+      window.open(link, '_blank');
+    }
+
+    // LISTEN FOR TAB RETURN (VISIBILITY CHANGE & FOCUS)
+    function handleUserReturn() {
+      if (pendingAdIndex === null || !adStartTime) return;
+
+      const timeSpentSec = (Date.now() - adStartTime) / 1000;
+      const currentAdIndex = pendingAdIndex;
+      
+      // Reset tracker state
+      pendingAdIndex = null;
+      adStartTime = null;
+
+      // STAGE 1: LESS THAN 10 SECONDS (STRICT WARNING)
+      if (timeSpentSec < 10) {
+        showAlert(
+          "Warning! 10 Seconds Required",
+          "Aap 10 second se pehle wapis aa gaye! Apko 1 paise bhi nahi milega. Ad ko kam se kam 10 second dekhein.",
+          false
+        );
+        return;
+      }
+
+      // STAGE 2: SUCCESSFULLY WATCHED 10+ SECONDS
+      claimAdReward(currentAdIndex);
+    }
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === 'visible') {
+        handleUserReturn();
+      }
+    });
+
+    window.addEventListener("focus", () => {
+      handleUserReturn();
+    });
+
+    // CLAIM REWARD & SET 24-HOUR LOCK IN FIREBASE
+    async function claimAdReward(idx) {
+      const adId = "ad_" + (idx + 1);
+      const userRef = ref(db, 'users/' + userData.username);
+      const lockExpiryTime = Date.now() + (24 * 60 * 60 * 1000); // 24 Hours Lock
+
+      try {
+        // Atomic Balance Update (+0.05)
+        await runTransaction(ref(db, 'users/' + userData.username + '/balance'), (currentBal) => {
+          return (parseFloat(currentBal) || 0) + 0.05;
+        });
+
+        // Set 24h Lock for this user ad
+        const updates = {};
+        updates['users/' + userData.username + '/simpleAdLocks/' + adId] = lockExpiryTime;
+        await update(ref(db), updates);
+
+        showAlert(
+          "Reward Added!",
+          "Mubarak ho! Rs. 0.05 aap ke account balance me add ho gaye hain. Ab ye ad 24 hours ke liye lock ho gaya hai.",
+          true
+        );
+
+      } catch (err) {
+        console.error(err);
+        showAlert("Error!", "Balance update nahi ho saka. Net check karein.", false);
+      }
+    }
+
+    // MODAL POPUP DISPLAY HANDLER
+    function showAlert(title, desc, isSuccess) {
+      const modal = document.getElementById('alertModal');
+      const icon = document.getElementById('modalIcon');
+      const btn = document.getElementById('modalBtn');
+
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalDesc').innerText = desc;
+
+      if (isSuccess) {
+        icon.className = "modal-icon success";
+        icon.innerHTML = `<i class="fa-solid fa-circle-check"></i>`;
+        btn.className = "modal-close-btn btn-green";
+      } else {
+        icon.className = "modal-icon warning";
+        icon.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i>`;
+        btn.className = "modal-close-btn btn-red";
+      }
+
+      modal.style.display = 'flex';
+    }
+
+    window.closeModal = function() {
+      document.getElementById('alertModal').style.display = 'none';
+    };
+
+    // Auto-refresh timers every 1 minute
+    setInterval(() => {
+      renderAdButtons();
+    }, 60000);
+  </script>
+</body>
+</html>

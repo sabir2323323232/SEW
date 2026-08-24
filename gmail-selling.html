@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SEW - Gmail Selling</title>
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-body: #0b0f19;
+      --card-bg: #161f30;
+      --primary: #2563eb;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --accent-gold: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      background: rgba(22, 31, 48, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .page-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #ef4444;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(59, 130, 246, 0.1);
+      padding: 4px 8px;
+      border-radius: 20px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .avatar {
+      width: 22px;
+      height: 22px;
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 11px;
+    }
+
+    .username-txt {
+      font-size: 11px;
+      font-weight: 700;
+      color: #93c5fd;
+      max-width: 80px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 500px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* REALTIME BALANCE CARD */
+    .balance-card {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      border-radius: 14px;
+      padding: 14px;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .balance-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    .balance-val {
+      font-size: 22px;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
+    .reward-badge {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--accent-green);
+      color: #34d399;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    /* CREATE GMAIL ACTION CARD */
+    .action-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .action-title {
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: var(--text-main);
+    }
+
+    .action-desc {
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .required-pass-box {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px dashed var(--accent-gold);
+      color: #fbbf24;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+
+    .btn-create-gmail {
+      background: linear-gradient(135deg, #ea4335, #c5221f);
+      color: #ffffff;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 12px rgba(234, 67, 53, 0.3);
+      text-decoration: none;
+    }
+
+    .btn-create-gmail:active {
+      transform: scale(0.98);
+    }
+
+    /* FORM CARD */
+    .form-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .form-title {
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      margin-bottom: 4px;
+      color: var(--text-main);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 9px 12px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 11px;
+      color: #ffffff;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: var(--primary);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 10px;
+      background: var(--accent-green);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 4px;
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .status-msg {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 8px;
+      border-radius: 6px;
+      margin-top: 8px;
+      text-align: center;
+      display: none;
+    }
+    .status-msg.error { background: rgba(239, 68, 68, 0.2); color: #f87171; display: block; }
+    .status-msg.success { background: rgba(16, 185, 129, 0.2); color: #34d399; display: block; }
+
+    /* HISTORY LIST CARD */
+    .history-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .history-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .gmail-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .gmail-item {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .gmail-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .gmail-address {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .gmail-pass {
+      font-size: 9px;
+      color: var(--text-muted);
+    }
+
+    .status-badge {
+      font-size: 9px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .badge-pending { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .badge-approved { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .badge-rejected { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+
+    .no-gmails-txt {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <button class="back-btn" onclick="navigateTo('dashboard.html')">
+      <i class="fa-solid fa-arrow-left"></i> Dashboard
+    </button>
+    <div class="page-title"><i class="fa-brands fa-google"></i> GMAIL SELLING</div>
+    <div class="user-pill">
+      <div class="avatar" id="navAvatar">U</div>
+      <span class="username-txt" id="navUserName">User</span>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- REALTIME BALANCE CARD -->
+    <div class="balance-card">
+      <div>
+        <div class="balance-title"><i class="fa-solid fa-wallet"></i> Live Balance</div>
+        <div class="balance-val" id="userBalance">Rs. 0.00</div>
+      </div>
+      <div class="reward-badge">
+        <i class="fa-solid fa-circle-check"></i> +Rs. 45 / Gmail
+      </div>
+    </div>
+
+    <!-- CREATE GMAIL ACTION CARD -->
+    <div class="action-card">
+      <div class="action-title">Step 1: Create New Gmail</div>
+      <div class="action-desc">Niche diye gaye button par click karke naya Gmail account banayein. Account banate waqt password wahi rakhein jo niche likha hai.</div>
+      
+      <div class="required-pass-box">
+        <i class="fa-solid fa-key"></i> Required Password: <strong>aass1122</strong>
+      </div>
+
+      <a href="https://accounts.google.com/signup" target="_blank" class="btn-create-gmail">
+        <i class="fa-brands fa-google"></i> Create New Gmail Account
+      </a>
+    </div>
+
+    <!-- SUBMIT GMAIL FORM -->
+    <div class="form-card">
+      <div class="form-title"><i class="fa-solid fa-paper-plane"></i> Step 2: Submit Details</div>
+      
+      <form id="gmailForm" onsubmit="handleGmailSubmit(event)">
+        <div class="form-group">
+          <label>Gmail Address</label>
+          <input type="email" id="gmailInput" placeholder="example@gmail.com" required />
+        </div>
+
+        <div class="form-group">
+          <label>Password (Must be: aass1122)</label>
+          <input type="text" id="passwordInput" value="aass1122" required />
+        </div>
+
+        <div id="formStatusMsg" class="status-msg"></div>
+
+        <button type="submit" id="submitBtn" class="submit-btn">Submit Gmail For Approval</button>
+      </form>
+    </div>
+
+    <!-- MY SUBMITTED GMAILS HISTORY -->
+    <div class="history-card">
+      <div class="history-title"><i class="fa-solid fa-list-check"></i> My Submitted Gmails</div>
+      <div class="gmail-list" id="gmailList">
+        <div class="no-gmails-txt">Loading history...</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Global Nav Script -->
+  <script>
+    function navigateTo(url) {
+      if (url) window.location.href = url;
+    }
+  </script>
+
+  <!-- Firebase Integration Module -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue, push, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
+      authDomain: "newweb-d50af.firebaseapp.com",
+      databaseURL: "https://newweb-d50af-default-rtdb.firebaseio.com",
+      projectId: "newweb-d50af",
+      storageBucket: "newweb-d50af.firebasestorage.app",
+      messagingSenderId: "358603295768",
+      appId: "1:358603295768:web:82a9666514a7cb468c476d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Session Verification
+    const rawSession = localStorage.getItem('sew_session');
+    if (!rawSession) {
+      window.location.replace("index.html");
+    }
+
+    const userData = JSON.parse(rawSession || '{}');
+
+    function renderUI(data) {
+      if (!data) return;
+      const name = data.fullName || data.username || "User";
+      document.getElementById('navUserName').innerText = name;
+      document.getElementById('navAvatar').innerText = name.charAt(0).toUpperCase();
+      document.getElementById('userBalance').innerText = "Rs. " + (parseFloat(data.balance || 0).toFixed(2));
+    }
+
+    renderUI(userData);
+
+    // REALTIME USER BALANCE SYNC
+    if (userData.username) {
+      onValue(ref(db, 'users/' + userData.username), (snapshot) => {
+        if (snapshot.exists()) {
+          const fresh = snapshot.val();
+          renderUI(fresh);
+          localStorage.setItem('sew_session', JSON.stringify(fresh));
+        }
+      });
+    }
+
+    // REALTIME GMAIL SUBMISSIONS TRACKER FOR LOGGED IN USER
+    onValue(ref(db, 'gmail_submissions'), (snapshot) => {
+      const container = document.getElementById('gmailList');
+      container.innerHTML = "";
+
+      if (!snapshot.exists()) {
+        container.innerHTML = `<div class="no-gmails-txt">Aapne abhi tak koi Gmail submit nahi ki.</div>`;
+        return;
+      }
+
+      const allData = snapshot.val();
+      let userItems = [];
+
+      Object.keys(allData).forEach(key => {
+        const item = allData[key];
+        if (item.username === userData.username) {
+          userItems.push(item);
+        }
+      });
+
+      if (userItems.length === 0) {
+        container.innerHTML = `<div class="no-gmails-txt">Aapne abhi tak koi Gmail submit nahi ki.</div>`;
+        return;
+      }
+
+      userItems.reverse().forEach(item => {
+        const status = (item.status || 'Pending').toLowerCase();
+        let badgeClass = 'badge-pending';
+        let statusTxt = 'Pending';
+
+        if (status === 'approved' || status === 'ok' || status === 'confirmed') {
+          badgeClass = 'badge-approved';
+          statusTxt = 'Approved (+Rs. 45)';
+        } else if (status === 'rejected') {
+          badgeClass = 'badge-rejected';
+          statusTxt = 'Rejected';
+        }
+
+        container.innerHTML += `
+          <div class="gmail-item">
+            <div class="gmail-info">
+              <span class="gmail-address">${item.gmail}</span>
+              <span class="gmail-pass">Password: ${item.password}</span>
+            </div>
+            <span class="status-badge ${badgeClass}">${statusTxt}</span>
+          </div>
+        `;
+      });
+    });
+
+    // SUBMIT FORM WITH STRICT VALIDATION
+    window.handleGmailSubmit = async function(e) {
+      e.preventDefault();
+
+      const gmailInput = document.getElementById('gmailInput').value.trim().toLowerCase();
+      const passwordInput = document.getElementById('passwordInput').value.trim();
+      const statusMsg = document.getElementById('formStatusMsg');
+      const btn = document.getElementById('submitBtn');
+
+      statusMsg.className = "status-msg";
+      statusMsg.style.display = "none";
+
+      // 1. Password Check (MUST BE 'aass1122')
+      if (passwordInput !== 'aass1122') {
+        statusMsg.innerText = "Ghalat Password! Password sirf 'aass1122' hi rakhna zaroori hai.";
+        statusMsg.className = "status-msg error";
+        return;
+      }
+
+      // 2. Real Gmail Check
+      if (!gmailInput.endsWith('@gmail.com') || gmailInput.length < 11) {
+        statusMsg.innerText = "Ghalat Gmail Format! Sahi Real Gmail address likhein (e.g. user@gmail.com).";
+        statusMsg.className = "status-msg error";
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "Checking Duplicate...";
+
+      try {
+        // 3. Duplicate Check across Database
+        const snapshot = await get(ref(db, 'gmail_submissions'));
+        if (snapshot.exists()) {
+          const allSubs = snapshot.val();
+          const isDuplicate = Object.values(allSubs).some(sub => (sub.gmail || '').toLowerCase() === gmailInput);
+          
+          if (isDuplicate) {
+            statusMsg.innerText = "Ye Gmail pehle se submit ho chuki hai! Fake ya Duplicate Gmail allow nahi hai.";
+            statusMsg.className = "status-msg error";
+            btn.disabled = false;
+            btn.innerText = "Submit Gmail For Approval";
+            return;
+          }
+        }
+
+        btn.innerText = "Submitting...";
+
+        // Push new Gmail Submission to Firebase
+        const newSubmission = {
+          username: userData.username,
+          customerEmail: userData.email || 'N/A',
+          gmail: gmailInput,
+          password: passwordInput,
+          reward: 45,
+          status: "Pending",
+          createdAt: new Date().toISOString()
+        };
+
+        await push(ref(db, 'gmail_submissions'), newSubmission);
+
+        statusMsg.innerText = "Gmail Ba-asani Submit Ho Gayi! Admin verify karke Rs. 45 account me add kar dega.";
+        statusMsg.className = "status-msg success";
+
+        document.getElementById('gmailInput').value = "";
+        document.getElementById('passwordInput').value = "aass1122";
+
+      } catch (err) {
+        statusMsg.innerText = "Error: " + err.message;
+        statusMsg.className = "status-msg error";
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "Submit Gmail For Approval";
+      }
+    };
+  </script>
+</body>
+</html>

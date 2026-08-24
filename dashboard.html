@@ -29,11 +29,16 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    html, body {
+      height: 100%;
+    }
+
     body {
       background-color: var(--bg-body);
       color: var(--text-main);
       min-height: 100vh;
-      padding-bottom: 10px;
+      display: flex;
+      flex-direction: column;
     }
 
     /* NAVBAR */
@@ -105,11 +110,16 @@
       text-overflow: ellipsis;
     }
 
-    /* CONTAINER */
+    /* FULL HEIGHT FLEX CONTAINER */
     .container {
       max-width: 500px;
+      width: 100%;
       margin: 0 auto;
       padding: 6px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
     /* EARNING SECTION */
@@ -118,7 +128,6 @@
       border-radius: 12px;
       padding: 8px;
       border: 1px solid var(--border-color);
-      margin-bottom: 6px;
     }
 
     .balance-card {
@@ -190,7 +199,6 @@
       color: #ffffff;
       border-radius: 8px;
       padding: 5px 10px;
-      margin-bottom: 6px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -214,12 +222,15 @@
       font-size: 9px;
     }
 
-    /* MARKET SECTION */
+    /* MARKET SECTION (EXPANDS TO FILL HEIGHT) */
     .market-section {
       background: #ffffff;
       border-radius: 12px;
       padding: 8px;
       border: 1px solid var(--border-color);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
     .search-box {
@@ -316,7 +327,12 @@
       cursor: pointer;
     }
 
-    /* CATEGORIES GRID */
+    /* CATEGORIES AT BOTTOM WRAPPER */
+    .categories-wrapper {
+      margin-top: auto;
+      padding-top: 6px;
+    }
+
     .category-section-title {
       font-size: 9px;
       font-weight: 700;
@@ -513,7 +529,7 @@
         </div>
       </div>
 
-      <!-- 5 EARNING BUTTONS (SAFE NAVIGATION) -->
+      <!-- 5 EARNING BUTTONS -->
       <div class="earning-grid">
         <div class="earn-btn" onclick="navigateTo('free-ads.html')">
           <i class="fa-solid fa-rectangle-ad"></i>
@@ -562,14 +578,16 @@
         <!-- Loaded Realtime from Firebase -->
       </div>
 
-      <!-- CATEGORIES (SAFE NAVIGATION) -->
-      <div class="category-section-title">Categories</div>
-      <div class="category-grid">
-        <div class="cat-btn" onclick="navigateTo('clothes.html')"><i class="fa-solid fa-shirt"></i> Clothes</div>
-        <div class="cat-btn" onclick="navigateTo('tools.html')"><i class="fa-solid fa-screwdriver-wrench"></i> Tools</div>
-        <div class="cat-btn" onclick="navigateTo('mobiles.html')"><i class="fa-solid fa-mobile-screen-button"></i> Mobiles</div>
-        <div class="cat-btn" onclick="navigateTo('motors.html')"><i class="fa-solid fa-motorcycle"></i> Motors</div>
-        <div class="cat-btn" onclick="navigateTo('jewelry.html')"><i class="fa-solid fa-gem"></i> Jewelry</div>
+      <!-- CATEGORIES WRAPPER (ANCHORED TO BOTTOM) -->
+      <div class="categories-wrapper">
+        <div class="category-section-title">Categories</div>
+        <div class="category-grid">
+          <div class="cat-btn" onclick="navigateTo('clothes.html')"><i class="fa-solid fa-shirt"></i> Clothes</div>
+          <div class="cat-btn" onclick="navigateTo('tools.html')"><i class="fa-solid fa-screwdriver-wrench"></i> Tools</div>
+          <div class="cat-btn" onclick="navigateTo('mobiles.html')"><i class="fa-solid fa-mobile-screen-button"></i> Mobiles</div>
+          <div class="cat-btn" onclick="navigateTo('motors.html')"><i class="fa-solid fa-motorcycle"></i> Motors</div>
+          <div class="cat-btn" onclick="navigateTo('jewelry.html')"><i class="fa-solid fa-gem"></i> Jewelry</div>
+        </div>
       </div>
     </section>
 

@@ -31,6 +31,8 @@
 
     html, body {
       height: 100%;
+      width: 100%;
+      overflow-x: hidden; /* Website ko horizontal scroll hone se rokata hai */
     }
 
     body {
@@ -120,6 +122,7 @@
       display: flex;
       flex-direction: column;
       gap: 6px;
+      overflow-x: hidden;
     }
 
     /* EARNING SECTION */
@@ -222,7 +225,7 @@
       font-size: 9px;
     }
 
-    /* MARKET SECTION (EXPANDS TO FILL HEIGHT) */
+    /* MARKET SECTION */
     .market-section {
       background: #ffffff;
       border-radius: 12px;
@@ -231,6 +234,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
     }
 
     .search-box {
@@ -257,15 +261,26 @@
       outline: none;
     }
 
-    /* PRODUCT GRID */
+    /* PRODUCT HORIZONTAL SLIDER */
     .product-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
-      margin-bottom: 8px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 4px;
+      margin-bottom: 4px;
+      scrollbar-width: none; /* Firefox hide scrollbar */
+    }
+
+    .product-grid::-webkit-scrollbar {
+      display: none; /* Chrome/Safari hide scrollbar */
     }
 
     .product-card {
+      flex: 0 0 160px; /* Uniform width for horizontally sliding cards */
+      scroll-snap-align: start;
       background: #ffffff;
       border: 1px solid var(--border-color);
       border-radius: 8px;
@@ -277,7 +292,7 @@
 
     .product-img {
       width: 100%;
-      height: 65px;
+      height: 70px;
       object-fit: cover;
       border-radius: 5px;
       background: #f1f5f9;
@@ -325,6 +340,43 @@
       font-weight: 700;
       border: none;
       cursor: pointer;
+    }
+
+    /* PRODUCT SCROLL ARROWS */
+    .product-arrows {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding: 0 2px;
+    }
+
+    .arrow-btn {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid #dbeafe;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 11px;
+      transition: background 0.2s;
+    }
+
+    .arrow-btn:active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .arrow-text {
+      font-size: 9px;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     /* CATEGORIES AT BOTTOM WRAPPER */
@@ -573,9 +625,20 @@
         <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()" />
       </div>
 
-      <!-- Products Grid -->
+      <!-- Products Grid (Horizontal Slider) -->
       <div class="product-grid" id="productGrid">
         <!-- Loaded Realtime from Firebase -->
+      </div>
+
+      <!-- PRODUCT SCROLL ARROWS (NECHE ARROWS) -->
+      <div class="product-arrows">
+        <button type="button" class="arrow-btn" onclick="scrollProducts(-160)">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <span class="arrow-text"><i class="fa-solid fa-arrows-left-right"></i> Slide Products</span>
+        <button type="button" class="arrow-btn" onclick="scrollProducts(160)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
       </div>
 
       <!-- CATEGORIES WRAPPER (ANCHORED TO BOTTOM) -->
@@ -657,6 +720,14 @@
       } catch (e) {
         console.error("Navigation error:", e);
         window.location.assign(pageUrl);
+      }
+    }
+
+    // Scroll Products Left / Right
+    function scrollProducts(amount) {
+      const grid = document.getElementById('productGrid');
+      if (grid) {
+        grid.scrollBy({ left: amount, behavior: 'smooth' });
       }
     }
   </script>

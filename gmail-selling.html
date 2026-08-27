@@ -422,7 +422,7 @@
   <!-- Firebase Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, push, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
@@ -516,6 +516,14 @@
       });
     });
 
+    // Helper: Timeout Promise
+    const withTimeout = (promise, ms = 6000) => {
+      return Promise.race([
+        promise,
+        new Promise((_, reject) => setTimeout(() => reject(new Error("Network Timeout! Firebase Rules check karein.")), ms))
+      ]);
+    };
+
     // FORM SUBMIT EVENT LISTENER
     const form = document.getElementById('gmailForm');
     form.addEventListener('submit', async (e) => {
@@ -529,44 +537,26 @@
       statusMsg.className = "status-msg";
       statusMsg.style.display = "none";
 
-      // 1. Password Check
+      // Validation 1: Password
       if (passwordInput !== 'aass1122') {
-        statusMsg.innerText = "Ghalat Password! Password sirf 'aass1122' rakhna zaroori hai.";
+        statusMsg.innerText = "Ghalat Password! Password 'aass1122' hona zaroori hai.";
         statusMsg.className = "status-msg error";
         return;
       }
 
-      // 2. Gmail Format Check
+      // Validation 2: Gmail
       if (!gmailInput.endsWith('@gmail.com') || gmailInput.length < 11) {
-        statusMsg.innerText = "Ghalat Gmail Format! Sahi address likhein (e.g. name@gmail.com).";
+        statusMsg.innerText = "Sahi Gmail address likhein (e.g. name@gmail.com).";
         statusMsg.className = "status-msg error";
         return;
       }
 
       btn.disabled = true;
-      btn.innerText = "Checking Duplicate...";
+      btn.innerText = "Submitting...";
 
       try {
-        // 3. Duplicate Check
-        const snapshot = await get(ref(db, 'gmail_submissions'));
-        if (snapshot.exists()) {
-          const allSubs = snapshot.val();
-          const isDuplicate = Object.values(allSubs).some(sub => sub && (sub.gmail || '').toLowerCase() === gmailInput);
-          
-          if (isDuplicate) {
-            statusMsg.innerText = "Ye Gmail pehle se submit ho chuki hai!";
-            statusMsg.className = "status-msg error";
-            btn.disabled = false;
-            btn.innerText = "Submit Gmail For Approval";
-            return;
-          }
-        }
-
-        btn.innerText = "Submitting...";
-
-        // Push data to Firebase
         const newSubmission = {
-          username: userData.username || "Anonymous",
+          username: userData.username || "User",
           customerEmail: userData.email || 'N/A',
           gmail: gmailInput,
           password: passwordInput,
@@ -575,17 +565,18 @@
           createdAt: new Date().toISOString()
         };
 
-        await push(ref(db, 'gmail_submissions'), newSubmission);
+        // Push directly with 6-second timeout guarantee
+        await withTimeout(push(ref(db, 'gmail_submissions'), newSubmission), 6000);
 
-        statusMsg.innerText = "Gmail Submit Ho Gayi! Admin approval ke baad Rs. 45 add kar die jayeinge.";
+        statusMsg.innerText = "Gmail Submit Ho Gayi! Admin Panel par request bhej di gayi hai.";
         statusMsg.className = "status-msg success";
 
         document.getElementById('gmailInput').value = "";
         document.getElementById('passwordInput').value = "aass1122";
 
       } catch (err) {
-        console.error("Firebase Error:", err);
-        statusMsg.innerText = "Error: " + (err.message || "Submit Nahi Ho Saka");
+        console.error("Firebase Push Error:", err);
+        statusMsg.innerText = "Error: " + err.message;
         statusMsg.className = "status-msg error";
       } finally {
         btn.disabled = false;

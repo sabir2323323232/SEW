@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SEW - Watch Ads & Earn</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-body: #f8fafc;
+      --card-bg: #ffffff;
+      --input-bg: #f1f5f9;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --shadow-soft: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-body);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px 16px;
+      color: var(--text-main);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid #ffffff;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .back-btn {
+      background: var(--input-bg);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .balance-box {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      border-radius: 16px;
+      padding: 16px;
+      color: #ffffff;
+      text-align: center;
+      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+    }
+
+    .balance-box label {
+      font-size: 12px;
+      opacity: 0.85;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .balance-amount {
+      font-size: 28px;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
+    /* Live 1-Hour Reward Countdown Box */
+    .pending-box {
+      display: none;
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border: 2px solid #f59e0b;
+      border-radius: 16px;
+      padding: 14px;
+      text-align: center;
+      color: #78350f;
+      box-shadow: 0 8px 20px -6px rgba(245, 158, 11, 0.25);
+    }
+
+    .pending-title {
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: #92400e;
+    }
+
+    .pending-countdown {
+      font-size: 30px;
+      font-weight: 900;
+      color: #b45309;
+      margin: 4px 0;
+      font-family: monospace;
+      letter-spacing: 1px;
+    }
+
+    .pending-amount {
+      font-size: 13px;
+      font-weight: 700;
+      color: #d97706;
+    }
+
+    /* Multi Tag / Notification Row Header */
+    .multitag-box {
+      background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 8px 20px -4px rgba(79, 70, 229, 0.4);
+    }
+
+    .multitag-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .multitag-info i {
+      font-size: 24px;
+      color: #fbbf24;
+    }
+
+    .multitag-title {
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .multitag-sub {
+      font-size: 11px;
+      opacity: 0.85;
+    }
+
+    .multitag-btn {
+      background: #ffffff;
+      color: #3730a3;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 12px;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .multitag-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* Policy Rules Box */
+    .policy-box {
+      background: #fffbeebf;
+      border: 1.5px solid #fde68a;
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-size: 12.5px;
+      color: #78350f;
+      line-height: 1.5;
+    }
+
+    .policy-box h4 {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #92400e;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .policy-box ul {
+      padding-left: 18px;
+    }
+
+    /* Ad Buttons Grid */
+    .ads-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .ad-btn {
+      background: var(--input-bg);
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .ad-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: #eff6ff;
+    }
+
+    .ad-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      background: #e2e8f0;
+      border-color: #cbd5e1;
+    }
+
+    .ad-btn i {
+      font-size: 18px;
+      color: var(--primary);
+    }
+
+    .ad-btn.completed {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      color: #047857;
+    }
+
+    .ad-btn.completed i {
+      color: var(--success);
+    }
+
+    /* Verification Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
+    }
+
+    .timer-text {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--warning);
+    }
+
+    .file-input-box {
+      background: var(--input-bg);
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px dashed #cbd5e1;
+      font-size: 12px;
+    }
+
+    .submit-btn {
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: var(--success);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .submit-btn:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    /* 24 Hour Lock Box */
+    .lock-box {
+      display: none;
+      background: #fee2e2;
+      border: 1px solid #fca5a5;
+      color: #991b1b;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: center;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+        <div class="header-title">Watch Ads & Earn</div>
+        <div style="width: 40px;"></div>
+      </div>
+
+      <!-- Realtime Balance -->
+      <div class="balance-box">
+        <label>Current Balance</label>
+        <div class="balance-amount" id="userBalance">Rs. 0.00</div>
+      </div>
+    </div>
+
+    <!-- Step 1: Multi-Tag Notification Ad Row -->
+    <div class="multitag-box">
+      <div class="multitag-info">
+        <i class="fa-solid fa-bell fa-bounce"></i>
+        <div>
+          <div class="multitag-title">Step 1: Multi-Tag Notification Ad</div>
+          <div class="multitag-sub">Is ad ko pehle dekhein phir niche waale ads unlock hongay</div>
+        </div>
+      </div>
+      <button class="multitag-btn" onclick="openMultiTagAd()"><i class="fa-solid fa-external-link"></i> Open</button>
+    </div>
+
+    <!-- Strict Policy Notice -->
+    <div class="policy-box">
+      <h4><i class="fa-solid fa-triangle-exclamation"></i> STRICT POLICY RULES</h4>
+      <ul>
+        <li>Ad par click karne ke baad <strong>poore 1 Minute (60 Seconds)</strong> rukna zaroori hai.</li>
+        <li>Agar aap 60 seconds se pehle wapis aaye to task <strong>cancel</strong> ho jayega.</li>
+        <li>Ad page par jo bhi App/Website aaye usko <strong>Download ya Register karna LAZMI hai</strong>.</li>
+        <li>Download/Register ka <strong>Proof Screenshot</strong> attach karein warna reward cancel hoga.</li>
+        <li>Reward Verify hone ke baad <strong>1 Ghante ke baad balance</strong> me add hoga.</li>
+      </ul>
+    </div>
+
+    <!-- Live 1-Hour Reward Countdown Box (Directly Above Ads Box) -->
+    <div class="pending-box" id="pendingTimerBox">
+      <div class="pending-title"><i class="fa-solid fa-clock-rotate-left"></i> Reward Unlocking Timer</div>
+      <div class="pending-countdown" id="pendingCountdown">00m 00s</div>
+      <div class="pending-amount" id="pendingAmount">Rs. 0.00 Pending Reward</div>
+    </div>
+
+    <!-- Ads Buttons Grid -->
+    <div class="card" id="adsCard">
+      <div style="font-weight: 800; font-size: 15px; margin-bottom: 12px;">Step 2: Click Any Ad Button (10 Ads):</div>
+      <div class="ads-grid" id="adsContainer">
+        <!-- 10 Buttons dynamically generated -->
+      </div>
+    </div>
+
+    <!-- 24 Hour Lock Banner -->
+    <div class="lock-box" id="lockBox">
+      <i class="fa-solid fa-lock" style="font-size: 32px; margin-bottom: 8px;"></i>
+      <div>All 10 Ads Completed for Today!</div>
+      <div style="font-size: 13px; margin-top: 6px; font-weight: 500;">
+        Next unlocked in: <span id="cooldownTimer">24:00:00</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Verification Modal -->
+  <div class="modal-overlay" id="taskModal">
+    <div class="modal-card">
+      <h3 id="modalTitle" style="font-size: 16px; font-weight: 800;">Ad Task Verification</h3>
+      
+      <!-- 60 Sec Timer Display -->
+      <div class="timer-text" id="timerBox">
+        <i class="fa-solid fa-hourglass-half"></i> Stay on Ad: <span id="timerSec">60</span>s
+      </div>
+
+      <!-- Screenshot Proof Box -->
+      <div id="uploadBox" style="display: none; flex-direction: column; gap: 12px;">
+        <p style="font-size: 12px; color: var(--danger); font-weight: 700;">
+          ⚠️ Warning: App Download / Register ka Screenshot attach karein warna balance add nahi hoga!
+        </p>
+        <div class="file-input-box">
+          <input type="file" id="proofInput" accept="image/*" onchange="checkProofSelected()" />
+        </div>
+        <button class="submit-btn" id="submitProofBtn" disabled onclick="confirmTaskCompletion()">
+          Submit Proof Screenshot
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Modular SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
+      authDomain: "newweb-d50af.firebaseapp.com",
+      databaseURL: "https://newweb-d50af-default-rtdb.firebaseio.com",
+      projectId: "newweb-d50af",
+      storageBucket: "newweb-d50af.firebasestorage.app",
+      messagingSenderId: "358603295768",
+      appId: "1:358603295768:web:82a9666514a7cb468c476d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const sessionStr = localStorage.getItem('sew_session');
+    if (!sessionStr) window.location.replace("index.html");
+    const sessionUser = JSON.parse(sessionStr);
+
+    // 5 Links given by user mixed into 10 links
+    const rawLinks = [
+      "https://omg10.com/4/11668537",
+      "https://omg10.com/4/11668536",
+      "https://omg10.com/4/11668535",
+      "https://omg10.com/4/11668534",
+      "https://omg10.com/4/11668533"
+    ];
+
+    // Mixed 10 Ad Links
+    const adLinks = [
+      rawLinks[0], rawLinks[2], rawLinks[1], rawLinks[4], rawLinks[3],
+      rawLinks[1], rawLinks[0], rawLinks[3], rawLinks[2], rawLinks[4]
+    ];
+
+    // Multi Tag Notification Link
+    const multiTagLink = "https://omg10.com/4/11668537";
+
+    // Payout Pattern for 10 Ads: Rs 1 on Ad 1, Ad 3, Ad 7
+    const payoutPattern = [
+      true,  // Ad 1: Rs 1.00
+      false, // Ad 2: Rs 0
+      true,  // Ad 3: Rs 1.00
+      false, // Ad 4: Rs 0
+      false, // Ad 5: Rs 0
+      false, // Ad 6: Rs 0
+      true,  // Ad 7: Rs 1.00
+      false, // Ad 8: Rs 0
+      false, // Ad 9: Rs 0
+      false  // Ad 10: Rs 0
+    ];
+
+    let userData = null;
+    let activeAdIndex = null;
+    let adTimerInterval = null;
+    let isTimerFinished = false;
+    let isAdActive = false;
+
+    // Open Multi-Tag Notification Ad
+    window.openMultiTagAd = function() {
+      window.open(multiTagLink, '_blank');
+    };
+
+    // Realtime User Data Listener
+    const userRef = ref(db, 'users/' + sessionUser.username);
+    onValue(userRef, (snapshot) => {
+      if (snapshot.exists()) {
+        userData = snapshot.val();
+        const mainBalance = parseFloat(userData.balance || 0);
+        document.getElementById('userBalance').innerText = "Rs. " + mainBalance.toFixed(2);
+
+        renderButtonsAndLockCheck();
+      }
+    });
+
+    // 1-Hour Live Countdown Loop
+    setInterval(() => {
+      if (!userData) return;
+
+      const now = Date.now();
+      const pendingBal = parseFloat(userData.pendingBalance || 0);
+      const unlockTime = parseInt(userData.nextUnlockTime || 0);
+      const timerBox = document.getElementById('pendingTimerBox');
+
+      if (pendingBal > 0 && unlockTime > now) {
+        timerBox.style.display = 'block';
+        const diff = unlockTime - now;
+
+        const mins = Math.floor(diff / (1000 * 60));
+        const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById('pendingCountdown').innerText = `${mins.toString().padStart(2, '0')}m ${secs.toString().padStart(2, '0')}s`;
+        document.getElementById('pendingAmount').innerText = `Rs. ${pendingBal.toFixed(2)} Pending Reward`;
+      } 
+      else if (pendingBal > 0 && unlockTime <= now) {
+        // Auto Credit Pending to Main Balance after 1 Hour
+        const currentBal = parseFloat(userData.balance || 0);
+        const newBal = (currentBal + pendingBal).toFixed(2);
+
+        update(ref(db, 'users/' + sessionUser.username), {
+          balance: newBal,
+          pendingBalance: 0,
+          nextUnlockTime: 0
+        });
+
+        timerBox.style.display = 'none';
+      } 
+      else {
+        timerBox.style.display = 'none';
+      }
+    }, 1000);
+
+    function renderButtonsAndLockCheck() {
+      if (!userData) return;
+
+      const now = Date.now();
+      const lockDuration = 24 * 60 * 60 * 1000;
+      const completedAdsCount = userData.completedAdsCount || 0;
+      const lockTimestamp = userData.adLockTime || 0;
+
+      if (lockTimestamp && (now - lockTimestamp < lockDuration)) {
+        document.getElementById('adsCard').style.display = 'none';
+        document.getElementById('lockBox').style.display = 'block';
+        startCooldownTimer(lockDuration - (now - lockTimestamp));
+      } else {
+        if (lockTimestamp && (now - lockTimestamp >= lockDuration)) {
+          update(ref(db, 'users/' + sessionUser.username), {
+            completedAdsCount: 0,
+            adLockTime: 0
+          });
+        }
+
+        document.getElementById('adsCard').style.display = 'block';
+        document.getElementById('lockBox').style.display = 'none';
+        generateAdButtons(completedAdsCount);
+      }
+    }
+
+    function generateAdButtons(completedAdsCount) {
+      const container = document.getElementById('adsContainer');
+      container.innerHTML = '';
+
+      for (let i = 0; i < adLinks.length; i++) {
+        const isDone = i < completedAdsCount;
+        const isNext = i === completedAdsCount;
+
+        const btn = document.createElement('button');
+        btn.className = `ad-btn ${isDone ? 'completed' : ''}`;
+        btn.disabled = !isNext;
+
+        if (isDone) {
+          btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Ad #${i + 1} Done`;
+        } else {
+          btn.innerHTML = `<i class="fa-solid fa-rectangle-ad"></i> Open Ad #${i + 1}`;
+          btn.onclick = () => handleAdButtonClick(i);
+        }
+
+        container.appendChild(btn);
+      }
+    }
+
+    window.handleAdButtonClick = function(index) {
+      activeAdIndex = index;
+      isTimerFinished = false;
+      isAdActive = true;
+
+      window.open(adLinks[index], '_blank');
+
+      document.getElementById('modalTitle').innerText = `Ad #${index + 1} Verification`;
+      document.getElementById('taskModal').style.display = 'flex';
+      document.getElementById('timerBox').style.display = 'block';
+      document.getElementById('uploadBox').style.display = 'none';
+      document.getElementById('proofInput').value = '';
+
+      let timeLeft = 60; // 1 Minute Stay Timer
+      document.getElementById('timerSec').innerText = timeLeft;
+
+      if (adTimerInterval) clearInterval(adTimerInterval);
+
+      adTimerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timerSec').innerText = timeLeft;
+
+        if (timeLeft <= 0) {
+          clearInterval(adTimerInterval);
+          isTimerFinished = true;
+          isAdActive = false;
+          document.getElementById('timerBox').style.display = 'none';
+          document.getElementById('uploadBox').style.display = 'flex';
+        }
+      }, 1000);
+    };
+
+    // If User returns before 60 seconds (1 minute), cancel task
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && isAdActive && !isTimerFinished) {
+        clearInterval(adTimerInterval);
+        isAdActive = false;
+        document.getElementById('taskModal').style.display = 'none';
+        alert("⚠️ WARNING: Aap poore 1 Minute (60 Seconds) tak ad page par nahi ruke! Task cancel ho gaya hai. Dobara ad button par click karein.");
+      }
+    });
+
+    window.checkProofSelected = function() {
+      const file = document.getElementById('proofInput').files[0];
+      document.getElementById('submitProofBtn').disabled = !file;
+    };
+
+    window.confirmTaskCompletion = async function() {
+      const btn = document.getElementById('submitProofBtn');
+      btn.disabled = true;
+      btn.innerText = "Verifying...";
+
+      const isPaid = payoutPattern[activeAdIndex];
+
+      setTimeout(async () => {
+        try {
+          const completedAdsCount = (userData.completedAdsCount || 0) + 1;
+          const now = Date.now();
+          const updates = { completedAdsCount: completedAdsCount };
+
+          // Lock after 10 ads completed
+          if (completedAdsCount >= adLinks.length) {
+            updates.adLockTime = now;
+          }
+
+          if (isPaid) {
+            const currentPending = parseFloat(userData.pendingBalance || 0) + 1.00; // Rs 1.00 Payout
+            updates.pendingBalance = currentPending;
+            updates.nextUnlockTime = now + (60 * 60 * 1000); // 1 Hour Unlock Timer
+          }
+
+          await update(ref(db, 'users/' + sessionUser.username), updates);
+
+          if (isPaid) {
+            alert("Task Verified! Rs. 1.00 ka 1-Hour Live Countdown ads ke uper start ho gaya hai.");
+          } else {
+            alert("Task Verified & Completed!");
+          }
+
+          document.getElementById('taskModal').style.display = 'none';
+          btn.innerText = "Submit Proof Screenshot";
+
+        } catch (e) {
+          alert("Error: " + e.message);
+          btn.disabled = false;
+        }
+      }, 1200);
+    };
+
+    function startCooldownTimer(msLeft) {
+      const timerDisplay = document.getElementById('cooldownTimer');
+      const interval = setInterval(() => {
+        if (msLeft <= 0) {
+          clearInterval(interval);
+          location.reload();
+          return;
+        }
+        msLeft -= 1000;
+        const hrs = Math.floor(msLeft / (1000 * 60 * 60));
+        const mins = Math.floor((msLeft % (1000 * 60 * 60)) / (1000 * 60));
+        const secs = Math.floor((msLeft % (1000 * 60)) / 1000);
+
+        timerDisplay.innerText = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      }, 1000);
+    }
+  </script>
+</body>
+</html>

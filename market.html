@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>SEW - Dashboard & Market</title>
+  <title>SEW - Affiliate Dashboard</title>
   
   <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -114,7 +114,7 @@
       text-overflow: ellipsis;
     }
 
-    /* FULL HEIGHT FLEX CONTAINER */
+    /* CONTAINER */
     .container {
       max-width: 500px;
       width: 100%;
@@ -198,7 +198,7 @@
       color: var(--primary);
     }
 
-    /* MARKET BANNER */
+    /* BANNER */
     .market-banner {
       background: #0f172a;
       color: #ffffff;
@@ -263,7 +263,7 @@
       outline: none;
     }
 
-    /* PRODUCT HORIZONTAL SLIDER */
+    /* PRODUCT SLIDER */
     .product-grid {
       display: flex;
       gap: 8px;
@@ -274,7 +274,7 @@
       padding-bottom: 4px;
       margin-bottom: 4px;
       scrollbar-width: none;
-      min-height: 120px;
+      min-height: 130px;
     }
 
     .product-grid::-webkit-scrollbar {
@@ -334,18 +334,21 @@
       color: var(--accent-green);
     }
 
-    .order-btn {
+    .affiliate-btn {
       background: var(--primary);
       color: #ffffff;
-      padding: 3px 6px;
+      padding: 3px 8px;
       border-radius: 5px;
       font-size: 9px;
       font-weight: 700;
       border: none;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      text-decoration: none;
     }
 
-    /* PRODUCT SCROLL ARROWS */
     .product-arrows {
       display: flex;
       justify-content: space-between;
@@ -366,12 +369,6 @@
       justify-content: center;
       cursor: pointer;
       font-size: 11px;
-      transition: background 0.2s;
-    }
-
-    .arrow-btn:active {
-      background: var(--primary);
-      color: #ffffff;
     }
 
     .arrow-text {
@@ -379,98 +376,9 @@
       color: var(--text-muted);
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
     }
 
-    /* MY ORDERS BOX SECTION */
-    .my-orders-box {
-      background: #f8fafc;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 8px;
-      margin-bottom: 8px;
-    }
-
-    .orders-header {
-      font-size: 10px;
-      font-weight: 800;
-      color: var(--text-main);
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      text-transform: uppercase;
-    }
-
-    .my-orders-list {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      scrollbar-width: none;
-    }
-
-    .my-orders-list::-webkit-scrollbar {
-      display: none;
-    }
-
-    .order-mini-card {
-      flex: 0 0 130px;
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 6px;
-      cursor: pointer;
-      transition: transform 0.1s;
-    }
-
-    .order-mini-card:active {
-      transform: scale(0.98);
-    }
-
-    .order-mini-name {
-      font-size: 9px;
-      font-weight: 700;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      color: var(--text-main);
-    }
-
-    .order-mini-qty {
-      font-size: 8px;
-      color: var(--text-muted);
-      margin: 2px 0;
-    }
-
-    .order-status-badge {
-      display: inline-block;
-      font-size: 8px;
-      font-weight: 800;
-      padding: 2px 5px;
-      border-radius: 4px;
-      text-transform: uppercase;
-    }
-
-    .status-pending {
-      background: #fef3c7;
-      color: #d97706;
-    }
-
-    .status-ok {
-      background: #d1fae5;
-      color: #059669;
-    }
-
-    .no-orders-text {
-      font-size: 9px;
-      color: var(--text-muted);
-      text-align: center;
-      width: 100%;
-      padding: 6px 0;
-    }
-
-    /* CATEGORIES AT BOTTOM WRAPPER */
+    /* CATEGORIES WRAPPER */
     .categories-wrapper {
       margin-top: auto;
       padding-top: 6px;
@@ -502,7 +410,6 @@
       align-items: center;
       gap: 3px;
       cursor: pointer;
-      user-select: none;
     }
 
     .cat-btn.active {
@@ -515,15 +422,11 @@
       color: #ffffff;
     }
 
-    .cat-btn:active {
-      background: #e2e8f0;
-    }
-
     .cat-btn i {
       color: var(--primary);
     }
 
-    /* MODALS */
+    /* MODAL */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -538,12 +441,10 @@
     .modal-box {
       background: #ffffff;
       width: 100%;
-      max-width: 360px;
+      max-width: 340px;
       border-radius: 14px;
       padding: 16px;
       position: relative;
-      max-height: 90vh;
-      overflow-y: auto;
     }
 
     .close-modal {
@@ -556,69 +457,6 @@
       cursor: pointer;
       font-weight: 800;
       font-size: 12px;
-    }
-
-    .order-img {
-      width: 100%;
-      height: 110px;
-      object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 8px;
-    }
-
-    .order-title {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--text-main);
-    }
-
-    .order-desc {
-      font-size: 10px;
-      color: var(--text-muted);
-      margin: 3px 0 8px 0;
-      line-height: 1.3;
-    }
-
-    .order-price-tag {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--accent-green);
-      margin-bottom: 8px;
-    }
-
-    .form-group {
-      margin-bottom: 8px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 10px;
-      font-weight: 700;
-      margin-bottom: 3px;
-      color: var(--text-main);
-    }
-
-    .form-group input, .form-group textarea {
-      width: 100%;
-      padding: 7px;
-      background: #f8fafc;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      font-size: 11px;
-      outline: none;
-    }
-
-    .confirm-btn {
-      width: 100%;
-      padding: 10px;
-      background: var(--primary);
-      color: #ffffff;
-      border: none;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 6px;
     }
 
     .modal-avatar {
@@ -638,18 +476,6 @@
       border-bottom: 1px solid var(--border-color);
       font-size: 10px;
     }
-
-    .status-alert {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 6px;
-      border-radius: 6px;
-      margin-top: 6px;
-      text-align: center;
-      display: none;
-    }
-    .status-alert.success { background: #ecfdf5; color: #10b981; display: block; }
-    .status-alert.error { background: #fef2f2; color: #ef4444; display: block; }
   </style>
 </head>
 <body>
@@ -670,7 +496,7 @@
 
   <div class="container">
 
-    <!-- 1. EARNING & SINGLE BALANCE SECTION -->
+    <!-- BALANCE & ACTIONS SECTION -->
     <section class="earning-section">
       <div class="balance-card">
         <div class="balance-info">
@@ -682,7 +508,6 @@
         </div>
       </div>
 
-      <!-- 5 EARNING BUTTONS -->
       <div class="earning-grid">
         <div class="earn-btn" onclick="navigateTo('free-ads.html')">
           <i class="fa-solid fa-rectangle-ad"></i>
@@ -711,27 +536,27 @@
       </div>
     </section>
 
-    <!-- MINI BANNER -->
+    <!-- BANNER -->
     <div class="market-banner">
       <div class="market-banner-text">
-        <h2><i class="fa-solid fa-bolt"></i> MEGA MARKET 50% OFF</h2>
+        <h2><i class="fa-solid fa-bolt"></i> AFFILIATE MARKET OFFERS</h2>
       </div>
-      <div class="discount-badge">50% OFF</div>
+      <div class="discount-badge">HOT DEALS</div>
     </div>
 
-    <!-- 2. MARKETING & PRODUCTS SECTION -->
+    <!-- AFFILIATE PRODUCTS SECTION -->
     <section class="market-section">
       <div class="search-box">
         <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()" />
+        <input type="text" id="searchInput" placeholder="Search affiliate deals..." onkeyup="filterProducts()" />
       </div>
 
-      <!-- Products Grid (Horizontal Slider) -->
+      <!-- Horizontal Product Slider -->
       <div class="product-grid" id="productGrid">
         <!-- Loaded Realtime from Firebase -->
       </div>
 
-      <!-- PRODUCT SCROLL ARROWS -->
+      <!-- SCROLL ARROWS -->
       <div class="product-arrows">
         <button type="button" class="arrow-btn" onclick="scrollProducts(-160)">
           <i class="fa-solid fa-chevron-left"></i>
@@ -742,17 +567,7 @@
         </button>
       </div>
 
-      <!-- MY ORDERS BOX -->
-      <div class="my-orders-box">
-        <div class="orders-header">
-          <i class="fa-solid fa-box-open" style="color:var(--primary)"></i> My Placed Orders
-        </div>
-        <div class="my-orders-list" id="myOrdersList">
-          <div class="no-orders-text">Loading orders...</div>
-        </div>
-      </div>
-
-      <!-- CATEGORIES WRAPPER -->
+      <!-- CATEGORIES -->
       <div class="categories-wrapper">
         <div class="category-section-title">Categories</div>
         <div class="category-grid">
@@ -786,96 +601,16 @@
     </div>
   </div>
 
-  <!-- PLACE ORDER MODAL -->
-  <div class="modal-overlay" id="orderModal">
-    <div class="modal-box">
-      <button class="close-modal" onclick="closeOrderModal()">✕</button>
-      
-      <img id="orderModalImg" src="" class="order-img" alt="Product" />
-      <div id="orderModalTitle" class="order-title">Product Name</div>
-      <div id="orderModalDesc" class="order-desc">Product Details</div>
-      <div id="orderModalPrice" class="order-price-tag">Rs. 0</div>
-
-      <form id="orderForm" onsubmit="handlePlaceOrder(event)">
-        <div class="form-group">
-          <label>Full Name</label>
-          <input type="text" id="orderFullNameInput" placeholder="Your Name" required />
-        </div>
-
-        <div class="form-group">
-          <label>Mobile Number</label>
-          <input type="tel" id="orderMobileInput" placeholder="03001234567" required />
-        </div>
-
-        <div class="form-group">
-          <label>WhatsApp Number</label>
-          <input type="tel" id="orderWhatsappInput" placeholder="03001234567" required />
-        </div>
-
-        <div class="form-group">
-          <label>City Name</label>
-          <input type="text" id="orderCityInput" placeholder="e.g. Lahore, Karachi" required />
-        </div>
-
-        <div class="form-group">
-          <label>Quantity (Kitne lene hain)</label>
-          <input type="number" id="orderQuantity" value="1" min="1" oninput="updateOrderTotal()" required />
-        </div>
-
-        <div class="form-group">
-          <label>Delivery Full Address</label>
-          <textarea id="orderLocationInput" rows="2" placeholder="House / Street / Area Details" required></textarea>
-        </div>
-
-        <div style="font-size: 11px; font-weight: 800; margin: 4px 0; color: var(--text-main);">
-          Total Price: <span id="orderTotalPrice" style="color:var(--accent-green)">Rs. 0</span>
-        </div>
-
-        <div id="orderStatusAlert" class="status-alert"></div>
-
-        <button type="submit" id="confirmOrderBtn" class="confirm-btn">Confirm Order</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- VIEW ORDER DETAILS MODAL -->
-  <div class="modal-overlay" id="viewOrderDetailModal">
-    <div class="modal-box">
-      <button class="close-modal" onclick="closeViewOrderModal()">✕</button>
-      
-      <h3 style="font-size:13px; font-weight:800; text-transform:uppercase; margin-bottom:10px; color:var(--primary);">
-        <i class="fa-solid fa-file-invoice"></i> Order Details
-      </h3>
-
-      <div class="detail-item"><span style="color:var(--text-muted)">Product Name:</span> <strong id="vProductTitle">-</strong></div>
-      <div class="detail-item"><span style="color:var(--text-muted)">Customer Name:</span> <strong id="vCustomerName">-</strong></div>
-      <div class="detail-item"><span style="color:var(--text-muted)">Mobile Number:</span> <strong id="vMobile">-</strong></div>
-      <div class="detail-item"><span style="color:var(--text-muted)">WhatsApp Number:</span> <strong id="vWhatsapp">-</strong></div>
-      <div class="detail-item"><span style="color:var(--text-muted)">City:</span> <strong id="vCity">-</strong></div>
-      <div class="detail-item"><span style="color:var(--text-muted)">Full Address:</span> <strong id="vLocation" style="max-width:180px; text-align:right;">-</strong></div>
-      <div class="detail-item"><span style="color:var(--text-muted)">Quantity:</span> <strong id="vQuantity">-</strong></div>
-      <div class="detail-item"><span style="color:var(--text-muted)">Total Price:</span> <strong id="vTotalPrice" style="color:var(--accent-green);">-</strong></div>
-      <div class="detail-item"><span style="color:var(--text-muted)">Order Status:</span> <strong id="vStatus">-</strong></div>
-    </div>
-  </div>
-
   <!-- Global Navigation Script -->
   <script>
     function navigateTo(pageUrl) {
       if (!pageUrl) return;
-      try {
-        window.location.href = pageUrl;
-      } catch (e) {
-        console.error("Navigation error:", e);
-        window.location.assign(pageUrl);
-      }
+      window.location.href = pageUrl;
     }
 
     function scrollProducts(amount) {
       const grid = document.getElementById('productGrid');
-      if (grid) {
-        grid.scrollBy({ left: amount, behavior: 'smooth' });
-      }
+      if (grid) grid.scrollBy({ left: amount, behavior: 'smooth' });
     }
 
     function handleLogout() {
@@ -891,15 +626,20 @@
       document.getElementById('profileModal').style.display = 'none';
     }
 
-    function closeViewOrderModal() {
-      document.getElementById('viewOrderDetailModal').style.display = 'none';
+    // Direct Affiliate Link Redirect
+    function openAffiliateLink(url) {
+      if (url && url !== '#') {
+        window.open(url, '_blank');
+      } else {
+        alert("Affiliate link not configured.");
+      }
     }
   </script>
 
-  <!-- Firebase Module Script -->
+  <!-- Firebase Integration Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, get, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
@@ -921,8 +661,6 @@
     }
 
     const userData = JSON.parse(rawSession || '{}');
-    let selectedProduct = null;
-    let myUserOrdersMap = {};
     let selectedCategory = 'all';
 
     function renderUserUI(data) {
@@ -944,7 +682,7 @@
 
     renderUserUI(userData);
 
-    // REALTIME USER BALANCE SYNC FROM FIREBASE
+    // REALTIME USER BALANCE SYNC
     if (userData.username) {
       onValue(ref(db, 'users/' + userData.username), (snapshot) => {
         if (snapshot.exists()) {
@@ -955,27 +693,29 @@
       });
     }
 
-    // Default Fallback Products
+    // Default Fallback Affiliate Products
     const defaultProducts = [
       {
         id: "p1",
-        name: "Luxury Smart Watch",
+        name: "Smart Watch",
         category: "tools",
-        details: "Ultra display, water resistant smart watch with sports tracking.",
+        details: "Water resistant smart watch with sports tracking.",
         price: 2499,
+        affiliateUrl: "https://example.com/affiliate-link-1",
         image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300"
       },
       {
         id: "p2",
-        name: "Airbuds Pro",
+        name: "Wireless Earbuds",
         category: "mobiles",
-        details: "Noise cancellation sound, long battery backup.",
+        details: "Active Noise cancellation sound.",
         price: 1850,
+        affiliateUrl: "https://example.com/affiliate-link-2",
         image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300"
       }
     ];
 
-    // DISPLAY PRODUCTS ACCORDING TO SELECTED CATEGORY & SEARCH
+    // RENDER AFFILIATE PRODUCTS
     function renderFilteredProducts() {
       const grid = document.getElementById('productGrid');
       grid.innerHTML = "";
@@ -997,26 +737,29 @@
       });
 
       if (filtered.length === 0) {
-        grid.innerHTML = `<div class="no-orders-text" style="width:100%; font-size:10px;">No products found.</div>`;
+        grid.innerHTML = `<div style="width:100%; font-size:10px; color:var(--text-muted); text-align:center; padding:10px;">No deals found.</div>`;
         return;
       }
 
       filtered.forEach(p => {
+        const link = p.affiliateUrl || p.link || '#';
         grid.innerHTML += `
-          <div class="product-card" data-title="${(p.name || '').toLowerCase()}" onclick="openOrderModal('${p.id}')">
+          <div class="product-card" onclick="openAffiliateLink('${link}')">
             <img src="${p.image || 'https://via.placeholder.com/150'}" class="product-img" alt="${p.name}" />
             <div class="product-title">${p.name}</div>
             <div class="product-desc">${p.details || ''}</div>
             <div class="product-bottom">
               <div class="product-price">Rs. ${p.price}</div>
-              <button class="order-btn" onclick="event.stopPropagation(); openOrderModal('${p.id}')">Buy</button>
+              <button class="affiliate-btn" onclick="event.stopPropagation(); openAffiliateLink('${link}')">
+                Buy <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:8px;"></i>
+              </button>
             </div>
           </div>
         `;
       });
     }
 
-    // CATEGORY BUTTON FILTER
+    // CATEGORY FILTER
     window.filterByCategory = function(categoryName, element) {
       selectedCategory = categoryName;
 
@@ -1031,7 +774,7 @@
       renderFilteredProducts();
     };
 
-    // REALTIME PRODUCTS SYNC FROM FIREBASE
+    // REALTIME FIREBASE PRODUCTS FETCH
     onValue(ref(db, 'products'), (snapshot) => {
       let productList = [];
       if (snapshot.exists()) {
@@ -1046,152 +789,6 @@
       window.currentProducts = productList;
       renderFilteredProducts();
     });
-
-    // REALTIME ORDERS SYNC (MY ORDERS BOX)
-    onValue(ref(db, 'orders'), (snapshot) => {
-      const ordersContainer = document.getElementById('myOrdersList');
-      ordersContainer.innerHTML = "";
-      myUserOrdersMap = {};
-
-      if (!snapshot.exists()) {
-        ordersContainer.innerHTML = `<div class="no-orders-text">No orders placed yet.</div>`;
-        return;
-      }
-
-      const allOrders = snapshot.val();
-      let userOrdersCount = 0;
-
-      Object.keys(allOrders).reverse().forEach(oKey => {
-        const ord = allOrders[oKey];
-        if (ord.username === userData.username || ord.customerEmail === userData.email) {
-          userOrdersCount++;
-          myUserOrdersMap[oKey] = ord;
-
-          const isOk = (ord.status || '').toLowerCase() === 'ok' || (ord.status || '').toLowerCase() === 'confirmed' || (ord.status || '').toLowerCase() === 'delivered';
-          const badgeClass = isOk ? 'status-ok' : 'status-pending';
-          const statusDisplay = isOk ? 'OK / Confirmed' : (ord.status || 'Pending');
-
-          ordersContainer.innerHTML += `
-            <div class="order-mini-card" onclick="openViewOrderModal('${oKey}')">
-              <div class="order-mini-name">${ord.productName || 'Product'}</div>
-              <div class="order-mini-qty">Qty: ${ord.quantity || 1} | Rs.${ord.totalPrice || 0}</div>
-              <span class="order-status-badge ${badgeClass}">${statusDisplay}</span>
-            </div>
-          `;
-        }
-      });
-
-      if (userOrdersCount === 0) {
-        ordersContainer.innerHTML = `<div class="no-orders-text">No orders placed yet.</div>`;
-      }
-    });
-
-    // OPEN PLACE ORDER MODAL
-    window.openOrderModal = function(pId) {
-      const pList = window.currentProducts || defaultProducts;
-      selectedProduct = pList.find(item => item.id == pId) || pList[0];
-
-      if (!selectedProduct) return;
-
-      document.getElementById('orderModalImg').src = selectedProduct.image || 'https://via.placeholder.com/150';
-      document.getElementById('orderModalTitle').innerText = selectedProduct.name;
-      document.getElementById('orderModalDesc').innerText = selectedProduct.details || 'No details.';
-      document.getElementById('orderModalPrice').innerText = 'Rs. ' + selectedProduct.price;
-
-      document.getElementById('orderFullNameInput').value = userData.fullName || '';
-      document.getElementById('orderMobileInput').value = userData.mobile || '';
-      document.getElementById('orderWhatsappInput').value = userData.mobile || '';
-      document.getElementById('orderCityInput').value = userData.city || '';
-      document.getElementById('orderQuantity').value = 1;
-      document.getElementById('orderLocationInput').value = '';
-
-      updateOrderTotal();
-
-      const alertBox = document.getElementById('orderStatusAlert');
-      alertBox.className = 'status-alert';
-      alertBox.style.display = 'none';
-
-      document.getElementById('orderModal').style.display = 'flex';
-    };
-
-    window.closeOrderModal = function() {
-      document.getElementById('orderModal').style.display = 'none';
-    };
-
-    window.updateOrderTotal = function() {
-      if (!selectedProduct) return;
-      const qty = parseInt(document.getElementById('orderQuantity').value) || 1;
-      const total = selectedProduct.price * qty;
-      document.getElementById('orderTotalPrice').innerText = "Rs. " + total;
-    };
-
-    // HANDLE ORDER PLACEMENT TO FIREBASE
-    window.handlePlaceOrder = function(event) {
-      event.preventDefault();
-      const alertBox = document.getElementById('orderStatusAlert');
-      const btn = document.getElementById('confirmOrderBtn');
-
-      if (!selectedProduct) return;
-
-      const qty = parseInt(document.getElementById('orderQuantity').value) || 1;
-      const totalPrice = selectedProduct.price * qty;
-
-      const orderPayload = {
-        productId: selectedProduct.id,
-        productName: selectedProduct.name,
-        productPrice: selectedProduct.price,
-        quantity: qty,
-        totalPrice: totalPrice,
-        customerName: document.getElementById('orderFullNameInput').value,
-        mobile: document.getElementById('orderMobileInput').value,
-        whatsapp: document.getElementById('orderWhatsappInput').value,
-        city: document.getElementById('orderCityInput').value,
-        address: document.getElementById('orderLocationInput').value,
-        username: userData.username || 'guest',
-        customerEmail: userData.email || '',
-        status: 'Pending',
-        createdAt: new Date().toISOString()
-      };
-
-      btn.disabled = true;
-      btn.innerText = "Placing Order...";
-
-      push(ref(db, 'orders'), orderPayload)
-        .then(() => {
-          alertBox.innerText = "Order placed successfully!";
-          alertBox.className = "status-alert success";
-          setTimeout(() => {
-            closeOrderModal();
-            btn.disabled = false;
-            btn.innerText = "Confirm Order";
-          }, 1200);
-        })
-        .catch((err) => {
-          console.error(err);
-          alertBox.innerText = "Failed to place order. Try again.";
-          alertBox.className = "status-alert error";
-          btn.disabled = false;
-          btn.innerText = "Confirm Order";
-        });
-    };
-
-    // OPEN VIEW ORDER DETAILS MODAL
-    window.openViewOrderModal = function(oKey) {
-      const ord = myUserOrdersMap[oKey];
-      if (!ord) return;
-
-      document.getElementById('vProductTitle').innerText = ord.productName || '-';
-      document.getElementById('vCustomerName').innerText = ord.customerName || '-';
-      document.getElementById('vMobile').innerText = ord.mobile || '-';
-      document.getElementById('vWhatsapp').innerText = ord.whatsapp || '-';
-      document.getElementById('vCity').innerText = ord.city || '-';
-      document.getElementById('vLocation').innerText = ord.address || '-';
-      document.getElementById('vQuantity').innerText = ord.quantity || 1;
-      document.getElementById('vTotalPrice').innerText = "Rs. " + (ord.totalPrice || 0);
-      document.getElementById('vStatus').innerText = ord.status || 'Pending';
-
-      document.getElementById('viewOrderDetailModal').style.display = 'flex';
-    };
   </script>
 </body>
 </html>

@@ -7,8 +7,6 @@
   
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  
-  <script src="https://quge5.com/88/tag.min.js" data-zone="273760" async data-cfasync="false"></script>
 
   <style>
     :root {
@@ -184,12 +182,12 @@
       color: var(--success);
     }
 
-    /* Task Verification Modal / Area */
+    /* Verification Modal */
     .modal-overlay {
       display: none;
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(15, 23, 42, 0.65);
       backdrop-filter: blur(4px);
       z-index: 999;
       justify-content: center;
@@ -272,10 +270,10 @@
     <div class="policy-box">
       <h4><i class="fa-solid fa-shield-halved"></i> Strict Policy Rules</h4>
       <ul>
-        <li>Ad button click karne ke baad kam az kam <strong>20 seconds</strong> ad page/app par ruka lazmi hai.</li>
+        <li>Ad click karne ke baad kam az kam <strong>20 seconds</strong> ad page/app par ruka lazmi hai.</li>
+        <li>Agar aap 20 seconds se pehle wapis aaye to <strong>warning</strong> milegi aur task cancel ho jayega.</li>
         <li>App download ya register karke <strong>Proof Screenshot</strong> attach karna zaroori hai.</li>
-        <li>Screenshot submit karne ke baad earnings <strong>1 ghante ke andar auto-credit</strong> ho jayegi.</li>
-        <li>Tamaam 26 ad buttons complete karne par agla task <strong>24 ghante ke baad</strong> unlocked hoga.</li>
+        <li>Earnings <strong>1 ghante ke andar auto-credit</strong> hongi. Tamaam 26 ads ke baad <strong>24h lock</strong> ho jayega.</li>
       </ul>
     </div>
 
@@ -337,7 +335,7 @@
     if (!sessionStr) window.location.replace("index.html");
     const sessionUser = JSON.parse(sessionStr);
 
-    // 13 Monetag links provided (Duplicated to 26 spaced out buttons)
+    // 12 Clean Monetag Direct Links (Multi-tag link removed)
     const baseLinks = [
       "https://omg10.com/4/11668510",
       "https://omg10.com/4/11668513",
@@ -350,14 +348,13 @@
       "https://omg10.com/4/11668522",
       "https://omg10.com/4/11668523",
       "https://omg10.com/4/11668524",
-      "https://quge5.com/88/tag.min.js",
       "https://omg10.com/4/11668529"
     ];
 
-    // Total 26 links spaced out
-    const adLinks = [...baseLinks, ...baseLinks];
+    // Duplicate links to make exactly 26 spaced out tasks
+    const adLinks = [...baseLinks, ...baseLinks, baseLinks[0], baseLinks[1]];
 
-    // Payment sequence pattern: 1st Paid, 3 Unpaid, 1 Paid, 2 Unpaid, 1 Paid, 2 Unpaid...
+    // Payment sequence pattern: 1st Paid (0.20), 3 Unpaid, 1 Paid, 2 Unpaid...
     const payoutPattern = [
       true,  false, false, false, // Ad 1 (Paid), Ad 2..4 (Unpaid)
       true,  false, false,       // Ad 5 (Paid), Ad 6..7 (Unpaid)
@@ -373,6 +370,11 @@
     let mainBalance = 0;
     let lockTimestamp = 0;
     let activeAdIndex = null;
+
+    // Timer & Visibility Control Variables
+    let adTimerInterval = null;
+    let isTimerFinished = false;
+    let isAdActive = false;
 
     // Real-time Database Listener
     const userRef = ref(db, 'users/' + sessionUser.username);
@@ -423,7 +425,7 @@
 
         const btn = document.createElement('button');
         btn.className = `ad-btn ${isDone ? 'completed' : ''}`;
-        btn.disabled = !isNext; // Pehle ke ads ho chuke honge, serap agla button active rahega
+        btn.disabled = !isNext;
 
         if (isDone) {
           btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Ad #${i + 1} Done`;
@@ -436,15 +438,15 @@
       }
     }
 
-    // Handle Button Click
+    // Handle Button Click & Start Strict Ad Timer
     window.handleAdButtonClick = function(index) {
       activeAdIndex = index;
-      const targetUrl = adLinks[index];
+      isTimerFinished = false;
+      isAdActive = true;
 
-      // Direct Monetag Link Open in new tab
+      const targetUrl = adLinks[index];
       window.open(targetUrl, '_blank');
 
-      // Show Modal Timer & Verification
       document.getElementById('modalTitle').innerText = `Ad #${index + 1} Verification`;
       document.getElementById('taskModal').style.display = 'flex';
       document.getElementById('timerBox').style.display = 'block';
@@ -454,17 +456,31 @@
       let timeLeft = 20;
       document.getElementById('timerSec').innerText = timeLeft;
 
-      const interval = setInterval(() => {
+      if (adTimerInterval) clearInterval(adTimerInterval);
+
+      adTimerInterval = setInterval(() => {
         timeLeft--;
         document.getElementById('timerSec').innerText = timeLeft;
 
         if (timeLeft <= 0) {
-          clearInterval(interval);
+          clearInterval(adTimerInterval);
+          isTimerFinished = true;
+          isAdActive = false;
           document.getElementById('timerBox').style.display = 'none';
           document.getElementById('uploadBox').style.display = 'flex';
         }
       }, 1000);
     };
+
+    // Strict Early Return Detection (User returns to tab before 20s)
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && isAdActive && !isTimerFinished) {
+        clearInterval(adTimerInterval);
+        isAdActive = false;
+        document.getElementById('taskModal').style.display = 'none';
+        alert("⚠️ WARNING: Aapne ad poore 20 seconds tak nahi dekha! Task cancel kar diya gaya hai. Dobara button par click karein aur poora ad dekhein.");
+      }
+    });
 
     window.checkProofSelected = function() {
       const file = document.getElementById('proofInput').files[0];
@@ -484,12 +500,10 @@
           const nextCount = completedAdsCount + 1;
           const updates = { completedAdsCount: nextCount };
 
-          // Aggregate balance update for paid ads
           if (reward > 0) {
             updates.balance = (mainBalance + reward).toFixed(2);
           }
 
-          // Trigger 24h Lock after 26th Ad
           if (nextCount >= adLinks.length) {
             updates.adLockTime = Date.now();
           }

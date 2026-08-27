@@ -106,6 +106,13 @@
       margin-top: 2px;
     }
 
+    .pending-notice {
+      font-size: 12px;
+      color: #fef3c7;
+      margin-top: 4px;
+      font-weight: 600;
+    }
+
     /* Policy Rules Box */
     .policy-box {
       background: #fffbeebf;
@@ -261,28 +268,34 @@
         <div style="width: 40px;"></div>
       </div>
 
+      <!-- Realtime Balance -->
       <div class="balance-box">
         <label>Current Balance</label>
         <div class="balance-amount" id="userBalance">Rs. 0.00</div>
+        <div class="pending-notice" id="pendingNotice"></div>
       </div>
     </div>
 
+    <!-- Strict Policy Notice -->
     <div class="policy-box">
       <h4><i class="fa-solid fa-shield-halved"></i> Strict Policy Rules</h4>
       <ul>
         <li>Ad click karne ke baad kam az kam <strong>20 seconds</strong> ad page/app par ruka lazmi hai.</li>
         <li>Agar aap 20 seconds se pehle wapis aaye to <strong>warning</strong> milegi aur task cancel ho jayega.</li>
         <li>App download ya register karke <strong>Proof Screenshot</strong> attach karna zaroori hai.</li>
-        <li>Earnings <strong>1 ghante ke andar auto-credit</strong> hongi. Tamaam 26 ads ke baad <strong>24h lock</strong> ho jayega.</li>
+        <li>Earnings <strong>1 ghante ke baad auto-credit</strong> hongi. Tamaam 26 ads ke baad <strong>24h lock</strong> ho jayega.</li>
       </ul>
     </div>
 
+    <!-- Ads Buttons Grid -->
     <div class="card" id="adsCard">
       <div style="font-weight: 800; font-size: 15px; margin-bottom: 12px;">Click Any Ad Button:</div>
       <div class="ads-grid" id="adsContainer">
-        </div>
+        <!-- 26 Buttons dynamically generated -->
+      </div>
     </div>
 
+    <!-- 24 Hour Lock Banner -->
     <div class="lock-box" id="lockBox">
       <i class="fa-solid fa-lock" style="font-size: 32px; margin-bottom: 8px;"></i>
       <div>All 26 Ads Completed for Today!</div>
@@ -292,14 +305,17 @@
     </div>
   </div>
 
+  <!-- Verification Modal -->
   <div class="modal-overlay" id="taskModal">
     <div class="modal-card">
-      <h3 id="modalTitle" style="font-size: 16px; font-weight: 800;">Ad #1 Task Running</h3>
+      <h3 id="modalTitle" style="font-size: 16px; font-weight: 800;">Ad Task Verification</h3>
       
+      <!-- 20 Sec Timer Display -->
       <div class="timer-text" id="timerBox">
         <i class="fa-solid fa-hourglass-half"></i> Stay on Ad: <span id="timerSec">20</span>s
       </div>
 
+      <!-- Screenshot Proof Box -->
       <div id="uploadBox" style="display: none; flex-direction: column; gap: 12px;">
         <p style="font-size: 12px; color: var(--text-muted); font-weight: 600;">
           Attach app/register screenshot below to verify task.
@@ -314,9 +330,10 @@
     </div>
   </div>
 
+  <!-- Firebase Modular SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue, update, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
@@ -335,7 +352,7 @@
     if (!sessionStr) window.location.replace("index.html");
     const sessionUser = JSON.parse(sessionStr);
 
-    // 12 Clean Monetag Direct Links (Multi-tag link removed)
+    // Clean Monetag Direct Links (No multi-tag scripts)
     const baseLinks = [
       "https://omg10.com/4/11668510",
       "https://omg10.com/4/11668513",
@@ -351,10 +368,10 @@
       "https://omg10.com/4/11668529"
     ];
 
-    // Duplicate links to make exactly 26 spaced out tasks
+    // Duplicate links to make 26 tasks
     const adLinks = [...baseLinks, ...baseLinks, baseLinks[0], baseLinks[1]];
 
-    // Payment sequence pattern: 1st Paid (0.20), 3 Unpaid, 1 Paid, 2 Unpaid...
+    // Exact Sequence: 1st Paid, 3 Unpaid, 1 Paid, 2 Unpaid, 1 Paid, 2 Unpaid...
     const payoutPattern = [
       true,  false, false, false, // Ad 1 (Paid), Ad 2..4 (Unpaid)
       true,  false, false,       // Ad 5 (Paid), Ad 6..7 (Unpaid)
@@ -371,12 +388,11 @@
     let lockTimestamp = 0;
     let activeAdIndex = null;
 
-    // Timer & Visibility Control Variables
     let adTimerInterval = null;
     let isTimerFinished = false;
     let isAdActive = false;
 
-    // Real-time Database Listener
+    // Realtime User Data Listener
     const userRef = ref(db, 'users/' + sessionUser.username);
     onValue(userRef, (snapshot) => {
       if (snapshot.exists()) {
@@ -387,9 +403,49 @@
         completedAdsCount = data.completedAdsCount || 0;
         lockTimestamp = data.adLockTime || 0;
 
+        // Auto process pending rewards after 1 hour
+        processPendingRewards(data);
+
         renderButtonsAndLockCheck();
       }
     });
+
+    // 1-Hour Verification Check Function
+    function processPendingRewards(userData) {
+      if (!userData.pendingRewards) {
+        document.getElementById('pendingNotice').innerText = "";
+        return;
+      }
+      
+      const now = Date.now();
+      let pendingTotal = 0;
+      let claimableTotal = 0;
+      let updates = {};
+
+      Object.keys(userData.pendingRewards).forEach(key => {
+        const item = userData.pendingRewards[key];
+        if (now >= item.releaseTime) {
+          claimableTotal += parseFloat(item.amount || 0);
+          updates[`pendingRewards/${key}`] = null; // Clear item once claimed
+        } else {
+          pendingTotal += parseFloat(item.amount || 0);
+        }
+      });
+
+      // Show Pending Info on Balance Box
+      if (pendingTotal > 0) {
+        document.getElementById('pendingNotice').innerText = `⏳ Pending Rewards: Rs. ${pendingTotal.toFixed(2)} (Credits in 1 hr)`;
+      } else {
+        document.getElementById('pendingNotice').innerText = "";
+      }
+
+      // Auto Add to Balance if 1 Hour Passed
+      if (claimableTotal > 0) {
+        const newBalance = (mainBalance + claimableTotal).toFixed(2);
+        updates['balance'] = newBalance;
+        update(ref(db, 'users/' + sessionUser.username), updates);
+      }
+    }
 
     function renderButtonsAndLockCheck() {
       const now = Date.now();
@@ -438,14 +494,13 @@
       }
     }
 
-    // Handle Button Click & Start Strict Ad Timer
+    // Open Ad and start 20s timer
     window.handleAdButtonClick = function(index) {
       activeAdIndex = index;
       isTimerFinished = false;
       isAdActive = true;
 
-      const targetUrl = adLinks[index];
-      window.open(targetUrl, '_blank');
+      window.open(adLinks[index], '_blank');
 
       document.getElementById('modalTitle').innerText = `Ad #${index + 1} Verification`;
       document.getElementById('taskModal').style.display = 'flex';
@@ -472,7 +527,7 @@
       }, 1000);
     };
 
-    // Strict Early Return Detection (User returns to tab before 20s)
+    // Strict Early Return Detection (Warns if user returns early)
     document.addEventListener("visibilitychange", () => {
       if (!document.hidden && isAdActive && !isTimerFinished) {
         clearInterval(adTimerInterval);
@@ -487,28 +542,38 @@
       document.getElementById('submitProofBtn').disabled = !file;
     };
 
+    // Confirm Task (Queues reward for 1 hour if paid, completes step)
     window.confirmTaskCompletion = async function() {
       const btn = document.getElementById('submitProofBtn');
       btn.disabled = true;
       btn.innerText = "Verifying...";
 
       const isPaid = payoutPattern[activeAdIndex];
-      const reward = isPaid ? 0.20 : 0;
 
       setTimeout(async () => {
         try {
           const nextCount = completedAdsCount + 1;
           const updates = { completedAdsCount: nextCount };
 
-          if (reward > 0) {
-            updates.balance = (mainBalance + reward).toFixed(2);
-          }
-
+          // 1 Hour Lock trigger after 26 ads
           if (nextCount >= adLinks.length) {
             updates.adLockTime = Date.now();
           }
 
           await update(ref(db, 'users/' + sessionUser.username), updates);
+
+          // Add to 1-Hour Pending Rewards queue if ad is paid
+          if (isPaid) {
+            const pendingRef = push(ref(db, `users/${sessionUser.username}/pendingRewards`));
+            await update(pendingRef, {
+              amount: 0.20,
+              releaseTime: Date.now() + (60 * 60 * 1000), // 1 Hour Timer
+              adIndex: activeAdIndex
+            });
+            alert("Task Verified! Rs 0.20 queued. It will automatically credit to your balance after 1 hour.");
+          } else {
+            alert("Task Verified & Completed!");
+          }
 
           document.getElementById('taskModal').style.display = 'none';
           btn.innerText = "Submit Proof";

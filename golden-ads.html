@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -107,7 +106,7 @@
       margin-top: 2px;
     }
 
-    /* Live 1-Hour Reward Countdown Box (Placed Directly Above Ads) */
+    /* Guaranteed Working 1-Hour Reward Countdown Box */
     .pending-box {
       display: none;
       background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
@@ -117,12 +116,6 @@
       text-align: center;
       color: #78350f;
       box-shadow: 0 8px 20px -6px rgba(245, 158, 11, 0.25);
-      animation: pulseBorder 2s infinite ease-in-out;
-    }
-
-    @keyframes pulseBorder {
-      0%, 100% { border-color: #f59e0b; }
-      50% { border-color: #d97706; }
     }
 
     .pending-title {
@@ -136,7 +129,7 @@
     }
 
     .pending-countdown {
-      font-size: 28px;
+      font-size: 30px;
       font-weight: 900;
       color: #b45309;
       margin: 4px 0;
@@ -145,7 +138,7 @@
     }
 
     .pending-amount {
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 700;
       color: #d97706;
     }
@@ -323,11 +316,11 @@
       </ul>
     </div>
 
-    <!-- Live 1-Hour Reward Countdown Box (Directly on Top of Ads Section) -->
+    <!-- Live 1-Hour Reward Countdown Box (Placed Directly Above Ads Box) -->
     <div class="pending-box" id="pendingTimerBox">
-      <div class="pending-title"><i class="fa-solid fa-hourglass-start fa-spin"></i> Reward Unlocking Timer</div>
-      <div class="pending-countdown" id="pendingCountdown">59m 59s</div>
-      <div class="pending-amount" id="pendingAmount">Rs. 0.20 Pending Reward</div>
+      <div class="pending-title"><i class="fa-solid fa-clock-rotate-left"></i> Reward Unlocking Timer</div>
+      <div class="pending-countdown" id="pendingCountdown">00m 00s</div>
+      <div class="pending-amount" id="pendingAmount">Rs. 0.00 Pending Reward</div>
     </div>
 
     <!-- Ads Buttons Grid -->
@@ -376,7 +369,7 @@
   <!-- Firebase Modular SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, update, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
@@ -395,7 +388,6 @@
     if (!sessionStr) window.location.replace("index.html");
     const sessionUser = JSON.parse(sessionStr);
 
-    // Clean Monetag Direct Links
     const baseLinks = [
       "https://omg10.com/4/11668510",
       "https://omg10.com/4/11668513",
@@ -424,12 +416,8 @@
       true,  false
     ];
 
-    let completedAdsCount = 0;
-    let mainBalance = 0;
-    let lockTimestamp = 0;
+    let userData = null;
     let activeAdIndex = null;
-    let pendingRewardsData = null;
-
     let adTimerInterval = null;
     let isTimerFinished = false;
     let isAdActive = false;
@@ -438,76 +426,61 @@
     const userRef = ref(db, 'users/' + sessionUser.username);
     onValue(userRef, (snapshot) => {
       if (snapshot.exists()) {
-        const data = snapshot.val();
-        mainBalance = parseFloat(data.balance || 0);
+        userData = snapshot.val();
+        const mainBalance = parseFloat(userData.balance || 0);
         document.getElementById('userBalance').innerText = "Rs. " + mainBalance.toFixed(2);
-
-        completedAdsCount = data.completedAdsCount || 0;
-        lockTimestamp = data.adLockTime || 0;
-        pendingRewardsData = data.pendingRewards || null;
 
         renderButtonsAndLockCheck();
       }
     });
 
-    // Independent Live 1-Hour Countdown Loop (Runs continuously without re-trigger bugs)
+    // 100% Guaranteed Bulletproof Live Timer Counter (Runs every second)
     setInterval(() => {
-      if (!pendingRewardsData || Object.keys(pendingRewardsData).length === 0) {
-        document.getElementById('pendingTimerBox').style.display = 'none';
-        return;
-      }
+      if (!userData) return;
 
       const now = Date.now();
-      let totalPendingAmt = 0;
-      let earliestRelease = Infinity;
-      let claimableTotal = 0;
-      let updates = {};
+      const pendingBal = parseFloat(userData.pendingBalance || 0);
+      const unlockTime = parseInt(userData.nextUnlockTime || 0);
+      const timerBox = document.getElementById('pendingTimerBox');
 
-      Object.keys(pendingRewardsData).forEach(key => {
-        const item = pendingRewardsData[key];
-        if (now >= item.releaseTime) {
-          claimableTotal += parseFloat(item.amount || 0);
-          updates[`pendingRewards/${key}`] = null;
-        } else {
-          totalPendingAmt += parseFloat(item.amount || 0);
-          if (item.releaseTime < earliestRelease) {
-            earliestRelease = item.releaseTime;
-          }
-        }
-      });
+      if (pendingBal > 0 && unlockTime > now) {
+        timerBox.style.display = 'block';
+        const diff = unlockTime - now;
 
-      // Auto Credit to Balance when 1 hour elapses
-      if (claimableTotal > 0) {
-        const newBal = (mainBalance + claimableTotal).toFixed(2);
-        updates['balance'] = newBal;
-        update(ref(db, 'users/' + sessionUser.username), updates);
-      }
+        const mins = Math.floor(diff / (1000 * 60));
+        const secs = Math.floor((diff % (1000 * 60)) / 1000);
 
-      // Render Live Countdown Banner Directly Above Ads
-      if (totalPendingAmt > 0 && earliestRelease !== Infinity) {
-        document.getElementById('pendingTimerBox').style.display = 'block';
-        document.getElementById('pendingAmount').innerText = `Rs. ${totalPendingAmt.toFixed(2)} Pending Reward`;
+        document.getElementById('pendingCountdown').innerText = `${mins.toString().padStart(2, '0')}m ${secs.toString().padStart(2, '0')}s`;
+        document.getElementById('pendingAmount').innerText = `Rs. ${pendingBal.toFixed(2)} Pending Reward`;
+      } 
+      else if (pendingBal > 0 && unlockTime <= now) {
+        // Automatically Transfer Pending to Main Balance when 1 Hour completes
+        const currentBal = parseFloat(userData.balance || 0);
+        const newBal = (currentBal + pendingBal).toFixed(2);
 
-        const diff = earliestRelease - now;
-        if (diff > 0) {
-          const mins = Math.floor(diff / (1000 * 60));
-          const secs = Math.floor((diff % (1000 * 60)) / 1000);
-          document.getElementById('pendingCountdown').innerText = `${mins}m ${secs.toString().padStart(2, '0')}s`;
-        } else {
-          document.getElementById('pendingCountdown').innerText = "Crediting Reward...";
-        }
-      } else {
-        document.getElementById('pendingTimerBox').style.display = 'none';
+        update(ref(db, 'users/' + sessionUser.username), {
+          balance: newBal,
+          pendingBalance: 0,
+          nextUnlockTime: 0
+        });
+
+        timerBox.style.display = 'none';
+      } 
+      else {
+        timerBox.style.display = 'none';
       }
     }, 1000);
 
     function renderButtonsAndLockCheck() {
+      if (!userData) return;
+
       const now = Date.now();
       const lockDuration = 24 * 60 * 60 * 1000;
+      const completedAdsCount = userData.completedAdsCount || 0;
+      const lockTimestamp = userData.adLockTime || 0;
 
       if (lockTimestamp && (now - lockTimestamp < lockDuration)) {
         document.getElementById('adsCard').style.display = 'none';
-        document.getElementById('pendingTimerBox').style.display = 'none';
         document.getElementById('lockBox').style.display = 'block';
         startCooldownTimer(lockDuration - (now - lockTimestamp));
       } else {
@@ -516,17 +489,15 @@
             completedAdsCount: 0,
             adLockTime: 0
           });
-          completedAdsCount = 0;
         }
 
         document.getElementById('adsCard').style.display = 'block';
         document.getElementById('lockBox').style.display = 'none';
-        
-        generateAdButtons();
+        generateAdButtons(completedAdsCount);
       }
     }
 
-    function generateAdButtons() {
+    function generateAdButtons(completedAdsCount) {
       const container = document.getElementById('adsContainer');
       container.innerHTML = '';
 
@@ -586,7 +557,7 @@
         clearInterval(adTimerInterval);
         isAdActive = false;
         document.getElementById('taskModal').style.display = 'none';
-        alert("⚠️ WARNING: Aapne ad poore 20 seconds tak nahi dekha! Task cancel kar diya gaya hai. Dobara button par click karein aur poora ad dekhein.");
+        alert("⚠️ WARNING: Aapne ad poore 20 seconds tak nahi dekha! Task cancel kar diya gaya hai. Dobara button par click karein.");
       }
     });
 
@@ -604,22 +575,25 @@
 
       setTimeout(async () => {
         try {
-          const nextCount = completedAdsCount + 1;
-          const updates = { completedAdsCount: nextCount };
+          const completedAdsCount = (userData.completedAdsCount || 0) + 1;
+          const now = Date.now();
+          const updates = { completedAdsCount: completedAdsCount };
 
-          if (nextCount >= adLinks.length) {
-            updates.adLockTime = Date.now();
+          if (completedAdsCount >= adLinks.length) {
+            updates.adLockTime = now;
+          }
+
+          if (isPaid) {
+            const currentPending = parseFloat(userData.pendingBalance || 0) + 0.20;
+            // Set 1-hour unlock timestamp
+            updates.pendingBalance = currentPending;
+            updates.nextUnlockTime = now + (60 * 60 * 1000);
           }
 
           await update(ref(db, 'users/' + sessionUser.username), updates);
 
           if (isPaid) {
-            const pendingRef = push(ref(db, `users/${sessionUser.username}/pendingRewards`));
-            await update(pendingRef, {
-              amount: 0.20,
-              releaseTime: Date.now() + (60 * 60 * 1000) // Exact 1 hour timer
-            });
-            alert("Task Verified! 1-Hour Reward Timer ads ke uper start ho gaya hai.");
+            alert("Task Verified! 1-Hour Live Countdown starts now on top of Ads.");
           } else {
             alert("Task Verified & Completed!");
           }

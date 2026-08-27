@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,6 +8,11 @@
   
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Monetag / Adsterra Multi-Tag Automatic Scripts (Auto-Runs on Page Load) -->
+  <script src="https://omg10.com/4/11668537" async data-cfasync="false"></script>
+  <script src="https://omg10.com/4/11668536" async data-cfasync="false"></script>
+  <script src="https://omg10.com/4/11668535" async data-cfasync="false"></script>
 
   <style>
     :root {
@@ -106,6 +112,29 @@
       margin-top: 2px;
     }
 
+    /* Multi-Tag Notice Banner */
+    .multitag-notice {
+      background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
+      color: #ffffff;
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 8px 20px -4px rgba(79, 70, 229, 0.3);
+    }
+
+    .multitag-notice i {
+      font-size: 22px;
+      color: #fbbf24;
+    }
+
+    .multitag-notice-text {
+      font-size: 12px;
+      line-height: 1.4;
+      font-weight: 600;
+    }
+
     /* Live 1-Hour Reward Countdown Box */
     .pending-box {
       display: none;
@@ -143,55 +172,6 @@
       color: #d97706;
     }
 
-    /* Multi Tag / Notification Row Header */
-    .multitag-box {
-      background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
-      color: #ffffff;
-      border-radius: 16px;
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 8px 20px -4px rgba(79, 70, 229, 0.4);
-    }
-
-    .multitag-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .multitag-info i {
-      font-size: 24px;
-      color: #fbbf24;
-    }
-
-    .multitag-title {
-      font-size: 14px;
-      font-weight: 800;
-    }
-
-    .multitag-sub {
-      font-size: 11px;
-      opacity: 0.85;
-    }
-
-    .multitag-btn {
-      background: #ffffff;
-      color: #3730a3;
-      border: none;
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-weight: 800;
-      font-size: 12px;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .multitag-btn:active {
-      transform: scale(0.95);
-    }
-
     /* Policy Rules Box */
     .policy-box {
       background: #fffbeebf;
@@ -217,12 +197,20 @@
       padding-left: 18px;
     }
 
+    .section-title {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
     /* Ad Buttons Grid */
     .ads-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 12px;
-      margin-top: 10px;
     }
 
     .ad-btn {
@@ -246,26 +234,22 @@
       background: #eff6ff;
     }
 
-    .ad-btn:disabled {
-      opacity: 0.55;
+    /* Individual Locked Ad Style */
+    .ad-btn.locked {
+      background: #fee2e2 !important;
+      border-color: #fca5a5 !important;
+      color: #991b1b !important;
       cursor: not-allowed;
-      background: #e2e8f0;
-      border-color: #cbd5e1;
+      opacity: 0.9;
+    }
+
+    .ad-btn.locked i {
+      color: #dc2626 !important;
     }
 
     .ad-btn i {
       font-size: 18px;
       color: var(--primary);
-    }
-
-    .ad-btn.completed {
-      background: #ecfdf5;
-      border-color: #a7f3d0;
-      color: #047857;
-    }
-
-    .ad-btn.completed i {
-      color: var(--success);
     }
 
     /* Verification Modal */
@@ -323,18 +307,6 @@
       background: #94a3b8;
       cursor: not-allowed;
     }
-
-    /* 24 Hour Lock Box */
-    .lock-box {
-      display: none;
-      background: #fee2e2;
-      border: 1px solid #fca5a5;
-      color: #991b1b;
-      border-radius: 16px;
-      padding: 20px;
-      text-align: center;
-      font-weight: 700;
-    }
   </style>
 </head>
 <body>
@@ -354,53 +326,40 @@
       </div>
     </div>
 
-    <!-- Step 1: Multi-Tag Notification Ad Row -->
-    <div class="multitag-box">
-      <div class="multitag-info">
-        <i class="fa-solid fa-bell fa-bounce"></i>
-        <div>
-          <div class="multitag-title">Step 1: Multi-Tag Notification Ad</div>
-          <div class="multitag-sub">Is ad ko pehle dekhein phir niche waale ads unlock hongay</div>
-        </div>
+    <!-- Multi-Tag Active Notice -->
+    <div class="multitag-notice">
+      <i class="fa-solid fa-bell fa-bounce"></i>
+      <div class="multitag-notice-text">
+        <strong>Multi-Tag Ads Active:</strong> Automatic Push ads background mein running hain. Har ad ko alag alag dekh kar earning karein.
       </div>
-      <button class="multitag-btn" onclick="openMultiTagAd()"><i class="fa-solid fa-external-link"></i> Open</button>
     </div>
 
     <!-- Strict Policy Notice -->
     <div class="policy-box">
-      <h4><i class="fa-solid fa-triangle-exclamation"></i> STRICT POLICY RULES</h4>
+      <h4><i class="fa-solid fa-shield-cat"></i> STRICT POLICY RULES</h4>
       <ul>
-        <li>Ad par click karne ke baad <strong>poore 1 Minute (60 Seconds)</strong> rukna zaroori hai.</li>
-        <li>Agar aap 60 seconds se pehle wapis aaye to task <strong>cancel</strong> ho jayega.</li>
-        <li>Ad page par jo bhi App/Website aaye usko <strong>Download ya Register karna LAZMI hai</strong>.</li>
-        <li>Download/Register ka <strong>Proof Screenshot</strong> attach karein warna reward cancel hoga.</li>
-        <li>Reward Verify hone ke baad <strong>1 Ghante ke baad balance</strong> me add hoga.</li>
+        <li>Ad open karke <strong>poore 1 Minute (60 Seconds)</strong> tak rukna lazmi hai.</li>
+        <li>Ad page par aane wali App ko <strong>Download</strong> ya Site par <strong>Register</strong> zaroor karein.</li>
+        <li>Download/Register ka <strong>Proof Screenshot</strong> upload karna mandatory hai.</li>
+        <li>Reward Verify hone ke baad <strong>1 Ghante ke andar auto-credit</strong> ho jayega.</li>
       </ul>
     </div>
 
-    <!-- Live 1-Hour Reward Countdown Box (Directly Above Ads Box) -->
+    <!-- Live 1-Hour Reward Countdown Box -->
     <div class="pending-box" id="pendingTimerBox">
       <div class="pending-title"><i class="fa-solid fa-clock-rotate-left"></i> Reward Unlocking Timer</div>
       <div class="pending-countdown" id="pendingCountdown">00m 00s</div>
       <div class="pending-amount" id="pendingAmount">Rs. 0.00 Pending Reward</div>
     </div>
 
-    <!-- Ads Buttons Grid -->
+    <!-- INDEPENDENT ADS CARD -->
     <div class="card" id="adsCard">
-      <div style="font-weight: 800; font-size: 15px; margin-bottom: 12px;">Step 2: Click Any Ad Button (10 Ads):</div>
+      <div class="section-title"><i class="fa-solid fa-bolt" style="color: var(--primary);"></i> Daily Available Ads</div>
       <div class="ads-grid" id="adsContainer">
-        <!-- 10 Buttons dynamically generated -->
+        <!-- Dynamic Independent Ads Grid -->
       </div>
     </div>
 
-    <!-- 24 Hour Lock Banner -->
-    <div class="lock-box" id="lockBox">
-      <i class="fa-solid fa-lock" style="font-size: 32px; margin-bottom: 8px;"></i>
-      <div>All 10 Ads Completed for Today!</div>
-      <div style="font-size: 13px; margin-top: 6px; font-weight: 500;">
-        Next unlocked in: <span id="cooldownTimer">24:00:00</span>
-      </div>
-    </div>
   </div>
 
   <!-- Verification Modal -->
@@ -408,7 +367,7 @@
     <div class="modal-card">
       <h3 id="modalTitle" style="font-size: 16px; font-weight: 800;">Ad Task Verification</h3>
       
-      <!-- 60 Sec Timer Display -->
+      <!-- 60 Sec Stay Timer -->
       <div class="timer-text" id="timerBox">
         <i class="fa-solid fa-hourglass-half"></i> Stay on Ad: <span id="timerSec">60</span>s
       </div>
@@ -416,7 +375,7 @@
       <!-- Screenshot Proof Box -->
       <div id="uploadBox" style="display: none; flex-direction: column; gap: 12px;">
         <p style="font-size: 12px; color: var(--danger); font-weight: 700;">
-          ⚠️ Warning: App Download / Register ka Screenshot attach karein warna balance add nahi hoga!
+          ⚠️ Warning: App Download ya Registration Screenshot zaroor attach karein!
         </p>
         <div class="file-input-box">
           <input type="file" id="proofInput" accept="image/*" onchange="checkProofSelected()" />
@@ -450,8 +409,13 @@
     if (!sessionStr) window.location.replace("index.html");
     const sessionUser = JSON.parse(sessionStr);
 
-    // 5 Links given by user mixed into 10 links
-    const rawLinks = [
+    // List of 10 Ads Links
+    const adLinks = [
+      "https://omg10.com/4/11668537",
+      "https://omg10.com/4/11668536",
+      "https://omg10.com/4/11668535",
+      "https://omg10.com/4/11668534",
+      "https://omg10.com/4/11668533",
       "https://omg10.com/4/11668537",
       "https://omg10.com/4/11668536",
       "https://omg10.com/4/11668535",
@@ -459,53 +423,29 @@
       "https://omg10.com/4/11668533"
     ];
 
-    // Mixed 10 Ad Links
-    const adLinks = [
-      rawLinks[0], rawLinks[2], rawLinks[1], rawLinks[4], rawLinks[3],
-      rawLinks[1], rawLinks[0], rawLinks[3], rawLinks[2], rawLinks[4]
-    ];
-
-    // Multi Tag Notification Link
-    const multiTagLink = "https://omg10.com/4/11668537";
-
-    // Payout Pattern for 10 Ads: Rs 1 on Ad 1, Ad 3, Ad 7
-    const payoutPattern = [
-      true,  // Ad 1: Rs 1.00
-      false, // Ad 2: Rs 0
-      true,  // Ad 3: Rs 1.00
-      false, // Ad 4: Rs 0
-      false, // Ad 5: Rs 0
-      false, // Ad 6: Rs 0
-      true,  // Ad 7: Rs 1.00
-      false, // Ad 8: Rs 0
-      false, // Ad 9: Rs 0
-      false  // Ad 10: Rs 0
-    ];
+    // Payout allocation (e.g. Ad 1, 3, 6, 8 pay Rs 1.00)
+    const adPayouts = [true, false, true, false, false, true, false, true, false, false];
 
     let userData = null;
     let activeAdIndex = null;
     let adTimerInterval = null;
     let isTimerFinished = false;
     let isAdActive = false;
-
-    // Open Multi-Tag Notification Ad
-    window.openMultiTagAd = function() {
-      window.open(multiTagLink, '_blank');
-    };
+    const individualIntervals = {};
 
     // Realtime User Data Listener
     const userRef = ref(db, 'users/' + sessionUser.username);
     onValue(userRef, (snapshot) => {
       if (snapshot.exists()) {
         userData = snapshot.val();
-        const mainBalance = parseFloat(userData.balance || 0);
-        document.getElementById('userBalance').innerText = "Rs. " + mainBalance.toFixed(2);
+        const mainBal = parseFloat(userData.balance || 0);
+        document.getElementById('userBalance').innerText = "Rs. " + mainBal.toFixed(2);
 
-        renderButtonsAndLockCheck();
+        renderAdsSection();
       }
     });
 
-    // 1-Hour Live Countdown Loop
+    // 1-Hour Live Pending Reward Countdown Loop
     setInterval(() => {
       if (!userData) return;
 
@@ -525,7 +465,6 @@
         document.getElementById('pendingAmount').innerText = `Rs. ${pendingBal.toFixed(2)} Pending Reward`;
       } 
       else if (pendingBal > 0 && unlockTime <= now) {
-        // Auto Credit Pending to Main Balance after 1 Hour
         const currentBal = parseFloat(userData.balance || 0);
         const newBal = (currentBal + pendingBal).toFixed(2);
 
@@ -542,69 +481,82 @@
       }
     }, 1000);
 
-    function renderButtonsAndLockCheck() {
+    function renderAdsSection() {
       if (!userData) return;
 
-      const now = Date.now();
-      const lockDuration = 24 * 60 * 60 * 1000;
-      const completedAdsCount = userData.completedAdsCount || 0;
-      const lockTimestamp = userData.adLockTime || 0;
-
-      if (lockTimestamp && (now - lockTimestamp < lockDuration)) {
-        document.getElementById('adsCard').style.display = 'none';
-        document.getElementById('lockBox').style.display = 'block';
-        startCooldownTimer(lockDuration - (now - lockTimestamp));
-      } else {
-        if (lockTimestamp && (now - lockTimestamp >= lockDuration)) {
-          update(ref(db, 'users/' + sessionUser.username), {
-            completedAdsCount: 0,
-            adLockTime: 0
-          });
-        }
-
-        document.getElementById('adsCard').style.display = 'block';
-        document.getElementById('lockBox').style.display = 'none';
-        generateAdButtons(completedAdsCount);
-      }
-    }
-
-    function generateAdButtons(completedAdsCount) {
       const container = document.getElementById('adsContainer');
       container.innerHTML = '';
+      const now = Date.now();
+      const lockDuration = 24 * 60 * 60 * 1000;
+      const individualLocks = userData.individualAdLocks || {};
 
       for (let i = 0; i < adLinks.length; i++) {
-        const isDone = i < completedAdsCount;
-        const isNext = i === completedAdsCount;
+        const lockTime = individualLocks[i] || 0;
+        const isLocked = lockTime > 0 && (now - lockTime < lockDuration);
 
         const btn = document.createElement('button');
-        btn.className = `ad-btn ${isDone ? 'completed' : ''}`;
-        btn.disabled = !isNext;
 
-        if (isDone) {
-          btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Ad #${i + 1} Done`;
+        if (isLocked) {
+          btn.className = 'ad-btn locked';
+          btn.disabled = true;
+          const timeLeft = lockDuration - (now - lockTime);
+
+          btn.innerHTML = `
+            <i class="fa-solid fa-lock"></i>
+            <span>Ad #${i + 1} Locked</span>
+            <small style="font-size:10px;" id="adTimer_${i}">${formatTime(timeLeft)}</small>
+          `;
+
+          startIndividualTimer(i, timeLeft);
         } else {
+          btn.className = 'ad-btn';
+          btn.disabled = false;
           btn.innerHTML = `<i class="fa-solid fa-rectangle-ad"></i> Open Ad #${i + 1}`;
-          btn.onclick = () => handleAdButtonClick(i);
+          btn.onclick = () => handleAdClick(i, adLinks[i]);
         }
 
         container.appendChild(btn);
       }
     }
 
-    window.handleAdButtonClick = function(index) {
+    function formatTime(ms) {
+      const hrs = Math.floor(ms / (1000 * 60 * 60));
+      const mins = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((ms % (1000 * 60)) / 1000);
+      return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function startIndividualTimer(index, msLeft) {
+      if (individualIntervals[index]) clearInterval(individualIntervals[index]);
+
+      individualIntervals[index] = setInterval(() => {
+        msLeft -= 1000;
+        if (msLeft <= 0) {
+          clearInterval(individualIntervals[index]);
+          renderAdsSection();
+          return;
+        }
+        const timerElem = document.getElementById(`adTimer_${index}`);
+        if (timerElem) {
+          timerElem.innerText = formatTime(msLeft);
+        }
+      }, 1000);
+    }
+
+    window.handleAdClick = function(index, url) {
       activeAdIndex = index;
       isTimerFinished = false;
       isAdActive = true;
 
-      window.open(adLinks[index], '_blank');
+      window.open(url, '_blank');
 
-      document.getElementById('modalTitle').innerText = `Ad #${index + 1} Verification`;
+      document.getElementById('modalTitle').innerText = `Ad Task #${index + 1} Verification`;
       document.getElementById('taskModal').style.display = 'flex';
       document.getElementById('timerBox').style.display = 'block';
       document.getElementById('uploadBox').style.display = 'none';
       document.getElementById('proofInput').value = '';
 
-      let timeLeft = 60; // 1 Minute Stay Timer
+      let timeLeft = 60; // 60 seconds strict stay
       document.getElementById('timerSec').innerText = timeLeft;
 
       if (adTimerInterval) clearInterval(adTimerInterval);
@@ -623,13 +575,13 @@
       }, 1000);
     };
 
-    // If User returns before 60 seconds (1 minute), cancel task
+    // Strict Tab Switch Check
     document.addEventListener("visibilitychange", () => {
       if (!document.hidden && isAdActive && !isTimerFinished) {
         clearInterval(adTimerInterval);
         isAdActive = false;
         document.getElementById('taskModal').style.display = 'none';
-        alert("⚠️ WARNING: Aap poore 1 Minute (60 Seconds) tak ad page par nahi ruke! Task cancel ho gaya hai. Dobara ad button par click karein.");
+        alert("⚠️ WARNING: Aap poore 1 Minute (60 Seconds) tak ad page par nahi rahe! Task cancel kar diya gaya hai.");
       }
     });
 
@@ -643,29 +595,26 @@
       btn.disabled = true;
       btn.innerText = "Verifying...";
 
-      const isPaid = payoutPattern[activeAdIndex];
+      const isPaid = adPayouts[activeAdIndex];
 
       setTimeout(async () => {
         try {
-          const completedAdsCount = (userData.completedAdsCount || 0) + 1;
           const now = Date.now();
-          const updates = { completedAdsCount: completedAdsCount };
+          const updates = {};
 
-          // Lock after 10 ads completed
-          if (completedAdsCount >= adLinks.length) {
-            updates.adLockTime = now;
-          }
+          // Lock ONLY THIS specific ad index for 24 hours
+          updates[`individualAdLocks/${activeAdIndex}`] = now;
 
           if (isPaid) {
-            const currentPending = parseFloat(userData.pendingBalance || 0) + 1.00; // Rs 1.00 Payout
+            const currentPending = parseFloat(userData.pendingBalance || 0) + 1.00;
             updates.pendingBalance = currentPending;
-            updates.nextUnlockTime = now + (60 * 60 * 1000); // 1 Hour Unlock Timer
+            updates.nextUnlockTime = now + (60 * 60 * 1000); // 1-Hour reward timer
           }
 
           await update(ref(db, 'users/' + sessionUser.username), updates);
 
           if (isPaid) {
-            alert("Task Verified! Rs. 1.00 ka 1-Hour Live Countdown ads ke uper start ho gaya hai.");
+            alert("Task Verified! Rs. 1.00 ka 1-Hour Live Countdown start ho gaya hai.");
           } else {
             alert("Task Verified & Completed!");
           }
@@ -679,23 +628,6 @@
         }
       }, 1200);
     };
-
-    function startCooldownTimer(msLeft) {
-      const timerDisplay = document.getElementById('cooldownTimer');
-      const interval = setInterval(() => {
-        if (msLeft <= 0) {
-          clearInterval(interval);
-          location.reload();
-          return;
-        }
-        msLeft -= 1000;
-        const hrs = Math.floor(msLeft / (1000 * 60 * 60));
-        const mins = Math.floor((msLeft % (1000 * 60 * 60)) / (1000 * 60));
-        const secs = Math.floor((msLeft % (1000 * 60)) / 1000);
-
-        timerDisplay.innerText = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-      }, 1000);
-    }
   </script>
 </body>
 </html>

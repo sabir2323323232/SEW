@@ -107,10 +107,14 @@
     }
 
     .pending-notice {
-      font-size: 12px;
+      font-size: 12.5px;
       color: #fef3c7;
-      margin-top: 4px;
-      font-weight: 600;
+      margin-top: 6px;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 6px 12px;
+      border-radius: 10px;
+      display: inline-block;
     }
 
     /* Policy Rules Box */
@@ -268,11 +272,11 @@
         <div style="width: 40px;"></div>
       </div>
 
-      <!-- Realtime Balance -->
+      <!-- Realtime Balance & Live 1-Hour Reward Timer -->
       <div class="balance-box">
         <label>Current Balance</label>
         <div class="balance-amount" id="userBalance">Rs. 0.00</div>
-        <div class="pending-notice" id="pendingNotice"></div>
+        <div class="pending-notice" id="pendingNotice" style="display: none;"></div>
       </div>
     </div>
 
@@ -352,7 +356,7 @@
     if (!sessionStr) window.location.replace("index.html");
     const sessionUser = JSON.parse(sessionStr);
 
-    // Clean Monetag Direct Links (No multi-tag scripts)
+    // Clean Monetag Direct Links
     const baseLinks = [
       "https://omg10.com/4/11668510",
       "https://omg10.com/4/11668513",
@@ -368,19 +372,17 @@
       "https://omg10.com/4/11668529"
     ];
 
-    // Duplicate links to make 26 tasks
     const adLinks = [...baseLinks, ...baseLinks, baseLinks[0], baseLinks[1]];
 
-    // Exact Sequence: 1st Paid, 3 Unpaid, 1 Paid, 2 Unpaid, 1 Paid, 2 Unpaid...
     const payoutPattern = [
-      true,  false, false, false, // Ad 1 (Paid), Ad 2..4 (Unpaid)
-      true,  false, false,       // Ad 5 (Paid), Ad 6..7 (Unpaid)
-      true,  false, false,       // Ad 8 (Paid), Ad 9..10 (Unpaid)
-      true,  false, false,       // Ad 11 (Paid)...
+      true,  false, false, false,
       true,  false, false,
       true,  false, false,
       true,  false, false,
-      true,  false               // Total 26 Ads
+      true,  false, false,
+      true,  false, false,
+      true,  false, false,
+      true,  false
     ];
 
     let completedAdsCount = 0;
@@ -389,6 +391,7 @@
     let activeAdIndex = null;
 
     let adTimerInterval = null;
+    let pendingTimerInterval = null;
     let isTimerFinished = false;
     let isAdActive = false;
 
@@ -403,41 +406,39 @@
         completedAdsCount = data.completedAdsCount || 0;
         lockTimestamp = data.adLockTime || 0;
 
-        // Auto process pending rewards after 1 hour
+        // Start live 1-hour reward countdown timer
         processPendingRewards(data);
 
         renderButtonsAndLockCheck();
       }
     });
 
-    // 1-Hour Verification Check Function
+    // Live 1-Hour Countdown Timer Logic for Pending Rewards
     function processPendingRewards(userData) {
       if (!userData.pendingRewards) {
-        document.getElementById('pendingNotice').innerText = "";
+        document.getElementById('pendingNotice').style.display = 'none';
+        if (pendingTimerInterval) clearInterval(pendingTimerInterval);
         return;
       }
       
       const now = Date.now();
       let pendingTotal = 0;
       let claimableTotal = 0;
+      let minReleaseTime = Infinity;
       let updates = {};
 
       Object.keys(userData.pendingRewards).forEach(key => {
         const item = userData.pendingRewards[key];
         if (now >= item.releaseTime) {
           claimableTotal += parseFloat(item.amount || 0);
-          updates[`pendingRewards/${key}`] = null; // Clear item once claimed
+          updates[`pendingRewards/${key}`] = null;
         } else {
           pendingTotal += parseFloat(item.amount || 0);
+          if (item.releaseTime < minReleaseTime) {
+            minReleaseTime = item.releaseTime;
+          }
         }
       });
-
-      // Show Pending Info on Balance Box
-      if (pendingTotal > 0) {
-        document.getElementById('pendingNotice').innerText = `⏳ Pending Rewards: Rs. ${pendingTotal.toFixed(2)} (Credits in 1 hr)`;
-      } else {
-        document.getElementById('pendingNotice').innerText = "";
-      }
 
       // Auto Add to Balance if 1 Hour Passed
       if (claimableTotal > 0) {
@@ -445,11 +446,40 @@
         updates['balance'] = newBalance;
         update(ref(db, 'users/' + sessionUser.username), updates);
       }
+
+      // Live Countdown Timer Display (e.g. ⏳ Pending Rs. 0.20 (Unlocks in: 58m 20s))
+      if (pendingTotal > 0 && minReleaseTime !== Infinity) {
+        document.getElementById('pendingNotice').style.display = 'inline-block';
+        
+        if (pendingTimerInterval) clearInterval(pendingTimerInterval);
+
+        const updatePendingTimer = () => {
+          const currentTime = Date.now();
+          const diff = minReleaseTime - currentTime;
+
+          if (diff <= 0) {
+            clearInterval(pendingTimerInterval);
+            document.getElementById('pendingNotice').innerText = "⏳ Processing reward...";
+            return;
+          }
+
+          const mins = Math.floor(diff / (1000 * 60));
+          const secs = Math.floor((diff % (1000 * 60)) / 1000);
+          document.getElementById('pendingNotice').innerText = 
+            `⏳ Pending: Rs. ${pendingTotal.toFixed(2)} (Unlocks in: ${mins}m ${secs.toString().padStart(2, '0')}s)`;
+        };
+
+        updatePendingTimer();
+        pendingTimerInterval = setInterval(updatePendingTimer, 1000);
+      } else {
+        if (pendingTimerInterval) clearInterval(pendingTimerInterval);
+        document.getElementById('pendingNotice').style.display = 'none';
+      }
     }
 
     function renderButtonsAndLockCheck() {
       const now = Date.now();
-      const lockDuration = 24 * 60 * 60 * 1000; // 24 Hours
+      const lockDuration = 24 * 60 * 60 * 1000;
 
       if (lockTimestamp && (now - lockTimestamp < lockDuration)) {
         document.getElementById('adsCard').style.display = 'none';
@@ -494,7 +524,6 @@
       }
     }
 
-    // Open Ad and start 20s timer
     window.handleAdButtonClick = function(index) {
       activeAdIndex = index;
       isTimerFinished = false;
@@ -527,7 +556,6 @@
       }, 1000);
     };
 
-    // Strict Early Return Detection (Warns if user returns early)
     document.addEventListener("visibilitychange", () => {
       if (!document.hidden && isAdActive && !isTimerFinished) {
         clearInterval(adTimerInterval);
@@ -542,7 +570,6 @@
       document.getElementById('submitProofBtn').disabled = !file;
     };
 
-    // Confirm Task (Queues reward for 1 hour if paid, completes step)
     window.confirmTaskCompletion = async function() {
       const btn = document.getElementById('submitProofBtn');
       btn.disabled = true;
@@ -555,22 +582,20 @@
           const nextCount = completedAdsCount + 1;
           const updates = { completedAdsCount: nextCount };
 
-          // 1 Hour Lock trigger after 26 ads
           if (nextCount >= adLinks.length) {
             updates.adLockTime = Date.now();
           }
 
           await update(ref(db, 'users/' + sessionUser.username), updates);
 
-          // Add to 1-Hour Pending Rewards queue if ad is paid
           if (isPaid) {
             const pendingRef = push(ref(db, `users/${sessionUser.username}/pendingRewards`));
             await update(pendingRef, {
               amount: 0.20,
-              releaseTime: Date.now() + (60 * 60 * 1000), // 1 Hour Timer
+              releaseTime: Date.now() + (60 * 60 * 1000),
               adIndex: activeAdIndex
             });
-            alert("Task Verified! Rs 0.20 queued. It will automatically credit to your balance after 1 hour.");
+            alert("Task Verified! Rs 0.20 queued. Countdown timer balance box ke neeche start ho gaya hai.");
           } else {
             alert("Task Verified & Completed!");
           }

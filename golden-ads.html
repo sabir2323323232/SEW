@@ -37,9 +37,6 @@
     body {
       min-height: 100vh;
       background-color: var(--bg-body);
-      background-image: 
-        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.03) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.03) 0px, transparent 50%);
       display: flex;
       justify-content: center;
       align-items: flex-start;
@@ -52,13 +49,13 @@
       max-width: 520px;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 16px;
     }
 
     .card {
       background: var(--card-bg);
-      border-radius: 24px;
-      padding: 24px;
+      border-radius: 20px;
+      padding: 20px;
       box-shadow: var(--shadow-soft);
       border: 1px solid #ffffff;
     }
@@ -67,7 +64,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .back-btn {
@@ -91,8 +88,8 @@
 
     .balance-box {
       background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-      border-radius: 18px;
-      padding: 18px;
+      border-radius: 16px;
+      padding: 16px;
       color: #ffffff;
       text-align: center;
       box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
@@ -111,22 +108,22 @@
       margin-top: 2px;
     }
 
-    /* Policy Notice */
+    /* Policy Rules Box */
     .policy-box {
       background: #fffbeebf;
       border: 1.5px solid #fde68a;
       border-radius: 16px;
-      padding: 16px;
+      padding: 14px 16px;
       font-size: 12.5px;
       color: #78350f;
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
     .policy-box h4 {
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 800;
       color: #92400e;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -136,78 +133,114 @@
       padding-left: 18px;
     }
 
-    /* Ad Task Box */
-    .task-card {
+    /* Ad Buttons Grid */
+    .ads-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .ad-btn {
+      background: var(--input-bg);
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .ad-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: #eff6ff;
+    }
+
+    .ad-btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      background: #e2e8f0;
+      border-color: #cbd5e1;
+    }
+
+    .ad-btn i {
+      font-size: 18px;
+      color: var(--primary);
+    }
+
+    .ad-btn.completed {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      color: #047857;
+    }
+
+    .ad-btn.completed i {
+      color: var(--success);
+    }
+
+    /* Task Verification Modal / Area */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px;
+      width: 100%;
+      max-width: 400px;
       text-align: center;
       display: flex;
       flex-direction: column;
       gap: 16px;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
     }
 
-    .task-badge {
-      align-self: center;
-      background: #eff6ff;
-      color: var(--primary);
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 13px;
-      font-weight: 700;
+    .timer-text {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--warning);
     }
 
-    .btn {
-      width: 100%;
-      padding: 14px;
+    .file-input-box {
+      background: var(--input-bg);
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px dashed #cbd5e1;
+      font-size: 12px;
+    }
+
+    .submit-btn {
+      padding: 12px;
       border: none;
       border-radius: 12px;
-      background: var(--primary);
-      color: #ffffff;
-      font-size: 15px;
+      background: var(--success);
+      color: #fff;
       font-weight: 700;
+      font-size: 14px;
       cursor: pointer;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.25s ease;
     }
 
-    .btn:disabled {
+    .submit-btn:disabled {
       background: #94a3b8;
       cursor: not-allowed;
     }
 
-    /* Timer Display */
-    .timer-box {
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--warning);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    /* Proof Uploader */
-    .upload-section {
-      display: none;
-      flex-direction: column;
-      gap: 12px;
-      background: var(--input-bg);
-      padding: 16px;
-      border-radius: 14px;
-      border: 1px dashed #cbd5e1;
-    }
-
-    .upload-section label {
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .file-input {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
+    /* 24 Hour Lock Box */
     .lock-box {
       display: none;
       background: #fee2e2;
@@ -218,19 +251,6 @@
       text-align: center;
       font-weight: 700;
     }
-
-    .status-msg {
-      font-size: 13px;
-      font-weight: 600;
-      text-align: center;
-      padding: 10px;
-      border-radius: 8px;
-      display: none;
-    }
-
-    .status-msg.error { background: #fef2f2; color: var(--danger); display: block; }
-    .status-msg.success { background: #ecfdf5; color: var(--success); display: block; }
-    .status-msg.info { background: #eff6ff; color: var(--primary); display: block; }
   </style>
 </head>
 <body>
@@ -239,7 +259,7 @@
     <div class="card">
       <div class="card-header">
         <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-        <div class="header-title">Ad Tasks & Earning</div>
+        <div class="header-title">Watch Ads Buttons</div>
         <div style="width: 40px;"></div>
       </div>
 
@@ -250,46 +270,48 @@
     </div>
 
     <div class="policy-box">
-      <h4><i class="fa-solid fa-shield-halved"></i> Strict Earning Policy</h4>
+      <h4><i class="fa-solid fa-shield-halved"></i> Strict Policy Rules</h4>
       <ul>
-        <li>Har ad open karne ke baad minimum <strong>20 seconds</strong> page/app par stay karna lazmi hai.</li>
-        <li>Ad me diye gaye app/website par register karke <strong>Proof Screenshot</strong> attach karna hoga.</li>
-        <li>Screenshot submit hone ke baad rewards <strong>1 ghante ke andar auto-verify</strong> ho kar balance me add honge.</li>
-        <li>Sabh 26 task complete karne ke baad agla set <strong>24 ghante ke baad</strong> unlocked hoga.</li>
+        <li>Ad button click karne ke baad kam az kam <strong>20 seconds</strong> ad page/app par ruka lazmi hai.</li>
+        <li>App download ya register karke <strong>Proof Screenshot</strong> attach karna zaroori hai.</li>
+        <li>Screenshot submit karne ke baad earnings <strong>1 ghante ke andar auto-credit</strong> ho jayegi.</li>
+        <li>Tamaam 26 ad buttons complete karne par agla task <strong>24 ghante ke baad</strong> unlocked hoga.</li>
       </ul>
     </div>
 
-    <div class="card task-card" id="taskBox">
-      <div class="task-badge" id="taskTracker">Task 1 of 26</div>
-      
-      <p id="instructionText" style="font-size: 14px; color: var(--text-muted); font-weight: 600;">
-        Click below to open Ad. Stay on page for 20 seconds and register if required.
-      </p>
-
-      <button class="btn" id="openAdBtn" onclick="startAdTask()">
-        <i class="fa-solid fa-up-right-from-square"></i> Open Ad & Start Timer
-      </button>
-
-      <div class="timer-box" id="timerBox">
-        <i class="fa-solid fa-hourglass-half"></i> Stay on Ad: <span id="timerSec">20</span>s
-      </div>
-
-      <div class="upload-section" id="uploadSection">
-        <label><i class="fa-solid fa-camera"></i> Attach Registration Screenshot:</label>
-        <input type="file" id="proofInput" accept="image/*" class="file-input" onchange="enableSubmitBtn()" />
-        <button class="btn" id="submitTaskBtn" style="background: var(--success);" disabled onclick="submitTask()">
-          <i class="fa-solid fa-check-circle"></i> Submit Proof
-        </button>
-      </div>
-
-      <div class="status-msg" id="statusMsg"></div>
+    <div class="card" id="adsCard">
+      <div style="font-weight: 800; font-size: 15px; margin-bottom: 12px;">Click Any Ad Button:</div>
+      <div class="ads-grid" id="adsContainer">
+        </div>
     </div>
 
     <div class="lock-box" id="lockBox">
-      <i class="fa-solid fa-lock" style="font-size: 30px; margin-bottom: 8px;"></i>
-      <div>Daily Ads Limit Reached!</div>
-      <div style="font-size: 12px; margin-top: 6px; font-weight: 500;">
-        Next tasks will unlock in: <span id="cooldownTimer">24:00:00</span>
+      <i class="fa-solid fa-lock" style="font-size: 32px; margin-bottom: 8px;"></i>
+      <div>All 26 Ads Completed for Today!</div>
+      <div style="font-size: 13px; margin-top: 6px; font-weight: 500;">
+        Next unlocked in: <span id="cooldownTimer">24:00:00</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="taskModal">
+    <div class="modal-card">
+      <h3 id="modalTitle" style="font-size: 16px; font-weight: 800;">Ad #1 Task Running</h3>
+      
+      <div class="timer-text" id="timerBox">
+        <i class="fa-solid fa-hourglass-half"></i> Stay on Ad: <span id="timerSec">20</span>s
+      </div>
+
+      <div id="uploadBox" style="display: none; flex-direction: column; gap: 12px;">
+        <p style="font-size: 12px; color: var(--text-muted); font-weight: 600;">
+          Attach app/register screenshot below to verify task.
+        </p>
+        <div class="file-input-box">
+          <input type="file" id="proofInput" accept="image/*" onchange="checkProofSelected()" />
+        </div>
+        <button class="submit-btn" id="submitProofBtn" disabled onclick="confirmTaskCompletion()">
+          Submit Proof
+        </button>
       </div>
     </div>
   </div>
@@ -311,12 +333,11 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // Auth Session Check
     const sessionStr = localStorage.getItem('sew_session');
     if (!sessionStr) window.location.replace("index.html");
     const sessionUser = JSON.parse(sessionStr);
 
-    // Monetag Links Array (13 unique links duplicated to 26 spaced out items)
+    // 13 Monetag links provided (Duplicated to 26 spaced out buttons)
     const baseLinks = [
       "https://omg10.com/4/11668510",
       "https://omg10.com/4/11668513",
@@ -329,30 +350,31 @@
       "https://omg10.com/4/11668522",
       "https://omg10.com/4/11668523",
       "https://omg10.com/4/11668524",
-      "https://omg10.com/4/11668529",
-      "https://quge5.com/88/tag.min.js" // Multi-tag fallback trigger
+      "https://quge5.com/88/tag.min.js",
+      "https://omg10.com/4/11668529"
     ];
 
-    // Combine 1..13 then 1..13 so same links don't come together
+    // Total 26 links spaced out
     const adLinks = [...baseLinks, ...baseLinks];
 
-    // Pay pattern: 1st Paid (true), 3 Unpaid (false, false, false), 1 Paid, 2 Unpaid, 1 Paid, 2 Unpaid...
+    // Payment sequence pattern: 1st Paid, 3 Unpaid, 1 Paid, 2 Unpaid, 1 Paid, 2 Unpaid...
     const payoutPattern = [
-      true,  false, false, false, // 1 paid, 3 unpaid
-      true,  false, false,       // 1 paid, 2 unpaid
-      true,  false, false,       // 1 paid, 2 unpaid
-      true,  false, false,       // 1 paid, 2 unpaid
-      true,  false, false,       // 1 paid, 2 unpaid
-      true,  false, false,       // 1 paid, 2 unpaid
-      true,  false, false,       // 1 paid, 2 unpaid
-      true,  false               // 1 paid, 1 unpaid (Total 26 tasks)
+      true,  false, false, false, // Ad 1 (Paid), Ad 2..4 (Unpaid)
+      true,  false, false,       // Ad 5 (Paid), Ad 6..7 (Unpaid)
+      true,  false, false,       // Ad 8 (Paid), Ad 9..10 (Unpaid)
+      true,  false, false,       // Ad 11 (Paid)...
+      true,  false, false,
+      true,  false, false,
+      true,  false, false,
+      true,  false               // Total 26 Ads
     ];
 
-    let currentTaskIndex = 0;
+    let completedAdsCount = 0;
     let mainBalance = 0;
     let lockTimestamp = 0;
+    let activeAdIndex = null;
 
-    // Realtime User Data Listener
+    // Real-time Database Listener
     const userRef = ref(db, 'users/' + sessionUser.username);
     onValue(userRef, (snapshot) => {
       if (snapshot.exists()) {
@@ -360,122 +382,128 @@
         mainBalance = parseFloat(data.balance || 0);
         document.getElementById('userBalance').innerText = "Rs. " + mainBalance.toFixed(2);
 
-        currentTaskIndex = data.adTaskIndex || 0;
+        completedAdsCount = data.completedAdsCount || 0;
         lockTimestamp = data.adLockTime || 0;
 
-        checkLockAndState();
+        renderButtonsAndLockCheck();
       }
     });
 
-    function checkLockAndState() {
+    function renderButtonsAndLockCheck() {
       const now = Date.now();
       const lockDuration = 24 * 60 * 60 * 1000; // 24 Hours
 
       if (lockTimestamp && (now - lockTimestamp < lockDuration)) {
-        // Show 24h Lock
-        document.getElementById('taskBox').style.display = 'none';
+        document.getElementById('adsCard').style.display = 'none';
         document.getElementById('lockBox').style.display = 'block';
         startCooldownTimer(lockDuration - (now - lockTimestamp));
       } else {
-        // Reset if 24 hours passed
         if (lockTimestamp && (now - lockTimestamp >= lockDuration)) {
           update(ref(db, 'users/' + sessionUser.username), {
-            adTaskIndex: 0,
+            completedAdsCount: 0,
             adLockTime: 0
           });
-          currentTaskIndex = 0;
+          completedAdsCount = 0;
         }
 
-        document.getElementById('taskBox').style.display = 'flex';
+        document.getElementById('adsCard').style.display = 'block';
         document.getElementById('lockBox').style.display = 'none';
-
-        if (currentTaskIndex >= adLinks.length) {
-          // Trigger 24h Lock
-          update(ref(db, 'users/' + sessionUser.username), { adLockTime: Date.now() });
-        } else {
-          document.getElementById('taskTracker').innerText = `Task ${currentTaskIndex + 1} of ${adLinks.length}`;
-        }
+        
+        generateAdButtons();
       }
     }
 
-    // 1. Open Ad & Start 20 Sec Timer
-    window.startAdTask = function() {
-      const targetUrl = adLinks[currentTaskIndex];
+    function generateAdButtons() {
+      const container = document.getElementById('adsContainer');
+      container.innerHTML = '';
+
+      for (let i = 0; i < adLinks.length; i++) {
+        const isDone = i < completedAdsCount;
+        const isNext = i === completedAdsCount;
+
+        const btn = document.createElement('button');
+        btn.className = `ad-btn ${isDone ? 'completed' : ''}`;
+        btn.disabled = !isNext; // Pehle ke ads ho chuke honge, serap agla button active rahega
+
+        if (isDone) {
+          btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Ad #${i + 1} Done`;
+        } else {
+          btn.innerHTML = `<i class="fa-solid fa-rectangle-ad"></i> Open Ad #${i + 1}`;
+          btn.onclick = () => handleAdButtonClick(i);
+        }
+
+        container.appendChild(btn);
+      }
+    }
+
+    // Handle Button Click
+    window.handleAdButtonClick = function(index) {
+      activeAdIndex = index;
+      const targetUrl = adLinks[index];
+
+      // Direct Monetag Link Open in new tab
       window.open(targetUrl, '_blank');
 
-      const openBtn = document.getElementById('openAdBtn');
-      const timerBox = document.getElementById('timerBox');
-      const timerSec = document.getElementById('timerSec');
-
-      openBtn.disabled = true;
-      timerBox.style.display = 'flex';
+      // Show Modal Timer & Verification
+      document.getElementById('modalTitle').innerText = `Ad #${index + 1} Verification`;
+      document.getElementById('taskModal').style.display = 'flex';
+      document.getElementById('timerBox').style.display = 'block';
+      document.getElementById('uploadBox').style.display = 'none';
+      document.getElementById('proofInput').value = '';
 
       let timeLeft = 20;
+      document.getElementById('timerSec').innerText = timeLeft;
+
       const interval = setInterval(() => {
         timeLeft--;
-        timerSec.innerText = timeLeft;
+        document.getElementById('timerSec').innerText = timeLeft;
 
         if (timeLeft <= 0) {
           clearInterval(interval);
-          timerBox.style.display = 'none';
-          document.getElementById('uploadSection').style.display = 'flex';
-          showStatus("Please attach the registration screenshot to submit task.", "info");
+          document.getElementById('timerBox').style.display = 'none';
+          document.getElementById('uploadBox').style.display = 'flex';
         }
       }, 1000);
     };
 
-    // Enable Submit button when file selected
-    window.enableSubmitBtn = function() {
+    window.checkProofSelected = function() {
       const file = document.getElementById('proofInput').files[0];
-      if (file) {
-        document.getElementById('submitTaskBtn').disabled = false;
-      }
+      document.getElementById('submitProofBtn').disabled = !file;
     };
 
-    // 2. Submit Task Logic (1 Hour verification delay client simulation + database reward calculation)
-    window.submitTask = async function() {
-      const submitBtn = document.getElementById('submitTaskBtn');
-      submitBtn.disabled = true;
-      submitBtn.innerText = "Verifying...";
+    window.confirmTaskCompletion = async function() {
+      const btn = document.getElementById('submitProofBtn');
+      btn.disabled = true;
+      btn.innerText = "Verifying...";
 
-      const isPaid = payoutPattern[currentTaskIndex];
-      const earnedAmount = isPaid ? 0.20 : 0;
+      const isPaid = payoutPattern[activeAdIndex];
+      const reward = isPaid ? 0.20 : 0;
 
-      // Simulate client verification
       setTimeout(async () => {
         try {
-          // Update Task Index in DB
-          const nextIndex = currentTaskIndex + 1;
-          const updates = { adTaskIndex: nextIndex };
+          const nextCount = completedAdsCount + 1;
+          const updates = { completedAdsCount: nextCount };
 
-          if (nextIndex >= adLinks.length) {
-            updates.adLockTime = Date.now();
+          // Aggregate balance update for paid ads
+          if (reward > 0) {
+            updates.balance = (mainBalance + reward).toFixed(2);
           }
 
-          // Add reward directly to Firebase (if this step is paid)
-          if (earnedAmount > 0) {
-            updates.balance = (mainBalance + earnedAmount).toFixed(2);
+          // Trigger 24h Lock after 26th Ad
+          if (nextCount >= adLinks.length) {
+            updates.adLockTime = Date.now();
           }
 
           await update(ref(db, 'users/' + sessionUser.username), updates);
 
-          showStatus(
-            earnedAmount > 0 
-              ? "Task Submitted! Rs 0.20 credited after 1-hr verification check." 
-              : "Task Verified & Completed!", 
-            "success"
-          );
-
-          // Reset UI for next task
-          document.getElementById('uploadSection').style.display = 'none';
-          document.getElementById('openAdBtn').disabled = false;
-          document.getElementById('proofInput').value = "";
-          submitBtn.innerText = "Submit Proof";
+          document.getElementById('taskModal').style.display = 'none';
+          btn.innerText = "Submit Proof";
 
         } catch (e) {
-          showStatus("Error: " + e.message, "error");
+          alert("Error: " + e.message);
+          btn.disabled = false;
         }
-      }, 1500);
+      }, 1200);
     };
 
     function startCooldownTimer(msLeft) {
@@ -493,12 +521,6 @@
 
         timerDisplay.innerText = `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
       }, 1000);
-    }
-
-    function showStatus(msg, type) {
-      const el = document.getElementById('statusMsg');
-      el.innerText = msg;
-      el.className = 'status-msg ' + type;
     }
   </script>
 </body>

@@ -273,6 +273,7 @@
       padding-bottom: 4px;
       margin-bottom: 4px;
       scrollbar-width: none;
+      min-height: 120px;
     }
 
     .product-grid::-webkit-scrollbar {
@@ -501,6 +502,16 @@
       gap: 3px;
       cursor: pointer;
       user-select: none;
+    }
+
+    .cat-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .cat-btn.active i {
+      color: #ffffff;
     }
 
     .cat-btn:active {
@@ -744,11 +755,12 @@
       <div class="categories-wrapper">
         <div class="category-section-title">Categories</div>
         <div class="category-grid">
-          <div class="cat-btn" onclick="navigateTo('clothes.html')"><i class="fa-solid fa-shirt"></i> Clothes</div>
-          <div class="cat-btn" onclick="navigateTo('tools.html')"><i class="fa-solid fa-screwdriver-wrench"></i> Tools</div>
-          <div class="cat-btn" onclick="navigateTo('mobiles.html')"><i class="fa-solid fa-mobile-screen-button"></i> Mobiles</div>
-          <div class="cat-btn" onclick="navigateTo('motors.html')"><i class="fa-solid fa-motorcycle"></i> Motors</div>
-          <div class="cat-btn" onclick="navigateTo('jewelry.html')"><i class="fa-solid fa-gem"></i> Jewelry</div>
+          <div class="cat-btn active" onclick="filterByCategory('all', this)"><i class="fa-solid fa-border-all"></i> All</div>
+          <div class="cat-btn" onclick="filterByCategory('clothes', this)"><i class="fa-solid fa-shirt"></i> Clothes</div>
+          <div class="cat-btn" onclick="filterByCategory('tools', this)"><i class="fa-solid fa-screwdriver-wrench"></i> Tools</div>
+          <div class="cat-btn" onclick="filterByCategory('mobiles', this)"><i class="fa-solid fa-mobile-screen-button"></i> Mobiles</div>
+          <div class="cat-btn" onclick="filterByCategory('motors', this)"><i class="fa-solid fa-motorcycle"></i> Motors</div>
+          <div class="cat-btn" onclick="filterByCategory('jewelry', this)"><i class="fa-solid fa-gem"></i> Jewelry</div>
         </div>
       </div>
     </section>
@@ -864,6 +876,23 @@
         grid.scrollBy({ left: amount, behavior: 'smooth' });
       }
     }
+
+    function handleLogout() {
+      localStorage.removeItem('sew_session');
+      window.location.replace("index.html");
+    }
+
+    function openProfileModal() {
+      document.getElementById('profileModal').style.display = 'flex';
+    }
+
+    function closeProfileModal() {
+      document.getElementById('profileModal').style.display = 'none';
+    }
+
+    function closeViewOrderModal() {
+      document.getElementById('viewOrderDetailModal').style.display = 'none';
+    }
   </script>
 
   <!-- Firebase Module Script -->
@@ -893,6 +922,7 @@
     const userData = JSON.parse(rawSession || '{}');
     let selectedProduct = null;
     let myUserOrdersMap = {};
+    let selectedCategory = 'all';
 
     function renderUserUI(data) {
       if(!data) return;
@@ -929,6 +959,7 @@
       {
         id: "p1",
         name: "Luxury Smart Watch",
+        category: "tools",
         details: "Ultra display, water resistant smart watch with sports tracking.",
         price: 2499,
         image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300"
@@ -936,30 +967,41 @@
       {
         id: "p2",
         name: "Airbuds Pro",
+        category: "mobiles",
         details: "Noise cancellation sound, long battery backup.",
         price: 1850,
         image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300"
       }
     ];
 
-    // REALTIME PRODUCTS SYNC
-    onValue(ref(db, 'products'), (snapshot) => {
+    // FUNCTION TO DISPLAY PRODUCTS ACCORDING TO SELECTED CATEGORY & SEARCH
+    function renderFilteredProducts() {
       const grid = document.getElementById('productGrid');
       grid.innerHTML = "";
 
-      let productList = [];
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        Object.keys(data).forEach(key => {
-          productList.push({ id: key, ...data[key] });
-        });
-      } else {
-        productList = defaultProducts;
+      const productList = window.currentProducts || defaultProducts;
+      const searchVal = (document.getElementById('searchInput')?.value || '').toLowerCase();
+
+      const filtered = productList.filter(p => {
+        const pCategory = (p.category || '').toLowerCase().trim();
+        const pName = (p.name || '').toLowerCase();
+        
+        // Category Filter logic (matches exact category or product name fallback)
+        const matchesCategory = selectedCategory === 'all' || 
+          pCategory === selectedCategory.toLowerCase() || 
+          pName.includes(selectedCategory.toLowerCase());
+
+        const matchesSearch = !searchVal || pName.includes(searchVal);
+
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="no-orders-text" style="width:100%; font-size:10px;">No products found for this category.</div>`;
+        return;
       }
 
-      window.currentProducts = productList;
-
-      productList.forEach(p => {
+      filtered.forEach(p => {
         grid.innerHTML += `
           <div class="product-card" data-title="${(p.name || '').toLowerCase()}" onclick="openOrderModal('${p.id}')">
             <img src="${p.image || 'https://via.placeholder.com/150'}" class="product-img" alt="${p.name}" />
@@ -972,6 +1014,38 @@
           </div>
         `;
       });
+    }
+
+    // ON CLICK CATEGORY BUTTON FILTER
+    window.filterByCategory = function(categoryName, element) {
+      selectedCategory = categoryName;
+
+      // Active state on category buttons
+      const catBtns = document.querySelectorAll('.cat-btn');
+      catBtns.forEach(btn => btn.classList.remove('active'));
+      if(element) element.classList.add('active');
+
+      renderFilteredProducts();
+    };
+
+    window.filterProducts = function() {
+      renderFilteredProducts();
+    };
+
+    // REALTIME PRODUCTS SYNC FROM FIREBASE
+    onValue(ref(db, 'products'), (snapshot) => {
+      let productList = [];
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        Object.keys(data).forEach(key => {
+          productList.push({ id: key, ...data[key] });
+        });
+      } else {
+        productList = defaultProducts;
+      }
+
+      window.currentProducts = productList;
+      renderFilteredProducts();
     });
 
     // REALTIME ORDERS SYNC (MY ORDERS BOX & ADMIN STATUS UPDATE)
@@ -990,7 +1064,6 @@
 
       Object.keys(allOrders).reverse().forEach(oKey => {
         const ord = allOrders[oKey];
-        // Match order with current user
         if (ord.username === userData.username || ord.customerEmail === userData.email) {
           userOrdersCount++;
           myUserOrdersMap[oKey] = ord;
@@ -1051,6 +1124,22 @@
       document.getElementById('orderTotalPrice').innerText = "Rs. " + total;
     };
 
+    window.openViewOrderModal = function(oKey) {
+      const ord = myUserOrdersMap[oKey];
+      if(!ord) return;
+      document.getElementById('vProductTitle').innerText = ord.productName || '-';
+      document.getElementById('vCustomerName').innerText = ord.customerName || '-';
+      document.getElementById('vMobile').innerText = ord.mobile || '-';
+      document.getElementById('vWhatsapp').innerText = ord.whatsapp || '-';
+      document.getElementById('vCity').innerText = ord.city || '-';
+      document.getElementById('vLocation').innerText = ord.location || '-';
+      document.getElementById('vQuantity').innerText = ord.quantity || '1';
+      document.getElementById('vTotalPrice').innerText = "Rs. " + (ord.totalPrice || '0');
+      document.getElementById('vStatus').innerText = ord.status || 'Pending';
+
+      document.getElementById('viewOrderDetailModal').style.display = 'flex';
+    };
+
     // FIREBASE PLACE ORDER SUBMISSION
     window.handlePlaceOrder = async function(e) {
       e.preventDefault();
@@ -1077,89 +1166,38 @@
       btn.innerText = "Submitting Order...";
 
       try {
-        const newOrder = {
+        const orderData = {
           productId: selectedProduct.id,
           productName: selectedProduct.name,
-          quantity: quantity,
-          unitPrice: unitPrice,
-          totalPrice: totalPrice,
+          username: userData.username || "",
           customerName: name,
-          username: userData.username || 'N/A',
-          customerEmail: userData.email || 'N/A',
+          customerEmail: userData.email || "",
           mobile: mobile,
           whatsapp: whatsapp,
           city: city,
+          quantity: quantity,
           location: location,
+          unitPrice: unitPrice,
+          totalPrice: totalPrice,
           status: "Pending",
-          createdAt: new Date().toISOString()
+          createdAt: Date.now()
         };
 
-        await push(ref(db, 'orders'), newOrder);
+        await push(ref(db, 'orders'), orderData);
 
-        alertBox.innerText = "Order Placed Successfully! It will appear in 'My Orders'.";
+        alertBox.innerText = "Order placed successfully!";
         alertBox.className = "status-alert success";
-
         setTimeout(() => {
           closeOrderModal();
-          btn.disabled = false;
-          btn.innerText = "Confirm Order";
-        }, 1500);
-
+        }, 1200);
       } catch (err) {
-        alertBox.innerText = "Order Failed: " + err.message;
+        console.error("Order error:", err);
+        alertBox.innerText = "Failed to place order. Try again!";
         alertBox.className = "status-alert error";
+      } finally {
         btn.disabled = false;
         btn.innerText = "Confirm Order";
       }
-    };
-
-    // OPEN ORDER DETAILS MODAL (VIEW ORDERED PRODUCT DETAILS)
-    window.openViewOrderModal = function(orderId) {
-      const ord = myUserOrdersMap[orderId];
-      if (!ord) return;
-
-      document.getElementById('vProductTitle').innerText = ord.productName || 'Product';
-      document.getElementById('vCustomerName').innerText = ord.customerName || 'N/A';
-      document.getElementById('vMobile').innerText = ord.mobile || 'N/A';
-      document.getElementById('vWhatsapp').innerText = ord.whatsapp || 'N/A';
-      document.getElementById('vCity').innerText = ord.city || 'N/A';
-      document.getElementById('vLocation').innerText = ord.location || 'N/A';
-      document.getElementById('vQuantity').innerText = ord.quantity || 1;
-      document.getElementById('vTotalPrice').innerText = "Rs. " + (ord.totalPrice || 0);
-      
-      const isOk = (ord.status || '').toLowerCase() === 'ok' || (ord.status || '').toLowerCase() === 'confirmed' || (ord.status || '').toLowerCase() === 'delivered';
-      document.getElementById('vStatus').innerHTML = isOk 
-        ? `<span class="order-status-badge status-ok">OK / Confirmed</span>` 
-        : `<span class="order-status-badge status-pending">${ord.status || 'Pending'}</span>`;
-
-      document.getElementById('viewOrderDetailModal').style.display = 'flex';
-    };
-
-    window.closeViewOrderModal = function() {
-      document.getElementById('viewOrderDetailModal').style.display = 'none';
-    };
-
-    // GLOBAL ACTIONS
-    window.handleLogout = function() {
-      localStorage.removeItem('sew_session');
-      window.location.replace("index.html");
-    };
-
-    window.openProfileModal = function() {
-      document.getElementById('profileModal').style.display = 'flex';
-    };
-
-    window.closeProfileModal = function() {
-      document.getElementById('profileModal').style.display = 'none';
-    };
-
-    window.filterProducts = function() {
-      const q = document.getElementById('searchInput').value.toLowerCase();
-      const cards = document.querySelectorAll('.product-card');
-      cards.forEach(card => {
-        const title = card.getAttribute('data-title') || '';
-        card.style.display = title.includes(q) ? 'flex' : 'none';
-      });
     };
   </script>
 </body>

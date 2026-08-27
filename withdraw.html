@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SEW - Withdraw Funds</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <style>
+    :root {
+      --bg-body: #f8fafc;
+      --card-bg: #ffffff;
+      --input-bg: #f1f5f9;
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --shadow-soft: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-body);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.03) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.03) 0px, transparent 50%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      color: var(--text-main);
+    }
+
+    .withdraw-card {
+      width: 100%;
+      max-width: 520px;
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: 32px 24px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid #ffffff;
+      animation: smoothFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes smoothFadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .back-btn {
+      background: var(--input-bg);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .back-btn:hover {
+      background: var(--border-color);
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .balance-box {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      border-radius: 18px;
+      padding: 20px;
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+    }
+
+    .balance-box label {
+      font-size: 13px;
+      opacity: 0.85;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .balance-amount {
+      font-size: 32px;
+      font-weight: 800;
+      margin-top: 4px;
+    }
+
+    .schedule-notice {
+      background: #fef3c7;
+      border: 1px solid #fde68a;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font-size: 12.5px;
+      color: #92400e;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .schedule-notice i {
+      font-size: 16px;
+      color: var(--warning);
+    }
+
+    .input-group {
+      margin-bottom: 14px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+
+    .field-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .field-wrapper i {
+      position: absolute;
+      left: 14px;
+      color: #94a3b8;
+      font-size: 15px;
+      transition: color 0.25s ease;
+    }
+
+    .field-wrapper input, .field-wrapper select {
+      width: 100%;
+      padding: 13px 14px 13px 44px;
+      background: var(--input-bg);
+      border: 1.5px solid transparent;
+      border-radius: 12px;
+      color: var(--text-main);
+      font-size: 14px;
+      font-weight: 500;
+      outline: none;
+      transition: all 0.25s ease;
+      appearance: none;
+    }
+
+    .field-wrapper input:focus, .field-wrapper select:focus {
+      background: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    .submit-btn:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+
+    .status-msg {
+      font-size: 13px;
+      margin-top: 12px;
+      font-weight: 600;
+      text-align: center;
+      display: none;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .status-msg.error {
+      color: var(--danger);
+      background: #fef2f2;
+      border: 1px solid #fee2e2;
+      display: block;
+    }
+
+    .status-msg.success {
+      color: var(--success);
+      background: #ecfdf5;
+      border: 1px solid #d1fae5;
+      display: block;
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top: 2px solid #ffffff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: inline-block;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="withdraw-card">
+    <div class="card-header">
+      <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+      <div class="header-title">Withdraw Funds</div>
+      <div style="width: 40px;"></div>
+    </div>
+
+    <div class="balance-box">
+      <label>Available Balance</label>
+      <div class="balance-amount" id="realtimeBalance">Rs. 0.00</div>
+    </div>
+
+    <div class="schedule-notice" id="dayNotice">
+      <i class="fa-solid fa-calendar-check"></i>
+      <span>Withdrawals are processed only on <strong>Monday</strong> & <strong>Friday</strong>.</span>
+    </div>
+
+    <form id="withdrawForm" onsubmit="handleWithdraw(event)">
+      
+      <div class="input-group">
+        <label>Payment Method</label>
+        <div class="field-wrapper">
+          <select id="paymentMethod" required>
+            <option value="" disabled selected>Select Payment Method</option>
+            <option value="JazzCash">JazzCash</option>
+            <option value="EasyPaisa">EasyPaisa</option>
+          </select>
+          <i class="fa-solid fa-wallet"></i>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Account Title / Full Name</label>
+        <div class="field-wrapper">
+          <input type="text" id="accName" placeholder="Account Title (e.g. Sabir Khan)" required />
+          <i class="fa-solid fa-user"></i>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Account / Mobile Number</label>
+        <div class="field-wrapper">
+          <input type="tel" id="accNumber" placeholder="e.g. 03001234567" required />
+          <i class="fa-solid fa-phone"></i>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Email Address</label>
+        <div class="field-wrapper">
+          <input type="email" id="accEmail" placeholder="yourname@gmail.com" required />
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label>Withdraw Amount (Min: Rs. 350)</label>
+        <div class="field-wrapper">
+          <input type="number" id="withdrawAmount" min="350" placeholder="Minimum 350" required />
+          <i class="fa-solid fa-money-bill-wave"></i>
+        </div>
+      </div>
+
+      <div class="status-msg" id="withdrawStatus"></div>
+
+      <button type="submit" class="submit-btn" id="withdrawBtn">
+        <span>Submit Request</span>
+        <i class="fa-solid fa-paper-plane"></i>
+      </button>
+
+    </form>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue, push, set, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
+      authDomain: "newweb-d50af.firebaseapp.com",
+      databaseURL: "https://newweb-d50af-default-rtdb.firebaseio.com",
+      projectId: "newweb-d50af",
+      storageBucket: "newweb-d50af.firebasestorage.app",
+      messagingSenderId: "358603295768",
+      appId: "1:358603295768:web:82a9666514a7cb468c476d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // 1. Session Check
+    const sessionStr = localStorage.getItem('sew_session');
+    if (!sessionStr) {
+      window.location.replace("index.html");
+    }
+    const sessionUser = JSON.parse(sessionStr);
+
+    let currentTotalBalance = 0;
+
+    // Prefill Email & Name if available
+    if (sessionUser.email) document.getElementById('accEmail').value = sessionUser.email;
+    if (sessionUser.fullName) document.getElementById('accName').value = sessionUser.fullName;
+
+    // 2. Real-time Balance Listener
+    const userRef = ref(db, 'users/' + sessionUser.username);
+    onValue(userRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        const mainBal = parseFloat(data.balance || 0);
+        const refBal = parseFloat(data.referralBalance || 0);
+        
+        currentTotalBalance = mainBal + refBal;
+        document.getElementById('realtimeBalance').innerText = "Rs. " + currentTotalBalance.toFixed(2);
+      }
+    });
+
+    // 3. Day Validation Function (1 = Monday, 5 = Friday)
+    function isWithdrawAllowedDay() {
+      const today = new Date().getDay(); // 0: Sun, 1: Mon, 2: Tue, 3: Wed, 4: Thu, 5: Fri, 6: Sat
+      return (today === 1 || today === 5);
+    }
+
+    // Initial Day Check UI Feedback
+    const btn = document.getElementById('withdrawBtn');
+    const statusMsg = document.getElementById('withdrawStatus');
+    
+    if (!isWithdrawAllowedDay()) {
+      showStatus(statusMsg, "Today is not a withdrawal day. Requests open only on Monday & Friday.", "error");
+    }
+
+    // 4. Handle Withdraw Request Submission
+    window.handleWithdraw = async function(e) {
+      e.preventDefault();
+
+      const method = document.getElementById('paymentMethod').value;
+      const name = document.getElementById('accName').value.trim();
+      const number = document.getElementById('accNumber').value.trim();
+      const email = document.getElementById('accEmail').value.trim();
+      const amount = parseFloat(document.getElementById('withdrawAmount').value);
+
+      // Rule Validation 1: Day Check
+      if (!isWithdrawAllowedDay()) {
+        showStatus(statusMsg, "Withdrawal failed! Requests can only be submitted on Monday or Friday.", "error");
+        return;
+      }
+
+      // Rule Validation 2: Minimum Amount Check
+      if (amount < 350) {
+        showStatus(statusMsg, "Minimum withdrawal amount is Rs. 350!", "error");
+        return;
+      }
+
+      // Rule Validation 3: Balance Check
+      if (amount > currentTotalBalance) {
+        showStatus(statusMsg, "Insufficient balance! Available: Rs. " + currentTotalBalance.toFixed(2), "error");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<span class="spinner"></span> Processing...`;
+
+      try {
+        // Push Request to Firebase RTDB under 'withdrawals' (for Admin Panel)
+        const newWithdrawRef = push(ref(db, 'withdrawals'));
+        const requestData = {
+          requestId: newWithdrawRef.key,
+          username: sessionUser.username,
+          fullName: name,
+          email: email,
+          paymentMethod: method,
+          accountNumber: number,
+          amount: amount,
+          status: "pending",
+          date: new Date().toLocaleDateString(),
+          timestamp: new Date().toISOString()
+        };
+
+        await set(newWithdrawRef, requestData);
+
+        // Deduct balance in real-time
+        const userRefData = ref(db, 'users/' + sessionUser.username);
+        onValue(userRefData, async (snapshot) => {
+          if (snapshot.exists()) {
+            const data = snapshot.val();
+            let mainBal = parseFloat(data.balance || 0);
+            let refBal = parseFloat(data.referralBalance || 0);
+
+            // Deduct first from main balance, then referral balance if needed
+            if (mainBal >= amount) {
+              mainBal -= amount;
+            } else {
+              const remaining = amount - mainBal;
+              mainBal = 0;
+              refBal = Math.max(0, refBal - remaining);
+            }
+
+            await update(ref(db, 'users/' + sessionUser.username), {
+              balance: mainBal.toFixed(2),
+              referralBalance: refBal
+            });
+          }
+        }, { onlyOnce: true });
+
+        showStatus(statusMsg, "Withdrawal request submitted successfully!", "success");
+        document.getElementById('withdrawForm').reset();
+        
+      } catch (err) {
+        showStatus(statusMsg, "Error: " + err.message, "error");
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span>Submit Request</span> <i class="fa-solid fa-paper-plane"></i>`;
+      }
+    };
+
+    function showStatus(element, message, type) {
+      element.innerText = message;
+      element.className = "status-msg " + type;
+    }
+  </script>
+</body>
+</html>

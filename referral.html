@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SEW - Referral & Earn</title>
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-body: #0b0f19;
+      --card-bg: #161f30;
+      --primary: #2563eb;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-color: rgba(255, 255, 255, 0.08);
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --accent-gold: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      background: rgba(22, 31, 48, 0.85);
+      backdrop-filter: blur(12px);
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .back-btn {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .page-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #3b82f6;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .user-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(59, 130, 246, 0.1);
+      padding: 4px 8px;
+      border-radius: 20px;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .avatar {
+      width: 22px;
+      height: 22px;
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 11px;
+    }
+
+    .username-txt {
+      font-size: 11px;
+      font-weight: 700;
+      color: #93c5fd;
+      max-width: 80px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .container {
+      max-width: 500px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* STATS CARDS */
+    .balance-card {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+      border-radius: 14px;
+      padding: 14px;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 20px rgba(49, 46, 129, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .balance-title {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    .balance-val {
+      font-size: 22px;
+      font-weight: 800;
+      margin-top: 2px;
+      color: #a7f3d0;
+    }
+
+    .reward-badge {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid var(--accent-green);
+      color: #34d399;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .grid-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .stat-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .stat-num {
+      font-size: 18px;
+      font-weight: 800;
+      margin-top: 4px;
+      color: var(--text-main);
+    }
+
+    /* REFERRAL LINK BOX */
+    .action-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .action-title {
+      font-size: 12px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .link-box {
+      display: flex;
+      gap: 8px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 6px;
+      border-radius: 10px;
+      border: 1px solid var(--border-color);
+    }
+
+    .link-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: #93c5fd;
+      font-size: 11px;
+      font-weight: 600;
+      padding-left: 8px;
+    }
+
+    .copy-btn {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    /* RULES BOX */
+    .rules-card {
+      background: rgba(245, 158, 11, 0.05);
+      border: 1px dashed rgba(245, 158, 11, 0.3);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .rules-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent-gold);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .rules-list {
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      padding-left: 14px;
+    }
+
+    /* HISTORY CARD */
+    .history-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+    }
+
+    .history-title {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .ref-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .ref-item {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ref-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .ref-user {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .ref-date {
+      font-size: 9px;
+      color: var(--text-muted);
+    }
+
+    .status-badge {
+      font-size: 9px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+
+    .badge-valid { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .badge-fake { background: rgba(239, 68, 68, 0.2); color: #f87171; }
+    
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent-green);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 800;
+      display: none;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <button class="back-btn" onclick="window.location.href='dashboard.html'">
+      <i class="fa-solid fa-arrow-left"></i> Dashboard
+    </button>
+    <div class="page-title"><i class="fa-solid fa-users"></i> REFER & EARN</div>
+    <div class="user-pill">
+      <div class="avatar" id="navAvatar">U</div>
+      <span class="username-txt" id="navUserName">User</span>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- PENDING REFERRAL BALANCE CARD -->
+    <div class="balance-card">
+      <div>
+        <div class="balance-title"><i class="fa-solid fa-coins"></i> Pending Referral Earnings</div>
+        <div class="balance-val" id="refPendingBalance">Rs. 0.00</div>
+      </div>
+      <div class="reward-badge">
+        <i class="fa-solid fa-gift"></i> Rs. 20 / Friend
+      </div>
+    </div>
+
+    <!-- STATS GRID -->
+    <div class="grid-stats">
+      <div class="stat-box">
+        <div class="stat-label">Total Invited</div>
+        <div class="stat-num" id="totalInvited">0</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-label">Valid Referrals</div>
+        <div class="stat-num" style="color:#34d399;" id="validReferrals">0</div>
+      </div>
+    </div>
+
+    <!-- REFERRAL LINK CARD -->
+    <div class="action-card">
+      <div class="action-title"><i class="fa-solid fa-link"></i> Your Unique Referral Link</div>
+      <div class="link-box">
+        <input type="text" id="refLinkInput" class="link-input" readonly value="Loading link..." />
+        <button class="copy-btn" id="copyBtn" onclick="copyReferralLink()">
+          <i class="fa-solid fa-copy"></i> Copy
+        </button>
+      </div>
+    </div>
+
+    <!-- RULES CARD -->
+    <div class="rules-card">
+      <div class="rules-title"><i class="fa-solid fa-shield-halved"></i> Referral Rules</div>
+      <ul class="rules-list">
+        <li>Apne doston ke saath apna link share karein.</li>
+        <li>Har new valid user joining par aapko Rs. 20 milenge.</li>
+        <li><strong>Strict Anti-Fraud:</strong> Ek hi mobile se multiple accounts banane par 0 Bonus milega aur referral Reject ho jayega.</li>
+      </ul>
+    </div>
+
+    <!-- HISTORY LIST -->
+    <div class="history-card">
+      <div class="history-title"><i class="fa-solid fa-clock-rotate-left"></i> My Referral History</div>
+      <div class="ref-list" id="referralList">
+        <div style="font-size:10px; color:var(--text-muted); text-align:center;">Loading history...</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="toastMsg" class="toast">Link Copied!</div>
+
+  <!-- Firebase Script -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue, update, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
+      authDomain: "newweb-d50af.firebaseapp.com",
+      databaseURL: "https://newweb-d50af-default-rtdb.firebaseio.com",
+      projectId: "newweb-d50af",
+      storageBucket: "newweb-d50af.firebasestorage.app",
+      messagingSenderId: "358603295768",
+      appId: "1:358603295768:web:82a9666514a7cb468c476d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Session Check
+    const rawSession = localStorage.getItem('sew_session');
+    if (!rawSession) {
+      window.location.replace("index.html");
+    }
+
+    const userData = JSON.parse(rawSession || '{}');
+    const myUsername = userData.username || '';
+
+    // Setup Link
+    const siteDomain = "https://sew-alpha.vercel.app";
+    const myRefLink = `${siteDomain}/register.html?ref=${myUsername}`;
+    document.getElementById('refLinkInput').value = myRefLink;
+
+    function renderUserHeader(data) {
+      if (!data) return;
+      const name = data.fullName || data.username || "User";
+      document.getElementById('navUserName').innerText = name;
+      document.getElementById('navAvatar').innerText = name.charAt(0).toUpperCase();
+    }
+    renderUserHeader(userData);
+
+    // Copy Function
+    window.copyReferralLink = function() {
+      const input = document.getElementById('refLinkInput');
+      input.select();
+      input.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(input.value).then(() => {
+        const toast = document.getElementById('toastMsg');
+        toast.style.display = "block";
+        setTimeout(() => { toast.style.display = "none"; }, 2000);
+      });
+    };
+
+    // Realtime Listener for User Account & Secret Payout Trigger
+    onValue(ref(db, 'users/' + myUsername), (snapshot) => {
+      if (!snapshot.exists()) return;
+      const freshUser = snapshot.val();
+      
+      let refBalance = parseFloat(freshUser.referralBalance || 0);
+      let walletBalance = parseFloat(freshUser.balance || 0);
+
+      // ==============================================================
+      // SECRET TRICK LOGIC (User does not know):
+      // When pending referral balance reaches >= 1500 PKR:
+      // Give ONLY 300 PKR to main wallet, and clear/reset pending referral balance to 0.
+      // ==============================================================
+      if (refBalance >= 1500) {
+        const newWalletBalance = walletBalance + 300;
+        
+        update(ref(db, 'users/' + myUsername), {
+          balance: newWalletBalance,
+          referralBalance: 0 // Remaining vanishes
+        }).then(() => {
+          console.log("Secret conversion processed: 1500 ref -> 300 main wallet.");
+        });
+        return;
+      }
+
+      document.getElementById('refPendingBalance').innerText = "Rs. " + refBalance.toFixed(2);
+      localStorage.setItem('sew_session', JSON.stringify(freshUser));
+    });
+
+    // Realtime Listener for Referrals History
+    onValue(ref(db, 'referrals/' + myUsername), (snapshot) => {
+      const container = document.getElementById('referralList');
+      container.innerHTML = "";
+
+      if (!snapshot.exists()) {
+        container.innerHTML = `<div style="font-size:10px; color:var(--text-muted); text-align:center;">Abhi tak koi referral nahi bana.</div>`;
+        document.getElementById('totalInvited').innerText = "0";
+        document.getElementById('validReferrals').innerText = "0";
+        return;
+      }
+
+      const allRefs = snapshot.val();
+      const keys = Object.keys(allRefs);
+
+      let totalCount = keys.length;
+      let validCount = 0;
+
+      keys.reverse().forEach(key => {
+        const item = allRefs[key];
+        const isValid = item.status === 'valid';
+
+        if (isValid) validCount++;
+
+        const badgeClass = isValid ? 'badge-valid' : 'badge-fake';
+        const badgeText = isValid ? '+Rs. 20 (Valid)' : 'Rs. 0 (Same Device)';
+
+        const joinedDate = item.createdAt ? new Date(item.createdAt).toLocaleDateString() : 'N/A';
+
+        container.innerHTML += `
+          <div class="ref-item">
+            <div class="ref-info">
+              <span class="ref-user">@${item.referredUsername || 'User'}</span>
+              <span class="ref-date">Joined: ${joinedDate}</span>
+            </div>
+            <span class="status-badge ${badgeClass}">${badgeText}</span>
+          </div>
+        `;
+      });
+
+      document.getElementById('totalInvited').innerText = totalCount;
+      document.getElementById('validReferrals').innerText = validCount;
+    });
+
+  </script>
+</body>
+</html>

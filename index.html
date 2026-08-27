@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+><!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -368,6 +368,15 @@
             </div>
           </div>
 
+          <!-- REFERRAL CODE FIELD (OPTIONAL / AUTO-FILLED) -->
+          <div class="input-group full-width">
+            <label>Referral Code (Optional)</label>
+            <div class="field-wrapper">
+              <input type="text" id="regReferral" placeholder="e.g. referrer_username" />
+              <i class="fa-solid fa-users"></i>
+            </div>
+          </div>
+
         </div>
 
         <div class="status-msg" id="regStatus"></div>
@@ -427,7 +436,7 @@
   <!-- Firebase Modular SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, set, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, set, get, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
     import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
     const firebaseConfig = {
@@ -443,6 +452,15 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
     const auth = getAuth(app);
+
+    // Auto Detect URL Referral Code (?ref=username)
+    const urlParams = new URLSearchParams(window.location.search);
+    const refCodeFromUrl = urlParams.get('ref');
+    if (refCodeFromUrl) {
+      const cleanRef = refCodeFromUrl.trim().toLowerCase();
+      document.getElementById('regReferral').value = cleanRef;
+      localStorage.setItem('sew_pending_ref', cleanRef);
+    }
 
     // Session redirect check
     if (localStorage.getItem('sew_session')) {
@@ -465,6 +483,43 @@
       }
     };
 
+    // Helper Function to Process Referral Rewards & Anti-Fraud Logic
+    async function processReferral(newUser, referrerUsername) {
+      if (!referrerUsername || referrerUsername === newUser) return;
+
+      try {
+        const refSnap = await get(ref(db, 'users/' + referrerUsername));
+        if (!refSnap.exists()) return; // Referrer doesn't exist
+
+        // Check Anti-Fraud (Same Device Check)
+        const isDeviceRegistered = localStorage.getItem('sew_device_registered') === 'true';
+        const refStatus = isDeviceRegistered ? 'fake' : 'valid';
+
+        // Add Record in Referral History
+        await set(ref(db, `referrals/${referrerUsername}/${newUser}`), {
+          referredUsername: newUser,
+          status: refStatus,
+          createdAt: new Date().toISOString()
+        });
+
+        // Mark device as registered to prevent fraud multiple accounts
+        localStorage.setItem('sew_device_registered', 'true');
+
+        // If Valid, Add Rs 20 to Referrer's Referral Balance
+        if (refStatus === 'valid') {
+          const referrerData = refSnap.val();
+          const currentRefBal = parseFloat(referrerData.referralBalance || 0);
+          const newRefBal = currentRefBal + 20;
+
+          await update(ref(db, 'users/' + referrerUsername), {
+            referralBalance: newRefBal
+          });
+        }
+      } catch (err) {
+        console.error("Referral Error:", err);
+      }
+    }
+
     // REGISTER WITHOUT REQUIRING FIREBASE INDEX RULES
     window.handleRegister = async function(e) {
       e.preventDefault();
@@ -476,6 +531,7 @@
       const country = document.getElementById('regCountry').value.trim();
       const city = document.getElementById('regCity').value.trim();
       const password = document.getElementById('regPassword').value;
+      const referralBy = (document.getElementById('regReferral').value.trim() || localStorage.getItem('sew_pending_ref') || '').toLowerCase();
       
       const regSubmitBtn = document.getElementById('regSubmitBtn');
       const regStatus = document.getElementById('regStatus');
@@ -516,11 +572,18 @@
           city, 
           password, 
           balance: "0.00", 
+          referralBalance: 0,
+          referredBy: referralBy || "none",
           createdAt: new Date().toISOString() 
         };
 
         await set(ref(db, 'users/' + username), userData);
         
+        // Process Referral Reward Logic
+        if (referralBy) {
+          await processReferral(username, referralBy);
+        }
+
         // Store Session Token
         localStorage.setItem('sew_session', JSON.stringify(userData));
 
@@ -594,6 +657,7 @@
         const email = gUser.email.toLowerCase();
         const fullName = gUser.displayName || email.split('@')[0];
         const username = email.split('@')[0].replace(/[^a-z0-9]/g, "");
+        const referralBy = (document.getElementById('regReferral').value.trim() || localStorage.getItem('sew_pending_ref') || '').toLowerCase();
 
         // Fetch User Data from Firebase Realtime DB
         const snap = await get(ref(db, 'users/' + username));
@@ -611,9 +675,16 @@
             city: "N/A",
             password: "google_authenticated",
             balance: "0.00",
+            referralBalance: 0,
+            referredBy: referralBy || "none",
             createdAt: new Date().toISOString()
           };
           await set(ref(db, 'users/' + username), userData);
+
+          // Process Referral for New Google User
+          if (referralBy) {
+            await processReferral(username, referralBy);
+          }
         }
 
         localStorage.setItem('sew_session', JSON.stringify(userData));

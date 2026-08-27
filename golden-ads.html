@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,15 +107,47 @@
       margin-top: 2px;
     }
 
-    .pending-notice {
-      font-size: 12.5px;
-      color: #fef3c7;
-      margin-top: 6px;
+    /* Live 1-Hour Reward Countdown Box (Placed Directly Above Ads) */
+    .pending-box {
+      display: none;
+      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+      border: 2px solid #f59e0b;
+      border-radius: 16px;
+      padding: 14px;
+      text-align: center;
+      color: #78350f;
+      box-shadow: 0 8px 20px -6px rgba(245, 158, 11, 0.25);
+      animation: pulseBorder 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseBorder {
+      0%, 100% { border-color: #f59e0b; }
+      50% { border-color: #d97706; }
+    }
+
+    .pending-title {
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: #92400e;
+    }
+
+    .pending-countdown {
+      font-size: 28px;
+      font-weight: 900;
+      color: #b45309;
+      margin: 4px 0;
+      font-family: monospace;
+      letter-spacing: 1px;
+    }
+
+    .pending-amount {
+      font-size: 12px;
       font-weight: 700;
-      background: rgba(255, 255, 255, 0.15);
-      padding: 6px 12px;
-      border-radius: 10px;
-      display: inline-block;
+      color: #d97706;
     }
 
     /* Policy Rules Box */
@@ -272,11 +305,10 @@
         <div style="width: 40px;"></div>
       </div>
 
-      <!-- Realtime Balance & Live 1-Hour Reward Timer -->
+      <!-- Realtime Balance -->
       <div class="balance-box">
         <label>Current Balance</label>
         <div class="balance-amount" id="userBalance">Rs. 0.00</div>
-        <div class="pending-notice" id="pendingNotice" style="display: none;"></div>
       </div>
     </div>
 
@@ -289,6 +321,13 @@
         <li>App download ya register karke <strong>Proof Screenshot</strong> attach karna zaroori hai.</li>
         <li>Earnings <strong>1 ghante ke baad auto-credit</strong> hongi. Tamaam 26 ads ke baad <strong>24h lock</strong> ho jayega.</li>
       </ul>
+    </div>
+
+    <!-- Live 1-Hour Reward Countdown Box (Directly on Top of Ads Section) -->
+    <div class="pending-box" id="pendingTimerBox">
+      <div class="pending-title"><i class="fa-solid fa-hourglass-start fa-spin"></i> Reward Unlocking Timer</div>
+      <div class="pending-countdown" id="pendingCountdown">59m 59s</div>
+      <div class="pending-amount" id="pendingAmount">Rs. 0.20 Pending Reward</div>
     </div>
 
     <!-- Ads Buttons Grid -->
@@ -389,9 +428,9 @@
     let mainBalance = 0;
     let lockTimestamp = 0;
     let activeAdIndex = null;
+    let pendingRewardsData = null;
 
     let adTimerInterval = null;
-    let pendingTimerInterval = null;
     let isTimerFinished = false;
     let isAdActive = false;
 
@@ -405,77 +444,62 @@
 
         completedAdsCount = data.completedAdsCount || 0;
         lockTimestamp = data.adLockTime || 0;
-
-        // Start live 1-hour reward countdown timer
-        processPendingRewards(data);
+        pendingRewardsData = data.pendingRewards || null;
 
         renderButtonsAndLockCheck();
       }
     });
 
-    // Live 1-Hour Countdown Timer Logic for Pending Rewards
-    function processPendingRewards(userData) {
-      if (!userData.pendingRewards) {
-        document.getElementById('pendingNotice').style.display = 'none';
-        if (pendingTimerInterval) clearInterval(pendingTimerInterval);
+    // Independent Live 1-Hour Countdown Loop (Runs continuously without re-trigger bugs)
+    setInterval(() => {
+      if (!pendingRewardsData || Object.keys(pendingRewardsData).length === 0) {
+        document.getElementById('pendingTimerBox').style.display = 'none';
         return;
       }
-      
+
       const now = Date.now();
-      let pendingTotal = 0;
+      let totalPendingAmt = 0;
+      let earliestRelease = Infinity;
       let claimableTotal = 0;
-      let minReleaseTime = Infinity;
       let updates = {};
 
-      Object.keys(userData.pendingRewards).forEach(key => {
-        const item = userData.pendingRewards[key];
+      Object.keys(pendingRewardsData).forEach(key => {
+        const item = pendingRewardsData[key];
         if (now >= item.releaseTime) {
           claimableTotal += parseFloat(item.amount || 0);
           updates[`pendingRewards/${key}`] = null;
         } else {
-          pendingTotal += parseFloat(item.amount || 0);
-          if (item.releaseTime < minReleaseTime) {
-            minReleaseTime = item.releaseTime;
+          totalPendingAmt += parseFloat(item.amount || 0);
+          if (item.releaseTime < earliestRelease) {
+            earliestRelease = item.releaseTime;
           }
         }
       });
 
-      // Auto Add to Balance if 1 Hour Passed
+      // Auto Credit to Balance when 1 hour elapses
       if (claimableTotal > 0) {
-        const newBalance = (mainBalance + claimableTotal).toFixed(2);
-        updates['balance'] = newBalance;
+        const newBal = (mainBalance + claimableTotal).toFixed(2);
+        updates['balance'] = newBal;
         update(ref(db, 'users/' + sessionUser.username), updates);
       }
 
-      // Live Countdown Timer Display (e.g. ⏳ Pending Rs. 0.20 (Unlocks in: 58m 20s))
-      if (pendingTotal > 0 && minReleaseTime !== Infinity) {
-        document.getElementById('pendingNotice').style.display = 'inline-block';
-        
-        if (pendingTimerInterval) clearInterval(pendingTimerInterval);
+      // Render Live Countdown Banner Directly Above Ads
+      if (totalPendingAmt > 0 && earliestRelease !== Infinity) {
+        document.getElementById('pendingTimerBox').style.display = 'block';
+        document.getElementById('pendingAmount').innerText = `Rs. ${totalPendingAmt.toFixed(2)} Pending Reward`;
 
-        const updatePendingTimer = () => {
-          const currentTime = Date.now();
-          const diff = minReleaseTime - currentTime;
-
-          if (diff <= 0) {
-            clearInterval(pendingTimerInterval);
-            document.getElementById('pendingNotice').innerText = "⏳ Processing reward...";
-            return;
-          }
-
+        const diff = earliestRelease - now;
+        if (diff > 0) {
           const mins = Math.floor(diff / (1000 * 60));
           const secs = Math.floor((diff % (1000 * 60)) / 1000);
-          document.getElementById('pendingNotice').innerText = 
-            `⏳ Pending: Rs. ${pendingTotal.toFixed(2)} (Unlocks in: ${mins}m ${secs.toString().padStart(2, '0')}s)`;
-        };
-
-        updatePendingTimer();
-        pendingTimerInterval = setInterval(updatePendingTimer, 1000);
+          document.getElementById('pendingCountdown').innerText = `${mins}m ${secs.toString().padStart(2, '0')}s`;
+        } else {
+          document.getElementById('pendingCountdown').innerText = "Crediting Reward...";
+        }
       } else {
-        if (pendingTimerInterval) clearInterval(pendingTimerInterval);
-        document.getElementById('pendingNotice').style.display = 'none';
+        document.getElementById('pendingTimerBox').style.display = 'none';
       }
-    }
+    }, 1000);
 
     function renderButtonsAndLockCheck() {
       const now = Date.now();
@@ -483,6 +507,7 @@
 
       if (lockTimestamp && (now - lockTimestamp < lockDuration)) {
         document.getElementById('adsCard').style.display = 'none';
+        document.getElementById('pendingTimerBox').style.display = 'none';
         document.getElementById('lockBox').style.display = 'block';
         startCooldownTimer(lockDuration - (now - lockTimestamp));
       } else {
@@ -592,10 +617,9 @@
             const pendingRef = push(ref(db, `users/${sessionUser.username}/pendingRewards`));
             await update(pendingRef, {
               amount: 0.20,
-              releaseTime: Date.now() + (60 * 60 * 1000),
-              adIndex: activeAdIndex
+              releaseTime: Date.now() + (60 * 60 * 1000) // Exact 1 hour timer
             });
-            alert("Task Verified! Rs 0.20 queued. Countdown timer balance box ke neeche start ho gaya hai.");
+            alert("Task Verified! 1-Hour Reward Timer ads ke uper start ho gaya hai.");
           } else {
             alert("Task Verified & Completed!");
           }

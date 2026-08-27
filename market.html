@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>SEW - Affiliate Market</title>
+  <title>SEW - Dashboard & Market</title>
   
   <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -21,7 +21,6 @@
       --border-color: #e2e8f0;
       --accent-green: #10b981;
       --accent-orange: #f59e0b;
-      --accent-purple: #8b5cf6;
     }
 
     * {
@@ -30,6 +29,12 @@
       padding: 0;
       font-family: 'Plus Jakarta Sans', sans-serif;
       -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
     }
 
     body {
@@ -43,7 +48,7 @@
     /* NAVBAR */
     .navbar {
       background: #ffffff;
-      padding: 8px 12px;
+      padding: 6px 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -54,40 +59,41 @@
       box-shadow: 0 1px 8px rgba(0, 0, 0, 0.03);
     }
 
-    .back-btn {
-      background: #f1f5f9;
-      color: var(--text-main);
-      border: 1px solid var(--border-color);
-      padding: 5px 10px;
+    .logout-btn {
+      background: #fef2f2;
+      color: #ef4444;
+      border: 1px solid #fee2e2;
+      padding: 4px 8px;
       border-radius: 6px;
       font-weight: 700;
-      font-size: 11px;
+      font-size: 10px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 3px;
     }
 
     .brand-title {
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 800;
       color: var(--primary);
-      letter-spacing: 0.5px;
+      letter-spacing: 1px;
     }
 
     .profile-pill {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       background: var(--primary-soft);
-      padding: 4px 8px;
+      padding: 3px 6px;
       border-radius: 16px;
+      cursor: pointer;
       border: 1px solid #dbeafe;
     }
 
     .avatar {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       background: var(--primary);
       color: #ffffff;
       border-radius: 50%;
@@ -95,246 +101,433 @@
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 11px;
+      font-size: 10px;
     }
 
     .user-name-short {
       font-size: 10px;
       font-weight: 700;
       color: var(--primary);
-      max-width: 80px;
+      max-width: 75px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    /* CONTAINER */
+    /* FULL HEIGHT FLEX CONTAINER */
     .container {
       max-width: 500px;
       width: 100%;
       margin: 0 auto;
-      padding: 10px;
+      padding: 6px;
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 6px;
+      overflow-x: hidden;
     }
 
-    /* HERO BOARD */
-    .affiliate-hero {
-      background: linear-gradient(135deg, #4f46e5, #3b82f6);
+    /* EARNING SECTION */
+    .earning-section {
+      background: #ffffff;
       border-radius: 12px;
-      padding: 12px;
-      color: #ffffff;
-      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+      padding: 8px;
+      border: 1px solid var(--border-color);
     }
 
-    .hero-top {
+    .balance-card {
+      background: linear-gradient(135deg, #1e40af, #3b82f6);
+      border-radius: 8px;
+      padding: 6px 10px;
+      color: #ffffff;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
 
-    .hero-title {
-      font-size: 14px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .hero-tag {
-      background: rgba(255, 255, 255, 0.2);
-      font-size: 9px;
-      padding: 2px 6px;
-      border-radius: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-
-    .earning-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      background: rgba(255, 255, 255, 0.12);
-      backdrop-filter: blur(4px);
-      padding: 8px;
-      border-radius: 8px;
-    }
-
-    .stat-box p {
+    .balance-info p {
       font-size: 9px;
       opacity: 0.85;
       font-weight: 700;
       text-transform: uppercase;
     }
 
-    .stat-box h3 {
-      font-size: 15px;
+    .balance-amount {
+      font-size: 16px;
       font-weight: 800;
     }
 
-    /* ACCOUNT SETTINGS BOX */
-    .payout-card {
-      background: #ffffff;
-      border-radius: 10px;
-      padding: 10px;
+    .balance-icon {
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 8px;
+      border-radius: 6px;
+    }
+
+    /* 5 BUTTONS GRID */
+    .earning-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+    }
+
+    .earn-btn {
+      background: #f8fafc;
       border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px 2px;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-weight: 700;
+      font-size: 8px;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
     }
 
-    .payout-header {
-      font-size: 11px;
-      font-weight: 800;
-      margin-bottom: 8px;
-      color: var(--text-main);
+    .earn-btn:active {
+      background: #e2e8f0;
+    }
+
+    .earn-btn i {
+      font-size: 12px;
+      color: var(--primary);
+    }
+
+    /* MARKET BANNER */
+    .market-banner {
+      background: #0f172a;
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 5px 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .payout-inputs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
+    .market-banner-text h2 {
+      font-size: 11px;
+      font-weight: 800;
+      color: #f59e0b;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .payout-inputs input, .payout-inputs select {
-      padding: 6px 8px;
-      background: #f8fafc;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      font-size: 10px;
-      outline: none;
-    }
-
-    .save-payout-btn {
-      background: var(--accent-purple);
+    .discount-badge {
+      background: #ef4444;
       color: #ffffff;
-      border: none;
-      border-radius: 6px;
-      padding: 6px;
-      font-size: 10px;
-      font-weight: 700;
-      cursor: pointer;
-      grid-column: span 2;
-      margin-top: 4px;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 9px;
     }
 
-    /* SEARCH BOX */
+    /* MARKET SECTION */
+    .market-section {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 8px;
+      border: 1px solid var(--border-color);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
     .search-box {
       position: relative;
+      margin-bottom: 6px;
     }
 
     .search-box i {
       position: absolute;
-      left: 10px;
+      left: 8px;
       top: 50%;
       transform: translateY(-50%);
       color: #94a3b8;
-      font-size: 12px;
+      font-size: 11px;
     }
 
     .search-box input {
       width: 100%;
-      padding: 8px 10px 8px 30px;
-      background: #ffffff;
+      padding: 6px 8px 6px 26px;
+      background: #f8fafc;
       border: 1px solid var(--border-color);
-      border-radius: 8px;
+      border-radius: 6px;
       font-size: 11px;
       outline: none;
     }
 
-    /* PRODUCT GRID */
-    .affiliate-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+    /* PRODUCT HORIZONTAL SLIDER */
+    .product-grid {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 4px;
+      margin-bottom: 4px;
+      scrollbar-width: none;
+      min-height: 120px;
     }
 
-    .aff-card {
+    .product-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .product-card {
+      flex: 0 0 160px;
+      scroll-snap-align: start;
       background: #ffffff;
       border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 8px;
+      border-radius: 8px;
+      padding: 6px;
       display: flex;
       flex-direction: column;
-      position: relative;
+      cursor: pointer;
     }
 
-    .aff-img-wrapper {
-      position: relative;
+    .product-img {
       width: 100%;
-      height: 110px;
-      border-radius: 6px;
-      overflow: hidden;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 5px;
       background: #f1f5f9;
     }
 
-    .aff-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .download-badge {
-      position: absolute;
-      top: 5px; right: 5px;
-      background: rgba(15, 23, 42, 0.75);
-      color: #ffffff;
-      width: 26px; height: 26px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      cursor: pointer;
-      backdrop-filter: blur(2px);
-    }
-
-    .aff-title {
-      font-size: 11px;
+    .product-title {
+      font-size: 10px;
       font-weight: 700;
-      margin: 6px 0 2px 0;
+      margin: 4px 0 1px 0;
       color: var(--text-main);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    .aff-base-price {
-      font-size: 10px;
+    .product-desc {
+      font-size: 8px;
       color: var(--text-muted);
+      margin-bottom: 4px;
+      height: 12px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
 
-    .aff-price-num {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--primary);
+    .product-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
     }
 
-    .sell-btn {
-      width: 100%;
-      margin-top: 6px;
-      background: var(--accent-green);
-      color: #ffffff;
-      border: none;
-      padding: 6px;
-      border-radius: 6px;
+    .product-price {
       font-size: 10px;
       font-weight: 800;
+      color: var(--accent-green);
+    }
+
+    .order-btn {
+      background: var(--primary);
+      color: #ffffff;
+      padding: 3px 6px;
+      border-radius: 5px;
+      font-size: 9px;
+      font-weight: 700;
+      border: none;
       cursor: pointer;
+    }
+
+    /* PRODUCT SCROLL ARROWS */
+    .product-arrows {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      padding: 0 2px;
+    }
+
+    .arrow-btn {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid #dbeafe;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
+      font-size: 11px;
+      transition: background 0.2s;
+    }
+
+    .arrow-btn:active {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .arrow-text {
+      font-size: 9px;
+      color: var(--text-muted);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* MY ORDERS BOX SECTION */
+    .my-orders-box {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 8px;
+      margin-bottom: 8px;
+    }
+
+    .orders-header {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      text-transform: uppercase;
+    }
+
+    .my-orders-list {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+
+    .my-orders-list::-webkit-scrollbar {
+      display: none;
+    }
+
+    .order-mini-card {
+      flex: 0 0 130px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 6px;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+
+    .order-mini-card:active {
+      transform: scale(0.98);
+    }
+
+    .order-mini-name {
+      font-size: 9px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text-main);
+    }
+
+    .order-mini-qty {
+      font-size: 8px;
+      color: var(--text-muted);
+      margin: 2px 0;
+    }
+
+    .order-status-badge {
+      display: inline-block;
+      font-size: 8px;
+      font-weight: 800;
+      padding: 2px 5px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .status-pending {
+      background: #fef3c7;
+      color: #d97706;
+    }
+
+    .status-ok {
+      background: #d1fae5;
+      color: #059669;
+    }
+
+    .no-orders-text {
+      font-size: 9px;
+      color: var(--text-muted);
+      text-align: center;
+      width: 100%;
+      padding: 6px 0;
+    }
+
+    /* CATEGORIES AT BOTTOM WRAPPER */
+    .categories-wrapper {
+      margin-top: auto;
+      padding-top: 6px;
+    }
+
+    .category-section-title {
+      font-size: 9px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .category-grid {
+      display: flex;
+      flex-wrap: wrap;
       gap: 4px;
     }
 
-    /* MODAL STYLES */
+    .cat-btn {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      padding: 4px 8px;
+      border-radius: 6px;
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 9px;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .cat-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+    }
+
+    .cat-btn.active i {
+      color: #ffffff;
+    }
+
+    .cat-btn:active {
+      background: #e2e8f0;
+    }
+
+    .cat-btn i {
+      color: var(--primary);
+    }
+
+    /* MODALS */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(15, 23, 42, 0.5);
       display: none;
       justify-content: center;
       align-items: center;
@@ -345,9 +538,9 @@
     .modal-box {
       background: #ffffff;
       width: 100%;
-      max-width: 400px;
+      max-width: 360px;
       border-radius: 14px;
-      padding: 14px;
+      padding: 16px;
       position: relative;
       max-height: 90vh;
       overflow-y: auto;
@@ -358,101 +551,41 @@
       top: 10px; right: 10px;
       background: #f1f5f9;
       border: none;
-      width: 26px; height: 26px;
+      width: 24px; height: 24px;
       border-radius: 50%;
       cursor: pointer;
       font-weight: 800;
       font-size: 12px;
     }
 
-    /* MULTI-IMAGE GALLERY */
-    .image-gallery-container {
-      margin-bottom: 10px;
-    }
-
-    .main-gallery-img {
+    .order-img {
       width: 100%;
-      height: 140px;
+      height: 110px;
       object-fit: cover;
       border-radius: 8px;
-      margin-bottom: 6px;
-    }
-
-    .gallery-thumbs {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-    }
-
-    .thumb-img {
-      width: 45px; height: 45px;
-      object-fit: cover;
-      border-radius: 6px;
-      cursor: pointer;
-      border: 2px solid transparent;
-    }
-
-    .thumb-img.active {
-      border-color: var(--primary);
-    }
-
-    .download-all-btn {
-      background: #f1f5f9;
-      color: var(--text-main);
-      border: 1px solid var(--border-color);
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-size: 9px;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
       margin-bottom: 8px;
     }
 
-    /* COMMISSION CALCULATOR */
-    .commission-box {
-      background: var(--primary-soft);
-      border: 1px solid #bfdbfe;
-      border-radius: 8px;
-      padding: 8px;
-      margin-bottom: 10px;
-    }
-
-    .calc-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 11px;
-      margin-bottom: 4px;
-    }
-
-    .calc-input {
-      width: 90px;
-      padding: 4px 6px;
-      border: 1px solid var(--primary);
-      border-radius: 5px;
-      font-size: 11px;
-      font-weight: 700;
-      text-align: right;
-      outline: none;
-    }
-
-    .total-price-banner {
-      background: #10b981;
-      color: #ffffff;
-      padding: 6px 10px;
-      border-radius: 6px;
+    .order-title {
+      font-size: 14px;
       font-weight: 800;
-      font-size: 12px;
-      display: flex;
-      justify-content: space-between;
-      margin-top: 6px;
+      color: var(--text-main);
     }
 
-    /* FORM STYLES */
+    .order-desc {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin: 3px 0 8px 0;
+      line-height: 1.3;
+    }
+
+    .order-price-tag {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--accent-green);
+      margin-bottom: 8px;
+    }
+
     .form-group {
       margin-bottom: 8px;
     }
@@ -475,7 +608,7 @@
       outline: none;
     }
 
-    .submit-order-btn {
+    .confirm-btn {
       width: 100%;
       padding: 10px;
       background: var(--primary);
@@ -483,9 +616,27 @@
       border: none;
       border-radius: 8px;
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 700;
       cursor: pointer;
       margin-top: 6px;
+    }
+
+    .modal-avatar {
+      width: 40px; height: 40px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 16px; font-weight: 800;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 6px auto;
+    }
+
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 10px;
     }
 
     .status-alert {
@@ -505,11 +656,13 @@
 
   <!-- TOP NAVBAR -->
   <header class="navbar">
-    <button class="back-btn" onclick="window.history.back()">
-      <i class="fa-solid fa-arrow-left"></i> Back
+    <button class="logout-btn" onclick="handleLogout()">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
     </button>
-    <div class="brand-title"><i class="fa-solid fa-store"></i> Affiliate Market</div>
-    <div class="profile-pill">
+
+    <div class="brand-title">SEW</div>
+
+    <div class="profile-pill" onclick="openProfileModal()">
       <div class="avatar" id="navAvatar">U</div>
       <span class="user-name-short" id="navUserName">User</span>
     </div>
@@ -517,151 +670,236 @@
 
   <div class="container">
 
-    <!-- HERO BOARD -->
-    <section class="affiliate-hero">
-      <div class="hero-top">
-        <div class="hero-title">
-          <i class="fa-solid fa-hand-holding-dollar"></i> Resell & Earn
+    <!-- 1. EARNING & SINGLE BALANCE SECTION -->
+    <section class="earning-section">
+      <div class="balance-card">
+        <div class="balance-info">
+          <p>Total Balance</p>
+          <div class="balance-amount" id="userBalance">Rs. 0.00</div>
         </div>
-        <span class="hero-tag">Custom Profit</span>
+        <div class="balance-icon">
+          <i class="fa-solid fa-wallet"></i>
+        </div>
       </div>
-      <p style="font-size: 10px; opacity: 0.9; margin-bottom: 8px;">
-        Apne hisab se commission add karein. Client order karega, delivery par apka profit wallet me milega!
-      </p>
 
-      <div class="earning-stats">
-        <div class="stat-box">
-          <p>Main Balance</p>
-          <h3 id="userBalance">Rs. 0</h3>
+      <!-- 5 EARNING BUTTONS -->
+      <div class="earning-grid">
+        <div class="earn-btn" onclick="navigateTo('free-ads.html')">
+          <i class="fa-solid fa-rectangle-ad"></i>
+          <span>Free Ads</span>
         </div>
-        <div class="stat-box">
-          <p>Pending Profit</p>
-          <h3 id="pendingCommission">Rs. 0</h3>
+
+        <div class="earn-btn" onclick="navigateTo('referral.html')">
+          <i class="fa-solid fa-users"></i>
+          <span>Referral</span>
+        </div>
+
+        <div class="earn-btn" onclick="navigateTo('gmail-selling.html')">
+          <i class="fa-solid fa-envelope"></i>
+          <span>Gmail</span>
+        </div>
+
+        <div class="earn-btn" onclick="navigateTo('withdraw.html')">
+          <i class="fa-solid fa-money-bill-transfer"></i>
+          <span>Withdraw</span>
+        </div>
+
+        <div class="earn-btn" onclick="navigateTo('free-jobs.html')">
+          <i class="fa-solid fa-briefcase"></i>
+          <span>Jobs</span>
         </div>
       </div>
     </section>
 
-    <!-- ACCOUNT PAYOUT SETTINGS BOX -->
-    <section class="payout-card">
-      <div class="payout-header">
-        <span><i class="fa-solid fa-building-columns"></i> Account Details (Auto Payout)</span>
-        <i class="fa-solid fa-shield-halved" style="color:var(--accent-green)"></i>
+    <!-- MINI BANNER -->
+    <div class="market-banner">
+      <div class="market-banner-text">
+        <h2><i class="fa-solid fa-bolt"></i> MEGA MARKET 50% OFF</h2>
       </div>
-      <form id="payoutForm" onsubmit="savePayoutDetails(event)" class="payout-inputs">
-        <select id="payoutMethod" required>
-          <option value="EasyPaisa">EasyPaisa</option>
-          <option value="JazzCash">JazzCash</option>
-          <option value="Bank">Bank Account</option>
-        </select>
-        <input type="text" id="accountTitle" placeholder="Account Title Name" required />
-        <input type="text" id="accountNumber" placeholder="Account Number / Mobile" style="grid-column: span 2;" required />
-        <button type="submit" class="save-payout-btn">Save Account Details</button>
-      </form>
+      <div class="discount-badge">50% OFF</div>
+    </div>
+
+    <!-- 2. MARKETING & PRODUCTS SECTION -->
+    <section class="market-section">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()" />
+      </div>
+
+      <!-- Products Grid (Horizontal Slider) -->
+      <div class="product-grid" id="productGrid">
+        <!-- Loaded Realtime from Firebase -->
+      </div>
+
+      <!-- PRODUCT SCROLL ARROWS -->
+      <div class="product-arrows">
+        <button type="button" class="arrow-btn" onclick="scrollProducts(-160)">
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <span class="arrow-text"><i class="fa-solid fa-arrows-left-right"></i> Slide Products</span>
+        <button type="button" class="arrow-btn" onclick="scrollProducts(160)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <!-- MY ORDERS BOX -->
+      <div class="my-orders-box">
+        <div class="orders-header">
+          <i class="fa-solid fa-box-open" style="color:var(--primary)"></i> My Placed Orders
+        </div>
+        <div class="my-orders-list" id="myOrdersList">
+          <div class="no-orders-text">Loading orders...</div>
+        </div>
+      </div>
+
+      <!-- CATEGORIES WRAPPER -->
+      <div class="categories-wrapper">
+        <div class="category-section-title">Categories</div>
+        <div class="category-grid">
+          <div class="cat-btn active" onclick="filterByCategory('all', this)"><i class="fa-solid fa-border-all"></i> All</div>
+          <div class="cat-btn" onclick="filterByCategory('clothes', this)"><i class="fa-solid fa-shirt"></i> Clothes</div>
+          <div class="cat-btn" onclick="filterByCategory('tools', this)"><i class="fa-solid fa-screwdriver-wrench"></i> Tools</div>
+          <div class="cat-btn" onclick="filterByCategory('mobiles', this)"><i class="fa-solid fa-mobile-screen-button"></i> Mobiles</div>
+          <div class="cat-btn" onclick="filterByCategory('motors', this)"><i class="fa-solid fa-motorcycle"></i> Motors</div>
+          <div class="cat-btn" onclick="filterByCategory('jewelry', this)"><i class="fa-solid fa-gem"></i> Jewelry</div>
+        </div>
+      </div>
     </section>
-
-    <!-- SEARCH BOX -->
-    <div class="search-box">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterAffiliateProducts()" />
-    </div>
-
-    <!-- PRODUCTS GRID -->
-    <div class="affiliate-grid" id="affiliateGrid">
-      <div style="grid-column: span 2; text-align: center; font-size: 11px; color: var(--text-muted); padding: 20px;">
-        Loading products from Dashboard...
-      </div>
-    </div>
 
   </div>
 
-  <!-- PLACE AFFILIATE ORDER MODAL -->
-  <div class="modal-overlay" id="affiliateModal">
+  <!-- PROFILE MODAL -->
+  <div class="modal-overlay" id="profileModal">
     <div class="modal-box">
-      <button class="close-modal" onclick="closeAffiliateModal()">✕</button>
-
-      <!-- MULTI-IMAGE GALLERY -->
-      <div class="image-gallery-container">
-        <img id="mainGalleryImg" src="" class="main-gallery-img" alt="Product Image" />
-        <div class="gallery-thumbs" id="galleryThumbs"></div>
+      <button class="close-modal" onclick="closeProfileModal()">✕</button>
+      
+      <div style="text-align: center; margin-bottom: 10px;">
+        <div class="modal-avatar" id="modalAvatar">U</div>
+        <h4 id="modalFullName" style="font-size: 13px; font-weight: 800;">User Name</h4>
+        <p id="modalUsername" style="font-size: 10px; color: var(--text-muted);">@username</p>
       </div>
 
-      <button class="download-all-btn" onclick="downloadCurrentImage()">
-        <i class="fa-solid fa-download"></i> Download Selected Image
-      </button>
+      <div class="detail-item"><span style="color:var(--text-muted)">Mobile:</span> <strong id="modalMobile">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Email:</span> <strong id="modalEmail">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">City:</span> <strong id="modalCity">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Country:</span> <strong id="modalCountry">-</strong></div>
+    </div>
+  </div>
 
-      <h3 id="modalProductTitle" style="font-size: 13px; font-weight: 800; color: var(--text-main);">Product Title</h3>
-      <p id="modalProductDesc" style="font-size: 10px; color: var(--text-muted); margin-bottom: 8px;">Product details...</p>
+  <!-- PLACE ORDER MODAL -->
+  <div class="modal-overlay" id="orderModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeOrderModal()">✕</button>
+      
+      <img id="orderModalImg" src="" class="order-img" alt="Product" />
+      <div id="orderModalTitle" class="order-title">Product Name</div>
+      <div id="orderModalDesc" class="order-desc">Product Details</div>
+      <div id="orderModalPrice" class="order-price-tag">Rs. 0</div>
 
-      <!-- COMMISSION CALCULATOR -->
-      <div class="commission-box">
-        <div class="calc-row">
-          <span>Base Price (Admin):</span>
-          <strong id="modalBasePrice">Rs. 0</strong>
-        </div>
-        <div class="calc-row">
-          <span>Your Profit/Commission:</span>
-          <div>
-            Rs. <input type="number" id="userCommissionInput" class="calc-input" value="50" min="0" oninput="calculateTotalSellingPrice()" />
-          </div>
-        </div>
-        <div class="calc-row">
-          <span>Quantity (Kitne lega):</span>
-          <div>
-            <input type="number" id="clientQuantityInput" class="calc-input" value="1" min="1" oninput="calculateTotalSellingPrice()" />
-          </div>
-        </div>
-        
-        <div class="total-price-banner">
-          <span>Client Total Bill:</span>
-          <span id="finalClientPrice">Rs. 0</span>
-        </div>
-      </div>
-
-      <!-- CLIENT DETAILS FORM -->
-      <form id="affiliateOrderForm" onsubmit="handleAffiliateOrderSubmit(event)">
-        <h4 style="font-size: 11px; font-weight: 800; margin-bottom: 6px; text-transform: uppercase; color: var(--primary);">
-          <i class="fa-solid fa-user-tag"></i> Client Details (Delivery Info)
-        </h4>
-
+      <form id="orderForm" onsubmit="handlePlaceOrder(event)">
         <div class="form-group">
-          <label>Client Full Name</label>
-          <input type="text" id="clientNameInput" placeholder="Client Name" required />
+          <label>Full Name</label>
+          <input type="text" id="orderFullNameInput" placeholder="Your Name" required />
         </div>
 
         <div class="form-group">
-          <label>Client Mobile Number</label>
-          <input type="tel" id="clientMobileInput" placeholder="03001234567" required />
+          <label>Mobile Number</label>
+          <input type="tel" id="orderMobileInput" placeholder="03001234567" required />
         </div>
 
         <div class="form-group">
-          <label>Client WhatsApp Number</label>
-          <input type="tel" id="clientWhatsappInput" placeholder="03001234567" required />
+          <label>WhatsApp Number</label>
+          <input type="tel" id="orderWhatsappInput" placeholder="03001234567" required />
         </div>
 
         <div class="form-group">
           <label>City Name</label>
-          <input type="text" id="clientCityInput" placeholder="e.g. Lahore, Karachi" required />
+          <input type="text" id="orderCityInput" placeholder="e.g. Lahore, Karachi" required />
         </div>
 
         <div class="form-group">
-          <label>Complete Delivery Address</label>
-          <textarea id="clientAddressInput" rows="2" placeholder="House / Street / Area details" required></textarea>
+          <label>Quantity (Kitne lene hain)</label>
+          <input type="number" id="orderQuantity" value="1" min="1" oninput="updateOrderTotal()" required />
         </div>
 
-        <div id="modalAlertBox" class="status-alert"></div>
+        <div class="form-group">
+          <label>Delivery Full Address</label>
+          <textarea id="orderLocationInput" rows="2" placeholder="House / Street / Area Details" required></textarea>
+        </div>
 
-        <button type="submit" id="submitAffiliateBtn" class="submit-order-btn">
-          Submit Affiliate Order
-        </button>
+        <div style="font-size: 11px; font-weight: 800; margin: 4px 0; color: var(--text-main);">
+          Total Price: <span id="orderTotalPrice" style="color:var(--accent-green)">Rs. 0</span>
+        </div>
+
+        <div id="orderStatusAlert" class="status-alert"></div>
+
+        <button type="submit" id="confirmOrderBtn" class="confirm-btn">Confirm Order</button>
       </form>
-
     </div>
   </div>
 
-  <!-- FIREBASE MODULE SCRIPT -->
+  <!-- VIEW ORDER DETAILS MODAL -->
+  <div class="modal-overlay" id="viewOrderDetailModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeViewOrderModal()">✕</button>
+      
+      <h3 style="font-size:13px; font-weight:800; text-transform:uppercase; margin-bottom:10px; color:var(--primary);">
+        <i class="fa-solid fa-file-invoice"></i> Order Details
+      </h3>
+
+      <div class="detail-item"><span style="color:var(--text-muted)">Product Name:</span> <strong id="vProductTitle">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Customer Name:</span> <strong id="vCustomerName">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Mobile Number:</span> <strong id="vMobile">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">WhatsApp Number:</span> <strong id="vWhatsapp">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">City:</span> <strong id="vCity">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Full Address:</span> <strong id="vLocation" style="max-width:180px; text-align:right;">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Quantity:</span> <strong id="vQuantity">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Total Price:</span> <strong id="vTotalPrice" style="color:var(--accent-green);">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Order Status:</span> <strong id="vStatus">-</strong></div>
+    </div>
+  </div>
+
+  <!-- Global Navigation Script -->
+  <script>
+    function navigateTo(pageUrl) {
+      if (!pageUrl) return;
+      try {
+        window.location.href = pageUrl;
+      } catch (e) {
+        console.error("Navigation error:", e);
+        window.location.assign(pageUrl);
+      }
+    }
+
+    function scrollProducts(amount) {
+      const grid = document.getElementById('productGrid');
+      if (grid) {
+        grid.scrollBy({ left: amount, behavior: 'smooth' });
+      }
+    }
+
+    function handleLogout() {
+      localStorage.removeItem('sew_session');
+      window.location.replace("index.html");
+    }
+
+    function openProfileModal() {
+      document.getElementById('profileModal').style.display = 'flex';
+    }
+
+    function closeProfileModal() {
+      document.getElementById('profileModal').style.display = 'none';
+    }
+
+    function closeViewOrderModal() {
+      document.getElementById('viewOrderDetailModal').style.display = 'none';
+    }
+  </script>
+
+  <!-- Firebase Module Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, get, set, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, get, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
@@ -676,339 +914,283 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // User Session Check
+    // Session Check
     const rawSession = localStorage.getItem('sew_session');
     if (!rawSession) {
       window.location.replace("index.html");
     }
 
     const userData = JSON.parse(rawSession || '{}');
-    let selectedAffProduct = null;
-    let currentGalleryImages = [];
-    let selectedImageIndex = 0;
+    let selectedProduct = null;
+    let myUserOrdersMap = {};
+    let selectedCategory = 'all';
 
-    // Render User Info Header
-    function renderUserHeader(data) {
+    function renderUserUI(data) {
       if(!data) return;
       const displayTitle = data.fullName || data.username || "User";
       document.getElementById('navUserName').innerText = displayTitle;
-      document.getElementById('navAvatar').innerText = displayTitle.charAt(0).toUpperCase();
-      document.getElementById('userBalance').innerText = "Rs. " + (data.balance || "0");
-      document.getElementById('pendingCommission').innerText = "Rs. " + (data.pendingCommission || "0");
+      const initial = displayTitle.charAt(0).toUpperCase();
+      document.getElementById('navAvatar').innerText = initial;
+      document.getElementById('userBalance').innerText = "Rs. " + (data.balance || "0.00");
 
-      if(data.payoutDetails) {
-        document.getElementById('payoutMethod').value = data.payoutDetails.method || 'EasyPaisa';
-        document.getElementById('accountTitle').value = data.payoutDetails.title || '';
-        document.getElementById('accountNumber').value = data.payoutDetails.number || '';
-      }
+      document.getElementById('modalAvatar').innerText = initial;
+      document.getElementById('modalFullName').innerText = data.fullName || "User";
+      document.getElementById('modalUsername').innerText = "@" + (data.username || "");
+      document.getElementById('modalMobile').innerText = data.mobile || "N/A";
+      document.getElementById('modalEmail').innerText = data.email || "N/A";
+      document.getElementById('modalCity').innerText = data.city || "N/A";
+      document.getElementById('modalCountry').innerText = data.country || "N/A";
     }
-    renderUserHeader(userData);
 
-    // Sync Live User Data from Firebase
+    renderUserUI(userData);
+
+    // REALTIME USER BALANCE SYNC FROM FIREBASE
     if (userData.username) {
       onValue(ref(db, 'users/' + userData.username), (snapshot) => {
         if (snapshot.exists()) {
           const freshData = snapshot.val();
-          renderUserHeader(freshData);
+          renderUserUI(freshData);
           localStorage.setItem('sew_session', JSON.stringify(freshData));
         }
       });
     }
 
-    // SAVE PAYOUT DETAILS IN FIREBASE (FOR USER AND ADMIN PANEL)
-    window.savePayoutDetails = async function(e) {
-      e.preventDefault();
-      const method = document.getElementById('payoutMethod').value;
-      const title = document.getElementById('accountTitle').value.trim();
-      const number = document.getElementById('accountNumber').value.trim();
-
-      const payoutObj = {
-        username: userData.username || "",
-        method, title, number,
-        updatedAt: Date.now()
-      };
-
-      try {
-        // Save to User Profile
-        await set(ref(db, 'users/' + userData.username + '/payoutDetails'), payoutObj);
-        
-        // Push directly for Admin Panel visibility
-        await set(ref(db, 'payoutRequests/' + userData.username), payoutObj);
-
-        alert("Account details saved successfully! Admin panel receives auto-payout info.");
-      } catch(err) {
-        alert("Failed to save account details: " + err.message);
+    // Default Fallback Products
+    const defaultProducts = [
+      {
+        id: "p1",
+        name: "Luxury Smart Watch",
+        category: "tools",
+        details: "Ultra display, water resistant smart watch with sports tracking.",
+        price: 2499,
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300"
+      },
+      {
+        id: "p2",
+        name: "Airbuds Pro",
+        category: "mobiles",
+        details: "Noise cancellation sound, long battery backup.",
+        price: 1850,
+        image: "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?w=300"
       }
-    };
+    ];
 
-    // FLEXIBLE PRODUCT PROPERTY EXTRACTOR (Dashboard Compatible)
-    function parseProductItem(key, item) {
-      // Name Fallbacks
-      const name = item.name || item.productName || item.title || item.pName || 'Product';
-      
-      // Price Fallbacks
-      const rawPrice = item.price || item.productPrice || item.pPrice || item.rate || 0;
-      const price = parseFloat(rawPrice) || 0;
-
-      // Details Fallbacks
-      const details = item.details || item.description || item.desc || item.pDesc || '';
-
-      // Image List Fallbacks
-      let images = [];
-      if (Array.isArray(item.images) && item.images.length > 0) {
-        images = item.images;
-      } else if (typeof item.images === 'string' && item.images.trim() !== '') {
-        images = item.images.split(',').map(s => s.trim());
-      } else {
-        const singleImg = item.image || item.img || item.imageUrl || item.photo || item.pic || item.url;
-        if (singleImg) images.push(singleImg);
-      }
-
-      if (images.length === 0) {
-        images.push('https://via.placeholder.com/300?text=No+Image');
-      }
-
-      return { id: key, name, price, details, images };
-    }
-
-    // RENDER PRODUCTS GRID
-    function renderAffiliateProducts(products) {
-      const grid = document.getElementById('affiliateGrid');
+    // DISPLAY PRODUCTS ACCORDING TO SELECTED CATEGORY & SEARCH
+    function renderFilteredProducts() {
+      const grid = document.getElementById('productGrid');
       grid.innerHTML = "";
 
-      if (!products || products.length === 0) {
-        grid.innerHTML = `<div style="grid-column: span 2; text-align: center; font-size: 11px; color: var(--text-muted); padding: 20px;">No products found in Dashboard.</div>`;
+      const productList = window.currentProducts || defaultProducts;
+      const searchVal = (document.getElementById('searchInput')?.value || '').toLowerCase();
+
+      const filtered = productList.filter(p => {
+        const pCategory = (p.category || '').toLowerCase().trim();
+        const pName = (p.name || '').toLowerCase();
+        
+        const matchesCategory = selectedCategory === 'all' || 
+          pCategory === selectedCategory.toLowerCase() || 
+          pName.includes(selectedCategory.toLowerCase());
+
+        const matchesSearch = !searchVal || pName.includes(searchVal);
+
+        return matchesCategory && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="no-orders-text" style="width:100%; font-size:10px;">No products found.</div>`;
         return;
       }
 
-      products.forEach(p => {
-        const coverImg = p.images[0];
-        
+      filtered.forEach(p => {
         grid.innerHTML += `
-          <div class="aff-card" onclick="openAffiliateModal('${p.id}')">
-            <div class="aff-img-wrapper">
-              <img src="${coverImg}" class="aff-img" alt="${p.name}" />
-              <div class="download-badge" title="Download Image" onclick="event.stopPropagation(); triggerSingleDownload('${coverImg}', '${p.name}')">
-                <i class="fa-solid fa-download"></i>
-              </div>
+          <div class="product-card" data-title="${(p.name || '').toLowerCase()}" onclick="openOrderModal('${p.id}')">
+            <img src="${p.image || 'https://via.placeholder.com/150'}" class="product-img" alt="${p.name}" />
+            <div class="product-title">${p.name}</div>
+            <div class="product-desc">${p.details || ''}</div>
+            <div class="product-bottom">
+              <div class="product-price">Rs. ${p.price}</div>
+              <button class="order-btn" onclick="event.stopPropagation(); openOrderModal('${p.id}')">Buy</button>
             </div>
-            <div class="aff-title">${p.name}</div>
-            <div class="aff-base-price">Base Price:</div>
-            <div class="aff-price-num">Rs. ${p.price}</div>
-            <button class="sell-btn" onclick="event.stopPropagation(); openAffiliateModal('${p.id}')">
-              <i class="fa-solid fa-plus-circle"></i> Resell & Earn
-            </button>
           </div>
         `;
       });
     }
 
-    // REALTIME DASHBOARD PRODUCTS LISTENER
+    // CATEGORY BUTTON FILTER
+    window.filterByCategory = function(categoryName, element) {
+      selectedCategory = categoryName;
+
+      const catBtns = document.querySelectorAll('.cat-btn');
+      catBtns.forEach(btn => btn.classList.remove('active'));
+      if(element) element.classList.add('active');
+
+      renderFilteredProducts();
+    };
+
+    window.filterProducts = function() {
+      renderFilteredProducts();
+    };
+
+    // REALTIME PRODUCTS SYNC FROM FIREBASE
     onValue(ref(db, 'products'), (snapshot) => {
       let productList = [];
       if (snapshot.exists()) {
         const data = snapshot.val();
         Object.keys(data).forEach(key => {
-          const parsed = parseProductItem(key, data[key]);
-          productList.push(parsed);
+          productList.push({ id: key, ...data[key] });
         });
+      } else {
+        productList = defaultProducts;
       }
-      window.allAffProducts = productList;
-      renderAffiliateProducts(productList);
+
+      window.currentProducts = productList;
+      renderFilteredProducts();
     });
 
-    // FILTER PRODUCTS BY SEARCH
-    window.filterAffiliateProducts = function() {
-      const query = (document.getElementById('searchInput').value || '').toLowerCase();
-      const list = window.allAffProducts || [];
-      const filtered = list.filter(p => p.name.toLowerCase().includes(query));
-      renderAffiliateProducts(filtered);
-    };
+    // REALTIME ORDERS SYNC (MY ORDERS BOX)
+    onValue(ref(db, 'orders'), (snapshot) => {
+      const ordersContainer = document.getElementById('myOrdersList');
+      ordersContainer.innerHTML = "";
+      myUserOrdersMap = {};
 
-    // OPEN AFFILIATE MODAL
-    window.openAffiliateModal = function(pId) {
-      const list = window.allAffProducts || [];
-      selectedAffProduct = list.find(p => p.id == pId);
-      if(!selectedAffProduct) return;
-
-      currentGalleryImages = selectedAffProduct.images || [];
-      selectedImageIndex = 0;
-
-      document.getElementById('modalProductTitle').innerText = selectedAffProduct.name;
-      document.getElementById('modalProductDesc').innerText = selectedAffProduct.details || 'No additional specifications.';
-      document.getElementById('modalBasePrice').innerText = "Rs. " + selectedAffProduct.price;
-
-      // Reset Form Inputs
-      document.getElementById('userCommissionInput').value = 50;
-      document.getElementById('clientQuantityInput').value = 1;
-      document.getElementById('clientNameInput').value = '';
-      document.getElementById('clientMobileInput').value = '';
-      document.getElementById('clientWhatsappInput').value = '';
-      document.getElementById('clientCityInput').value = '';
-      document.getElementById('clientAddressInput').value = '';
-
-      // Setup Image Gallery
-      setupModalGallery();
-      calculateTotalSellingPrice();
-
-      document.getElementById('modalAlertBox').style.display = "none";
-      document.getElementById('affiliateModal').style.display = "flex";
-    };
-
-    function setupModalGallery() {
-      const mainImg = document.getElementById('mainGalleryImg');
-      const thumbsContainer = document.getElementById('galleryThumbs');
-
-      mainImg.src = currentGalleryImages[selectedImageIndex] || 'https://via.placeholder.com/300';
-      thumbsContainer.innerHTML = "";
-
-      currentGalleryImages.forEach((imgUrl, idx) => {
-        thumbsContainer.innerHTML += `
-          <img src="${imgUrl}" class="thumb-img ${idx === selectedImageIndex ? 'active' : ''}" onclick="selectGalleryImage(${idx})" />
-        `;
-      });
-    }
-
-    window.selectGalleryImage = function(idx) {
-      selectedImageIndex = idx;
-      setupModalGallery();
-    };
-
-    // IMAGE DOWNLOAD LOGIC
-    window.downloadCurrentImage = function() {
-      const currentUrl = currentGalleryImages[selectedImageIndex] || '';
-      if(currentUrl) {
-        triggerSingleDownload(currentUrl, selectedAffProduct ? selectedAffProduct.name : 'product');
-      }
-    };
-
-    window.triggerSingleDownload = function(url, filename) {
-      fetch(url)
-        .then(response => response.blob())
-        .then(blob => {
-          const blobUrl = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.style.display = 'none';
-          a.href = blobUrl;
-          a.download = (filename || 'product').replace(/\s+/g, '_') + '.jpg';
-          document.body.appendChild(a);
-          a.click();
-          window.URL.revokeObjectURL(blobUrl);
-        })
-        .catch(() => {
-          window.open(url, '_blank');
-        });
-    };
-
-    window.closeAffiliateModal = function() {
-      document.getElementById('affiliateModal').style.display = "none";
-    };
-
-    // CALCULATE CLIENT TOTAL PRICE
-    window.calculateTotalSellingPrice = function() {
-      if(!selectedAffProduct) return;
-
-      const basePrice = parseFloat(selectedAffProduct.price) || 0;
-      const commission = parseFloat(document.getElementById('userCommissionInput').value) || 0;
-      const qty = parseInt(document.getElementById('clientQuantityInput').value) || 1;
-
-      const unitSellingPrice = basePrice + commission;
-      const grandTotal = unitSellingPrice * qty;
-
-      document.getElementById('finalClientPrice').innerText = "Rs. " + grandTotal;
-    };
-
-    // SUBMIT AFFILIATE ORDER TO FIREBASE FOR ADMIN PANEL
-    window.handleAffiliateOrderSubmit = async function(e) {
-      e.preventDefault();
-
-      const btn = document.getElementById('submitAffiliateBtn');
-      const alertBox = document.getElementById('modalAlertBox');
-
-      const clientName = document.getElementById('clientNameInput').value.trim();
-      const clientMobile = document.getElementById('clientMobileInput').value.trim();
-      const clientWhatsapp = document.getElementById('clientWhatsappInput').value.trim();
-      const clientCity = document.getElementById('clientCityInput').value.trim();
-      const clientAddress = document.getElementById('clientAddressInput').value.trim();
-
-      const basePrice = parseFloat(selectedAffProduct.price) || 0;
-      const userCommission = parseFloat(document.getElementById('userCommissionInput').value) || 0;
-      const quantity = parseInt(document.getElementById('clientQuantityInput').value) || 1;
-
-      const unitPrice = basePrice + userCommission;
-      const totalPrice = unitPrice * quantity;
-      const totalCommission = userCommission * quantity;
-
-      // Current Saved Payout Details
-      const method = document.getElementById('payoutMethod').value;
-      const title = document.getElementById('accountTitle').value.trim();
-      const number = document.getElementById('accountNumber').value.trim();
-
-      if (!clientName || !clientMobile || !clientWhatsapp || !clientCity || !clientAddress) {
-        alertBox.innerText = "Please fill all client details!";
-        alertBox.className = "status-alert error";
+      if (!snapshot.exists()) {
+        ordersContainer.innerHTML = `<div class="no-orders-text">No orders placed yet.</div>`;
         return;
       }
 
-      btn.disabled = true;
-      btn.innerText = "Submitting Order...";
+      const allOrders = snapshot.val();
+      let userOrdersCount = 0;
 
-      try {
-        const orderData = {
-          orderType: "Affiliate Market",
-          productId: selectedAffProduct.id,
-          productName: selectedAffProduct.name,
-          affiliateUsername: userData.username || "",
-          affiliateEmail: userData.email || "",
+      Object.keys(allOrders).reverse().forEach(oKey => {
+        const ord = allOrders[oKey];
+        if (ord.username === userData.username || ord.customerEmail === userData.email) {
+          userOrdersCount++;
+          myUserOrdersMap[oKey] = ord;
 
-          // Price & Profit
-          basePrice: basePrice,
-          userCommission: userCommission,
-          unitPrice: unitPrice,
-          quantity: quantity,
-          totalPrice: totalPrice,
-          totalCommission: totalCommission,
+          const isOk = (ord.status || '').toLowerCase() === 'ok' || (ord.status || '').toLowerCase() === 'confirmed' || (ord.status || '').toLowerCase() === 'delivered';
+          const badgeClass = isOk ? 'status-ok' : 'status-pending';
+          const statusDisplay = isOk ? 'OK / Confirmed' : (ord.status || 'Pending');
 
-          // Client Info
-          customerName: clientName,
-          mobile: clientMobile,
-          whatsapp: clientWhatsapp,
-          city: clientCity,
-          location: clientAddress,
+          ordersContainer.innerHTML += `
+            <div class="order-mini-card" onclick="openViewOrderModal('${oKey}')">
+              <div class="order-mini-name">${ord.productName || 'Product'}</div>
+              <div class="order-mini-qty">Qty: ${ord.quantity || 1} | Rs.${ord.totalPrice || 0}</div>
+              <span class="order-status-badge ${badgeClass}">${statusDisplay}</span>
+            </div>
+          `;
+        }
+      });
 
-          // User's Wallet Details (So Admin directly sees payout info)
-          userPayoutDetails: {
-            method: method || "EasyPaisa",
-            accountTitle: title || "Not set",
-            accountNumber: number || "Not set"
-          },
-
-          status: "Pending", // Admin changes to 'Delivered' / 'Completed' to send funds
-          createdAt: Date.now()
-        };
-
-        // Save order directly in 'orders' node for Admin Panel
-        await push(ref(db, 'orders'), orderData);
-
-        // Update User Pending Commission
-        const currentPending = parseFloat(userData.pendingCommission || 0);
-        await set(ref(db, 'users/' + userData.username + '/pendingCommission'), currentPending + totalCommission);
-
-        alertBox.innerText = "Affiliate Order Submitted to Admin Panel!";
-        alertBox.className = "status-alert success";
-
-        setTimeout(() => {
-          closeAffiliateModal();
-        }, 1300);
-
-      } catch (err) {
-        console.error("Order Submit Error:", err);
-        alertBox.innerText = "Error: " + err.message;
-        alertBox.className = "status-alert error";
-      } finally {
-        btn.disabled = false;
-        btn.innerText = "Submit Affiliate Order";
+      if (userOrdersCount === 0) {
+        ordersContainer.innerHTML = `<div class="no-orders-text">No orders placed yet.</div>`;
       }
+    });
+
+    // OPEN PLACE ORDER MODAL
+    window.openOrderModal = function(pId) {
+      const pList = window.currentProducts || defaultProducts;
+      selectedProduct = pList.find(item => item.id == pId) || pList[0];
+
+      if (!selectedProduct) return;
+
+      document.getElementById('orderModalImg').src = selectedProduct.image || 'https://via.placeholder.com/150';
+      document.getElementById('orderModalTitle').innerText = selectedProduct.name;
+      document.getElementById('orderModalDesc').innerText = selectedProduct.details || 'No details.';
+      document.getElementById('orderModalPrice').innerText = 'Rs. ' + selectedProduct.price;
+
+      document.getElementById('orderFullNameInput').value = userData.fullName || '';
+      document.getElementById('orderMobileInput').value = userData.mobile || '';
+      document.getElementById('orderWhatsappInput').value = userData.mobile || '';
+      document.getElementById('orderCityInput').value = userData.city || '';
+      document.getElementById('orderQuantity').value = 1;
+      document.getElementById('orderLocationInput').value = '';
+
+      updateOrderTotal();
+
+      const alertBox = document.getElementById('orderStatusAlert');
+      alertBox.className = 'status-alert';
+      alertBox.style.display = 'none';
+
+      document.getElementById('orderModal').style.display = 'flex';
+    };
+
+    window.closeOrderModal = function() {
+      document.getElementById('orderModal').style.display = 'none';
+    };
+
+    window.updateOrderTotal = function() {
+      if (!selectedProduct) return;
+      const qty = parseInt(document.getElementById('orderQuantity').value) || 1;
+      const total = selectedProduct.price * qty;
+      document.getElementById('orderTotalPrice').innerText = "Rs. " + total;
+    };
+
+    // HANDLE ORDER PLACEMENT TO FIREBASE
+    window.handlePlaceOrder = function(event) {
+      event.preventDefault();
+      const alertBox = document.getElementById('orderStatusAlert');
+      const btn = document.getElementById('confirmOrderBtn');
+
+      if (!selectedProduct) return;
+
+      const qty = parseInt(document.getElementById('orderQuantity').value) || 1;
+      const totalPrice = selectedProduct.price * qty;
+
+      const orderPayload = {
+        productId: selectedProduct.id,
+        productName: selectedProduct.name,
+        productPrice: selectedProduct.price,
+        quantity: qty,
+        totalPrice: totalPrice,
+        customerName: document.getElementById('orderFullNameInput').value,
+        mobile: document.getElementById('orderMobileInput').value,
+        whatsapp: document.getElementById('orderWhatsappInput').value,
+        city: document.getElementById('orderCityInput').value,
+        address: document.getElementById('orderLocationInput').value,
+        username: userData.username || 'guest',
+        customerEmail: userData.email || '',
+        status: 'Pending',
+        createdAt: new Date().toISOString()
+      };
+
+      btn.disabled = true;
+      btn.innerText = "Placing Order...";
+
+      push(ref(db, 'orders'), orderPayload)
+        .then(() => {
+          alertBox.innerText = "Order placed successfully!";
+          alertBox.className = "status-alert success";
+          setTimeout(() => {
+            closeOrderModal();
+            btn.disabled = false;
+            btn.innerText = "Confirm Order";
+          }, 1200);
+        })
+        .catch((err) => {
+          console.error(err);
+          alertBox.innerText = "Failed to place order. Try again.";
+          alertBox.className = "status-alert error";
+          btn.disabled = false;
+          btn.innerText = "Confirm Order";
+        });
+    };
+
+    // OPEN VIEW ORDER DETAILS MODAL
+    window.openViewOrderModal = function(oKey) {
+      const ord = myUserOrdersMap[oKey];
+      if (!ord) return;
+
+      document.getElementById('vProductTitle').innerText = ord.productName || '-';
+      document.getElementById('vCustomerName').innerText = ord.customerName || '-';
+      document.getElementById('vMobile').innerText = ord.mobile || '-';
+      document.getElementById('vWhatsapp').innerText = ord.whatsapp || '-';
+      document.getElementById('vCity').innerText = ord.city || '-';
+      document.getElementById('vLocation').innerText = ord.address || '-';
+      document.getElementById('vQuantity').innerText = ord.quantity || 1;
+      document.getElementById('vTotalPrice').innerText = "Rs. " + (ord.totalPrice || 0);
+      document.getElementById('vStatus').innerText = ord.status || 'Pending';
+
+      document.getElementById('viewOrderDetailModal').style.display = 'flex';
     };
   </script>
 </body>

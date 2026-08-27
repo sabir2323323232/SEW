@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SEW - Affiliate Market</title>
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-body: #f1f5f9;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-soft: #eff6ff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --accent-green: #10b981;
+      --accent-orange: #f59e0b;
+      --accent-purple: #8b5cf6;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      background: #ffffff;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.03);
+    }
+
+    .back-btn {
+      background: #f1f5f9;
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 0.5px;
+    }
+
+    .profile-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-soft);
+      padding: 4px 8px;
+      border-radius: 16px;
+      border: 1px solid #dbeafe;
+    }
+
+    .avatar {
+      width: 22px;
+      height: 22px;
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 11px;
+    }
+
+    .user-name-short {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      max-width: 80px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 500px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 10px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    /* AFFILIATE HEADER HERO */
+    .affiliate-hero {
+      background: linear-gradient(135deg, #4f46e5, #3b82f6);
+      border-radius: 12px;
+      padding: 12px;
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+    }
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .hero-title {
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-tag {
+      background: rgba(255, 255, 255, 0.2);
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .earning-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(4px);
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    .stat-box p {
+      font-size: 9px;
+      opacity: 0.85;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .stat-box h3 {
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    /* ACCOUNT SETTINGS BOX */
+    .payout-card {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+    }
+
+    .payout-header {
+      font-size: 11px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--text-main);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .payout-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+
+    .payout-inputs input, .payout-inputs select {
+      padding: 6px 8px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 10px;
+      outline: none;
+    }
+
+    .save-payout-btn {
+      background: var(--accent-purple);
+      color: #ffffff;
+      border: none;
+      border-radius: 6px;
+      padding: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      grid-column: span 2;
+      margin-top: 4px;
+    }
+
+    /* SEARCH & FILTER */
+    .search-box {
+      position: relative;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 12px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 8px 10px 8px 30px;
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 11px;
+      outline: none;
+    }
+
+    /* PRODUCT GRID */
+    .affiliate-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .aff-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .aff-img-wrapper {
+      position: relative;
+      width: 100%;
+      height: 110px;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #f1f5f9;
+    }
+
+    .aff-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .download-badge {
+      position: absolute;
+      top: 5px; right: 5px;
+      background: rgba(15, 23, 42, 0.75);
+      color: #ffffff;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      cursor: pointer;
+      backdrop-filter: blur(2px);
+    }
+
+    .aff-title {
+      font-size: 11px;
+      font-weight: 700;
+      margin: 6px 0 2px 0;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .aff-base-price {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    .aff-price-num {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .sell-btn {
+      width: 100%;
+      margin-top: 6px;
+      background: var(--accent-green);
+      color: #ffffff;
+      border: none;
+      padding: 6px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    /* MODAL STYLES */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.6);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+      padding: 12px;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 14px;
+      padding: 14px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: #f1f5f9;
+      border: none;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 12px;
+    }
+
+    /* MULTI-IMAGE GALLERY IN MODAL */
+    .image-gallery-container {
+      margin-bottom: 10px;
+    }
+
+    .main-gallery-img {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 6px;
+    }
+
+    .gallery-thumbs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .thumb-img {
+      width: 45px; height: 45px;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .thumb-img.active {
+      border-color: var(--primary);
+    }
+
+    .download-all-btn {
+      background: #f1f5f9;
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 9px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    /* COMMISSION CALCULATOR BOX */
+    .commission-box {
+      background: var(--primary-soft);
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      padding: 8px;
+      margin-bottom: 10px;
+    }
+
+    .calc-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      margin-bottom: 4px;
+    }
+
+    .calc-input {
+      width: 90px;
+      padding: 4px 6px;
+      border: 1px solid var(--primary);
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      text-align: right;
+      outline: none;
+    }
+
+    .total-price-banner {
+      background: #10b981;
+      color: #ffffff;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      margin-top: 6px;
+    }
+
+    /* FORM STYLES */
+    .form-group {
+      margin-bottom: 8px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      margin-bottom: 3px;
+      color: var(--text-main);
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 7px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 11px;
+      outline: none;
+    }
+
+    .submit-order-btn {
+      width: 100%;
+      padding: 10px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 6px;
+    }
+
+    .status-alert {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 6px;
+      border-radius: 6px;
+      margin-top: 6px;
+      text-align: center;
+      display: none;
+    }
+    .status-alert.success { background: #ecfdf5; color: #10b981; display: block; }
+    .status-alert.error { background: #fef2f2; color: #ef4444; display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- TOP NAVBAR -->
+  <header class="navbar">
+    <button class="back-btn" onclick="window.history.back()">
+      <i class="fa-solid fa-arrow-left"></i> Back
+    </button>
+    <div class="brand-title"><i class="fa-solid fa-store"></i> Affiliate Market</div>
+    <div class="profile-pill">
+      <div class="avatar" id="navAvatar">U</div>
+      <span class="user-name-short" id="navUserName">User</span>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- AFFILIATE HERO BOARD -->
+    <section class="affiliate-hero">
+      <div class="hero-top">
+        <div class="hero-title">
+          <i class="fa-solid fa-hand-holding-dollar"></i> Resell & Earn
+        </div>
+        <span class="hero-tag">Custom Profit</span>
+      </div>
+      <p style="font-size: 10px; opacity: 0.9; margin-bottom: 8px;">
+        Apne hisab se commission add karein. Client order karega, product delivery par apka profit direct wallet me milega!
+      </p>
+
+      <div class="earning-stats">
+        <div class="stat-box">
+          <p>Main Wallet</p>
+          <h3 id="userBalance">Rs. 0</h3>
+        </div>
+        <div class="stat-box">
+          <p>Pending Profit</p>
+          <h3 id="pendingCommission">Rs. 0</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- ACCOUNT PAYOUT SETTINGS BOX -->
+    <section class="payout-card">
+      <div class="payout-header">
+        <span><i class="fa-solid fa-building-columns"></i> Account Details (Auto Payout)</span>
+        <i class="fa-solid fa-shield-halved" style="color:var(--accent-green)"></i>
+      </div>
+      <form id="payoutForm" onsubmit="savePayoutDetails(event)" class="payout-inputs">
+        <select id="payoutMethod" required>
+          <option value="EasyPaisa">EasyPaisa</option>
+          <option value="JazzCash">JazzCash</option>
+          <option value="Bank">Bank Account</option>
+        </select>
+        <input type="text" id="accountTitle" placeholder="Account Title Name" required />
+        <input type="text" id="accountNumber" placeholder="Account Number / Mobile" style="grid-column: span 2;" required />
+        <button type="submit" class="save-payout-btn">Save Account Details</button>
+      </form>
+    </section>
+
+    <!-- SEARCH BOX -->
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="searchInput" placeholder="Search affiliate products..." onkeyup="filterAffiliateProducts()" />
+    </div>
+
+    <!-- PRODUCTS GRID -->
+    <div class="affiliate-grid" id="affiliateGrid">
+      <div style="grid-column: span 2; text-align: center; font-size: 11px; color: var(--text-muted); padding: 20px;">
+        Loading affiliate products...
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PLACE AFFILIATE ORDER MODAL -->
+  <div class="modal-overlay" id="affiliateModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeAffiliateModal()">✕</button>
+
+      <!-- MULTI-IMAGE GALLERY -->
+      <div class="image-gallery-container">
+        <img id="mainGalleryImg" src="" class="main-gallery-img" alt="Product Image" />
+        <div class="gallery-thumbs" id="galleryThumbs"></div>
+      </div>
+
+      <button class="download-all-btn" onclick="downloadCurrentImage()">
+        <i class="fa-solid fa-download"></i> Download Selected Image
+      </button>
+
+      <h3 id="modalProductTitle" style="font-size: 13px; font-weight: 800; color: var(--text-main);">Product Title</h3>
+      <p id="modalProductDesc" style="font-size: 10px; color: var(--text-muted); margin-bottom: 8px;">Product details...</p>
+
+      <!-- COMMISSION CALCULATOR -->
+      <div class="commission-box">
+        <div class="calc-row">
+          <span>Base Price (Admin):</span>
+          <strong id="modalBasePrice">Rs. 0</strong>
+        </div>
+        <div class="calc-row">
+          <span>Your Commission (Profit):</span>
+          <div>
+            Rs. <input type="number" id="userCommissionInput" class="calc-input" value="50" min="0" oninput="calculateTotalSellingPrice()" />
+          </div>
+        </div>
+        <div class="calc-row">
+          <span>Quantity (Kitne lega):</span>
+          <div>
+            <input type="number" id="clientQuantityInput" class="calc-input" value="1" min="1" oninput="calculateTotalSellingPrice()" />
+          </div>
+        </div>
+        
+        <div class="total-price-banner">
+          <span>Client Total Bill:</span>
+          <span id="finalClientPrice">Rs. 0</span>
+        </div>
+      </div>
+
+      <!-- CLIENT DETAILS FORM -->
+      <form id="affiliateOrderForm" onsubmit="handleAffiliateOrderSubmit(event)">
+        <h4 style="font-size: 11px; font-weight: 800; margin-bottom: 6px; text-transform: uppercase; color: var(--primary);">
+          <i class="fa-solid fa-user-tag"></i> Client Details (Delivery Info)
+        </h4>
+
+        <div class="form-group">
+          <label>Client Full Name</label>
+          <input type="text" id="clientNameInput" placeholder="Client Name" required />
+        </div>
+
+        <div class="form-group">
+          <label>Client Mobile Number</label>
+          <input type="tel" id="clientMobileInput" placeholder="03001234567" required />
+        </div>
+
+        <div class="form-group">
+          <label>Client WhatsApp Number</label>
+          <input type="tel" id="clientWhatsappInput" placeholder="03001234567" required />
+        </div>
+
+        <div class="form-group">
+          <label>City Name</label>
+          <input type="text" id="clientCityInput" placeholder="e.g. Lahore, Karachi" required />
+        </div>
+
+        <div class="form-group">
+          <label>Complete Delivery Address</label>
+          <textarea id="clientAddressInput" rows="2" placeholder="House / Street / Area details for delivery" required></textarea>
+        </div>
+
+        <div id="modalAlertBox" class="status-alert"></div>
+
+        <button type="submit" id="submitAffiliateBtn" class="submit-order-btn">
+          Submit Affiliate Order
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- FIREBASE MODULE SCRIPT -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, get, set, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
+      authDomain: "newweb-d50af.firebaseapp.com",
+      databaseURL: "https://newweb-d50af-default-rtdb.firebaseio.com",
+      projectId: "newweb-d50af",
+      storageBucket: "newweb-d50af.firebasestorage.app",
+      messagingSenderId: "358603295768",
+      appId: "1:358603295768:web:82a9666514a7cb468c476d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // Session Check
+    const rawSession = localStorage.getItem('sew_session');
+    if (!rawSession) {
+      window.location.replace("index.html");
+    }
+
+    const userData = JSON.parse(rawSession || '{}');
+    let selectedAffProduct = null;
+    let currentGalleryImages = [];
+    let selectedImageIndex = 0;
+
+    // Render User Info Header
+    function renderUserHeader(data) {
+      if(!data) return;
+      const displayTitle = data.fullName || data.username || "User";
+      document.getElementById('navUserName').innerText = displayTitle;
+      document.getElementById('navAvatar').innerText = displayTitle.charAt(0).toUpperCase();
+      document.getElementById('userBalance').innerText = "Rs. " + (data.balance || "0");
+      document.getElementById('pendingCommission').innerText = "Rs. " + (data.pendingCommission || "0");
+
+      if(data.payoutDetails) {
+        document.getElementById('payoutMethod').value = data.payoutDetails.method || 'EasyPaisa';
+        document.getElementById('accountTitle').value = data.payoutDetails.title || '';
+        document.getElementById('accountNumber').value = data.payoutDetails.number || '';
+      }
+    }
+    renderUserHeader(userData);
+
+    // Sync Live User Balance & Payout Status
+    if (userData.username) {
+      onValue(ref(db, 'users/' + userData.username), (snapshot) => {
+        if (snapshot.exists()) {
+          const freshData = snapshot.val();
+          renderUserHeader(freshData);
+          localStorage.setItem('sew_session', JSON.stringify(freshData));
+        }
+      });
+    }
+
+    // SAVE PAYOUT DETAILS IN FIREBASE
+    window.savePayoutDetails = async function(e) {
+      e.preventDefault();
+      const method = document.getElementById('payoutMethod').value;
+      const title = document.getElementById('accountTitle').value.trim();
+      const number = document.getElementById('accountNumber').value.trim();
+
+      try {
+        await set(ref(db, 'users/' + userData.username + '/payoutDetails'), {
+          method, title, number, updatedAt: Date.now()
+        });
+        alert("Account details saved successfully! Payouts will be auto sent to this account.");
+      } catch(err) {
+        alert("Failed to save account details: " + err.message);
+      }
+    };
+
+    // RENDER PRODUCTS GRID
+    function renderAffiliateProducts(products) {
+      const grid = document.getElementById('affiliateGrid');
+      grid.innerHTML = "";
+
+      if (!products || products.length === 0) {
+        grid.innerHTML = `<div style="grid-column: span 2; text-align: center; font-size: 11px; color: var(--text-muted); padding: 20px;">No affiliate products available right now.</div>`;
+        return;
+      }
+
+      products.forEach(p => {
+        const coverImg = (p.images && p.images.length > 0) ? p.images[0] : (p.image || 'https://via.placeholder.com/150');
+        
+        grid.innerHTML += `
+          <div class="aff-card" onclick="openAffiliateModal('${p.id}')">
+            <div class="aff-img-wrapper">
+              <img src="${coverImg}" class="aff-img" alt="${p.name}" />
+              <div class="download-badge" title="Download Image" onclick="event.stopPropagation(); triggerSingleDownload('${coverImg}', '${p.name}')">
+                <i class="fa-solid fa-download"></i>
+              </div>
+            </div>
+            <div class="aff-title">${p.name}</div>
+            <div class="aff-base-price">Base Price:</div>
+            <div class="aff-price-num">Rs. ${p.price}</div>
+            <button class="sell-btn" onclick="event.stopPropagation(); openAffiliateModal('${p.id}')">
+              <i class="fa-solid fa-plus-circle"></i> Earn / Promote
+            </button>
+          </div>
+        `;
+      });
+    }
+
+    // REALTIME PRODUCTS SYNC FROM FIREBASE
+    onValue(ref(db, 'products'), (snapshot) => {
+      let productList = [];
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        Object.keys(data).forEach(key => {
+          const item = data[key];
+          // Handle Multiple Images Array or Single Image Fallback
+          let imgs = item.images || [];
+          if(imgs.length === 0 && item.image) imgs.push(item.image);
+          if(imgs.length === 0) imgs.push("https://via.placeholder.com/300");
+
+          productList.push({
+            id: key,
+            name: item.name || 'Product',
+            details: item.details || '',
+            price: parseFloat(item.price) || 0,
+            images: imgs
+          });
+        });
+      }
+      window.allAffProducts = productList;
+      renderAffiliateProducts(productList);
+    });
+
+    // FILTER PRODUCTS BY SEARCH
+    window.filterAffiliateProducts = function() {
+      const query = (document.getElementById('searchInput').value || '').toLowerCase();
+      const list = window.allAffProducts || [];
+      const filtered = list.filter(p => p.name.toLowerCase().includes(query));
+      renderAffiliateProducts(filtered);
+    };
+
+    // OPEN AFFILIATE ORDER MODAL
+    window.openAffiliateModal = function(pId) {
+      const list = window.allAffProducts || [];
+      selectedAffProduct = list.find(p => p.id == pId);
+      if(!selectedAffProduct) return;
+
+      currentGalleryImages = selectedAffProduct.images || [];
+      selectedImageIndex = 0;
+
+      document.getElementById('modalProductTitle').innerText = selectedAffProduct.name;
+      document.getElementById('modalProductDesc').innerText = selectedAffProduct.details || 'No additional specifications.';
+      document.getElementById('modalBasePrice').innerText = "Rs. " + selectedAffProduct.price;
+
+      // Reset Inputs
+      document.getElementById('userCommissionInput').value = 50;
+      document.getElementById('clientQuantityInput').value = 1;
+      document.getElementById('clientNameInput').value = '';
+      document.getElementById('clientMobileInput').value = '';
+      document.getElementById('clientWhatsappInput').value = '';
+      document.getElementById('clientCityInput').value = '';
+      document.getElementById('clientAddressInput').value = '';
+
+      // Setup Image Gallery
+      setupModalGallery();
+      calculateTotalSellingPrice();
+
+      document.getElementById('modalAlertBox').style.display = "none";
+      document.getElementById('affiliateModal').style.display = "flex";
+    };
+
+    function setupModalGallery() {
+      const mainImg = document.getElementById('mainGalleryImg');
+      const thumbsContainer = document.getElementById('galleryThumbs');
+
+      mainImg.src = currentGalleryImages[selectedImageIndex] || 'https://via.placeholder.com/300';
+      thumbsContainer.innerHTML = "";
+
+      currentGalleryImages.forEach((imgUrl, idx) => {
+        thumbsContainer.innerHTML += `
+          <img src="${imgUrl}" class="thumb-img ${idx === selectedImageIndex ? 'active' : ''}" onclick="selectGalleryImage(${idx})" />
+        `;
+      });
+    }
+
+    window.selectGalleryImage = function(idx) {
+      selectedImageIndex = idx;
+      setupModalGallery();
+    };
+
+    // IMAGE DOWNLOAD LOGIC
+    window.downloadCurrentImage = function() {
+      const currentUrl = currentGalleryImages[selectedImageIndex] || '';
+      if(currentUrl) {
+        triggerSingleDownload(currentUrl, selectedAffProduct ? selectedAffProduct.name : 'product');
+      }
+    };
+
+    window.triggerSingleDownload = function(url, filename) {
+      fetch(url)
+        .then(response => response.blob())
+        .then(blob => {
+          const blobUrl = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.style.display = 'none';
+          a.href = blobUrl;
+          a.download = (filename || 'product').replace(/\s+/g, '_') + '.jpg';
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(blobUrl);
+        })
+        .catch(() => {
+          // Direct fallback if cross-origin restricts fetch
+          window.open(url, '_blank');
+        });
+    };
+
+    window.closeAffiliateModal = function() {
+      document.getElementById('affiliateModal').style.display = "none";
+    };
+
+    // CALCULATE CLIENT TOTAL PRICE
+    window.calculateTotalSellingPrice = function() {
+      if(!selectedAffProduct) return;
+
+      const basePrice = parseFloat(selectedAffProduct.price) || 0;
+      const commission = parseFloat(document.getElementById('userCommissionInput').value) || 0;
+      const qty = parseInt(document.getElementById('clientQuantityInput').value) || 1;
+
+      const unitSellingPrice = basePrice + commission;
+      const grandTotal = unitSellingPrice * qty;
+
+      document.getElementById('finalClientPrice').innerText = "Rs. " + grandTotal;
+    };
+
+    // SUBMIT AFFILIATE ORDER TO FIREBASE
+    window.handleAffiliateOrderSubmit = async function(e) {
+      e.preventDefault();
+
+      const btn = document.getElementById('submitAffiliateBtn');
+      const alertBox = document.getElementById('modalAlertBox');
+
+      const clientName = document.getElementById('clientNameInput').value.trim();
+      const clientMobile = document.getElementById('clientMobileInput').value.trim();
+      const clientWhatsapp = document.getElementById('clientWhatsappInput').value.trim();
+      const clientCity = document.getElementById('clientCityInput').value.trim();
+      const clientAddress = document.getElementById('clientAddressInput').value.trim();
+
+      const basePrice = parseFloat(selectedAffProduct.price) || 0;
+      const userCommission = parseFloat(document.getElementById('userCommissionInput').value) || 0;
+      const quantity = parseInt(document.getElementById('clientQuantityInput').value) || 1;
+
+      const unitPrice = basePrice + userCommission;
+      const totalPrice = unitPrice * quantity;
+      const totalCommission = userCommission * quantity;
+
+      if (!clientName || !clientMobile || !clientWhatsapp || !clientCity || !clientAddress) {
+        alertBox.innerText = "Please complete all client details!";
+        alertBox.className = "status-alert error";
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "Submitting Order...";
+
+      try {
+        const orderData = {
+          orderType: "Affiliate Market",
+          productId: selectedAffProduct.id,
+          productName: selectedAffProduct.name,
+          affiliateUsername: userData.username || "",
+          affiliateEmail: userData.email || "",
+          
+          // Pricing Breakdown
+          basePrice: basePrice,
+          userCommission: userCommission,
+          unitPrice: unitPrice,
+          quantity: quantity,
+          totalPrice: totalPrice,
+          totalCommission: totalCommission,
+
+          // Client Details
+          customerName: clientName,
+          mobile: clientMobile,
+          whatsapp: clientWhatsapp,
+          city: clientCity,
+          location: clientAddress,
+
+          status: "Pending", // Admin will mark "OK / Delivered" to confirm commission
+          createdAt: Date.now()
+        };
+
+        // Push order to Firebase 'orders' node
+        await push(ref(db, 'orders'), orderData);
+
+        // Update User Pending Commission Tracker
+        const currentPending = parseFloat(userData.pendingCommission || 0);
+        await set(ref(db, 'users/' + userData.username + '/pendingCommission'), currentPending + totalCommission);
+
+        alertBox.innerText = "Affiliate order submitted successfully!";
+        alertBox.className = "status-alert success";
+
+        setTimeout(() => {
+          closeAffiliateModal();
+        }, 1300);
+
+      } catch (err) {
+        console.error("Affiliate Order Error:", err);
+        alertBox.innerText = "Error placing order: " + err.message;
+        alertBox.className = "status-alert error";
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "Submit Affiliate Order";
+      }
+    };
+  </script>
+</body>
+</html>

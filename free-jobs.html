@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Jobs Portal - Select Job</title>
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --primary-glow: #2563eb;
+      --accent-green: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .jobs-container {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .header-title {
+      text-align: center;
+      margin-bottom: 8px;
+    }
+
+    .header-title h2 {
+      font-size: 22px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #60a5fa, #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .header-title p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* LARGE ANIMATED BUTTON STYLES */
+    .job-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      border-radius: 16px;
+      text-decoration: none;
+      color: var(--text-main);
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .job-info {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      z-index: 2;
+    }
+
+    .icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .job-details h3 {
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .job-details p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    .badge {
+      font-size: 9px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      z-index: 2;
+    }
+
+    /* 1. ACTIVE BUTTON: AFFILIATE MARKET */
+    .job-btn.active-market {
+      border-color: rgba(37, 99, 235, 0.4);
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.15);
+      animation: pulseGlow 2.5s infinite alternate;
+    }
+
+    .job-btn.active-market .icon-box {
+      background: rgba(37, 99, 235, 0.2);
+      color: #60a5fa;
+    }
+
+    .job-btn.active-market .badge {
+      background: rgba(16, 185, 129, 0.2);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .job-btn.active-market:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+      border-color: #3b82f6;
+    }
+
+    .job-btn.active-market:hover .icon-box {
+      transform: scale(1.1) rotate(-5deg);
+    }
+
+    /* 2 & 3. DISABLED BUTTONS: COMING SOON */
+    .job-btn.disabled-job {
+      opacity: 0.65;
+      cursor: not-allowed;
+      filter: grayscale(20%);
+    }
+
+    .job-btn.disabled-job .icon-box {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-muted);
+    }
+
+    .job-btn.disabled-job .badge {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    .job-btn.disabled-job:hover {
+      animation: shake 0.4s ease-in-out;
+    }
+
+    /* KEYFRAME ANIMATIONS */
+    @keyframes pulseGlow {
+      0% {
+        box-shadow: 0 0 10px rgba(37, 99, 235, 0.2);
+      }
+      100% {
+        box-shadow: 0 0 22px rgba(37, 99, 235, 0.45);
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-5px); }
+      40% { transform: translateX(5px); }
+      60% { transform: translateX(-3px); }
+      80% { transform: translateX(3px); }
+    }
+
+    /* TOAST NOTIFICATION */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #f59e0b;
+      color: #0f172a;
+      padding: 10px 18px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: 800;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="jobs-container">
+    
+    <div class="header-title">
+      <h2>Select Your Job</h2>
+      <p>Choose an available portal to start earning</p>
+    </div>
+
+    <!-- 1. AFFILIATE MARKETING JOB (ACTIVE) -->
+    <a href="market.html" class="job-btn active-market">
+      <div class="job-info">
+        <div class="icon-box">
+          <i class="fa-solid fa-store"></i>
+        </div>
+        <div class="job-details">
+          <h3>Affiliate Marketing</h3>
+          <p>Resell products & earn profit</p>
+        </div>
+      </div>
+      <span class="badge">Active <i class="fa-solid fa-arrow-right" style="margin-left: 2px;"></i></span>
+    </a>
+
+    <!-- 2. WRITING JOB (DISABLED / COMING SOON) -->
+    <div class="job-btn disabled-job" onclick="triggerComingSoon('Writing Job')">
+      <div class="job-info">
+        <div class="icon-box">
+          <i class="fa-solid fa-pen-nib"></i>
+        </div>
+        <div class="job-details">
+          <h3>Writing Job</h3>
+          <p>Article & content creation</p>
+        </div>
+      </div>
+      <span class="badge"><i class="fa-solid fa-lock"></i> Coming Soon</span>
+    </div>
+
+    <!-- 3. CONTROL JOB (DISABLED / COMING SOON) -->
+    <div class="job-btn disabled-job" onclick="triggerComingSoon('Control Job')">
+      <div class="job-info">
+        <div class="icon-box">
+          <i class="fa-solid fa-sliders"></i>
+        </div>
+        <div class="job-details">
+          <h3>Control Job</h3>
+          <p>Data management & audit</p>
+        </div>
+      </div>
+      <span class="badge"><i class="fa-solid fa-lock"></i> Coming Soon</span>
+    </div>
+
+  </div>
+
+  <!-- TOAST ALERT FOR LOCKED JOBS -->
+  <div id="toast" class="toast">
+    <i class="fa-solid fa-circle-info"></i>
+    <span id="toastMsg">This job is coming soon!</span>
+  </div>
+
+  <script>
+    function triggerComingSoon(jobName) {
+      const toast = document.getElementById('toast');
+      const msg = document.getElementById('toastMsg');
+      
+      msg.innerText = jobName + " is coming soon!";
+      toast.classList.add('show');
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2500);
+    }
+  </script>
+
+</body>
+</html>

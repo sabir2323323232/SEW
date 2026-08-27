@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>SEW - Withdraw Funds</title>
   
+  <!-- Google Fonts & Font Awesome Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   
@@ -40,17 +41,23 @@
         radial-gradient(at 100% 100%, rgba(59, 130, 246, 0.03) 0px, transparent 50%);
       display: flex;
       justify-content: center;
-      align-items: center;
-      padding: 16px;
+      align-items: flex-start;
+      padding: 24px 16px;
       color: var(--text-main);
     }
 
-    .withdraw-card {
+    .container {
       width: 100%;
       max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .withdraw-card {
       background: var(--card-bg);
       border-radius: 24px;
-      padding: 32px 24px;
+      padding: 28px 24px;
       box-shadow: var(--shadow-soft);
       border: 1px solid #ffffff;
       animation: smoothFadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
@@ -65,7 +72,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
 
     .back-btn {
@@ -159,7 +166,6 @@
       left: 14px;
       color: #94a3b8;
       font-size: 15px;
-      transition: color 0.25s ease;
     }
 
     .field-wrapper input, .field-wrapper select {
@@ -235,6 +241,102 @@
       display: block;
     }
 
+    /* History Section Styles */
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .history-item {
+      background: var(--input-bg);
+      border-radius: 14px;
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid var(--border-color);
+    }
+
+    .history-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .history-method {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .history-date {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .history-right {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .history-amount {
+      font-weight: 800;
+      font-size: 15px;
+      color: var(--text-main);
+    }
+
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      text-transform: capitalize;
+    }
+
+    .badge-pending {
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
+    }
+
+    .badge-approved {
+      background: #d1fae5;
+      color: #047857;
+      border: 1px solid #a7f3d0;
+    }
+
+    .badge-rejected {
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fca5a5;
+    }
+
+    .empty-history {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      padding: 20px;
+    }
+
     .spinner {
       width: 16px;
       height: 16px;
@@ -253,79 +355,100 @@
 </head>
 <body>
 
-  <div class="withdraw-card">
-    <div class="card-header">
-      <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-      <div class="header-title">Withdraw Funds</div>
-      <div style="width: 40px;"></div>
+  <div class="container">
+    <div class="withdraw-card">
+      <div class="card-header">
+        <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+        <div class="header-title">Withdraw Funds</div>
+        <div style="width: 40px;"></div>
+      </div>
+
+      <!-- Real-time Balance Box -->
+      <div class="balance-box">
+        <label>Available Balance</label>
+        <div class="balance-amount" id="realtimeBalance">Rs. 0.00</div>
+      </div>
+
+      <!-- Day Restriction Notice -->
+      <div class="schedule-notice" id="dayNotice">
+        <i class="fa-solid fa-calendar-check"></i>
+        <span>Withdrawals are processed only on <strong>Monday</strong> & <strong>Friday</strong>.</span>
+      </div>
+
+      <form id="withdrawForm" onsubmit="handleWithdraw(event)">
+        
+        <!-- Payment Method -->
+        <div class="input-group">
+          <label>Payment Method</label>
+          <div class="field-wrapper">
+            <select id="paymentMethod" required>
+              <option value="" disabled selected>Select Payment Method</option>
+              <option value="JazzCash">JazzCash</option>
+              <option value="EasyPaisa">EasyPaisa</option>
+            </select>
+            <i class="fa-solid fa-wallet"></i>
+          </div>
+        </div>
+
+        <!-- Account Holder Name -->
+        <div class="input-group">
+          <label>Account Title / Full Name</label>
+          <div class="field-wrapper">
+            <input type="text" id="accName" placeholder="Account Title (e.g. Sabir Khan)" required />
+            <i class="fa-solid fa-user"></i>
+          </div>
+        </div>
+
+        <!-- Mobile / Account Number -->
+        <div class="input-group">
+          <label>Account / Mobile Number</label>
+          <div class="field-wrapper">
+            <input type="tel" id="accNumber" placeholder="e.g. 03001234567" required />
+            <i class="fa-solid fa-phone"></i>
+          </div>
+        </div>
+
+        <!-- Email Address -->
+        <div class="input-group">
+          <label>Email Address</label>
+          <div class="field-wrapper">
+            <input type="email" id="accEmail" placeholder="yourname@gmail.com" required />
+            <i class="fa-solid fa-envelope"></i>
+          </div>
+        </div>
+
+        <!-- Amount Input -->
+        <div class="input-group">
+          <label>Withdraw Amount (Min: Rs. 350)</label>
+          <div class="field-wrapper">
+            <input type="number" id="withdrawAmount" min="350" placeholder="Minimum 350" required />
+            <i class="fa-solid fa-money-bill-wave"></i>
+          </div>
+        </div>
+
+        <div class="status-msg" id="withdrawStatus"></div>
+
+        <button type="submit" class="submit-btn" id="withdrawBtn">
+          <span>Submit Request</span>
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+
+      </form>
     </div>
 
-    <div class="balance-box">
-      <label>Available Balance</label>
-      <div class="balance-amount" id="realtimeBalance">Rs. 0.00</div>
+    <!-- Realtime Withdrawal History Section -->
+    <div class="withdraw-card">
+      <div class="section-title">
+        <i class="fa-solid fa-clock-rotate-left" style="color: var(--primary);"></i>
+        <span>Withdrawal History & Status</span>
+      </div>
+      <div class="history-list" id="historyList">
+        <div class="empty-history">Loading withdrawal history...</div>
+      </div>
     </div>
-
-    <div class="schedule-notice" id="dayNotice">
-      <i class="fa-solid fa-calendar-check"></i>
-      <span>Withdrawals are processed only on <strong>Monday</strong> & <strong>Friday</strong>.</span>
-    </div>
-
-    <form id="withdrawForm" onsubmit="handleWithdraw(event)">
-      
-      <div class="input-group">
-        <label>Payment Method</label>
-        <div class="field-wrapper">
-          <select id="paymentMethod" required>
-            <option value="" disabled selected>Select Payment Method</option>
-            <option value="JazzCash">JazzCash</option>
-            <option value="EasyPaisa">EasyPaisa</option>
-          </select>
-          <i class="fa-solid fa-wallet"></i>
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label>Account Title / Full Name</label>
-        <div class="field-wrapper">
-          <input type="text" id="accName" placeholder="Account Title (e.g. Sabir Khan)" required />
-          <i class="fa-solid fa-user"></i>
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label>Account / Mobile Number</label>
-        <div class="field-wrapper">
-          <input type="tel" id="accNumber" placeholder="e.g. 03001234567" required />
-          <i class="fa-solid fa-phone"></i>
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label>Email Address</label>
-        <div class="field-wrapper">
-          <input type="email" id="accEmail" placeholder="yourname@gmail.com" required />
-          <i class="fa-solid fa-envelope"></i>
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label>Withdraw Amount (Min: Rs. 350)</label>
-        <div class="field-wrapper">
-          <input type="number" id="withdrawAmount" min="350" placeholder="Minimum 350" required />
-          <i class="fa-solid fa-money-bill-wave"></i>
-        </div>
-      </div>
-
-      <div class="status-msg" id="withdrawStatus"></div>
-
-      <button type="submit" class="submit-btn" id="withdrawBtn">
-        <span>Submit Request</span>
-        <i class="fa-solid fa-paper-plane"></i>
-      </button>
-
-    </form>
   </div>
 
+  <!-- Firebase Modular SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue, push, set, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -369,13 +492,66 @@
       }
     });
 
-    // 3. Day Validation Function (1 = Monday, 5 = Friday)
+    // 3. Real-time Withdrawal History Listener
+    const withdrawalsRef = ref(db, 'withdrawals');
+    onValue(withdrawalsRef, (snapshot) => {
+      const historyList = document.getElementById('historyList');
+      historyList.innerHTML = '';
+
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        // Filter user requests and sort by date/timestamp (newest first)
+        const myRequests = Object.values(data)
+          .filter(item => item.username === sessionUser.username)
+          .sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
+
+        if (myRequests.length === 0) {
+          historyList.innerHTML = `<div class="empty-history">No withdrawal history found.</div>`;
+          return;
+        }
+
+        myRequests.forEach(item => {
+          let badgeClass = 'badge-pending';
+          let statusText = 'Pending';
+
+          const st = (item.status || 'pending').toLowerCase();
+          if (st === 'approved' || st === 'completed' || st === 'success') {
+            badgeClass = 'badge-approved';
+            statusText = 'Approved';
+          } else if (st === 'rejected' || st === 'failed') {
+            badgeClass = 'badge-rejected';
+            statusText = 'Rejected';
+          }
+
+          const historyHtml = `
+            <div class="history-item">
+              <div class="history-info">
+                <div class="history-method">
+                  <i class="fa-solid fa-wallet" style="color: var(--primary);"></i>
+                  ${item.paymentMethod} (${item.accountNumber})
+                </div>
+                <div class="history-date">${item.date || ''}</div>
+              </div>
+              <div class="history-right">
+                <div class="history-amount">Rs. ${item.amount}</div>
+                <span class="badge ${badgeClass}">${statusText}</span>
+              </div>
+            </div>
+          `;
+          historyList.innerHTML += historyHtml;
+        });
+
+      } else {
+        historyList.innerHTML = `<div class="empty-history">No withdrawal history found.</div>`;
+      }
+    });
+
+    // 4. Day Validation Function (1 = Monday, 5 = Friday)
     function isWithdrawAllowedDay() {
       const today = new Date().getDay(); // 0: Sun, 1: Mon, 2: Tue, 3: Wed, 4: Thu, 5: Fri, 6: Sat
       return (today === 1 || today === 5);
     }
 
-    // Initial Day Check UI Feedback
     const btn = document.getElementById('withdrawBtn');
     const statusMsg = document.getElementById('withdrawStatus');
     
@@ -383,7 +559,7 @@
       showStatus(statusMsg, "Today is not a withdrawal day. Requests open only on Monday & Friday.", "error");
     }
 
-    // 4. Handle Withdraw Request Submission
+    // 5. Handle Withdraw Request Submission
     window.handleWithdraw = async function(e) {
       e.preventDefault();
 
@@ -393,19 +569,16 @@
       const email = document.getElementById('accEmail').value.trim();
       const amount = parseFloat(document.getElementById('withdrawAmount').value);
 
-      // Rule Validation 1: Day Check
       if (!isWithdrawAllowedDay()) {
         showStatus(statusMsg, "Withdrawal failed! Requests can only be submitted on Monday or Friday.", "error");
         return;
       }
 
-      // Rule Validation 2: Minimum Amount Check
       if (amount < 350) {
         showStatus(statusMsg, "Minimum withdrawal amount is Rs. 350!", "error");
         return;
       }
 
-      // Rule Validation 3: Balance Check
       if (amount > currentTotalBalance) {
         showStatus(statusMsg, "Insufficient balance! Available: Rs. " + currentTotalBalance.toFixed(2), "error");
         return;
@@ -415,7 +588,6 @@
       btn.innerHTML = `<span class="spinner"></span> Processing...`;
 
       try {
-        // Push Request to Firebase RTDB under 'withdrawals' (for Admin Panel)
         const newWithdrawRef = push(ref(db, 'withdrawals'));
         const requestData = {
           requestId: newWithdrawRef.key,
@@ -426,7 +598,7 @@
           accountNumber: number,
           amount: amount,
           status: "pending",
-          date: new Date().toLocaleDateString(),
+          date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
           timestamp: new Date().toISOString()
         };
 
@@ -440,7 +612,6 @@
             let mainBal = parseFloat(data.balance || 0);
             let refBal = parseFloat(data.referralBalance || 0);
 
-            // Deduct first from main balance, then referral balance if needed
             if (mainBal >= amount) {
               mainBal -= amount;
             } else {

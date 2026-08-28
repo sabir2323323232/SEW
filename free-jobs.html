@@ -11,12 +11,13 @@
 
   <style>
     :root {
-      --bg-color: #0f172a;
-      --card-bg: #1e293b;
+      --bg-color: #f8fafc;
+      --card-bg: #ffffff;
       --primary-glow: #2563eb;
-      --accent-green: #10b981;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
+      --accent-green: #16a34a;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
     }
 
     * {
@@ -51,17 +52,18 @@
     }
 
     .header-title h2 {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 800;
-      background: linear-gradient(135deg, #60a5fa, #a855f7);
+      background: linear-gradient(135deg, #2563eb, #7c3aed);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
     .header-title p {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-muted);
       margin-top: 4px;
+      font-weight: 500;
     }
 
     /* LARGE ANIMATED BUTTON STYLES */
@@ -75,7 +77,8 @@
       text-decoration: none;
       color: var(--text-main);
       background: var(--card-bg);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--border-color);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
       overflow: hidden;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -103,18 +106,19 @@
       font-size: 15px;
       font-weight: 700;
       line-height: 1.2;
+      color: #0f172a;
     }
 
     .job-details p {
-      font-size: 11px;
+      font-size: 12px;
       color: var(--text-muted);
       margin-top: 3px;
     }
 
     .badge {
-      font-size: 9px;
+      font-size: 10px;
       font-weight: 800;
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 20px;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -123,25 +127,25 @@
 
     /* 1. ACTIVE BUTTON: AFFILIATE MARKET */
     .job-btn.active-market {
-      border-color: rgba(37, 99, 235, 0.4);
-      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.15);
+      border-color: #bfdbfe;
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.08);
       animation: pulseGlow 2.5s infinite alternate;
     }
 
     .job-btn.active-market .icon-box {
-      background: rgba(37, 99, 235, 0.2);
-      color: #60a5fa;
+      background: #eff6ff;
+      color: #2563eb;
     }
 
     .job-btn.active-market .badge {
-      background: rgba(16, 185, 129, 0.2);
-      color: #34d399;
-      border: 1px solid rgba(16, 185, 129, 0.3);
+      background: #dcfce7;
+      color: #15803d;
+      border: 1px solid #bbf7d0;
     }
 
     .job-btn.active-market:hover {
-      transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+      transform: translateY(-3px) scale(1.01);
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.15);
       border-color: #3b82f6;
     }
 
@@ -151,20 +155,21 @@
 
     /* 2 & 3. DISABLED BUTTONS: COMING SOON */
     .job-btn.disabled-job {
-      opacity: 0.65;
+      opacity: 0.75;
       cursor: not-allowed;
-      filter: grayscale(20%);
+      background: #ffffff;
+      border-color: var(--border-color);
     }
 
     .job-btn.disabled-job .icon-box {
-      background: rgba(255, 255, 255, 0.05);
-      color: var(--text-muted);
+      background: #f1f5f9;
+      color: #94a3b8;
     }
 
     .job-btn.disabled-job .badge {
-      background: rgba(245, 158, 11, 0.15);
-      color: #fbbf24;
-      border: 1px solid rgba(245, 158, 11, 0.3);
+      background: #fef3c7;
+      color: #b45309;
+      border: 1px solid #fde68a;
     }
 
     .job-btn.disabled-job:hover {
@@ -174,40 +179,44 @@
     /* KEYFRAME ANIMATIONS */
     @keyframes pulseGlow {
       0% {
-        box-shadow: 0 0 10px rgba(37, 99, 235, 0.2);
+        box-shadow: 0 0 10px rgba(37, 99, 235, 0.06);
       }
       100% {
-        box-shadow: 0 0 22px rgba(37, 99, 235, 0.45);
+        box-shadow: 0 0 20px rgba(37, 99, 235, 0.18);
       }
     }
 
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      20% { transform: translateX(-5px); }
-      40% { transform: translateX(5px); }
-      60% { transform: translateX(-3px); }
-      80% { transform: translateX(3px); }
+      20% { transform: translateX(-4px); }
+      40% { transform: translateX(4px); }
+      60% { transform: translateX(-2px); }
+      80% { transform: translateX(2px); }
     }
 
     /* TOAST NOTIFICATION */
     .toast {
       position: fixed;
-      bottom: 20px;
+      bottom: 24px;
       left: 50%;
       transform: translateX(-50%) translateY(100px);
-      background: #f59e0b;
-      color: #0f172a;
-      padding: 10px 18px;
+      background: #0f172a;
+      color: #ffffff;
+      padding: 12px 20px;
       border-radius: 30px;
       font-size: 12px;
-      font-weight: 800;
-      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+      font-weight: 700;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2);
       opacity: 0;
       transition: all 0.3s ease;
       z-index: 100;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+    }
+
+    .toast i {
+      color: #f59e0b;
     }
 
     .toast.show {

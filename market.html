@@ -40,7 +40,7 @@
     }
 
     .logo-title {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 700;
       color: #2563eb;
       display: flex;
@@ -48,18 +48,30 @@
       gap: 6px;
     }
 
-    .btn-my-orders-toggle {
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-header {
       background: #eff6ff;
       color: #2563eb;
       border: 1px solid #bfdbfe;
-      padding: 6px 12px;
+      padding: 6px 10px;
       border-radius: 20px;
       font-size: 11px;
       font-weight: 600;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
+    }
+
+    .btn-wallet {
+      background: #16a34a;
+      color: #ffffff;
+      border: none;
     }
 
     /* MAIN CONTAINER */
@@ -69,7 +81,7 @@
       padding: 12px;
     }
 
-    /* MAIN SEARCH & CATEGORIES BAR */
+    /* SEARCH & CATEGORIES BAR */
     .search-section {
       background: #ffffff;
       border-radius: 14px;
@@ -103,7 +115,7 @@
       background: #f8fafc;
     }
 
-    /* HORIZONTAL CATEGORY SCROLL BUTTONS */
+    /* CATEGORY BUTTONS */
     .category-scroll {
       display: flex;
       gap: 8px;
@@ -129,7 +141,6 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      transition: all 0.2s ease;
     }
 
     .cat-btn.active {
@@ -138,7 +149,7 @@
       border-color: #2563eb;
     }
 
-    /* PRODUCT CARDS LIST */
+    /* PRODUCTS LIST */
     .products-list {
       display: flex;
       flex-direction: column;
@@ -153,7 +164,6 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.03);
     }
 
-    /* HORIZONTAL SCROLLABLE IMAGES FOR MOBILE */
     .image-gallery {
       display: flex;
       gap: 8px;
@@ -243,83 +253,7 @@
       gap: 5px;
     }
 
-    /* ORDER DRAWER (MY ORDERS) */
-    .orders-drawer {
-      position: fixed;
-      top: 0; right: -100%;
-      width: 100%;
-      max-width: 380px;
-      height: 100%;
-      background: #ffffff;
-      box-shadow: -4px 0 15px rgba(0,0,0,0.1);
-      z-index: 150;
-      transition: right 0.3s ease;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .orders-drawer.open {
-      right: 0;
-    }
-
-    .drawer-header {
-      padding: 14px;
-      border-bottom: 1px solid #e2e8f0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: #f8fafc;
-    }
-
-    .drawer-header h3 {
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    .close-drawer-btn {
-      background: none;
-      border: none;
-      font-size: 18px;
-      cursor: pointer;
-      color: #64748b;
-    }
-
-    .drawer-body {
-      padding: 12px;
-      overflow-y: auto;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .order-card {
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 10px;
-      background: #f8fafc;
-      font-size: 11px;
-    }
-
-    .order-card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 4px;
-      font-weight: 700;
-    }
-
-    .status-badge {
-      padding: 2px 8px;
-      border-radius: 12px;
-      font-size: 9px;
-      font-weight: 700;
-    }
-
-    .status-pending { background: #fef3c7; color: #d97706; }
-    .status-done { background: #d1fae5; color: #059669; }
-
-    /* SELL MODAL POPUP */
+    /* MODAL / SHEET COMMON */
     .modal-backdrop {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -361,30 +295,33 @@
       font-weight: 700;
     }
 
-    .calc-box {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 10px;
-      padding: 10px;
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      color: #64748b;
+    }
+
+    /* WALLET SPECIFIC STYLES */
+    .wallet-card-box {
+      background: linear-gradient(135deg, #16a34a, #15803d);
+      color: #ffffff;
+      border-radius: 12px;
+      padding: 14px;
       margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .wallet-card-box span {
       font-size: 11px;
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      opacity: 0.9;
     }
 
-    .calc-row {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .calc-row.total {
-      border-top: 1px solid #cbd5e1;
-      padding-top: 6px;
-      margin-top: 2px;
-      font-size: 13px;
+    .wallet-card-box h2 {
+      font-size: 24px;
       font-weight: 700;
-      color: #2563eb;
+      margin-top: 2px;
     }
 
     .form-field {
@@ -408,43 +345,92 @@
       outline: none;
     }
 
-    .btn-submit-order {
+    .btn-action-green {
       width: 100%;
       background: #16a34a;
       color: #ffffff;
       border: none;
-      padding: 11px;
+      padding: 10px;
       border-radius: 8px;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       cursor: pointer;
-      margin-top: 6px;
     }
+
+    /* ORDERS DRAWER */
+    .orders-drawer {
+      position: fixed;
+      top: 0; right: -100%;
+      width: 100%;
+      max-width: 380px;
+      height: 100%;
+      background: #ffffff;
+      box-shadow: -4px 0 15px rgba(0,0,0,0.1);
+      z-index: 150;
+      transition: right 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .orders-drawer.open {
+      right: 0;
+    }
+
+    .drawer-body {
+      padding: 12px;
+      overflow-y: auto;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .order-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px;
+      background: #f8fafc;
+      font-size: 11px;
+    }
+
+    .status-badge {
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 9px;
+      font-weight: 700;
+    }
+    .status-pending { background: #fef3c7; color: #d97706; }
+    .status-done { background: #d1fae5; color: #059669; }
   </style>
 </head>
 <body>
 
-  <!-- TOP HEADER -->
+  <!-- TOP HEADER WITH RIGHT SIDE WALLET & ORDERS BUTTON -->
   <header class="top-header">
     <div class="logo-title">
       <i class="fa-solid fa-shop"></i> Reseller Store
     </div>
-    <button class="btn-my-orders-toggle" onclick="toggleOrdersDrawer()">
-      <i class="fa-solid fa-box"></i> My Orders
-    </button>
+    <div class="header-actions">
+      <!-- RIGHT SIDE WALLET BUTTON -->
+      <button class="btn-header btn-wallet" onclick="openWalletModal()">
+        <i class="fa-solid fa-wallet"></i> Wallet
+      </button>
+      <button class="btn-header" onclick="toggleOrdersDrawer()">
+        <i class="fa-solid fa-box"></i> Orders
+      </button>
+    </div>
   </header>
 
   <!-- MAIN CONTAINER -->
   <div class="container">
 
-    <!-- SEARCH & CATEGORY BAR -->
+    <!-- SEARCH & CATEGORIES -->
     <div class="search-section">
       <div class="search-box">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="searchInput" placeholder="Search product name..." onkeyup="filterProducts()" />
       </div>
       
-      <!-- CATEGORY SCROLL BUTTONS -->
       <div class="category-scroll">
         <button class="cat-btn active" onclick="selectCat('all', this)"><i class="fa-solid fa-border-all"></i> All</button>
         <button class="cat-btn" onclick="selectCat('jewelry', this)"><i class="fa-solid fa-gem"></i> Jewelry</button>
@@ -454,7 +440,7 @@
       </div>
     </div>
 
-    <!-- PRODUCTS GRID/LIST -->
+    <!-- PRODUCTS LIST -->
     <div class="products-list" id="productsList">
       <div style="text-align:center; padding: 20px; color: #64748b; font-size: 12px;">
         Products Load Ho Rahe Hain...
@@ -463,15 +449,41 @@
 
   </div>
 
-  <!-- MY ORDERS DRAWER -->
-  <div class="orders-drawer" id="ordersDrawer">
-    <div class="drawer-header">
-      <h3><i class="fa-solid fa-truck-fast"></i> My Client Orders</h3>
-      <button class="close-drawer-btn" onclick="toggleOrdersDrawer()">✕</button>
-    </div>
-    <div class="drawer-body" id="drawerOrdersList">
-      <div style="text-align: center; color: #64748b; font-size: 12px; padding-top: 20px;">
-        Abhi koi order submit nahi hua.
+  <!-- WALLET MODAL (CLICKED FROM TOP RIGHT) -->
+  <div class="modal-backdrop" id="walletModal">
+    <div class="modal-sheet">
+      <div class="modal-sheet-header">
+        <h3><i class="fa-solid fa-wallet" style="color:#16a34a;"></i> My Wallet & Payout</h3>
+        <button class="close-btn" onclick="closeWalletModal()">✕</button>
+      </div>
+
+      <!-- BALANCE DISPLAY -->
+      <div class="wallet-card-box">
+        <span>Admin Se Mile Hue Total Paise</span>
+        <h2 id="walletBalanceText">Rs. 0.00</h2>
+      </div>
+
+      <!-- USER ACCOUNT SUBMIT FORM FOR ADMIN PANEL -->
+      <form id="walletForm" onsubmit="submitWalletDetails(event)">
+        <div class="form-field">
+          <label>Account Holder Name (Apna Name):</label>
+          <input type="text" id="accHolderName" placeholder="e.g. Muhammad Sabir" required />
+        </div>
+
+        <div class="form-field">
+          <label>Account Number (Easypaisa/Jazzcash/Bank):</label>
+          <input type="text" id="accNumber" placeholder="03XXXXXXXXX or IBAN" required />
+        </div>
+
+        <button type="submit" class="btn-action-green">Account Details Admin Ko Bhejen</button>
+      </form>
+
+      <!-- PAYOUT HISTORY -->
+      <div style="margin-top:14px;">
+        <h4 style="font-size:12px; margin-bottom:6px;">Payment History:</h4>
+        <div id="payoutHistoryList" style="font-size:11px; color:#64748b;">
+          Abhi koi payment receive nahi hui.
+        </div>
       </div>
     </div>
   </div>
@@ -481,65 +493,72 @@
     <div class="modal-sheet">
       <div class="modal-sheet-header">
         <h3>Client Order Form</h3>
-        <button class="close-drawer-btn" onclick="closeSellModal()">✕</button>
+        <button class="close-btn" onclick="closeSellModal()">✕</button>
       </div>
 
       <form id="orderForm" onsubmit="submitOrder(event)">
-        <!-- LIVE PRICE CALCULATOR -->
-        <div class="calc-box">
-          <div class="calc-row">
+        <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:10px; margin-bottom:12px; font-size:11px;">
+          <div style="display:flex; justify-content:space-between;">
             <span>Wholesale Price:</span>
             <span>Rs. <span id="calcBase">0</span></span>
           </div>
-          <div class="calc-row">
-            <span>Your Commission (Profit):</span>
+          <div style="display:flex; justify-content:space-between;">
+            <span>Your Profit:</span>
             <span>+ Rs. <span id="calcProfit">0</span></span>
           </div>
-          <div class="calc-row total">
-            <span>Client Final Total Price:</span>
+          <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:700; color:#2563eb; border-top:1px solid #cbd5e1; padding-top:4px; margin-top:4px;">
+            <span>Client Total Price:</span>
             <span>Rs. <span id="calcTotal">0</span></span>
           </div>
         </div>
 
         <div class="form-field">
-          <label>Apna Commission Likhein (Rs.):</label>
+          <label>Apna Profit Likhein (Rs.):</label>
           <input type="number" id="inputProfit" value="100" min="0" required oninput="reCalculate()" />
         </div>
 
         <div class="form-field">
-          <label>Quantity (Tadad):</label>
+          <label>Quantity:</label>
           <input type="number" id="inputQty" value="1" min="1" required oninput="reCalculate()" />
         </div>
 
         <div class="form-field">
-          <label>Client Ka Naam:</label>
-          <input type="text" id="clientName" placeholder="Customer Full Name" required />
+          <label>Client Name:</label>
+          <input type="text" id="clientName" placeholder="Customer Name" required />
         </div>
 
         <div class="form-field">
-          <label>Client WhatsApp / Mobile Number:</label>
+          <label>Client Mobile/WhatsApp:</label>
           <input type="tel" id="clientPhone" placeholder="03XXXXXXXXX" required />
         </div>
 
         <div class="form-field">
-          <label>Client Ka Poora Address:</label>
-          <textarea id="clientAddress" rows="2" placeholder="House #, Street, City Name" required></textarea>
+          <label>Client Address:</label>
+          <textarea id="clientAddress" rows="2" placeholder="Full Address" required></textarea>
         </div>
 
-        <div class="form-field">
-          <label>Apna Easypaisa/Jazzcash/Bank Account (Paise lene ke liye):</label>
-          <input type="text" id="userPayoutAccount" placeholder="Account Title & Number" required />
-        </div>
-
-        <button type="submit" class="btn-submit-order">Order Confirm Karke Admin Ko Bhejen</button>
+        <button type="submit" class="btn-action-green">Order Confirm Karein</button>
       </form>
+    </div>
+  </div>
+
+  <!-- ORDERS DRAWER -->
+  <div class="orders-drawer" id="ordersDrawer">
+    <div style="padding:14px; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
+      <h3 style="font-size:14px;"><i class="fa-solid fa-truck-fast"></i> My Orders</h3>
+      <button class="close-btn" onclick="toggleOrdersDrawer()">✕</button>
+    </div>
+    <div class="drawer-body" id="drawerOrdersList">
+      <div style="text-align: center; color: #64748b; font-size: 12px; padding-top: 20px;">
+        Abhi koi order nahi hai.
+      </div>
     </div>
   </div>
 
   <!-- FIREBASE SCRIPT -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
@@ -561,16 +580,68 @@
     let activeCategory = 'all';
     let selectedProduct = null;
 
-    // REALTIME PRODUCTS FETCH FROM FIREBASE
+    // WALLET MODAL CONTROLS
+    window.openWalletModal = function() {
+      document.getElementById('walletModal').style.display = 'flex';
+      // Auto Fill Saved Acc
+      const savedName = localStorage.getItem('acc_name') || '';
+      const savedNum = localStorage.getItem('acc_num') || '';
+      if(savedName) document.getElementById('accHolderName').value = savedName;
+      if(savedNum) document.getElementById('accNumber').value = savedNum;
+    };
+
+    window.closeWalletModal = function() {
+      document.getElementById('walletModal').style.display = 'none';
+    };
+
+    // SUBMIT ACCOUNT DETAILS TO ADMIN VIA FIREBASE
+    window.submitWalletDetails = function(e) {
+      e.preventDefault();
+      const name = document.getElementById('accHolderName').value;
+      const num = document.getElementById('accNumber').value;
+
+      localStorage.setItem('acc_name', name);
+      localStorage.setItem('acc_num', num);
+
+      set(ref(db, `user_payout_accounts/${userData.username}`), {
+        username: userData.username,
+        accountTitle: name,
+        accountNumber: num,
+        updatedAt: Date.now()
+      }).then(() => {
+        alert("Account details Admin ko bhej di gayi hain!");
+      }).catch(err => alert("Error: " + err.message));
+    };
+
+    // REALTIME USER WALLET BALANCE LISTENER FROM ADMIN
+    onValue(ref(db, `user_wallets/${userData.username}`), (snapshot) => {
+      if(snapshot.exists()){
+        const wallet = snapshot.val();
+        document.getElementById('walletBalanceText').innerText = `Rs. ${wallet.balance || 0}`;
+        
+        // Payout history
+        const listContainer = document.getElementById('payoutHistoryList');
+        if(wallet.history) {
+          let hHtml = '';
+          Object.keys(wallet.history).forEach(k => {
+            const h = wallet.history[k];
+            hHtml += `<div style="background:#f8fafc; padding:6px; border-radius:6px; margin-bottom:4px; display:flex; justify-content:space-between;">
+              <span>Received: Rs. ${h.amount}</span>
+              <span style="color:#16a34a; font-weight:700;">PAID</span>
+            </div>`;
+          });
+          listContainer.innerHTML = hHtml;
+        }
+      }
+    });
+
+    // REALTIME PRODUCTS
     onValue(ref(db, 'products'), (snapshot) => {
       allProducts = [];
       if (snapshot.exists()) {
         const data = snapshot.val();
-        Object.keys(data).forEach(k => {
-          allProducts.push({ id: k, ...data[k] });
-        });
+        Object.keys(data).forEach(k => allProducts.push({ id: k, ...data[k] }));
       } else {
-        // Fallback Sample Data if Firebase empty
         allProducts = [
           {
             id: "p1",
@@ -578,32 +649,24 @@
             category: "jewelry",
             price: 1200,
             details: "High quality bridal necklace & earrings set.",
-            images: [
-              "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500",
-              "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500"
-            ]
+            images: ["https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=500"]
           },
           {
             id: "p2",
-            name: "3-Piece Printed Lawn Suit",
+            name: "Printed Lawn Suit",
             category: "clothes",
             price: 1800,
-            details: "Soft lawn fabric with chiffon dupatta.",
-            images: [
-              "https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500",
-              "https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=500"
-            ]
+            details: "Soft lawn fabric 3-piece.",
+            images: ["https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=500"]
           }
         ];
       }
       renderProducts();
     });
 
-    // RENDER PRODUCTS
     function renderProducts() {
       const list = document.getElementById('productsList');
       list.innerHTML = "";
-
       const query = document.getElementById('searchInput').value.toLowerCase();
 
       const filtered = allProducts.filter(p => {
@@ -614,16 +677,14 @@
       });
 
       if (filtered.length === 0) {
-        list.innerHTML = `<div style="text-align:center; padding: 20px; color: #64748b; font-size: 12px;">Is Category Me Koi Product Nahi Mila.</div>`;
+        list.innerHTML = `<div style="text-align:center; padding: 20px; color: #64748b; font-size: 12px;">Koi product nahi mila.</div>`;
         return;
       }
 
       filtered.forEach(p => {
         const imgs = p.images || [p.image || 'https://via.placeholder.com/300'];
         let galleryHTML = '';
-        imgs.forEach(src => {
-          galleryHTML += `<img src="${src}" alt="product" />`;
-        });
+        imgs.forEach(src => galleryHTML += `<img src="${src}" alt="product" />`);
 
         const card = document.createElement('div');
         card.className = 'product-card';
@@ -637,7 +698,7 @@
           </div>
           <div class="card-actions">
             <button class="btn-download-photos" onclick="downloadAllImgs('${p.id}')">
-              <i class="fa-solid fa-download"></i> Photos Download
+              <i class="fa-solid fa-download"></i> Photos
             </button>
             <button class="btn-sell-now" onclick="openSellModal('${p.id}')">
               <i class="fa-solid fa-cart-shopping"></i> Sell & Earn
@@ -648,7 +709,6 @@
       });
     }
 
-    // CATEGORY FILTER
     window.selectCat = function(catName, btn) {
       activeCategory = catName;
       document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
@@ -656,134 +716,99 @@
       renderProducts();
     };
 
-    window.filterProducts = function() {
-      renderProducts();
-    };
+    window.filterProducts = function() { renderProducts(); };
 
-    // DOWNLOAD PICTURES (FIXED DIRECT DOWNLOAD BLOB LOGIC)
+    // DOWNLOAD PHOTOS
     window.downloadAllImgs = async function(productId) {
       const item = allProducts.find(p => p.id === productId);
       if(!item) return;
       const imgs = item.images || [item.image];
-
-      alert("Downloading photos... Please wait 2-3 seconds.");
-
       for(let i = 0; i < imgs.length; i++) {
-        const url = imgs[i];
         try {
-          const resp = await fetch(url);
+          const resp = await fetch(imgs[i]);
           const blob = await resp.blob();
           const blobUrl = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = blobUrl;
-          a.download = `${item.name.replace(/\s+/g, '_')}_${i + 1}.jpg`;
+          a.download = `${item.name}_${i + 1}.jpg`;
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
           URL.revokeObjectURL(blobUrl);
         } catch (e) {
-          window.open(url, '_blank');
+          window.open(imgs[i], '_blank');
         }
       }
     };
 
-    // MODAL FUNCTIONS
+    // ORDER MODAL & SUBMIT
     window.openSellModal = function(productId) {
       selectedProduct = allProducts.find(p => p.id === productId);
       if(!selectedProduct) return;
-
       document.getElementById('calcBase').innerText = selectedProduct.price;
-      document.getElementById('inputProfit').value = 100;
-      document.getElementById('inputQty').value = 1;
-      
-      const savedAcc = localStorage.getItem('payout_acc_no') || '';
-      if(savedAcc) document.getElementById('userPayoutAccount').value = savedAcc;
-
       reCalculate();
       document.getElementById('sellModal').style.display = 'flex';
     };
 
-    window.closeSellModal = function() {
-      document.getElementById('sellModal').style.display = 'none';
-    };
+    window.closeSellModal = function() { document.getElementById('sellModal').style.display = 'none'; };
 
     window.reCalculate = function() {
       if(!selectedProduct) return;
       const base = parseInt(selectedProduct.price) || 0;
       const profit = parseInt(document.getElementById('inputProfit').value) || 0;
       const qty = parseInt(document.getElementById('inputQty').value) || 1;
-
-      const totalProfit = profit * qty;
-      const grandTotal = (base + profit) * qty;
-
-      document.getElementById('calcProfit').innerText = totalProfit;
-      document.getElementById('calcTotal').innerText = grandTotal;
+      document.getElementById('calcProfit').innerText = profit * qty;
+      document.getElementById('calcTotal').innerText = (base + profit) * qty;
     };
 
-    // SUBMIT ORDER TO FIREBASE
     window.submitOrder = function(e) {
       e.preventDefault();
-
-      const payoutAcc = document.getElementById('userPayoutAccount').value;
-      localStorage.setItem('payout_acc_no', payoutAcc);
-
       const base = parseInt(selectedProduct.price) || 0;
       const profit = parseInt(document.getElementById('inputProfit').value) || 0;
       const qty = parseInt(document.getElementById('inputQty').value) || 1;
 
       const orderPayload = {
         resellerUsername: userData.username,
-        payoutAccount: payoutAcc,
         productName: selectedProduct.name,
         basePrice: base,
-        profitPerPiece: profit,
         totalProfit: profit * qty,
         clientTotalPrice: (base + profit) * qty,
         quantity: qty,
         clientName: document.getElementById('clientName').value,
         clientPhone: document.getElementById('clientPhone').value,
         clientAddress: document.getElementById('clientAddress').value,
-        status: "pending", // Admin "done" karega
+        status: "pending",
         timestamp: Date.now()
       };
 
       push(ref(db, 'affiliate_orders'), orderPayload)
         .then(() => {
-          alert("Order Admin Ko Bhej Diya Gaya Hai!");
+          alert("Order Admin Ko Bhej Diya Gaya!");
           closeSellModal();
           document.getElementById('orderForm').reset();
           toggleOrdersDrawer(true);
-        })
-        .catch(err => alert("Error: " + err.message));
+        });
     };
 
-    // MY ORDERS DRAWER TOGGLE
     window.toggleOrdersDrawer = function(forceOpen = false) {
       const drawer = document.getElementById('ordersDrawer');
-      if(forceOpen) {
-        drawer.classList.add('open');
-      } else {
-        drawer.classList.toggle('open');
-      }
+      if(forceOpen) drawer.classList.add('open');
+      else drawer.classList.toggle('open');
     };
 
-    // REALTIME MY ORDERS TRACKING LISTENER
+    // ORDERS LISTENER
     onValue(ref(db, 'affiliate_orders'), (snapshot) => {
       const container = document.getElementById('drawerOrdersList');
       container.innerHTML = "";
-
       if(snapshot.exists()) {
         const data = snapshot.val();
         let myOrders = [];
-
         Object.keys(data).forEach(k => {
-          if(data[k].resellerUsername === userData.username) {
-            myOrders.push({ id: k, ...data[k] });
-          }
+          if(data[k].resellerUsername === userData.username) myOrders.push({ id: k, ...data[k] });
         });
 
         if(myOrders.length === 0) {
-          container.innerHTML = `<div style="text-align: center; color: #64748b; font-size: 12px; padding-top: 20px;">Abhi koi order submit nahi hua.</div>`;
+          container.innerHTML = `<div style="text-align: center; color: #64748b; font-size: 12px; padding-top: 20px;">Abhi koi order nahi hai.</div>`;
           return;
         }
 
@@ -795,20 +820,18 @@
           const card = document.createElement('div');
           card.className = 'order-card';
           card.innerHTML = `
-            <div class="order-card-header">
+            <div style="display:flex; justify-content:space-between; font-weight:700; margin-bottom:4px;">
               <span>${o.productName}</span>
               <span class="status-badge ${statusClass}">${statusText}</span>
             </div>
             <div>Client: <strong>${o.clientName}</strong> (${o.clientPhone})</div>
             <div style="display:flex; justify-content:space-between; margin-top:4px;">
-              <span>Total Price: Rs. ${o.clientTotalPrice}</span>
+              <span>Price: Rs. ${o.clientTotalPrice}</span>
               <span style="color:#16a34a; font-weight:700;">Profit: Rs. ${o.totalProfit}</span>
             </div>
           `;
           container.appendChild(card);
         });
-      } else {
-        container.innerHTML = `<div style="text-align: center; color: #64748b; font-size: 12px; padding-top: 20px;">Abhi koi order submit nahi hua.</div>`;
       }
     });
   </script>

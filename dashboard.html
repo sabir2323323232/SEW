@@ -261,7 +261,7 @@
       outline: none;
     }
 
-    /* MARKAZ STYLE 2-COLUMN VERTICAL GRID */
+    /* MARKAZ STYLE VERTICAL GRID */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -291,10 +291,10 @@
 
     .product-img {
       width: 100%;
-      height: 110px;
+      height: 120px;
       object-fit: cover;
       border-radius: 6px;
-      background: #f1f5f9;
+      background: #e2e8f0;
     }
 
     .product-title {
@@ -497,11 +497,11 @@
 
     .order-img {
       width: 100%;
-      height: 160px;
+      height: 180px;
       object-fit: cover;
       border-radius: 8px;
       margin-bottom: 8px;
-      background: #f1f5f9;
+      background: #e2e8f0;
     }
 
     .order-title {
@@ -597,7 +597,7 @@
 </head>
 <body>
 
-  <!-- TOP NAVBAR -->
+  <!-- NAVBAR -->
   <header class="navbar">
     <button class="logout-btn" onclick="handleLogout()">
       <i class="fa-solid fa-right-from-bracket"></i> Logout
@@ -613,7 +613,7 @@
 
   <div class="container">
 
-    <!-- 1. EARNING SECTION -->
+    <!-- EARNING SECTION -->
     <section class="earning-section">
       <div class="balance-card">
         <div class="balance-info">
@@ -653,7 +653,7 @@
       </div>
     </section>
 
-    <!-- MINI BANNER -->
+    <!-- BANNER -->
     <div class="market-banner">
       <div class="market-banner-text">
         <h2><i class="fa-solid fa-bolt"></i> MEGA MARKET 50% OFF</h2>
@@ -661,14 +661,14 @@
       <div class="discount-badge">50% OFF</div>
     </div>
 
-    <!-- 2. MARKETING & PRODUCTS SECTION -->
+    <!-- MARKET SECTION -->
     <section class="market-section">
       <div class="search-box">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()" />
       </div>
 
-      <!-- Products Grid (Markaz Style Vertical Grid) -->
+      <!-- Products Vertical Grid -->
       <div class="product-grid" id="productGrid">
         <!-- Loaded Realtime from Firebase -->
       </div>
@@ -717,12 +717,12 @@
     </div>
   </div>
 
-  <!-- PRODUCT DETAILS & PLACE ORDER MODAL -->
+  <!-- PRODUCT DETAILS & ORDER MODAL -->
   <div class="modal-overlay" id="orderModal">
     <div class="modal-box">
       <button class="close-modal" onclick="closeOrderModal()">✕</button>
       
-      <img id="orderModalImg" src="" class="order-img" alt="Product" referrerpolicy="no-referrer" onerror="this.src='https://via.placeholder.com/300?text=No+Image'" />
+      <img id="orderModalImg" src="" class="order-img" alt="Product" crossorigin="anonymous" onerror="this.onerror=null; this.src='https://via.placeholder.com/300?text=No+Image'" />
       <div id="orderModalTitle" class="order-title">Product Name</div>
       <div id="orderModalPrice" class="order-price-tag">Rs. 0</div>
       <div id="orderModalDesc" class="order-desc">Product Details</div>
@@ -749,7 +749,7 @@
         </div>
 
         <div class="form-group">
-          <label>Quantity (Kitne lene hain)</label>
+          <label>Quantity</label>
           <input type="number" id="orderQuantity" value="1" min="1" oninput="updateOrderTotal()" required />
         </div>
 
@@ -790,16 +790,11 @@
     </div>
   </div>
 
-  <!-- Global Navigation Script -->
+  <!-- Navigation Helper -->
   <script>
     function navigateTo(pageUrl) {
       if (!pageUrl) return;
-      try {
-        window.location.href = pageUrl;
-      } catch (e) {
-        console.error("Navigation error:", e);
-        window.location.assign(pageUrl);
-      }
+      window.location.href = pageUrl;
     }
 
     function handleLogout() {
@@ -820,10 +815,10 @@
     }
   </script>
 
-  <!-- Firebase Module Script -->
+  <!-- Firebase Integration -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, get, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
@@ -877,36 +872,26 @@
       });
     }
 
-    const defaultProducts = [
-      {
-        id: "p1",
-        name: "Luxury Smart Watch",
-        category: "tools",
-        details: "Ultra HD display, water resistant smart watch with fitness tracking and Bluetooth call support.",
-        price: 2499,
-        image: "https://i.ibb.co/L5Q4y0K/watch.jpg"
-      },
-      {
-        id: "p2",
-        name: "Airbuds Pro",
-        category: "mobiles",
-        details: "Active Noise Cancellation, deep bass, 24-hour battery backup with wireless charging case.",
-        price: 1850,
-        image: "https://i.ibb.co/3WqP7t7/airbuds.jpg"
+    function formatImageSrc(imgStr) {
+      if (!imgStr) return 'https://via.placeholder.com/150?text=No+Image';
+      imgStr = imgStr.trim();
+      
+      // If it's Base64 image
+      if (imgStr.startsWith('data:image/')) {
+        return imgStr;
       }
-    ];
-
-    function cleanImageUrl(url) {
-      if(!url) return 'https://via.placeholder.com/150';
-      url = url.trim();
-      return url;
+      // If it's an ibb page link, format if possible
+      if (imgStr.includes('ibb.co/') && !imgStr.includes('i.ibb.co/')) {
+        return imgStr;
+      }
+      return imgStr;
     }
 
     function renderFilteredProducts() {
       const grid = document.getElementById('productGrid');
       grid.innerHTML = "";
 
-      const productList = window.currentProducts || defaultProducts;
+      const productList = window.currentProducts || [];
       const searchVal = (document.getElementById('searchInput')?.value || '').toLowerCase();
 
       const filtered = productList.filter(p => {
@@ -923,19 +908,19 @@
       });
 
       if (filtered.length === 0) {
-        grid.innerHTML = `<div class="no-orders-text" style="grid-column: 1 / -1; width:100%; font-size:10px;">No products found in this category.</div>`;
+        grid.innerHTML = `<div class="no-orders-text" style="grid-column: 1 / -1; width:100%; font-size:10px;">No products found.</div>`;
         return;
       }
 
       filtered.forEach(p => {
-        const imgSrc = cleanImageUrl(p.image);
+        const imgSrc = formatImageSrc(p.image);
         grid.innerHTML += `
           <div class="product-card" onclick="openOrderModal('${p.id}')">
-            <img src="${imgSrc}" class="product-img" alt="${p.name}" referrerpolicy="no-referrer" onerror="this.src='https://via.placeholder.com/150?text=No+Image'" />
-            <div class="product-title">${p.name}</div>
+            <img src="${imgSrc}" class="product-img" alt="${p.name || 'Product'}" crossorigin="anonymous" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=No+Image'" />
+            <div class="product-title">${p.name || 'Product'}</div>
             <div class="product-desc">${p.details || ''}</div>
             <div class="product-bottom">
-              <div class="product-price">Rs. ${p.price}</div>
+              <div class="product-price">Rs. ${p.price || 0}</div>
               <button class="order-btn" onclick="event.stopPropagation(); openOrderModal('${p.id}')">Buy Now</button>
             </div>
           </div>
@@ -963,8 +948,6 @@
         Object.keys(data).forEach(key => {
           productList.push({ id: key, ...data[key] });
         });
-      } else {
-        productList = defaultProducts;
       }
 
       window.currentProducts = productList;
@@ -1010,14 +993,14 @@
     });
 
     window.openOrderModal = function(pId) {
-      const pList = window.currentProducts || defaultProducts;
-      selectedProduct = pList.find(item => item.id == pId) || pList[0];
+      const pList = window.currentProducts || [];
+      selectedProduct = pList.find(item => item.id == pId);
 
       if (!selectedProduct) return;
 
-      document.getElementById('orderModalImg').src = cleanImageUrl(selectedProduct.image);
+      document.getElementById('orderModalImg').src = formatImageSrc(selectedProduct.image);
       document.getElementById('orderModalTitle').innerText = selectedProduct.name || "Product Name";
-      document.getElementById('orderModalDesc').innerText = selectedProduct.details || "No details provided for this product.";
+      document.getElementById('orderModalDesc').innerText = selectedProduct.details || "No details provided.";
       document.getElementById('orderModalPrice').innerText = "Rs. " + (selectedProduct.price || 0);
 
       if (userData.fullName) document.getElementById('orderFullNameInput').value = userData.fullName;

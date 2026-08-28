@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>SEW - Gmail Selling</title>
   
+  <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
@@ -349,6 +350,7 @@
 </head>
 <body>
 
+  <!-- NAVBAR -->
   <header class="navbar">
     <button class="back-btn" onclick="window.location.href='dashboard.html'">
       <i class="fa-solid fa-arrow-left"></i> Dashboard
@@ -361,6 +363,8 @@
   </header>
 
   <div class="container">
+
+    <!-- BALANCE CARD -->
     <div class="balance-card">
       <div>
         <div class="balance-title"><i class="fa-solid fa-wallet"></i> Live Balance</div>
@@ -371,6 +375,7 @@
       </div>
     </div>
 
+    <!-- CREATE GMAIL ACTION CARD -->
     <div class="action-card">
       <div class="action-title">Step 1: Create New Gmail</div>
       <div class="action-desc">Niche diye gaye button par click karke naya Gmail account banayein.</div>
@@ -384,6 +389,7 @@
       </a>
     </div>
 
+    <!-- SUBMIT GMAIL FORM -->
     <div class="form-card">
       <div class="form-title"><i class="fa-solid fa-paper-plane"></i> Step 2: Submit Details</div>
       
@@ -404,14 +410,17 @@
       </form>
     </div>
 
+    <!-- HISTORY CARD -->
     <div class="history-card">
       <div class="history-title"><i class="fa-solid fa-list-check"></i> My Submitted Gmails</div>
       <div class="gmail-list" id="gmailList">
         <div style="font-size:10px; color:var(--text-muted); text-align:center;">Loading...</div>
       </div>
     </div>
+
   </div>
 
+  <!-- Firebase Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -429,6 +438,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
+    // Session Check
     const rawSession = localStorage.getItem('sew_session');
     if (!rawSession) {
       window.location.replace("index.html");
@@ -447,6 +457,7 @@
 
     renderUI(userData);
 
+    // Realtime Balance Sync
     if (userData && userData.username) {
       onValue(ref(db, 'users/' + userData.username), (snapshot) => {
         if (snapshot.exists()) {
@@ -457,7 +468,7 @@
       });
     }
 
-    // FAST HISTORY RENDERER (Single DOM Update)
+    // Realtime Submitted Gmails History (Optimized to prevent lag)
     onValue(ref(db, 'gmail_submissions'), (snapshot) => {
       const container = document.getElementById('gmailList');
 
@@ -467,56 +478,54 @@
       }
 
       const allData = snapshot.val();
-      const userItems = [];
+      const keys = Object.keys(allData).reverse();
+      let html = "";
+      let count = 0;
 
-      for (const key in allData) {
+      keys.forEach(key => {
         const item = allData[key];
-        if (item) {
-          const itemUser = (item.username || '').toLowerCase().trim();
-          const itemEmail = (item.customerEmail || '').toLowerCase().trim();
+        if (!item) return;
 
-          if (itemUser === activeUsername || itemEmail === activeUsername) {
-            userItems.push(item);
+        const itemUser = (item.username || '').toLowerCase().trim();
+        const itemEmail = (item.customerEmail || '').toLowerCase().trim();
+
+        if (itemUser === activeUsername || itemEmail === activeUsername || itemUser === (userData.username || '').toLowerCase().trim()) {
+          count++;
+          const status = (item.status || 'Pending').toLowerCase();
+          let badgeClass = 'badge-pending';
+          let statusTxt = 'Pending';
+
+          if (status === 'approved' || status === 'ok' || status === 'confirmed') {
+            badgeClass = 'badge-approved';
+            statusTxt = 'Approved (+Rs. 45)';
+          } else if (status === 'rejected') {
+            badgeClass = 'badge-rejected';
+            statusTxt = 'Rejected';
           }
-        }
-      }
 
-      if (userItems.length === 0) {
-        container.innerHTML = `<div style="font-size:10px; color:var(--text-muted); text-align:center;">Aapne abhi tak koi Gmail submit nahi ki.</div>`;
-        return;
-      }
-
-      // Single String Assembly - Super Fast performance
-      const listMarkup = userItems.reverse().map(item => {
-        const status = (item.status || 'Pending').toLowerCase();
-        let badgeClass = 'badge-pending';
-        let statusTxt = 'Pending';
-
-        if (status === 'approved' || status === 'ok' || status === 'confirmed') {
-          badgeClass = 'badge-approved';
-          statusTxt = 'Approved (+Rs. 45)';
-        } else if (status === 'rejected') {
-          badgeClass = 'badge-rejected';
-          statusTxt = 'Rejected';
-        }
-
-        return `
-          <div class="gmail-item">
-            <div class="gmail-info">
-              <span class="gmail-address">${item.gmail}</span>
-              <span class="gmail-pass">Password: ${item.password}</span>
+          html += `
+            <div class="gmail-item">
+              <div class="gmail-info">
+                <span class="gmail-address">${item.gmail || 'N/A'}</span>
+                <span class="gmail-pass">Password: ${item.password || 'N/A'}</span>
+              </div>
+              <span class="status-badge ${badgeClass}">${statusTxt}</span>
             </div>
-            <span class="status-badge ${badgeClass}">${statusTxt}</span>
-          </div>
-        `;
-      }).join('');
+          `;
+        }
+      });
 
-      container.innerHTML = listMarkup;
+      if (count === 0) {
+        container.innerHTML = `<div style="font-size:10px; color:var(--text-muted); text-align:center;">Aapne abhi tak koi Gmail submit nahi ki.</div>`;
+      } else {
+        container.innerHTML = html;
+      }
     }, (error) => {
       console.error("Firebase History Read Error:", error);
-      document.getElementById('gmailList').innerHTML = `<div style="font-size:10px; color:var(--accent-red); text-align:center;">Record load nahi ho saka.</div>`;
+      document.getElementById('gmailList').innerHTML = `<div style="font-size:10px; color:var(--accent-red); text-align:center;">Record load nahi ho saka (Firebase Rules Check Karein).</div>`;
     });
 
+    // FORM SUBMIT EVENT LISTENER
     const form = document.getElementById('gmailForm');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -557,7 +566,7 @@
 
         await push(ref(db, 'gmail_submissions'), newSubmission);
 
-        statusMsg.innerHTML = "✅ <strong>SUCCESS!</strong> Gmail submit ho gayi hai. Admin panel me request chali gayi hai.";
+        statusMsg.innerHTML = "✅ <strong>SUCCESS!</strong> Gmail successfully submit ho gayi hai. Admin panel me request chali gayi hai.";
         statusMsg.className = "status-msg success";
 
         document.getElementById('gmailInput').value = "";

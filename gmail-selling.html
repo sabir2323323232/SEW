@@ -457,7 +457,54 @@
 
     renderUI(userData);
 
-    // Realtime Balance Sync
+    // -------------------------------------------------------------
+    // INSTANT UI RENDER FUNCTION
+    // -------------------------------------------------------------
+    function renderHistoryList(items) {
+      const container = document.getElementById('gmailList');
+      if (!items || items.length === 0) {
+        container.innerHTML = `<div style="font-size:10px; color:var(--text-muted); text-align:center;">Aapne abhi tak koi Gmail submit nahi ki.</div>`;
+        return;
+      }
+
+      let html = "";
+      items.forEach(item => {
+        const status = (item.status || 'Pending').toLowerCase();
+        let badgeClass = 'badge-pending';
+        let statusTxt = 'Pending';
+
+        if (status === 'approved' || status === 'ok' || status === 'confirmed') {
+          badgeClass = 'badge-approved';
+          statusTxt = 'Approved (+Rs. 45)';
+        } else if (status === 'rejected') {
+          badgeClass = 'badge-rejected';
+          statusTxt = 'Rejected';
+        }
+
+        html += `
+          <div class="gmail-item">
+            <div class="gmail-info">
+              <span class="gmail-address">${item.gmail || 'N/A'}</span>
+              <span class="gmail-pass">Password: ${item.password || 'N/A'}</span>
+            </div>
+            <span class="status-badge ${badgeClass}">${statusTxt}</span>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    // 1. FAURAN CACHE SE SHOW KAREIN (0ms Delay)
+    const cacheKey = 'sew_gmail_cache_' + activeUsername;
+    const cachedHistory = localStorage.getItem(cacheKey);
+    if (cachedHistory) {
+      try {
+        renderHistoryList(JSON.parse(cachedHistory));
+      } catch(e){}
+    }
+
+    // 2. Realtime Balance Sync
     if (userData && userData.username) {
       onValue(ref(db, 'users/' + userData.username), (snapshot) => {
         if (snapshot.exists()) {
@@ -468,19 +515,17 @@
       });
     }
 
-    // Realtime Submitted Gmails History (Optimized to prevent lag)
+    // 3. REALTIME FIREBASE FETCH & CACHE UPDATE
     onValue(ref(db, 'gmail_submissions'), (snapshot) => {
-      const container = document.getElementById('gmailList');
-
       if (!snapshot.exists()) {
-        container.innerHTML = `<div style="font-size:10px; color:var(--text-muted); text-align:center;">Aapne abhi tak koi Gmail submit nahi ki.</div>`;
+        renderHistoryList([]);
+        localStorage.removeItem(cacheKey);
         return;
       }
 
       const allData = snapshot.val();
       const keys = Object.keys(allData).reverse();
-      let html = "";
-      let count = 0;
+      const userItems = [];
 
       keys.forEach(key => {
         const item = allData[key];
@@ -490,39 +535,15 @@
         const itemEmail = (item.customerEmail || '').toLowerCase().trim();
 
         if (itemUser === activeUsername || itemEmail === activeUsername || itemUser === (userData.username || '').toLowerCase().trim()) {
-          count++;
-          const status = (item.status || 'Pending').toLowerCase();
-          let badgeClass = 'badge-pending';
-          let statusTxt = 'Pending';
-
-          if (status === 'approved' || status === 'ok' || status === 'confirmed') {
-            badgeClass = 'badge-approved';
-            statusTxt = 'Approved (+Rs. 45)';
-          } else if (status === 'rejected') {
-            badgeClass = 'badge-rejected';
-            statusTxt = 'Rejected';
-          }
-
-          html += `
-            <div class="gmail-item">
-              <div class="gmail-info">
-                <span class="gmail-address">${item.gmail || 'N/A'}</span>
-                <span class="gmail-pass">Password: ${item.password || 'N/A'}</span>
-              </div>
-              <span class="status-badge ${badgeClass}">${statusTxt}</span>
-            </div>
-          `;
+          userItems.push(item);
         }
       });
 
-      if (count === 0) {
-        container.innerHTML = `<div style="font-size:10px; color:var(--text-muted); text-align:center;">Aapne abhi tak koi Gmail submit nahi ki.</div>`;
-      } else {
-        container.innerHTML = html;
-      }
+      // Local Cache update karke screen par show karein
+      localStorage.setItem(cacheKey, JSON.stringify(userItems));
+      renderHistoryList(userItems);
     }, (error) => {
       console.error("Firebase History Read Error:", error);
-      document.getElementById('gmailList').innerHTML = `<div style="font-size:10px; color:var(--accent-red); text-align:center;">Record load nahi ho saka (Firebase Rules Check Karein).</div>`;
     });
 
     // FORM SUBMIT EVENT LISTENER
@@ -564,14 +585,21 @@
           createdAt: new Date().toISOString()
         };
 
+        // Instant Local Cache Update (Optimistic UI)
+        let currentCache = [];
+        try { currentCache = JSON.parse(localStorage.getItem(cacheKey) || "[]"); } catch(e){}
+        currentCache.unshift(newSubmission);
+        localStorage.setItem(cacheKey, JSON.stringify(currentCache));
+        renderHistoryList(currentCache);
+
+        // Firebase Sync
         await push(ref(db, 'gmail_submissions'), newSubmission);
 
-        statusMsg.innerHTML = "✅ <strong>SUCCESS!</strong> Gmail successfully submit ho gayi hai. Admin panel me request chali gayi hai.";
+        statusMsg.innerHTML = "✅ <strong>SUCCESS!</strong> Gmail successfully submit ho gayi hai.";
         statusMsg.className = "status-msg success";
 
         document.getElementById('gmailInput').value = "";
         document.getElementById('passwordInput').value = "aass1122";
-        statusMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 
       } catch (err) {
         console.error("Firebase Submit Error:", err);

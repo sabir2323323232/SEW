@@ -475,7 +475,7 @@
     .modal-box {
       background: #ffffff;
       width: 100%;
-      max-width: 380px;
+      max-width: 420px;
       border-radius: 14px;
       padding: 16px;
       position: relative;
@@ -495,13 +495,46 @@
       font-size: 12px;
     }
 
-    .order-img {
+    /* 3-PHOTOS GRID IN MODAL */
+    .modal-photos-wrapper {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .photo-card-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .modal-photo-img {
       width: 100%;
-      height: 180px;
+      height: 90px;
       object-fit: cover;
-      border-radius: 8px;
-      margin-bottom: 8px;
+      border-radius: 6px;
+      border: 1px solid var(--border-color);
       background: #e2e8f0;
+    }
+
+    .download-photo-btn {
+      background: #1e293b;
+      color: #ffffff;
+      border: none;
+      padding: 4px 0;
+      border-radius: 4px;
+      font-size: 9px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+
+    .download-photo-btn:hover {
+      background: var(--primary);
     }
 
     .order-title {
@@ -717,12 +750,16 @@
     </div>
   </div>
 
-  <!-- PRODUCT DETAILS & ORDER MODAL -->
+  <!-- PRODUCT DETAILS & ORDER MODAL (UPDATED WITH 3 PHOTOS + DOWNLOAD) -->
   <div class="modal-overlay" id="orderModal">
     <div class="modal-box">
       <button class="close-modal" onclick="closeOrderModal()">✕</button>
       
-      <img id="orderModalImg" src="" class="order-img" alt="Product" crossorigin="anonymous" onerror="this.onerror=null; this.src='https://via.placeholder.com/300?text=No+Image'" />
+      <!-- 3 Photos Grid Container -->
+      <div class="modal-photos-wrapper" id="modalPhotosContainer">
+        <!-- Rendered dynamically -->
+      </div>
+
       <div id="orderModalTitle" class="order-title">Product Name</div>
       <div id="orderModalPrice" class="order-price-tag">Rs. 0</div>
       <div id="orderModalDesc" class="order-desc">Product Details</div>
@@ -790,7 +827,7 @@
     </div>
   </div>
 
-  <!-- Navigation Helper -->
+  <!-- Navigation & Image Helper Script -->
   <script>
     function navigateTo(pageUrl) {
       if (!pageUrl) return;
@@ -813,9 +850,27 @@
     function closeViewOrderModal() {
       document.getElementById('viewOrderDetailModal').style.display = 'none';
     }
+
+    // Helper to download images safely
+    async function downloadImage(url, filename) {
+      try {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename || 'product-image.jpg';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(blobUrl);
+      } catch (err) {
+        window.open(url, '_blank');
+      }
+    }
   </script>
 
-  <!-- Firebase Integration -->
+  <!-- Firebase Integration Script -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -875,15 +930,7 @@
     function formatImageSrc(imgStr) {
       if (!imgStr) return 'https://via.placeholder.com/150?text=No+Image';
       imgStr = imgStr.trim();
-      
-      // If it's Base64 image
-      if (imgStr.startsWith('data:image/')) {
-        return imgStr;
-      }
-      // If it's an ibb page link, format if possible
-      if (imgStr.includes('ibb.co/') && !imgStr.includes('i.ibb.co/')) {
-        return imgStr;
-      }
+      if (imgStr.startsWith('data:image/')) return imgStr;
       return imgStr;
     }
 
@@ -913,7 +960,8 @@
       }
 
       filtered.forEach(p => {
-        const imgSrc = formatImageSrc(p.image);
+        const mainImg = Array.isArray(p.images) && p.images.length > 0 ? p.images[0] : (p.image || p.image1);
+        const imgSrc = formatImageSrc(mainImg);
         grid.innerHTML += `
           <div class="product-card" onclick="openOrderModal('${p.id}')">
             <img src="${imgSrc}" class="product-img" alt="${p.name || 'Product'}" crossorigin="anonymous" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=No+Image'" />
@@ -998,7 +1046,36 @@
 
       if (!selectedProduct) return;
 
-      document.getElementById('orderModalImg').src = formatImageSrc(selectedProduct.image);
+      // Extract 3 images
+      let imgArray = [];
+      if (Array.isArray(selectedProduct.images) && selectedProduct.images.length > 0) {
+        imgArray = selectedProduct.images;
+      } else {
+        if (selectedProduct.image || selectedProduct.image1) imgArray.push(selectedProduct.image || selectedProduct.image1);
+        if (selectedProduct.image2) imgArray.push(selectedProduct.image2);
+        if (selectedProduct.image3) imgArray.push(selectedProduct.image3);
+      }
+
+      // Fill up to 3 images if less than 3
+      while (imgArray.length < 3) {
+        imgArray.push(imgArray[0] || 'https://via.placeholder.com/150?text=No+Image');
+      }
+
+      // Render 3 Photos Grid with Download buttons
+      const photosGrid = document.getElementById('modalPhotosContainer');
+      photosGrid.innerHTML = "";
+      imgArray.slice(0, 3).forEach((imgUrl, idx) => {
+        const formatted = formatImageSrc(imgUrl);
+        photosGrid.innerHTML += `
+          <div class="photo-card-item">
+            <img src="${formatted}" class="modal-photo-img" alt="Photo ${idx+1}" crossorigin="anonymous" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=No+Image'" />
+            <button type="button" class="download-photo-btn" onclick="downloadImage('${formatted}', '${(selectedProduct.name || 'product')}-img${idx+1}.jpg')">
+              <i class="fa-solid fa-download"></i> Save
+            </button>
+          </div>
+        `;
+      });
+
       document.getElementById('orderModalTitle').innerText = selectedProduct.name || "Product Name";
       document.getElementById('orderModalDesc').innerText = selectedProduct.details || "No details provided.";
       document.getElementById('orderModalPrice').innerText = "Rs. " + (selectedProduct.price || 0);
@@ -1019,6 +1096,23 @@
 
     window.closeOrderModal = function() {
       document.getElementById('orderModal').style.display = 'none';
+    };
+
+    window.openViewOrderModal = function(oKey) {
+      const ord = myUserOrdersMap[oKey];
+      if(!ord) return;
+
+      document.getElementById('vProductTitle').innerText = ord.productName || '-';
+      document.getElementById('vCustomerName').innerText = ord.customerName || '-';
+      document.getElementById('vMobile').innerText = ord.mobile || '-';
+      document.getElementById('vWhatsapp').innerText = ord.whatsapp || '-';
+      document.getElementById('vCity').innerText = ord.city || '-';
+      document.getElementById('vLocation').innerText = ord.location || '-';
+      document.getElementById('vQuantity').innerText = ord.quantity || '1';
+      document.getElementById('vTotalPrice').innerText = "Rs. " + (ord.totalPrice || '0');
+      document.getElementById('vStatus').innerText = ord.status || 'Pending';
+
+      document.getElementById('viewOrderDetailModal').style.display = 'flex';
     };
 
     window.updateOrderTotal = function() {
@@ -1066,29 +1160,11 @@
           btn.innerText = "Confirm Order";
         }, 1200);
       } catch (err) {
-        console.error("Order submit error:", err);
-        alertBox.innerText = "Error placing order. Please try again.";
+        alertBox.innerText = "Error: " + err.message;
         alertBox.className = 'status-alert error';
         btn.disabled = false;
         btn.innerText = "Confirm Order";
       }
-    };
-
-    window.openViewOrderModal = function(oKey) {
-      const ord = myUserOrdersMap[oKey];
-      if (!ord) return;
-
-      document.getElementById('vProductTitle').innerText = ord.productName || "-";
-      document.getElementById('vCustomerName').innerText = ord.customerName || "-";
-      document.getElementById('vMobile').innerText = ord.mobile || "-";
-      document.getElementById('vWhatsapp').innerText = ord.whatsapp || "-";
-      document.getElementById('vCity').innerText = ord.city || "-";
-      document.getElementById('vLocation').innerText = ord.location || "-";
-      document.getElementById('vQuantity').innerText = ord.quantity || "1";
-      document.getElementById('vTotalPrice').innerText = "Rs. " + (ord.totalPrice || 0);
-      document.getElementById('vStatus').innerText = ord.status || "Pending";
-
-      document.getElementById('viewOrderDetailModal').style.display = 'flex';
     };
   </script>
 </body>

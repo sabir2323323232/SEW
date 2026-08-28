@@ -580,6 +580,21 @@
     let activeCategory = 'all';
     let selectedProduct = null;
 
+    // HELPER FUNCTION TO GET IMAGES ARRAY SAFELY
+    function getProductImages(p) {
+      let imgs = [];
+      if (Array.isArray(p.images)) {
+        imgs = p.images;
+      } else if (typeof p.images === 'string') {
+        imgs = p.images.split(',').map(s => s.trim());
+      } else if (p.images && typeof p.images === 'object') {
+        imgs = Object.values(p.images);
+      } else if (p.image) {
+        imgs = [p.image];
+      }
+      return imgs.filter(url => url && typeof url === 'string');
+    }
+
     // WALLET MODAL CONTROLS
     window.openWalletModal = function() {
       document.getElementById('walletModal').style.display = 'flex';
@@ -682,9 +697,13 @@
       }
 
       filtered.forEach(p => {
-        const imgs = p.images || [p.image || 'https://via.placeholder.com/300'];
+        let imgs = getProductImages(p);
+        if (imgs.length === 0) imgs = ['https://via.placeholder.com/300?text=No+Image'];
+
         let galleryHTML = '';
-        imgs.forEach(src => galleryHTML += `<img src="${src}" alt="product" />`);
+        imgs.forEach(src => {
+          galleryHTML += `<img src="${src}" alt="${p.name}" onerror="this.onerror=null;this.src='https://via.placeholder.com/300?text=Image+Error';" />`;
+        });
 
         const card = document.createElement('div');
         card.className = 'product-card';
@@ -722,7 +741,9 @@
     window.downloadAllImgs = async function(productId) {
       const item = allProducts.find(p => p.id === productId);
       if(!item) return;
-      const imgs = item.images || [item.image];
+      let imgs = getProductImages(item);
+      if(imgs.length === 0) return;
+
       for(let i = 0; i < imgs.length; i++) {
         try {
           const resp = await fetch(imgs[i]);

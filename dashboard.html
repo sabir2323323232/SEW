@@ -193,7 +193,7 @@
       border-radius: 8px;
     }
 
-    /* Updated to 6 columns and adjusted button styles to fit in 1 line */
+    /* 6 COLUMNS GRID */
     .earning-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -350,12 +350,13 @@
       color: #ffffff;
     }
 
-    /* HIGH-END LOCK-STYLE PRODUCT GRID */
+    /* PRODUCT GRID */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
       padding: 2px 0 6px 0;
+      min-height: 150px;
     }
 
     .product-card {
@@ -453,7 +454,7 @@
       background: var(--primary-dark);
     }
 
-    /* FIXED / LOCKED CATEGORIES BAR AT SCREEN BOTTOM */
+    /* FIXED CATEGORIES BAR */
     .categories-wrapper {
       position: fixed;
       bottom: 0;
@@ -687,7 +688,7 @@
     .status-alert.success { background: #ecfdf5; color: #10b981; display: block; }
     .status-alert.error { background: #fef2f2; color: #ef4444; display: block; }
 
-    /* HELPLINE STYLES */
+    /* HELPLINE */
     .helpline-option {
       display: flex;
       align-items: center;
@@ -726,16 +727,10 @@
       flex-direction: column;
     }
 
-    .helpline-info-text strong {
-      font-size: 11px;
-    }
+    .helpline-info-text strong { font-size: 11px; }
+    .helpline-info-text span { font-size: 9.5px; color: var(--text-muted); }
 
-    .helpline-info-text span {
-      font-size: 9.5px;
-      color: var(--text-muted);
-    }
-
-    /* POPUP MY ORDERS LIST STYLES */
+    /* POPUP MY ORDERS LIST */
     .orders-popup-list {
       display: flex;
       flex-direction: column;
@@ -754,9 +749,7 @@
       cursor: pointer;
     }
 
-    .order-popup-card:hover {
-      border-color: var(--primary);
-    }
+    .order-popup-card:hover { border-color: var(--primary); }
 
     .order-status-badge {
       display: inline-block;
@@ -782,12 +775,10 @@
     <div class="brand-title">SEW</div>
 
     <div class="nav-right-actions">
-      <!-- HELPLINE ICON -->
       <button class="helpline-btn" onclick="openHelplineModal()" title="Helpline Support">
         <i class="fa-solid fa-headset"></i>
       </button>
 
-      <!-- PROFILE PILL -->
       <div class="profile-pill" onclick="openProfileModal()">
         <div class="avatar" id="navAvatar">U</div>
         <span class="user-name-short" id="navUserName">User</span>
@@ -852,33 +843,33 @@
 
     <!-- MARKET SECTION -->
     <section class="market-section">
-      <!-- TOP BAR WITH SEARCH, ORDERS ICON & AFFILIATE MARKETING -->
       <div class="market-top-bar">
         <div class="search-box">
           <i class="fa-solid fa-magnifying-glass"></i>
           <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterProducts()" />
         </div>
 
-        <!-- MY ORDERS ICON BUTTON -->
         <button class="orders-icon-btn" onclick="openMyOrdersModal()" title="My Placed Orders">
           <i class="fa-solid fa-box-open"></i> Orders
         </button>
 
-        <!-- AFFILIATE MARKETING BUTTON -->
         <button class="affiliate-icon-btn" onclick="navigateTo('market.html')" title="Affiliate Marketing">
           <i class="fa-solid fa-share-nodes"></i> Affiliate
         </button>
       </div>
 
-      <!-- Products Locked Grid -->
+      <!-- PRODUCT GRID WITH LOADING INDICATOR -->
       <div class="product-grid" id="productGrid">
-        <!-- Loaded Realtime from Firebase -->
+        <div style="grid-column: 1 / -1; text-align: center; padding: 30px 10px; color: var(--text-muted); font-size: 11px;">
+          <i class="fa-solid fa-spinner fa-spin" style="font-size: 24px; color: var(--primary); margin-bottom: 8px;"></i>
+          <p>Products load ho rahe hain, baraaye meharbani intazar karein...</p>
+        </div>
       </div>
     </section>
 
   </div>
 
-  <!-- ALWAYS LOCKED CATEGORIES BAR AT BOTTOM -->
+  <!-- FIXED CATEGORIES BAR AT SCREEN BOTTOM -->
   <div class="categories-wrapper">
     <div class="category-section-title">Categories</div>
     <div class="category-grid">
@@ -901,7 +892,6 @@
       </h3>
       <p style="font-size: 10px; color: var(--text-muted); margin-bottom: 8px;">Contact us directly for support & queries</p>
 
-      <!-- WHATSAPP DIRECT LINK -->
       <a href="https://wa.me/923179774920" target="_blank" class="helpline-option">
         <div class="helpline-icon-box helpline-whatsapp">
           <i class="fa-brands fa-whatsapp"></i>
@@ -912,7 +902,6 @@
         </div>
       </a>
 
-      <!-- EMAIL DIRECT LINK -->
       <a href="mailto:sabirkhansadre@gmail.com" target="_blank" class="helpline-option">
         <div class="helpline-icon-box helpline-email">
           <i class="fa-solid fa-envelope"></i>
@@ -969,7 +958,7 @@
       <div id="orderModalPrice" class="order-price-tag">Rs. 0</div>
       <div id="orderModalDesc" class="order-desc">Product Details</div>
 
-      <form id="orderForm" onsubmit="handlePlaceOrder(event)">
+      <form id="orderForm">
         <div class="form-group">
           <label>Full Name</label>
           <input type="text" id="orderFullNameInput" placeholder="Your Name" required />
@@ -992,7 +981,7 @@
 
         <div class="form-group">
           <label>Quantity</label>
-          <input type="number" id="orderQuantity" value="1" min="1" oninput="updateOrderTotal()" required />
+          <input type="number" id="orderQuantity" value="1" min="1" required />
         </div>
 
         <div class="form-group">
@@ -1032,7 +1021,7 @@
     </div>
   </div>
 
-  <!-- Navigation & Modal Script -->
+  <!-- GLOBAL HELPER FUNCTIONS -->
   <script>
     function navigateTo(pageUrl) {
       if (!pageUrl) return;
@@ -1068,6 +1057,10 @@
       document.getElementById('myOrdersModal').style.display = 'none';
     }
 
+    function closeOrderModal() {
+      document.getElementById('orderModal').style.display = 'none';
+    }
+
     function closeViewOrderModal() {
       document.getElementById('viewOrderDetailModal').style.display = 'none';
     }
@@ -1090,7 +1083,7 @@
     }
   </script>
 
-  <!-- Firebase Integration Script -->
+  <!-- FIREBASE INTEGRATION & PRODUCTS LOADING SCRIPT -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -1108,18 +1101,20 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
+    // SESSION VERIFICATION
     const rawSession = localStorage.getItem('sew_session');
     if (!rawSession) {
       window.location.replace("index.html");
     }
 
     const userData = JSON.parse(rawSession || '{}');
+    let allProductsMap = {};
     let selectedProduct = null;
-    let myUserOrdersMap = {};
     let selectedCategory = 'all';
 
+    // RENDER USER PROFILE DATA
     function renderUserUI(data) {
-      if(!data) return;
+      if (!data) return;
       const displayTitle = data.fullName || data.username || "User";
       document.getElementById('navUserName').innerText = displayTitle;
       const initial = displayTitle.charAt(0).toUpperCase();
@@ -1133,10 +1128,17 @@
       document.getElementById('modalEmail').innerText = data.email || "N/A";
       document.getElementById('modalCity').innerText = data.city || "N/A";
       document.getElementById('modalCountry').innerText = data.country || "N/A";
+
+      // Prefill order form inputs
+      if (document.getElementById('orderFullNameInput')) document.getElementById('orderFullNameInput').value = data.fullName || '';
+      if (document.getElementById('orderMobileInput')) document.getElementById('orderMobileInput').value = data.mobile || '';
+      if (document.getElementById('orderWhatsappInput')) document.getElementById('orderWhatsappInput').value = data.mobile || '';
+      if (document.getElementById('orderCityInput')) document.getElementById('orderCityInput').value = data.city || '';
     }
 
     renderUserUI(userData);
 
+    // LIVE USER BALANCE UPDATER
     if (userData.username) {
       onValue(ref(db, 'users/' + userData.username), (snapshot) => {
         if (snapshot.exists()) {
@@ -1147,7 +1149,264 @@
       });
     }
 
-    function formatImageSrc(imgSt) {}
+    // IMAGE FORMATTER HELPER
+    function formatImageSrc(imgSt) {
+      if (!imgSt) return 'https://via.placeholder.com/150?text=No+Image';
+      if (imgSt.startsWith('data:') || imgSt.startsWith('http://') || imgSt.startsWith('https://')) {
+        return imgSt;
+      }
+      return 'data:image/jpeg;base64,' + imgSt;
+    }
+
+    // 1. LOAD PRODUCTS FROM FIREBASE REALTIME DATABASE
+    const productGrid = document.getElementById('productGrid');
+    
+    onValue(ref(db, 'products'), (snapshot) => {
+      if (snapshot.exists()) {
+        allProductsMap = snapshot.val();
+        renderProducts();
+      } else {
+        allProductsMap = {};
+        productGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 30px 10px; color: var(--text-muted); font-size: 11px;">
+            <i class="fa-solid fa-box-open" style="font-size: 24px; margin-bottom: 8px;"></i>
+            <p>Filhal koi product dastiyab nahi hai.</p>
+          </div>
+        `;
+      }
+    }, (error) => {
+      console.error("Products error:", error);
+      productGrid.innerHTML = `
+        <div style="grid-column: 1 / -1; text-align: center; padding: 30px 10px; color: #ef4444; font-size: 11px;">
+          <i class="fa-solid fa-circle-exclamation" style="font-size: 24px; margin-bottom: 8px;"></i>
+          <p>Products load hone me masla aaya. Refresh karein.</p>
+        </div>
+      `;
+    });
+
+    // 2. RENDER PRODUCTS GRID
+    function renderProducts() {
+      const searchVal = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+      productGrid.innerHTML = '';
+
+      const keys = Object.keys(allProductsMap);
+      let count = 0;
+
+      keys.forEach((key) => {
+        const prod = allProductsMap[key];
+        prod.id = key;
+
+        const catMatch = (selectedCategory === 'all') || (prod.category && prod.category.toLowerCase() === selectedCategory.toLowerCase());
+        const searchMatch = !searchVal || (prod.title && prod.title.toLowerCase().includes(searchVal)) || (prod.description && prod.description.toLowerCase().includes(searchVal));
+
+        if (catMatch && searchMatch) {
+          count++;
+          
+          let mainImg = 'https://via.placeholder.com/150?text=No+Image';
+          if (prod.images && Array.isArray(prod.images) && prod.images.length > 0) {
+            mainImg = formatImageSrc(prod.images[0]);
+          } else if (prod.image) {
+            mainImg = formatImageSrc(prod.image);
+          }
+
+          const card = document.createElement('div');
+          card.className = 'product-card';
+          card.innerHTML = `
+            <div class="product-img-wrapper">
+              <img src="${mainImg}" class="product-img" alt="${prod.title || 'Product'}" />
+            </div>
+            <div class="product-title">${prod.title || 'Untitled Product'}</div>
+            <div class="product-desc">${prod.description || 'No description available'}</div>
+            <div class="product-bottom">
+              <span class="product-price">Rs. ${prod.price || '0'}</span>
+              <button class="order-btn">Order Now</button>
+            </div>
+          `;
+
+          card.onclick = () => openOrderModal(prod);
+          productGrid.appendChild(card);
+        }
+      });
+
+      if (count === 0) {
+        productGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 30px 10px; color: var(--text-muted); font-size: 11px;">
+            <i class="fa-solid fa-magnifying-glass" style="font-size: 20px; margin-bottom: 8px;"></i>
+            <p>Koi matching product nahi mila.</p>
+          </div>
+        `;
+      }
+    }
+
+    // CATEGORY & SEARCH FILTER EXPOSURE
+    window.filterByCategory = function(cat, el) {
+      selectedCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+      if (el) el.classList.add('active');
+      renderProducts();
+    };
+
+    window.filterProducts = function() {
+      renderProducts();
+    };
+
+    // 3. OPEN ORDER MODAL
+    function openOrderModal(product) {
+      selectedProduct = product;
+      document.getElementById('orderModalTitle').innerText = product.title || 'Product';
+      document.getElementById('orderModalPrice').innerText = 'Rs. ' + (product.price || '0');
+      document.getElementById('orderModalDesc').innerText = product.description || 'No description';
+
+      // Photos Gallery
+      const photoContainer = document.getElementById('modalPhotosContainer');
+      photoContainer.innerHTML = '';
+
+      let imagesArray = [];
+      if (product.images && Array.isArray(product.images) && product.images.length > 0) {
+        imagesArray = product.images;
+      } else if (product.image) {
+        imagesArray = [product.image];
+      }
+
+      if (imagesArray.length === 0) {
+        photoContainer.style.display = 'none';
+      } else {
+        photoContainer.style.display = 'grid';
+        imagesArray.forEach((imgSrc, idx) => {
+          const formatted = formatImageSrc(imgSrc);
+          const item = document.createElement('div');
+          item.className = 'photo-card-item';
+          item.innerHTML = `
+            <img src="${formatted}" class="modal-photo-img" />
+            <button class="download-photo-btn" onclick="downloadImage('${formatted}', '${(product.title || 'photo').replace(/[^a-zA-Z0-9]/g, '_')}_${idx + 1}.jpg')">
+              <i class="fa-solid fa-download"></i> Save
+            </button>
+          `;
+          photoContainer.appendChild(item);
+        });
+      }
+
+      document.getElementById('orderQuantity').value = 1;
+      updateOrderTotal();
+
+      const alertBox = document.getElementById('orderStatusAlert');
+      alertBox.className = 'status-alert';
+      alertBox.innerText = '';
+
+      document.getElementById('orderModal').style.display = 'flex';
+    }
+
+    function updateOrderTotal() {
+      if (!selectedProduct) return;
+      const qty = parseInt(document.getElementById('orderQuantity').value) || 1;
+      const price = parseFloat(selectedProduct.price) || 0;
+      document.getElementById('orderTotalPrice').innerText = 'Rs. ' + (price * qty).toFixed(2);
+    }
+
+    document.getElementById('orderQuantity').addEventListener('input', updateOrderTotal);
+
+    // 4. HANDLE PLACE ORDER
+    document.getElementById('orderForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!selectedProduct) return;
+
+      const btn = document.getElementById('confirmOrderBtn');
+      const alertBox = document.getElementById('orderStatusAlert');
+
+      btn.disabled = true;
+      btn.innerText = "Processing...";
+
+      const qty = parseInt(document.getElementById('orderQuantity').value) || 1;
+      const unitPrice = parseFloat(selectedProduct.price) || 0;
+      const totalPrice = unitPrice * qty;
+
+      const orderPayload = {
+        productId: selectedProduct.id,
+        productTitle: selectedProduct.title || 'Product',
+        customerUsername: userData.username || 'guest',
+        customerName: document.getElementById('orderFullNameInput').value,
+        mobile: document.getElementById('orderMobileInput').value,
+        whatsapp: document.getElementById('orderWhatsappInput').value,
+        city: document.getElementById('orderCityInput').value,
+        location: document.getElementById('orderLocationInput').value,
+        quantity: qty,
+        totalPrice: totalPrice,
+        status: 'Pending',
+        timestamp: Date.now()
+      };
+
+      try {
+        await push(ref(db, 'orders'), orderPayload);
+        alertBox.className = 'status-alert success';
+        alertBox.innerText = "Order kamyabi se place ho gaya!";
+        btn.innerText = "Order Placed";
+        setTimeout(() => {
+          closeOrderModal();
+          btn.disabled = false;
+          btn.innerText = "Confirm Order";
+        }, 1500);
+      } catch (err) {
+        alertBox.className = 'status-alert error';
+        alertBox.innerText = "Order place karne me error aaya: " + err.message;
+        btn.disabled = false;
+        btn.innerText = "Confirm Order";
+      }
+    });
+
+    // 5. LOAD USER ORDERS POPUP
+    onValue(ref(db, 'orders'), (snapshot) => {
+      const popupContainer = document.getElementById('myOrdersPopupList');
+      if (!snapshot.exists()) {
+        popupContainer.innerHTML = `<div style="font-size:10px; color:var(--text-muted); text-align:center;">Koi order nahi mila.</div>`;
+        return;
+      }
+
+      const allOrders = snapshot.val();
+      popupContainer.innerHTML = '';
+      let myOrdersCount = 0;
+
+      Object.keys(allOrders).forEach((orderKey) => {
+        const order = allOrders[orderKey];
+        if (order.customerUsername === userData.username) {
+          myOrdersCount++;
+          const card = document.createElement('div');
+          card.className = 'order-popup-card';
+          
+          const isPending = (order.status || 'Pending').toLowerCase() === 'pending';
+          const badgeClass = isPending ? 'status-pending' : 'status-ok';
+
+          card.innerHTML = `
+            <div>
+              <div style="font-size:11px; font-weight:800; color:var(--text-main);">${order.productTitle}</div>
+              <div style="font-size:9.5px; color:var(--text-muted)">Qty: ${order.quantity} | Total: Rs. ${order.totalPrice}</div>
+            </div>
+            <span class="order-status-badge ${badgeClass}">${order.status || 'Pending'}</span>
+          `;
+
+          card.onclick = () => showOrderDetailView(order);
+          popupContainer.appendChild(card);
+        }
+      });
+
+      if (myOrdersCount === 0) {
+        popupContainer.innerHTML = `<div style="font-size:10px; color:var(--text-muted); text-align:center;">Aap ne abhi tak koi order place nahi kiya.</div>`;
+      }
+    });
+
+    function showOrderDetailView(order) {
+      document.getElementById('vProductTitle').innerText = order.productTitle || '-';
+      document.getElementById('vCustomerName').innerText = order.customerName || '-';
+      document.getElementById('vMobile').innerText = order.mobile || '-';
+      document.getElementById('vWhatsapp').innerText = order.whatsapp || '-';
+      document.getElementById('vCity').innerText = order.city || '-';
+      document.getElementById('vLocation').innerText = order.location || '-';
+      document.getElementById('vQuantity').innerText = order.quantity || '1';
+      document.getElementById('vTotalPrice').innerText = 'Rs. ' + (order.totalPrice || '0');
+      document.getElementById('vStatus').innerText = order.status || 'Pending';
+
+      closeMyOrdersModal();
+      document.getElementById('viewOrderDetailModal').style.display = 'flex';
+    }
   </script>
 </body>
 </html>

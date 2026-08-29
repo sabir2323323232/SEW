@@ -84,6 +84,27 @@
       letter-spacing: 1.5px;
     }
 
+    .nav-right-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .helpline-btn {
+      background: #ecfdf5;
+      color: #10b981;
+      border: 1px solid #a7f3d0;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+
     .profile-pill {
       display: flex;
       align-items: center;
@@ -112,7 +133,7 @@
       font-size: 11px;
       font-weight: 700;
       color: var(--primary);
-      max-width: 80px;
+      max-width: 70px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -123,7 +144,7 @@
       max-width: 500px;
       width: 100%;
       margin: 0 auto;
-      padding: 8px 8px 75px 8px; /* Extra bottom padding for fixed categories bar */
+      padding: 8px 8px 75px 8px;
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -248,9 +269,16 @@
       flex-direction: column;
     }
 
+    .market-top-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
     .search-box {
       position: relative;
-      margin-bottom: 8px;
+      flex: 1;
     }
 
     .search-box i {
@@ -277,12 +305,32 @@
       border-color: var(--primary);
     }
 
+    .orders-icon-btn {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid #dbeafe;
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+
+    .orders-icon-btn:hover {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
     /* HIGH-END LOCK-STYLE PRODUCT GRID */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
-      padding: 2px 0 10px 0;
+      padding: 2px 0 6px 0;
     }
 
     .product-card {
@@ -309,7 +357,6 @@
       transform: scale(0.98);
     }
 
-    /* Image Wrapper Box */
     .product-img-wrapper {
       width: 100%;
       height: 100px;
@@ -349,7 +396,6 @@
       text-overflow: ellipsis;
     }
 
-    /* Locked Bottom Section inside Card */
     .product-bottom {
       display: flex;
       justify-content: space-between;
@@ -380,84 +426,6 @@
 
     .order-btn:hover {
       background: var(--primary-dark);
-    }
-
-    /* MY ORDERS BOX */
-    .my-orders-box {
-      background: #f8fafc;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 8px;
-      margin-top: 6px;
-    }
-
-    .orders-header {
-      font-size: 10px;
-      font-weight: 800;
-      color: var(--text-main);
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .my-orders-list {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      scrollbar-width: none;
-    }
-
-    .my-orders-list::-webkit-scrollbar {
-      display: none;
-    }
-
-    .order-mini-card {
-      flex: 0 0 135px;
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 6px 8px;
-      cursor: pointer;
-      box-shadow: var(--shadow-sm);
-    }
-
-    .order-mini-name {
-      font-size: 9.5px;
-      font-weight: 700;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      color: var(--text-main);
-    }
-
-    .order-mini-qty {
-      font-size: 8.5px;
-      color: var(--text-muted);
-      margin: 2px 0;
-    }
-
-    .order-status-badge {
-      display: inline-block;
-      font-size: 8px;
-      font-weight: 800;
-      padding: 2px 6px;
-      border-radius: 4px;
-      text-transform: uppercase;
-    }
-
-    .status-pending { background: #fef3c7; color: #d97706; }
-    .status-ok { background: #d1fae5; color: #059669; }
-
-    .no-orders-text {
-      font-size: 9.5px;
-      color: var(--text-muted);
-      text-align: center;
-      width: 100%;
-      padding: 6px 0;
     }
 
     /* FIXED / LOCKED CATEGORIES BAR AT SCREEN BOTTOM */
@@ -561,7 +529,6 @@
       color: var(--text-muted);
     }
 
-    /* 3-PHOTOS GRID IN MODAL */
     .modal-photos-wrapper {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -694,6 +661,89 @@
     }
     .status-alert.success { background: #ecfdf5; color: #10b981; display: block; }
     .status-alert.error { background: #fef2f2; color: #ef4444; display: block; }
+
+    /* HELPLINE STYLES */
+    .helpline-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      padding: 10px 12px;
+      border-radius: 10px;
+      margin-top: 8px;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: all 0.2s;
+    }
+
+    .helpline-option:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .helpline-icon-box {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #ffffff;
+    }
+
+    .helpline-whatsapp { background: #25D366; }
+    .helpline-email { background: #ea4335; }
+
+    .helpline-info-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .helpline-info-text strong {
+      font-size: 11px;
+    }
+
+    .helpline-info-text span {
+      font-size: 9.5px;
+      color: var(--text-muted);
+    }
+
+    /* POPUP MY ORDERS LIST STYLES */
+    .orders-popup-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .order-popup-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .order-popup-card:hover {
+      border-color: var(--primary);
+    }
+
+    .order-status-badge {
+      display: inline-block;
+      font-size: 8px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .status-pending { background: #fef3c7; color: #d97706; }
+    .status-ok { background: #d1fae5; color: #059669; }
   </style>
 </head>
 <body>
@@ -706,9 +756,17 @@
 
     <div class="brand-title">SEW</div>
 
-    <div class="profile-pill" onclick="openProfileModal()">
-      <div class="avatar" id="navAvatar">U</div>
-      <span class="user-name-short" id="navUserName">User</span>
+    <div class="nav-right-actions">
+      <!-- HELPLINE ICON -->
+      <button class="helpline-btn" onclick="openHelplineModal()" title="Helpline Support">
+        <i class="fa-solid fa-headset"></i>
+      </button>
+
+      <!-- PROFILE PILL -->
+      <div class="profile-pill" onclick="openProfileModal()">
+        <div class="avatar" id="navAvatar">U</div>
+        <span class="user-name-short" id="navUserName">User</span>
+      </div>
     </div>
   </header>
 
@@ -764,24 +822,22 @@
 
     <!-- MARKET SECTION -->
     <section class="market-section">
-      <div class="search-box">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()" />
+      <!-- TOP BAR WITH SEARCH & MY ORDERS ICON -->
+      <div class="market-top-bar">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()" />
+        </div>
+
+        <!-- MY ORDERS ICON BUTTON RIGHT BELOW SEARCH BAR -->
+        <button class="orders-icon-btn" onclick="openMyOrdersModal()" title="My Placed Orders">
+          <i class="fa-solid fa-box-open"></i> Orders
+        </button>
       </div>
 
       <!-- Products Locked Grid -->
       <div class="product-grid" id="productGrid">
         <!-- Loaded Realtime from Firebase -->
-      </div>
-
-      <!-- MY ORDERS BOX -->
-      <div class="my-orders-box">
-        <div class="orders-header">
-          <i class="fa-solid fa-box-open" style="color:var(--primary)"></i> My Placed Orders
-        </div>
-        <div class="my-orders-list" id="myOrdersList">
-          <div class="no-orders-text">Loading orders...</div>
-        </div>
       </div>
     </section>
 
@@ -797,6 +853,55 @@
       <div class="cat-btn" onclick="filterByCategory('mobiles', this)"><i class="fa-solid fa-mobile-screen-button"></i> Mobiles</div>
       <div class="cat-btn" onclick="filterByCategory('motors', this)"><i class="fa-solid fa-motorcycle"></i> Motors</div>
       <div class="cat-btn" onclick="filterByCategory('jewelry', this)"><i class="fa-solid fa-gem"></i> Jewelry</div>
+    </div>
+  </div>
+
+  <!-- HELPLINE MODAL -->
+  <div class="modal-overlay" id="helplineModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeHelplineModal()">✕</button>
+      
+      <h3 style="font-size:13px; font-weight:800; text-transform:uppercase; margin-bottom:4px; color:var(--primary);">
+        <i class="fa-solid fa-headset"></i> Support & Helpline
+      </h3>
+      <p style="font-size: 10px; color: var(--text-muted); margin-bottom: 8px;">Contact us directly for support & queries</p>
+
+      <!-- WHATSAPP DIRECT LINK -->
+      <a href="https://wa.me/923179774920" target="_blank" class="helpline-option">
+        <div class="helpline-icon-box helpline-whatsapp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </div>
+        <div class="helpline-info-text">
+          <strong>WhatsApp Helpline</strong>
+          <span>03179774920</span>
+        </div>
+      </a>
+
+      <!-- EMAIL DIRECT LINK -->
+      <a href="mailto:sabirkhansadre@gmail.com" target="_blank" class="helpline-option">
+        <div class="helpline-icon-box helpline-email">
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+        <div class="helpline-info-text">
+          <strong>Official Email Support</strong>
+          <span>sabirkhansadre@gmail.com</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- MY PLACED ORDERS POPUP MODAL -->
+  <div class="modal-overlay" id="myOrdersModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeMyOrdersModal()">✕</button>
+      
+      <h3 style="font-size:13px; font-weight:800; text-transform:uppercase; margin-bottom:8px; color:var(--primary);">
+        <i class="fa-solid fa-box-open"></i> My Placed Orders
+      </h3>
+
+      <div class="orders-popup-list" id="myOrdersPopupList">
+        <div class="no-orders-text" style="font-size:10px; color:var(--text-muted); text-align:center;">Loading orders...</div>
+      </div>
     </div>
   </div>
 
@@ -823,10 +928,7 @@
     <div class="modal-box">
       <button class="close-modal" onclick="closeOrderModal()">✕</button>
       
-      <!-- 3 Photos Grid Container -->
-      <div class="modal-photos-wrapper" id="modalPhotosContainer">
-        <!-- Rendered dynamically -->
-      </div>
+      <div class="modal-photos-wrapper" id="modalPhotosContainer"></div>
 
       <div id="orderModalTitle" class="order-title">Product Name</div>
       <div id="orderModalPrice" class="order-price-tag">Rs. 0</div>
@@ -895,7 +997,7 @@
     </div>
   </div>
 
-  <!-- Navigation & Image Helper Script -->
+  <!-- Navigation & Modal Script -->
   <script>
     function navigateTo(pageUrl) {
       if (!pageUrl) return;
@@ -913,6 +1015,22 @@
 
     function closeProfileModal() {
       document.getElementById('profileModal').style.display = 'none';
+    }
+
+    function openHelplineModal() {
+      document.getElementById('helplineModal').style.display = 'flex';
+    }
+
+    function closeHelplineModal() {
+      document.getElementById('helplineModal').style.display = 'none';
+    }
+
+    function openMyOrdersModal() {
+      document.getElementById('myOrdersModal').style.display = 'flex';
+    }
+
+    function closeMyOrdersModal() {
+      document.getElementById('myOrdersModal').style.display = 'none';
     }
 
     function closeViewOrderModal() {
@@ -1022,7 +1140,7 @@
       });
 
       if (filtered.length === 0) {
-        grid.innerHTML = `<div class="no-orders-text" style="grid-column: 1 / -1; width:100%; font-size:10px;">No products found.</div>`;
+        grid.innerHTML = `<div style="grid-column: 1 / -1; width:100%; font-size:10px; color:var(--text-muted); text-align:center; padding:10px;">No products found.</div>`;
         return;
       }
 
@@ -1072,12 +1190,12 @@
     });
 
     onValue(ref(db, 'orders'), (snapshot) => {
-      const ordersContainer = document.getElementById('myOrdersList');
-      ordersContainer.innerHTML = "";
+      const popupOrdersList = document.getElementById('myOrdersPopupList');
+      popupOrdersList.innerHTML = "";
       myUserOrdersMap = {};
 
       if (!snapshot.exists()) {
-        ordersContainer.innerHTML = `<div class="no-orders-text">No orders placed yet.</div>`;
+        popupOrdersList.innerHTML = `<div class="no-orders-text" style="font-size:10px; color:var(--text-muted); text-align:center;">No orders placed yet.</div>`;
         return;
       }
 
@@ -1094,10 +1212,12 @@
           const badgeClass = isOk ? 'status-ok' : 'status-pending';
           const statusDisplay = isOk ? 'OK / Confirmed' : (ord.status || 'Pending');
 
-          ordersContainer.innerHTML += `
-            <div class="order-mini-card" onclick="openViewOrderModal('${oKey}')">
-              <div class="order-mini-name">${ord.productName || 'Product'}</div>
-              <div class="order-mini-qty">Qty: ${ord.quantity || 1} | Rs.${ord.totalPrice || 0}</div>
+          popupOrdersList.innerHTML += `
+            <div class="order-popup-card" onclick="openViewOrderModal('${oKey}')">
+              <div>
+                <div style="font-size:11px; font-weight:800;">${ord.productName || 'Product'}</div>
+                <div style="font-size:9.5px; color:var(--text-muted);">Qty: ${ord.quantity || 1} | Rs. ${ord.totalPrice || 0}</div>
+              </div>
               <span class="order-status-badge ${badgeClass}">${statusDisplay}</span>
             </div>
           `;
@@ -1105,7 +1225,7 @@
       });
 
       if (userOrdersCount === 0) {
-        ordersContainer.innerHTML = `<div class="no-orders-text">No orders placed yet.</div>`;
+        popupOrdersList.innerHTML = `<div class="no-orders-text" style="font-size:10px; color:var(--text-muted); text-align:center;">No orders placed yet.</div>`;
       }
     });
 
@@ -1241,6 +1361,7 @@
       statusSpan.innerText = isOk ? 'OK / Confirmed' : (ord.status || 'Pending');
       statusSpan.style.color = isOk ? 'var(--accent-green)' : 'var(--accent-orange)';
 
+      closeMyOrdersModal();
       document.getElementById('viewOrderDetailModal').style.display = 'flex';
     };
   </script>

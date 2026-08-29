@@ -280,6 +280,7 @@
       padding: 6px;
       display: flex;
       flex-direction: column;
+      justify-content: space-between;
       cursor: pointer;
       box-shadow: 0 1px 3px rgba(0,0,0,0.02);
       transition: transform 0.1s;
@@ -289,12 +290,13 @@
       transform: scale(0.98);
     }
 
+    /* UPDATED: Full photo & smaller height */
     .product-img {
       width: 100%;
-      height: 120px;
-      object-fit: cover;
+      height: 95px;
+      object-fit: contain;
       border-radius: 6px;
-      background: #e2e8f0;
+      background: #f8fafc;
     }
 
     .product-title {
@@ -322,6 +324,7 @@
       justify-content: space-between;
       align-items: center;
       margin-top: auto;
+      padding-top: 4px;
     }
 
     .product-price {
@@ -750,7 +753,7 @@
     </div>
   </div>
 
-  <!-- PRODUCT DETAILS & ORDER MODAL (UPDATED WITH 3 PHOTOS + DOWNLOAD) -->
+  <!-- PRODUCT DETAILS & ORDER MODAL -->
   <div class="modal-overlay" id="orderModal">
     <div class="modal-box">
       <button class="close-modal" onclick="closeOrderModal()">✕</button>
@@ -1046,7 +1049,6 @@
 
       if (!selectedProduct) return;
 
-      // Extract 3 images
       let imgArray = [];
       if (Array.isArray(selectedProduct.images) && selectedProduct.images.length > 0) {
         imgArray = selectedProduct.images;
@@ -1056,12 +1058,10 @@
         if (selectedProduct.image3) imgArray.push(selectedProduct.image3);
       }
 
-      // Fill up to 3 images if less than 3
       while (imgArray.length < 3) {
         imgArray.push(imgArray[0] || 'https://via.placeholder.com/150?text=No+Image');
       }
 
-      // Render 3 Photos Grid with Download buttons
       const photosGrid = document.getElementById('modalPhotosContainer');
       photosGrid.innerHTML = "";
       imgArray.slice(0, 3).forEach((imgUrl, idx) => {
@@ -1077,19 +1077,21 @@
       });
 
       document.getElementById('orderModalTitle').innerText = selectedProduct.name || "Product Name";
-      document.getElementById('orderModalDesc').innerText = selectedProduct.details || "No details provided.";
+      document.getElementById('orderModalDesc').innerText = selectedProduct.details || "No description available.";
       document.getElementById('orderModalPrice').innerText = "Rs. " + (selectedProduct.price || 0);
 
-      if (userData.fullName) document.getElementById('orderFullNameInput').value = userData.fullName;
-      if (userData.mobile) document.getElementById('orderMobileInput').value = userData.mobile;
-      if (userData.city) document.getElementById('orderCityInput').value = userData.city;
-
+      document.getElementById('orderFullNameInput').value = userData.fullName || "";
+      document.getElementById('orderMobileInput').value = userData.mobile || "";
+      document.getElementById('orderWhatsappInput').value = userData.mobile || "";
+      document.getElementById('orderCityInput').value = userData.city || "";
       document.getElementById('orderQuantity').value = 1;
+      document.getElementById('orderLocationInput').value = "";
+
       updateOrderTotal();
 
       const alertBox = document.getElementById('orderStatusAlert');
-      alertBox.style.display = 'none';
       alertBox.className = 'status-alert';
+      alertBox.innerText = '';
 
       document.getElementById('orderModal').style.display = 'flex';
     };
@@ -1098,73 +1100,82 @@
       document.getElementById('orderModal').style.display = 'none';
     };
 
-    window.openViewOrderModal = function(oKey) {
-      const ord = myUserOrdersMap[oKey];
-      if(!ord) return;
+    window.updateOrderTotal = function() {
+      if (!selectedProduct) return;
+      const qty = parseInt(document.getElementById('orderQuantity').value) || 1;
+      const unitPrice = parseFloat(selectedProduct.price) || 0;
+      const total = qty * unitPrice;
+      document.getElementById('orderTotalPrice').innerText = "Rs. " + total;
+    };
+
+    window.handlePlaceOrder = function(e) {
+      e.preventDefault();
+      if (!selectedProduct) return;
+
+      const confirmBtn = document.getElementById('confirmOrderBtn');
+      const alertBox = document.getElementById('orderStatusAlert');
+      
+      confirmBtn.disabled = true;
+      confirmBtn.innerText = "Placing Order...";
+
+      const qty = parseInt(document.getElementById('orderQuantity').value) || 1;
+      const unitPrice = parseFloat(selectedProduct.price) || 0;
+      const total = qty * unitPrice;
+
+      const orderPayload = {
+        productId: selectedProduct.id,
+        productName: selectedProduct.name || "Product",
+        productPrice: unitPrice,
+        quantity: qty,
+        totalPrice: total,
+        customerName: document.getElementById('orderFullNameInput').value.trim(),
+        mobile: document.getElementById('orderMobileInput').value.trim(),
+        whatsapp: document.getElementById('orderWhatsappInput').value.trim(),
+        city: document.getElementById('orderCityInput').value.trim(),
+        deliveryAddress: document.getElementById('orderLocationInput').value.trim(),
+        username: userData.username || "guest",
+        customerEmail: userData.email || "",
+        status: "Pending",
+        createdAt: new Date().toISOString()
+      };
+
+      push(ref(db, 'orders'), orderPayload)
+        .then(() => {
+          alertBox.className = 'status-alert success';
+          alertBox.innerText = "Order Placed Successfully!";
+          setTimeout(() => {
+            closeOrderModal();
+            confirmBtn.disabled = false;
+            confirmBtn.innerText = "Confirm Order";
+          }, 1500);
+        })
+        .catch(err => {
+          alertBox.className = 'status-alert error';
+          alertBox.innerText = "Error: " + err.message;
+          confirmBtn.disabled = false;
+          confirmBtn.innerText = "Confirm Order";
+        });
+    };
+
+    window.openViewOrderModal = function(orderId) {
+      const ord = myUserOrdersMap[orderId];
+      if (!ord) return;
 
       document.getElementById('vProductTitle').innerText = ord.productName || '-';
       document.getElementById('vCustomerName').innerText = ord.customerName || '-';
       document.getElementById('vMobile').innerText = ord.mobile || '-';
       document.getElementById('vWhatsapp').innerText = ord.whatsapp || '-';
       document.getElementById('vCity').innerText = ord.city || '-';
-      document.getElementById('vLocation').innerText = ord.location || '-';
+      document.getElementById('vLocation').innerText = ord.deliveryAddress || '-';
       document.getElementById('vQuantity').innerText = ord.quantity || '1';
-      document.getElementById('vTotalPrice').innerText = "Rs. " + (ord.totalPrice || '0');
-      document.getElementById('vStatus').innerText = ord.status || 'Pending';
+      document.getElementById('vTotalPrice').innerText = "Rs. " + (ord.totalPrice || 0);
+
+      const isOk = (ord.status || '').toLowerCase() === 'ok' || (ord.status || '').toLowerCase() === 'confirmed' || (ord.status || '').toLowerCase() === 'delivered';
+      const statusSpan = document.getElementById('vStatus');
+      statusSpan.innerText = isOk ? 'OK / Confirmed' : (ord.status || 'Pending');
+      statusSpan.style.color = isOk ? 'var(--accent-green)' : 'var(--accent-orange)';
 
       document.getElementById('viewOrderDetailModal').style.display = 'flex';
-    };
-
-    window.updateOrderTotal = function() {
-      if (!selectedProduct) return;
-      const qty = parseInt(document.getElementById('orderQuantity').value) || 1;
-      const total = (selectedProduct.price || 0) * qty;
-      document.getElementById('orderTotalPrice').innerText = "Rs. " + total;
-    };
-
-    window.handlePlaceOrder = async function(e) {
-      e.preventDefault();
-      const btn = document.getElementById('confirmOrderBtn');
-      const alertBox = document.getElementById('orderStatusAlert');
-
-      btn.disabled = true;
-      btn.innerText = "Processing...";
-
-      const qty = parseInt(document.getElementById('orderQuantity').value) || 1;
-      const total = (selectedProduct.price || 0) * qty;
-
-      const orderData = {
-        productId: selectedProduct.id,
-        productName: selectedProduct.name,
-        productPrice: selectedProduct.price,
-        quantity: qty,
-        totalPrice: total,
-        customerName: document.getElementById('orderFullNameInput').value,
-        mobile: document.getElementById('orderMobileInput').value,
-        whatsapp: document.getElementById('orderWhatsappInput').value,
-        city: document.getElementById('orderCityInput').value,
-        location: document.getElementById('orderLocationInput').value,
-        username: userData.username || "",
-        customerEmail: userData.email || "",
-        status: "Pending",
-        createdAt: new Date().toISOString()
-      };
-
-      try {
-        await push(ref(db, 'orders'), orderData);
-        alertBox.innerText = "Order placed successfully!";
-        alertBox.className = 'status-alert success';
-        setTimeout(() => {
-          closeOrderModal();
-          btn.disabled = false;
-          btn.innerText = "Confirm Order";
-        }, 1200);
-      } catch (err) {
-        alertBox.innerText = "Error: " + err.message;
-        alertBox.className = 'status-alert error';
-        btn.disabled = false;
-        btn.innerText = "Confirm Order";
-      }
     };
   </script>
 </body>

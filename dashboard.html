@@ -193,7 +193,7 @@
       border-radius: 8px;
     }
 
-    /* Updated to 6 columns & slightly compact sizing */
+    /* Updated to 6 columns and adjusted button styles to fit in 1 line */
     .earning-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -224,7 +224,7 @@
     }
 
     .earn-btn i {
-      font-size: 12px;
+      font-size: 11px;
       color: var(--primary);
     }
 
@@ -1147,13 +1147,7 @@
       });
     }
 
-    function formatImageSrc(imgStr) {
-      if (!imgStr) return 'https://via.placeholder.com/150';
-      if (imgStr.startsWith('http://') || imgStr.startsWith('https://') || imgStr.startsWith('data:image')) {
-        return imgStr;
-      }
-      return 'data:image/jpeg;base64,' + imgStr;
-    }
+    function formatImageSrc(imgSt) {}
   </script>
 </body>
 </html>

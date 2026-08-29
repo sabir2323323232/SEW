@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>SEW - Dashboard & Market</title>
+  <title>SEW - Premium Market & Dashboard</title>
   
   <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -12,15 +12,18 @@
 
   <style>
     :root {
-      --bg-body: #f1f5f9;
+      --bg-body: #f8fafc;
       --card-bg: #ffffff;
       --primary: #2563eb;
+      --primary-dark: #1d4ed8;
       --primary-soft: #eff6ff;
       --text-main: #0f172a;
       --text-muted: #64748b;
       --border-color: #e2e8f0;
-      --accent-green: #10b981;
-      --accent-orange: #f59e0b;
+      --accent-green: #059669;
+      --accent-orange: #d97706;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.06);
     }
 
     * {
@@ -35,10 +38,10 @@
       height: 100%;
       width: 100%;
       overflow-x: hidden;
+      background-color: var(--bg-body);
     }
 
     body {
-      background-color: var(--bg-body);
       color: var(--text-main);
       min-height: 100vh;
       display: flex;
@@ -48,7 +51,7 @@
     /* NAVBAR */
     .navbar {
       background: #ffffff;
-      padding: 6px 10px;
+      padding: 8px 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -56,44 +59,45 @@
       top: 0;
       z-index: 100;
       border-bottom: 1px solid var(--border-color);
-      box-shadow: 0 1px 8px rgba(0, 0, 0, 0.03);
+      box-shadow: var(--shadow-sm);
     }
 
     .logout-btn {
       background: #fef2f2;
       color: #ef4444;
       border: 1px solid #fee2e2;
-      padding: 4px 8px;
-      border-radius: 6px;
+      padding: 5px 10px;
+      border-radius: 8px;
       font-weight: 700;
-      font-size: 10px;
+      font-size: 11px;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 3px;
+      gap: 4px;
+      transition: all 0.2s;
     }
 
     .brand-title {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 800;
       color: var(--primary);
-      letter-spacing: 1px;
+      letter-spacing: 1.5px;
     }
 
     .profile-pill {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       background: var(--primary-soft);
-      padding: 3px 6px;
-      border-radius: 16px;
+      padding: 4px 8px;
+      border-radius: 20px;
       cursor: pointer;
       border: 1px solid #dbeafe;
     }
 
     .avatar {
-      width: 20px;
-      height: 20px;
+      width: 22px;
+      height: 22px;
       background: var(--primary);
       color: #ffffff;
       border-radius: 50%;
@@ -101,234 +105,262 @@
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      font-size: 10px;
+      font-size: 11px;
     }
 
     .user-name-short {
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 700;
       color: var(--primary);
-      max-width: 75px;
+      max-width: 80px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
-    /* CONTAINER */
+    /* MAIN CONTAINER */
     .container {
       max-width: 500px;
       width: 100%;
       margin: 0 auto;
-      padding: 6px;
+      padding: 8px 8px 75px 8px; /* Extra bottom padding for fixed categories bar */
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 6px;
-      overflow-x: hidden;
+      gap: 8px;
     }
 
     /* EARNING SECTION */
     .earning-section {
       background: #ffffff;
-      border-radius: 12px;
-      padding: 8px;
+      border-radius: 14px;
+      padding: 10px;
       border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
     }
 
     .balance-card {
-      background: linear-gradient(135deg, #1e40af, #3b82f6);
-      border-radius: 8px;
-      padding: 6px 10px;
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      border-radius: 10px;
+      padding: 8px 12px;
       color: #ffffff;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
     }
 
     .balance-info p {
       font-size: 9px;
-      opacity: 0.85;
+      opacity: 0.9;
       font-weight: 700;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .balance-amount {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 800;
     }
 
     .balance-icon {
       font-size: 16px;
-      background: rgba(255, 255, 255, 0.2);
-      padding: 4px 8px;
-      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(4px);
+      padding: 6px 10px;
+      border-radius: 8px;
     }
 
     .earning-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 4px;
+      gap: 5px;
     }
 
     .earn-btn {
       background: #f8fafc;
       border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 6px 2px;
+      border-radius: 8px;
+      padding: 7px 2px;
       color: var(--text-main);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2px;
+      gap: 3px;
       font-weight: 700;
-      font-size: 8px;
+      font-size: 9px;
       text-align: center;
       cursor: pointer;
       user-select: none;
+      transition: transform 0.1s;
     }
 
     .earn-btn:active {
+      transform: scale(0.95);
       background: #e2e8f0;
     }
 
     .earn-btn i {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--primary);
     }
 
-    /* MARKET BANNER */
+    /* BANNER */
     .market-banner {
       background: #0f172a;
       color: #ffffff;
-      border-radius: 8px;
-      padding: 5px 10px;
+      border-radius: 10px;
+      padding: 8px 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      box-shadow: var(--shadow-sm);
     }
 
     .market-banner-text h2 {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 800;
-      color: #f59e0b;
+      color: #fbbf24;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 6px;
     }
 
     .discount-badge {
       background: #ef4444;
       color: #ffffff;
-      padding: 2px 6px;
-      border-radius: 10px;
+      padding: 3px 8px;
+      border-radius: 12px;
       font-weight: 800;
       font-size: 9px;
+      letter-spacing: 0.5px;
     }
 
     /* MARKET SECTION */
     .market-section {
       background: #ffffff;
-      border-radius: 12px;
-      padding: 8px;
+      border-radius: 14px;
+      padding: 10px;
       border: 1px solid var(--border-color);
-      flex: 1;
+      box-shadow: var(--shadow-sm);
       display: flex;
       flex-direction: column;
     }
 
     .search-box {
       position: relative;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .search-box i {
       position: absolute;
-      left: 8px;
+      left: 10px;
       top: 50%;
       transform: translateY(-50%);
       color: #94a3b8;
-      font-size: 11px;
+      font-size: 12px;
     }
 
     .search-box input {
       width: 100%;
-      padding: 6px 8px 6px 26px;
+      padding: 8px 10px 8px 30px;
       background: #f8fafc;
       border: 1px solid var(--border-color);
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 11px;
       outline: none;
+      transition: border-color 0.2s;
     }
 
-    /* MARKAZ STYLE VERTICAL GRID */
+    .search-box input:focus {
+      border-color: var(--primary);
+    }
+
+    /* HIGH-END LOCK-STYLE PRODUCT GRID */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-      padding: 2px 0 6px 0;
-      margin-bottom: 6px;
-      max-height: 480px;
-      overflow-y: auto;
+      gap: 10px;
+      padding: 2px 0 10px 0;
     }
 
     .product-card {
-      width: 100%;
       background: #ffffff;
       border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 6px;
+      border-radius: 12px;
+      padding: 8px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       cursor: pointer;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-      transition: transform 0.1s;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: #cbd5e1;
     }
 
     .product-card:active {
       transform: scale(0.98);
     }
 
-    /* UPDATED: Full photo & smaller height */
-    .product-img {
+    /* Image Wrapper Box */
+    .product-img-wrapper {
       width: 100%;
-      height: 95px;
-      object-fit: contain;
-      border-radius: 6px;
+      height: 100px;
+      border-radius: 8px;
       background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      margin-bottom: 6px;
+      border: 1px solid #f1f5f9;
+    }
+
+    .product-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
 
     .product-title {
-      font-size: 10px;
-      font-weight: 700;
-      margin: 5px 0 2px 0;
+      font-size: 11px;
+      font-weight: 800;
       color: var(--text-main);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      margin-bottom: 2px;
     }
 
     .product-desc {
-      font-size: 8px;
+      font-size: 9px;
       color: var(--text-muted);
-      margin-bottom: 6px;
-      height: 12px;
+      margin-bottom: 8px;
+      height: 14px;
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
     }
 
+    /* Locked Bottom Section inside Card */
     .product-bottom {
       display: flex;
       justify-content: space-between;
       align-items: center;
       margin-top: auto;
-      padding-top: 4px;
+      padding-top: 6px;
+      border-top: 1px dashed var(--border-color);
     }
 
     .product-price {
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 800;
       color: var(--accent-green);
     }
@@ -336,21 +368,27 @@
     .order-btn {
       background: var(--primary);
       color: #ffffff;
-      padding: 4px 8px;
-      border-radius: 5px;
-      font-size: 9px;
-      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 9.5px;
+      font-weight: 800;
       border: none;
       cursor: pointer;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+      transition: background 0.2s;
     }
 
-    /* MY ORDERS BOX SECTION */
+    .order-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    /* MY ORDERS BOX */
     .my-orders-box {
       background: #f8fafc;
       border: 1px solid var(--border-color);
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 8px;
-      margin-bottom: 8px;
+      margin-top: 6px;
     }
 
     .orders-header {
@@ -362,6 +400,7 @@
       align-items: center;
       gap: 5px;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .my-orders-list {
@@ -377,16 +416,17 @@
     }
 
     .order-mini-card {
-      flex: 0 0 130px;
+      flex: 0 0 135px;
       background: #ffffff;
       border: 1px solid var(--border-color);
-      border-radius: 6px;
-      padding: 6px;
+      border-radius: 8px;
+      padding: 6px 8px;
       cursor: pointer;
+      box-shadow: var(--shadow-sm);
     }
 
     .order-mini-name {
-      font-size: 9px;
+      font-size: 9.5px;
       font-weight: 700;
       white-space: nowrap;
       overflow: hidden;
@@ -395,7 +435,7 @@
     }
 
     .order-mini-qty {
-      font-size: 8px;
+      font-size: 8.5px;
       color: var(--text-muted);
       margin: 2px 0;
     }
@@ -404,7 +444,7 @@
       display: inline-block;
       font-size: 8px;
       font-weight: 800;
-      padding: 2px 5px;
+      padding: 2px 6px;
       border-radius: 4px;
       text-transform: uppercase;
     }
@@ -413,52 +453,72 @@
     .status-ok { background: #d1fae5; color: #059669; }
 
     .no-orders-text {
-      font-size: 9px;
+      font-size: 9.5px;
       color: var(--text-muted);
       text-align: center;
       width: 100%;
       padding: 6px 0;
     }
 
-    /* CATEGORIES AT BOTTOM */
+    /* FIXED / LOCKED CATEGORIES BAR AT SCREEN BOTTOM */
     .categories-wrapper {
-      margin-top: auto;
-      padding-top: 6px;
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 500px;
+      background: #ffffff;
+      padding: 8px 10px;
+      border-top: 1px solid var(--border-color);
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+      z-index: 100;
     }
 
     .category-section-title {
       font-size: 9px;
-      font-weight: 700;
+      font-weight: 800;
       color: var(--text-muted);
-      margin-bottom: 4px;
+      margin-bottom: 5px;
       text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .category-grid {
       display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
+      gap: 6px;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+
+    .category-grid::-webkit-scrollbar {
+      display: none;
     }
 
     .cat-btn {
-      background: #f8fafc;
+      background: #f1f5f9;
       border: 1px solid var(--border-color);
-      padding: 4px 8px;
-      border-radius: 6px;
+      padding: 6px 12px;
+      border-radius: 20px;
       color: var(--text-main);
       font-weight: 700;
-      font-size: 9px;
-      display: flex;
+      font-size: 10px;
+      display: inline-flex;
       align-items: center;
-      gap: 3px;
+      gap: 5px;
       cursor: pointer;
       user-select: none;
+      flex-shrink: 0;
+      transition: all 0.2s;
     }
 
     .cat-btn.active {
       background: var(--primary);
       color: #ffffff;
       border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
     }
 
     .cat-btn.active i { color: #ffffff; }
@@ -467,7 +527,8 @@
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.6);
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(3px);
       display: none;
       justify-content: center;
       align-items: center;
@@ -479,23 +540,25 @@
       background: #ffffff;
       width: 100%;
       max-width: 420px;
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 16px;
       position: relative;
       max-height: 90vh;
       overflow-y: auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
     }
 
     .close-modal {
       position: absolute;
-      top: 10px; right: 10px;
+      top: 12px; right: 12px;
       background: #f1f5f9;
       border: none;
-      width: 26px; height: 26px;
+      width: 28px; height: 28px;
       border-radius: 50%;
       cursor: pointer;
       font-weight: 800;
       font-size: 12px;
+      color: var(--text-muted);
     }
 
     /* 3-PHOTOS GRID IN MODAL */
@@ -503,7 +566,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 6px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .photo-card-item {
@@ -515,25 +578,26 @@
     .modal-photo-img {
       width: 100%;
       height: 90px;
-      object-fit: cover;
-      border-radius: 6px;
+      object-fit: contain;
+      border-radius: 8px;
       border: 1px solid var(--border-color);
-      background: #e2e8f0;
+      background: #f8fafc;
+      padding: 2px;
     }
 
     .download-photo-btn {
-      background: #1e293b;
+      background: #0f172a;
       color: #ffffff;
       border: none;
       padding: 4px 0;
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 9px;
       font-weight: 700;
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 3px;
+      gap: 4px;
     }
 
     .download-photo-btn:hover {
@@ -554,7 +618,7 @@
       white-space: pre-line;
       background: #f8fafc;
       padding: 8px;
-      border-radius: 6px;
+      border-radius: 8px;
       border: 1px solid var(--border-color);
     }
 
@@ -579,10 +643,10 @@
 
     .form-group input, .form-group textarea {
       width: 100%;
-      padding: 7px;
+      padding: 8px;
       background: #f8fafc;
       border: 1px solid var(--border-color);
-      border-radius: 6px;
+      border-radius: 8px;
       font-size: 11px;
       outline: none;
     }
@@ -598,10 +662,11 @@
       font-weight: 700;
       cursor: pointer;
       margin-top: 6px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
     }
 
     .modal-avatar {
-      width: 40px; height: 40px;
+      width: 44px; height: 44px;
       background: var(--primary);
       color: #ffffff;
       font-size: 16px; font-weight: 800;
@@ -704,7 +769,7 @@
         <input type="text" id="searchInput" placeholder="Search products..." onkeyup="filterProducts()" />
       </div>
 
-      <!-- Products Vertical Grid -->
+      <!-- Products Locked Grid -->
       <div class="product-grid" id="productGrid">
         <!-- Loaded Realtime from Firebase -->
       </div>
@@ -718,21 +783,21 @@
           <div class="no-orders-text">Loading orders...</div>
         </div>
       </div>
-
-      <!-- CATEGORIES WRAPPER -->
-      <div class="categories-wrapper">
-        <div class="category-section-title">Categories</div>
-        <div class="category-grid">
-          <div class="cat-btn active" onclick="filterByCategory('all', this)"><i class="fa-solid fa-border-all"></i> All</div>
-          <div class="cat-btn" onclick="filterByCategory('clothes', this)"><i class="fa-solid fa-shirt"></i> Clothes</div>
-          <div class="cat-btn" onclick="filterByCategory('tools', this)"><i class="fa-solid fa-screwdriver-wrench"></i> Tools</div>
-          <div class="cat-btn" onclick="filterByCategory('mobiles', this)"><i class="fa-solid fa-mobile-screen-button"></i> Mobiles</div>
-          <div class="cat-btn" onclick="filterByCategory('motors', this)"><i class="fa-solid fa-motorcycle"></i> Motors</div>
-          <div class="cat-btn" onclick="filterByCategory('jewelry', this)"><i class="fa-solid fa-gem"></i> Jewelry</div>
-        </div>
-      </div>
     </section>
 
+  </div>
+
+  <!-- ALWAYS LOCKED CATEGORIES BAR AT BOTTOM -->
+  <div class="categories-wrapper">
+    <div class="category-section-title">Categories</div>
+    <div class="category-grid">
+      <div class="cat-btn active" onclick="filterByCategory('all', this)"><i class="fa-solid fa-border-all"></i> All</div>
+      <div class="cat-btn" onclick="filterByCategory('clothes', this)"><i class="fa-solid fa-shirt"></i> Clothes</div>
+      <div class="cat-btn" onclick="filterByCategory('tools', this)"><i class="fa-solid fa-screwdriver-wrench"></i> Tools</div>
+      <div class="cat-btn" onclick="filterByCategory('mobiles', this)"><i class="fa-solid fa-mobile-screen-button"></i> Mobiles</div>
+      <div class="cat-btn" onclick="filterByCategory('motors', this)"><i class="fa-solid fa-motorcycle"></i> Motors</div>
+      <div class="cat-btn" onclick="filterByCategory('jewelry', this)"><i class="fa-solid fa-gem"></i> Jewelry</div>
+    </div>
   </div>
 
   <!-- PROFILE MODAL -->
@@ -854,7 +919,6 @@
       document.getElementById('viewOrderDetailModal').style.display = 'none';
     }
 
-    // Helper to download images safely
     async function downloadImage(url, filename) {
       try {
         const response = await fetch(url);
@@ -967,7 +1031,9 @@
         const imgSrc = formatImageSrc(mainImg);
         grid.innerHTML += `
           <div class="product-card" onclick="openOrderModal('${p.id}')">
-            <img src="${imgSrc}" class="product-img" alt="${p.name || 'Product'}" crossorigin="anonymous" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=No+Image'" />
+            <div class="product-img-wrapper">
+              <img src="${imgSrc}" class="product-img" alt="${p.name || 'Product'}" crossorigin="anonymous" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=No+Image'" />
+            </div>
             <div class="product-title">${p.name || 'Product'}</div>
             <div class="product-desc">${p.details || ''}</div>
             <div class="product-bottom">

@@ -193,24 +193,25 @@
       border-radius: 8px;
     }
 
+    /* Updated to 6 columns & slightly compact sizing */
     .earning-grid {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 5px;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 3px;
     }
 
     .earn-btn {
       background: #f8fafc;
       border: 1px solid var(--border-color);
       border-radius: 8px;
-      padding: 7px 2px;
+      padding: 6px 1px;
       color: var(--text-main);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 3px;
+      gap: 2px;
       font-weight: 700;
-      font-size: 9px;
+      font-size: 8px;
       text-align: center;
       cursor: pointer;
       user-select: none;
@@ -223,7 +224,7 @@
     }
 
     .earn-btn i {
-      font-size: 13px;
+      font-size: 12px;
       color: var(--primary);
     }
 
@@ -814,6 +815,11 @@
           <span>Free Ads</span>
         </div>
 
+        <div class="earn-btn" onclick="navigateTo('task.html')">
+          <i class="fa-solid fa-list-check"></i>
+          <span>Task</span>
+        </div>
+
         <div class="earn-btn" onclick="navigateTo('referral.html')">
           <i class="fa-solid fa-users"></i>
           <span>Referral</span>
@@ -1142,257 +1148,12 @@
     }
 
     function formatImageSrc(imgStr) {
-      if (!imgStr) return 'https://via.placeholder.com/150?text=No+Image';
-      imgStr = imgStr.trim();
-      if (imgStr.startsWith('data:image/')) return imgStr;
-      return imgStr;
+      if (!imgStr) return 'https://via.placeholder.com/150';
+      if (imgStr.startsWith('http://') || imgStr.startsWith('https://') || imgStr.startsWith('data:image')) {
+        return imgStr;
+      }
+      return 'data:image/jpeg;base64,' + imgStr;
     }
-
-    function renderFilteredProducts() {
-      const grid = document.getElementById('productGrid');
-      grid.innerHTML = "";
-
-      const productList = window.currentProducts || [];
-      const searchVal = (document.getElementById('searchInput')?.value || '').toLowerCase();
-
-      const filtered = productList.filter(p => {
-        const pCategory = (p.category || '').toLowerCase().trim();
-        const pName = (p.name || '').toLowerCase();
-
-        const matchesCategory = selectedCategory === 'all' || 
-          pCategory === selectedCategory.toLowerCase() || 
-          pName.includes(selectedCategory.toLowerCase());
-
-        const matchesSearch = !searchVal || pName.includes(searchVal);
-
-        return matchesCategory && matchesSearch;
-      });
-
-      if (filtered.length === 0) {
-        grid.innerHTML = `<div style="grid-column: 1 / -1; width:100%; font-size:10px; color:var(--text-muted); text-align:center; padding:10px;">No products found.</div>`;
-        return;
-      }
-
-      filtered.forEach(p => {
-        const mainImg = Array.isArray(p.images) && p.images.length > 0 ? p.images[0] : (p.image || p.image1);
-        const imgSrc = formatImageSrc(mainImg);
-        grid.innerHTML += `
-          <div class="product-card" onclick="openOrderModal('${p.id}')">
-            <div class="product-img-wrapper">
-              <img src="${imgSrc}" class="product-img" alt="${p.name || 'Product'}" crossorigin="anonymous" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=No+Image'" />
-            </div>
-            <div class="product-title">${p.name || 'Product'}</div>
-            <div class="product-desc">${p.details || ''}</div>
-            <div class="product-bottom">
-              <div class="product-price">Rs. ${p.price || 0}</div>
-              <button class="order-btn" onclick="event.stopPropagation(); openOrderModal('${p.id}')">Buy Now</button>
-            </div>
-          </div>
-        `;
-      });
-    }
-
-    window.filterByCategory = function(categoryName, element) {
-      selectedCategory = categoryName;
-      const catBtns = document.querySelectorAll('.cat-btn');
-      catBtns.forEach(btn => btn.classList.remove('active'));
-      if(element) element.classList.add('active');
-
-      renderFilteredProducts();
-    };
-
-    window.filterProducts = function() {
-      renderFilteredProducts();
-    };
-
-    onValue(ref(db, 'products'), (snapshot) => {
-      let productList = [];
-      if (snapshot.exists()) {
-        const data = snapshot.val();
-        Object.keys(data).forEach(key => {
-          productList.push({ id: key, ...data[key] });
-        });
-      }
-
-      window.currentProducts = productList;
-      renderFilteredProducts();
-    });
-
-    onValue(ref(db, 'orders'), (snapshot) => {
-      const popupOrdersList = document.getElementById('myOrdersPopupList');
-      popupOrdersList.innerHTML = "";
-      myUserOrdersMap = {};
-
-      if (!snapshot.exists()) {
-        popupOrdersList.innerHTML = `<div class="no-orders-text" style="font-size:10px; color:var(--text-muted); text-align:center;">No orders placed yet.</div>`;
-        return;
-      }
-
-      const allOrders = snapshot.val();
-      let userOrdersCount = 0;
-
-      Object.keys(allOrders).reverse().forEach(oKey => {
-        const ord = allOrders[oKey];
-        if (ord.username === userData.username || ord.customerEmail === userData.email) {
-          userOrdersCount++;
-          myUserOrdersMap[oKey] = ord;
-
-          const isOk = (ord.status || '').toLowerCase() === 'ok' || (ord.status || '').toLowerCase() === 'confirmed' || (ord.status || '').toLowerCase() === 'delivered';
-          const badgeClass = isOk ? 'status-ok' : 'status-pending';
-          const statusDisplay = isOk ? 'OK / Confirmed' : (ord.status || 'Pending');
-
-          popupOrdersList.innerHTML += `
-            <div class="order-popup-card" onclick="openViewOrderModal('${oKey}')">
-              <div>
-                <div style="font-size:11px; font-weight:800;">${ord.productName || 'Product'}</div>
-                <div style="font-size:9.5px; color:var(--text-muted);">Qty: ${ord.quantity || 1} | Rs. ${ord.totalPrice || 0}</div>
-              </div>
-              <span class="order-status-badge ${badgeClass}">${statusDisplay}</span>
-            </div>
-          `;
-        }
-      });
-
-      if (userOrdersCount === 0) {
-        popupOrdersList.innerHTML = `<div class="no-orders-text" style="font-size:10px; color:var(--text-muted); text-align:center;">No orders placed yet.</div>`;
-      }
-    });
-
-    window.openOrderModal = function(pId) {
-      const pList = window.currentProducts || [];
-      selectedProduct = pList.find(item => item.id == pId);
-
-      if (!selectedProduct) return;
-
-      let imgArray = [];
-      if (Array.isArray(selectedProduct.images) && selectedProduct.images.length > 0) {
-        imgArray = selectedProduct.images;
-      } else {
-        if (selectedProduct.image || selectedProduct.image1) imgArray.push(selectedProduct.image || selectedProduct.image1);
-        if (selectedProduct.image2) imgArray.push(selectedProduct.image2);
-        if (selectedProduct.image3) imgArray.push(selectedProduct.image3);
-      }
-
-      while (imgArray.length < 3) {
-        imgArray.push(imgArray[0] || 'https://via.placeholder.com/150?text=No+Image');
-      }
-
-      const photosGrid = document.getElementById('modalPhotosContainer');
-      photosGrid.innerHTML = "";
-      imgArray.slice(0, 3).forEach((imgUrl, idx) => {
-        const formatted = formatImageSrc(imgUrl);
-        photosGrid.innerHTML += `
-          <div class="photo-card-item">
-            <img src="${formatted}" class="modal-photo-img" alt="Photo ${idx+1}" crossorigin="anonymous" onerror="this.onerror=null; this.src='https://via.placeholder.com/150?text=No+Image'" />
-            <button type="button" class="download-photo-btn" onclick="downloadImage('${formatted}', '${(selectedProduct.name || 'product')}-img${idx+1}.jpg')">
-              <i class="fa-solid fa-download"></i> Save
-            </button>
-          </div>
-        `;
-      });
-
-      document.getElementById('orderModalTitle').innerText = selectedProduct.name || "Product Name";
-      document.getElementById('orderModalDesc').innerText = selectedProduct.details || "No description available.";
-      document.getElementById('orderModalPrice').innerText = "Rs. " + (selectedProduct.price || 0);
-
-      document.getElementById('orderFullNameInput').value = userData.fullName || "";
-      document.getElementById('orderMobileInput').value = userData.mobile || "";
-      document.getElementById('orderWhatsappInput').value = userData.mobile || "";
-      document.getElementById('orderCityInput').value = userData.city || "";
-      document.getElementById('orderQuantity').value = 1;
-      document.getElementById('orderLocationInput').value = "";
-
-      updateOrderTotal();
-
-      const alertBox = document.getElementById('orderStatusAlert');
-      alertBox.className = 'status-alert';
-      alertBox.innerText = '';
-
-      document.getElementById('orderModal').style.display = 'flex';
-    };
-
-    window.closeOrderModal = function() {
-      document.getElementById('orderModal').style.display = 'none';
-    };
-
-    window.updateOrderTotal = function() {
-      if (!selectedProduct) return;
-      const qty = parseInt(document.getElementById('orderQuantity').value) || 1;
-      const unitPrice = parseFloat(selectedProduct.price) || 0;
-      const total = qty * unitPrice;
-      document.getElementById('orderTotalPrice').innerText = "Rs. " + total;
-    };
-
-    window.handlePlaceOrder = function(e) {
-      e.preventDefault();
-      if (!selectedProduct) return;
-
-      const confirmBtn = document.getElementById('confirmOrderBtn');
-      const alertBox = document.getElementById('orderStatusAlert');
-      
-      confirmBtn.disabled = true;
-      confirmBtn.innerText = "Placing Order...";
-
-      const qty = parseInt(document.getElementById('orderQuantity').value) || 1;
-      const unitPrice = parseFloat(selectedProduct.price) || 0;
-      const total = qty * unitPrice;
-
-      const orderPayload = {
-        productId: selectedProduct.id,
-        productName: selectedProduct.name || "Product",
-        productPrice: unitPrice,
-        quantity: qty,
-        totalPrice: total,
-        customerName: document.getElementById('orderFullNameInput').value.trim(),
-        mobile: document.getElementById('orderMobileInput').value.trim(),
-        whatsapp: document.getElementById('orderWhatsappInput').value.trim(),
-        city: document.getElementById('orderCityInput').value.trim(),
-        deliveryAddress: document.getElementById('orderLocationInput').value.trim(),
-        username: userData.username || "guest",
-        customerEmail: userData.email || "",
-        status: "Pending",
-        createdAt: new Date().toISOString()
-      };
-
-      push(ref(db, 'orders'), orderPayload)
-        .then(() => {
-          alertBox.className = 'status-alert success';
-          alertBox.innerText = "Order Placed Successfully!";
-          setTimeout(() => {
-            closeOrderModal();
-            confirmBtn.disabled = false;
-            confirmBtn.innerText = "Confirm Order";
-          }, 1500);
-        })
-        .catch(err => {
-          alertBox.className = 'status-alert error';
-          alertBox.innerText = "Error: " + err.message;
-          confirmBtn.disabled = false;
-          confirmBtn.innerText = "Confirm Order";
-        });
-    };
-
-    window.openViewOrderModal = function(orderId) {
-      const ord = myUserOrdersMap[orderId];
-      if (!ord) return;
-
-      document.getElementById('vProductTitle').innerText = ord.productName || '-';
-      document.getElementById('vCustomerName').innerText = ord.customerName || '-';
-      document.getElementById('vMobile').innerText = ord.mobile || '-';
-      document.getElementById('vWhatsapp').innerText = ord.whatsapp || '-';
-      document.getElementById('vCity').innerText = ord.city || '-';
-      document.getElementById('vLocation').innerText = ord.deliveryAddress || '-';
-      document.getElementById('vQuantity').innerText = ord.quantity || '1';
-      document.getElementById('vTotalPrice').innerText = "Rs. " + (ord.totalPrice || 0);
-
-      const isOk = (ord.status || '').toLowerCase() === 'ok' || (ord.status || '').toLowerCase() === 'confirmed' || (ord.status || '').toLowerCase() === 'delivered';
-      const statusSpan = document.getElementById('vStatus');
-      statusSpan.innerText = isOk ? 'OK / Confirmed' : (ord.status || 'Pending');
-      statusSpan.style.color = isOk ? 'var(--accent-green)' : 'var(--accent-orange)';
-
-      closeMyOrdersModal();
-      document.getElementById('viewOrderDetailModal').style.display = 'flex';
-    };
   </script>
 </body>
 </html>

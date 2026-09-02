@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -222,7 +223,7 @@
       cursor: not-allowed;
     }
 
-    /* MODAL PLAYER */
+    /* MODAL TIMER */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -238,11 +239,12 @@
     .modal-box {
       background: #ffffff;
       width: 100%;
-      max-width: 450px;
+      max-width: 400px;
       border-radius: 16px;
-      padding: 14px;
+      padding: 20px;
       position: relative;
       box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      text-align: center;
     }
 
     .close-modal {
@@ -256,58 +258,47 @@
       font-weight: 800;
       font-size: 12px;
       color: var(--text-muted);
-      z-index: 10;
     }
 
-    .player-wrapper {
-      width: 100%;
-      height: 250px;
-      background: #000;
-      border-radius: 10px;
-      overflow: hidden;
-      margin-top: 10px;
-      margin-bottom: 10px;
-    }
-
-    .player-wrapper iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    .timer-box {
-      background: #f8fafc;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 10px;
-      text-align: center;
-      margin-bottom: 10px;
+    .timer-circle-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--primary-soft);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin: 10px auto;
     }
 
     .timer-text {
-      font-size: 13px;
+      font-size: 18px;
       font-weight: 800;
       color: var(--primary);
+      margin-top: 6px;
     }
 
     .warning-text {
-      font-size: 9.5px;
-      color: var(--accent-red);
-      margin-top: 4px;
-      font-weight: 700;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin: 10px 0;
+      line-height: 1.4;
     }
 
     .claim-btn {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       background: var(--accent-green);
       color: #ffffff;
       border: none;
-      border-radius: 8px;
-      font-size: 12px;
+      border-radius: 10px;
+      font-size: 13px;
       font-weight: 800;
       cursor: pointer;
       display: none;
+      margin-top: 10px;
     }
   </style>
 </head>
@@ -348,20 +339,20 @@
     </div>
   </div>
 
-  <!-- PLAYER MODAL -->
+  <!-- TIMER MODAL -->
   <div class="modal-overlay" id="playerModal">
     <div class="modal-box">
       <button class="close-modal" onclick="cancelVideoTask()">✕</button>
 
-      <h4 style="font-size:13px; font-weight:800; color:var(--text-main);" id="modalTaskTitle">Watch Video Task</h4>
-      
-      <div class="player-wrapper">
-        <iframe id="videoIframe" src="" allowfullscreen scrolling="no"></iframe>
+      <div class="timer-circle-icon">
+        <i class="fa-solid fa-hourglass-half fa-spin"></i>
       </div>
 
-      <div class="timer-box">
-        <div class="timer-text" id="timerCount">Timer: 40s</div>
-        <div class="warning-text"><i class="fa-solid fa-circle-exclamation"></i> Video poori dekhein. Screen band karne ya cancel karne par reward nahi milega!</div>
+      <h4 style="font-size:14px; font-weight:800; color:var(--text-main);" id="modalTaskTitle">Task In Progress</h4>
+      
+      <div class="timer-text" id="timerCount">Timer: 40s</div>
+      <div class="warning-text" id="statusMessage">
+        Video naye tab me khull chuki hai. Kripya 40 seconds tak wait karein aur wapas aakar reward claim karein.
       </div>
 
       <button id="claimBtn" class="claim-btn" onclick="completeVideoTask()">
@@ -388,18 +379,18 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // 10 CONVERTED STREAMTAPE EMBED LINKS
+    // 10 STREAMTAPE DIRECT WATCH LINKS (/v/)
     const VIDEO_TASKS = [
-      { id: "v1", title: "Video Task #1", embedUrl: "https://streamtape.com/e/6kJQOy2xYRULar/" },
-      { id: "v2", title: "Video Task #2", embedUrl: "https://streamtape.com/e/2kvwkGWk1oFZbP7/" },
-      { id: "v3", title: "Video Task #3", embedUrl: "https://streamtape.com/e/6W8xPQwKvrUxop/" },
-      { id: "v4", title: "Video Task #4", embedUrl: "https://streamtape.com/e/j42LPXB67BUzR0q/" },
-      { id: "v5", title: "Video Task #5", embedUrl: "https://streamtape.com/e/eKGAMvmaZRIk8V/" },
-      { id: "v6", title: "Video Task #6", embedUrl: "https://streamtape.com/e/BBA7KVvX3zIy1jP/" },
-      { id: "v7", title: "Video Task #7", embedUrl: "https://streamtape.com/e/7z4QAMoXBAFxqL/" },
-      { id: "v8", title: "Video Task #8", embedUrl: "https://streamtape.com/e/ydy169lR2VH1DDY/" },
-      { id: "v9", title: "Video Task #9", embedUrl: "https://streamtape.com/e/QJPvoABMo3I0DlM/" },
-      { id: "v10", title: "Video Task #10", embedUrl: "https://streamtape.com/e/q8jkV4G0qrFzb7w/" }
+      { id: "v1", title: "Video Task #1", watchUrl: "https://streamtape.com/v/6kJQOy2xYRULar/" },
+      { id: "v2", title: "Video Task #2", watchUrl: "https://streamtape.com/v/2kvwkGWk1oFZbP7/" },
+      { id: "v3", title: "Video Task #3", watchUrl: "https://streamtape.com/v/6W8xPQwKvrUxop/" },
+      { id: "v4", title: "Video Task #4", watchUrl: "https://streamtape.com/v/j42LPXB67BUzR0q/" },
+      { id: "v5", title: "Video Task #5", watchUrl: "https://streamtape.com/v/eKGAMvmaZRIk8V/" },
+      { id: "v6", title: "Video Task #6", watchUrl: "https://streamtape.com/v/BBA7KVvX3zIy1jP/" },
+      { id: "v7", title: "Video Task #7", watchUrl: "https://streamtape.com/v/7z4QAMoXBAFxqL/" },
+      { id: "v8", title: "Video Task #8", watchUrl: "https://streamtape.com/v/ydy169lR2VH1DDY/" },
+      { id: "v9", title: "Video Task #9", watchUrl: "https://streamtape.com/v/QJPvoABMo3I0DlM/" },
+      { id: "v10", title: "Video Task #10", watchUrl: "https://streamtape.com/v/q8jkV4G0qrFzb7w/" }
     ];
 
     const REWARD_AMOUNT = 0.22;
@@ -427,7 +418,7 @@
 
     renderUserUI(userData);
 
-    // LIVE FIREBASE LISTENER (BALANCE & LOCKS)
+    // LIVE FIREBASE LISTENER
     if (userData.username) {
       onValue(ref(db, 'users/' + userData.username), (snapshot) => {
         if (snapshot.exists()) {
@@ -441,7 +432,7 @@
       });
     }
 
-    // RENDER TASK CARDS WITH 24H LOCK CHECK
+    // RENDER TASK CARDS WITH LOCK SYSTEM
     function renderTaskList() {
       const container = document.getElementById('videoTaskList');
       container.innerHTML = '';
@@ -480,7 +471,7 @@
       });
     }
 
-    // START TASK & TIMER
+    // START TASK
     window.startVideoTask = function(taskId) {
       const task = VIDEO_TASKS.find(t => t.id === taskId);
       if (!task) return;
@@ -488,9 +479,13 @@
       currentActiveTask = task;
       remainingTime = TASK_TIMER_SECONDS;
 
+      // Open Streamtape in New Tab
+      window.open(task.watchUrl, '_blank');
+
+      // Start Dashboard Modal Countdown
       document.getElementById('modalTaskTitle').innerText = task.title;
-      document.getElementById('videoIframe').src = task.embedUrl;
       document.getElementById('timerCount').innerText = `Timer: ${remainingTime}s`;
+      document.getElementById('statusMessage').innerText = "Video dusre tab me chal rahi hai. Timer poora hone tak wait karein.";
       document.getElementById('claimBtn').style.display = 'none';
       document.getElementById('playerModal').style.display = 'flex';
 
@@ -501,23 +496,16 @@
 
         if (remainingTime <= 0) {
           clearInterval(countdownInterval);
-          document.getElementById('timerCount').innerText = "Task Complete! Reward claim karein.";
+          document.getElementById('timerCount').innerText = "Task Complete!";
+          document.getElementById('statusMessage').innerText = "Shabash! Neeche diye gaye button par click karke apna reward claim karein.";
           document.getElementById('claimBtn').style.display = 'block';
         }
       }, 1000);
     };
 
-    // TAB SWITCH / CANCEL ANTI-CHEAT RESET
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden && currentActiveTask && remainingTime > 0) {
-        cancelVideoTask();
-        alert("Tab badalne ki waja se timer cancel ho gaya hai. Reward hasil karne ke liye dobara video poori dekhein!");
-      }
-    });
-
+    // CANCEL TASK
     window.cancelVideoTask = function() {
       clearInterval(countdownInterval);
-      document.getElementById('videoIframe').src = '';
       document.getElementById('playerModal').style.display = 'none';
       currentActiveTask = null;
       remainingTime = TASK_TIMER_SECONDS;

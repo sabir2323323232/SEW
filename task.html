@@ -1,259 +1,346 @@
+
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Task & Earn Portal</title>
+  <title>SEW - Tasks Hub</title>
   
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <style>
+    :root {
+      --bg-body: #f8fafc;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-soft: #eff6ff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --accent-green: #059669;
+      --accent-purple: #7c3aed;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.08);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
 
     body {
-      background-color: #f1f5f9;
-      color: #0f172a;
-      padding-bottom: 30px;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* HEADER */
-    .top-header {
+    /* NAVBAR */
+    .navbar {
       background: #ffffff;
-      padding: 14px 16px;
+      padding: 10px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #e2e8f0;
       position: sticky;
       top: 0;
-      z-index: 80;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
     }
 
-    .brand-title {
+    .back-btn {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid #dbeafe;
+      padding: 6px 12px;
+      border-radius: 8px;
       font-weight: 700;
-      font-size: 15px;
-      color: #2563eb;
+      font-size: 11px;
+      cursor: pointer;
       display: flex;
       align-items: center;
       gap: 6px;
+      text-decoration: none;
     }
 
-    .wallet-badge {
-      background: #16a34a;
-      color: #ffffff;
-      padding: 6px 12px;
+    .brand-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .profile-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-soft);
+      padding: 4px 8px;
       border-radius: 20px;
-      font-size: 12px;
-      font-weight: 700;
+      border: 1px solid #dbeafe;
     }
 
+    .avatar {
+      width: 22px;
+      height: 22px;
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 11px;
+    }
+
+    .user-name-short {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      max-width: 80px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* MAIN CONTAINER */
     .container {
       max-width: 500px;
+      width: 100%;
       margin: 0 auto;
-      padding: 14px;
-    }
-
-    /* POLICY BANNER */
-    .policy-box {
-      background: #eff6ff;
-      border: 1px solid #bfdbfe;
-      border-radius: 12px;
       padding: 12px;
-      font-size: 11px;
-      margin-bottom: 14px;
-      color: #1e3a8a;
-      line-height: 1.5;
-    }
-
-    /* TASK CARDS */
-    .task-list {
+      flex: 1;
       display: flex;
       flex-direction: column;
       gap: 12px;
     }
 
-    .task-card {
-      background: #ffffff;
-      border-radius: 12px;
-      padding: 12px;
-      border: 1px solid #e2e8f0;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-    }
-
-    .task-header {
+    /* BALANCE CARD */
+    .balance-card {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      border-radius: 14px;
+      padding: 14px 16px;
+      color: #ffffff;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 8px;
+      box-shadow: var(--shadow-md);
+    }
+
+    .balance-info p {
+      font-size: 10px;
+      opacity: 0.9;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .balance-amount {
+      font-size: 22px;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
+    .balance-badge {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* SECTION TITLE */
+    .section-header {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+    /* TASK CARDS GRID */
+    .tasks-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .task-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .task-card:hover {
+      border-color: var(--primary);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .task-card:active {
+      transform: scale(0.98);
+    }
+
+    .task-icon-box {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .icon-video {
+      background: #fef2f2;
+      color: #ef4444;
+      border: 1px solid #fee2e2;
+    }
+
+    .icon-app {
+      background: #f0fdf4;
+      color: var(--accent-green);
+      border: 1px solid #dcfce7;
+    }
+
+    .task-details {
+      flex: 1;
     }
 
     .task-title {
       font-size: 13px;
-      font-weight: 700;
-    }
-
-    .reward-show {
-      background: #fef3c7;
-      color: #d97706;
-      font-weight: 700;
-      font-size: 11px;
-      padding: 2px 8px;
-      border-radius: 6px;
-    }
-
-    .btn-start-task {
-      display: block;
-      width: 100%;
-      background: #2563eb;
-      color: #ffffff;
-      text-align: center;
-      padding: 8px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 12px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .code-input-row {
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 2px;
       display: flex;
-      gap: 6px;
-    }
-
-    .code-input-row input {
-      flex: 1;
-      padding: 8px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 11px;
-      outline: none;
-    }
-
-    .btn-submit-code {
-      background: #16a34a;
-      color: #ffffff;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 8px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    .task-card.locked {
-      opacity: 0.6;
-      pointer-events: none;
-    }
-
-    .task-card.locked .btn-start-task {
-      background: #64748b;
-    }
-
-    /* VOICE / POLICY MODAL OVERLAY (UNSKIPPABLE) */
-    .policy-modal-backdrop {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.9);
-      z-index: 9999;
-      display: flex;
-      justify-content: center;
       align-items: center;
-      padding: 20px;
+      justify-content: space-between;
     }
 
-    .policy-modal-box {
-      background: #ffffff;
-      border-radius: 16px;
-      padding: 20px;
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
+    .task-desc {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      line-height: 1.3;
     }
 
-    .voice-waves {
-      font-size: 40px;
-      color: #2563eb;
-      margin-bottom: 12px;
-      animation: pulse 1s infinite alternate;
+    .action-arrow {
+      color: var(--text-muted);
+      font-size: 12px;
+      transition: transform 0.2s;
+    }
+
+    .task-card:hover .action-arrow {
+      transform: translateX(3px);
+      color: var(--primary);
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+      animation: pulse 1.5s infinite;
     }
 
     @keyframes pulse {
-      from { transform: scale(1); }
-      to { transform: scale(1.1); }
-    }
-
-    .btn-audio-start {
-      background: #16a34a;
-      color: #ffffff;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 25px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 14px;
-    }
-
-    .btn-audio-start:disabled {
-      background: #94a3b8;
-      cursor: not-allowed;
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
     }
   </style>
 </head>
 <body>
 
-  <!-- TOP HEADER -->
-  <header class="top-header">
-    <div class="brand-title">
-      <i class="fa-solid fa-list-check"></i> Task & Earn Portal
-    </div>
-    <div class="wallet-badge" id="userWalletDisplay">
-      Rs. 0
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <a href="dashboard.html" class="back-btn">
+      <i class="fa-solid fa-arrow-left"></i> Dashboard
+    </a>
+
+    <div class="brand-title">Available Tasks</div>
+
+    <div class="profile-pill">
+      <div class="avatar" id="navAvatar">U</div>
+      <span class="user-name-short" id="navUserName">User</span>
     </div>
   </header>
 
   <div class="container">
 
-    <!-- POLICY TEXT BOX -->
-    <div class="policy-box">
-      <strong><i class="fa-solid fa-triangle-exclamation"></i> Rules & Policy:</strong><br/>
-      Is ad link mein jo bhi cheez aapke samne aaye (download karna ho, register karna ho, ya viewing), use mukammal karein aur aakhir mein Secret Code hasil karke yahan submit karein. Admin verification ke baad aapko RS. 5 milenge.
+    <!-- LIVE BALANCE CARD -->
+    <div class="balance-card">
+      <div class="balance-info">
+        <p>Current Balance</p>
+        <div class="balance-amount" id="userBalance">Rs. 0.00</div>
+      </div>
+      <div class="balance-badge">
+        <span class="live-dot"></span> Live Sync
+      </div>
     </div>
 
-    <!-- SINGLE TASK LIST -->
-    <div class="task-list" id="taskListContainer">
-      <!-- Generated via JavaScript -->
+    <!-- TASKS LIST -->
+    <div class="section-header">Select Task Category</div>
+
+    <div class="tasks-grid">
+      <!-- VIDEO TASK BUTTON -->
+      <div class="task-card" onclick="location.href='video-task.html'">
+        <div class="task-icon-box icon-video">
+          <i class="fa-solid fa-circle-play"></i>
+        </div>
+        <div class="task-details">
+          <div class="task-title">
+            <span>Video Tasks</span>
+            <i class="fa-solid fa-chevron-right action-arrow"></i>
+          </div>
+          <div class="task-desc">Short videos dekh kar daily balance earn karein.</div>
+        </div>
+      </div>
+
+      <!-- APP DOWNLOAD TASK BUTTON -->
+      <div class="task-card" onclick="location.href='app-task.html'">
+        <div class="task-icon-box icon-app">
+          <i class="fa-solid fa-cloud-arrow-down"></i>
+        </div>
+        <div class="task-details">
+          <div class="task-title">
+            <span>Download App Tasks</span>
+            <i class="fa-solid fa-chevron-right action-arrow"></i>
+          </div>
+          <div class="task-desc">Apps download aur test karke rewards hasil karein.</div>
+        </div>
+      </div>
     </div>
 
   </div>
 
-  <!-- UNSKIPPABLE VOICE INSTRUCTION MODAL -->
-  <div class="policy-modal-backdrop" id="voiceModal">
-    <div class="policy-modal-box">
-      <div class="voice-waves"><i class="fa-solid fa-volume-high"></i></div>
-      <h3 style="font-size:16px; margin-bottom:8px;">Hidayat Tawajjo Se Sunen</h3>
-      <p id="voiceStatusText" style="font-size:12px; color:#475569; line-height:1.5;">
-        Aapko tasks poore karne ki hidayat aawaz ki shakal mein sunai jayegi. Sunne ke baad hi aap portal par ja sakte hain.
-      </p>
-      
-      <button class="btn-audio-start" id="startAudioBtn" onclick="playVoiceInstruction()">
-        <i class="fa-solid fa-play"></i> Hidayat Sunen (Listen Instructions)
-      </button>
-    </div>
-  </div>
-
-  <!-- FIREBASE SCRIPT -->
+  <!-- FIREBASE REALTIME CONNECTION SCRIPT -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
@@ -268,126 +355,34 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
+    // 1. SESSION VERIFICATION
     const rawSession = localStorage.getItem('sew_session');
-    const userData = JSON.parse(rawSession || '{"username":"demo_user"}');
-
-    // SIRF AAPKA SHORTENER LINK CONFIGURATION
-    const tasksData = [
-      { id: 1, showReward: 10, link: "https://shrinkme.click/WBFS4" }
-    ];
-
-    let userCompletedTasks = {};
-
-    // LISTEN USER WALLET
-    onValue(ref(db, `user_wallets/${userData.username}`), (snapshot) => {
-      if(snapshot.exists()) {
-        document.getElementById('userWalletDisplay').innerText = `Rs. ${snapshot.val().balance || 0}`;
-      }
-    });
-
-    // LISTEN COMPLETED TASKS (24 HOUR LOCK)
-    onValue(ref(db, `user_task_locks/${userData.username}`), (snapshot) => {
-      userCompletedTasks = snapshot.exists() ? snapshot.val() : {};
-      renderTasks();
-    });
-
-    function renderTasks() {
-      const container = document.getElementById('taskListContainer');
-      container.innerHTML = "";
-
-      const now = Date.now();
-
-      tasksData.forEach(t => {
-        const lastDone = userCompletedTasks[`task_${t.id}`] || 0;
-        const isLocked = (now - lastDone) < (24 * 60 * 60 * 1000); // 24 Hours Lock Check
-
-        const card = document.createElement('div');
-        card.className = `task-card ${isLocked ? 'locked' : ''}`;
-        
-        card.innerHTML = `
-          <div class="task-header">
-            <span class="task-title"><i class="fa-solid fa-list-check"></i> Main Task</span>
-            <span class="reward-show">Reward: Rs. ${t.showReward}</span>
-          </div>
-          
-          ${isLocked 
-            ? `<div style="text-align:center; color:#d97706; font-weight:700; font-size:11px; padding:6px;">Submitted! Locked for 24 Hours</div>`
-            : `<a href="${t.link}" target="_blank" class="btn-start-task"><i class="fa-solid fa-up-right-from-square"></i> Open Task Link</a>
-               <div class="code-input-row">
-                 <input type="text" id="codeInput_${t.id}" placeholder="Enter Secret Code..." />
-                 <button class="btn-submit-code" onclick="submitTaskCode(${t.id})">Submit</button>
-               </div>`
-          }
-        `;
-        container.appendChild(card);
-      });
+    if (!rawSession) {
+      window.location.replace("index.html");
     }
 
-    // SUBMIT TASK CODE FUNCTION (ADMIN VERIFICATION LOGIC)
-    window.submitTaskCode = async function(taskId) {
-      const input = document.getElementById(`codeInput_${taskId}`);
-      const enteredCode = input ? input.value.trim() : "";
+    const userData = JSON.parse(rawSession || '{}');
 
-      if(!enteredCode) {
-        alert("Pehle Secret Code daalein!");
-        return;
-      }
+    function renderUserUI(data) {
+      if (!data) return;
+      const displayTitle = data.fullName || data.username || "User";
+      document.getElementById('navUserName').innerText = displayTitle;
+      document.getElementById('navAvatar').innerText = displayTitle.charAt(0).toUpperCase();
+      document.getElementById('userBalance').innerText = "Rs. " + (parseFloat(data.balance) || 0).toFixed(2);
+    }
 
-      // 1. Send Log to Admin Panel (Firebase node: task_submissions)
-      const submissionId = `${Date.now()}_${userData.username}`;
-      const submissionRef = ref(db, `task_submissions/${submissionId}`);
-      
-      await set(submissionRef, {
-        username: userData.username,
-        taskId: taskId,
-        submittedCode: enteredCode,
-        status: "PENDING", // Admin will review and approve
-        rewardAmount: 5,
-        timestamp: Date.now()
+    renderUserUI(userData);
+
+    // 2. REAL-TIME FIREBASE BALANCE LISTENER
+    if (userData.username) {
+      onValue(ref(db, 'users/' + userData.username), (snapshot) => {
+        if (snapshot.exists()) {
+          const freshData = snapshot.val();
+          renderUserUI(freshData);
+          localStorage.setItem('sew_session', JSON.stringify(freshData));
+        }
       });
-
-      // 2. Lock Task for 24 Hours
-      await set(ref(db, `user_task_locks/${userData.username}/task_${taskId}`), Date.now());
-
-      alert("Aapka code submit ho gaya hai! Admin verification ke baad Rs. 5 aapke wallet mein add kar diye jayenge.");
-      if(input) input.value = "";
-      renderTasks();
-    };
-
-    // VOICE INSTRUCTION (TTS) SYSTEM
-    window.playVoiceInstruction = function() {
-      const btn = document.getElementById('startAudioBtn');
-      const statusText = document.getElementById('voiceStatusText');
-
-      btn.disabled = true;
-      btn.innerText = "Hidayat Chal Rahi Hai...";
-      statusText.innerText = "Hidayat chal rahi hai, meharbani karke sunen...";
-
-      const text = "Aapke samne task diya gaya hai. Task link par click karne par jo bhi ad ya website khule, chahe wahan download karna ho, register hona ho, ya dekhna ho, use poora karein. Aakhir mein aapko ek secret code milega. Wo code yahan submit karein. Admin check karke aapke account mein paise add karega.";
-
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "ur-PK"; 
-      utterance.rate = 0.9;
-
-      utterance.onend = function() {
-        document.getElementById('voiceModal').style.display = 'none';
-        localStorage.setItem('has_listened_voice', 'true');
-      };
-
-      utterance.onerror = function() {
-        alert(text);
-        document.getElementById('voiceModal').style.display = 'none';
-      };
-
-      window.speechSynthesis.speak(utterance);
-    };
-
-    // Check if user already listened in session
-    window.addEventListener('DOMContentLoaded', () => {
-      if(localStorage.getItem('has_listened_voice') === 'true') {
-        document.getElementById('voiceModal').style.display = 'none';
-      }
-    });
+    }
   </script>
 </body>
 </html>

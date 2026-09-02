@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -160,7 +161,7 @@
 
     /* POLICY BANNER */
     .policy-box {
-      background: #fffbebfb;
+      background: #fffbeb;
       border: 1px solid #fef3c7;
       border-left: 4px solid var(--accent-yellow);
       border-radius: 10px;
@@ -311,7 +312,7 @@
 
     .timer-badge {
       text-align: center;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 800;
       color: var(--primary);
       margin: 10px 0;
@@ -330,14 +331,9 @@
       background: #f8fafc;
     }
 
-    .upload-area:hover {
-      border-color: var(--primary);
-      background: var(--primary-soft);
-    }
-
     .img-preview {
       width: 100%;
-      max-height: 140px;
+      max-height: 130px;
       object-fit: contain;
       border-radius: 8px;
       margin-top: 8px;
@@ -398,8 +394,7 @@
       </div>
       <ul class="policy-list">
         <li>Video App me khulne par kam se kam <strong>25 Seconds</strong> watch karna zaroori hai.</li>
-        <li>Video ke <strong>aakhir (last part)</strong> ka screenshot lena zaroori hai.</li>
-        <li>Ghalat ya adhoora screenshot dene par reward nahi milega.</li>
+        <li>Video ke <strong>aakhir (last part)</strong> ka screenshot dena zaroori hai, warna reward nahi milega.</li>
         <li>Admin review ke baad <strong>Rs. 0.20</strong> wallet me add honge.</li>
       </ul>
     </div>
@@ -420,19 +415,19 @@
 
       <h4 style="font-size:14px; font-weight:800; color:var(--text-main); text-align:center;" id="modalTaskTitle">Watch & Submit</h4>
 
-      <!-- STEP 1: OPEN APP LINK -->
+      <!-- STEP 1: OPEN EXTERNAL LINK -->
       <a id="openAppBtn" href="#" target="_blank" class="open-app-btn" onclick="startTaskTimer()">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Video App
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Video App (Streamtape)
       </a>
 
       <!-- TIMER STATUS -->
       <div class="timer-badge" id="timerBadge">
-        App button par click karke video dekhein (25s)
+        Pehle "Open Video App" button par click karein (25s)
       </div>
 
       <!-- STEP 2: SCREENSHOT UPLOAD -->
-      <div id="uploadSection" style="opacity: 0.5; pointer-events: none;">
-        <label style="font-size:11px; font-weight:700; color:var(--text-main);">Upload End Video Screenshot:</label>
+      <div id="uploadSection" style="opacity: 0.4; pointer-events: none;">
+        <label style="font-size:11px; font-weight:700; color:var(--text-main);">Upload Video End Screenshot:</label>
         
         <div class="upload-area" onclick="document.getElementById('screenshotInput').click()">
           <i class="fa-solid fa-cloud-arrow-up" style="font-size:22px; color:var(--primary);"></i>
@@ -468,7 +463,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // 10 VIDEO TASKS (Apne Streamtape / YouTube / External App links dalein)
+    // 10 STREAMTAPE VIDEO TASKS
     const VIDEO_TASKS = [
       { id: "v1", title: "Video Task #1", watchUrl: "https://streamtape.com/v/6kJQOy2xYRULar/" },
       { id: "v2", title: "Video Task #2", watchUrl: "https://streamtape.com/v/2kvwkGWk1oFZbP7/" },
@@ -485,7 +480,7 @@
     const TASK_TIMER_SECONDS = 25;
     const REWARD_AMOUNT = 0.20;
 
-    // SESSION VERIFICATION
+    // SESSION CHECK
     const rawSession = localStorage.getItem('sew_session');
     if (!rawSession) {
       window.location.replace("index.html");
@@ -509,7 +504,7 @@
 
     renderUserUI(userData);
 
-    // FIREBASE REALTIME LISTENER
+    // FIREBASE SYNC
     if (userData.username) {
       onValue(ref(db, 'users/' + userData.username), (snapshot) => {
         if (snapshot.exists()) {
@@ -523,7 +518,7 @@
       });
     }
 
-    // RENDER TASK CARDS
+    // RENDER LIST
     function renderTaskList() {
       const container = document.getElementById('videoTaskList');
       container.innerHTML = '';
@@ -558,7 +553,7 @@
       });
     }
 
-    // OPEN TASK MODAL
+    // OPEN MODAL
     window.openTaskModal = function(taskId) {
       const task = VIDEO_TASKS.find(t => t.id === taskId);
       if (!task) return;
@@ -570,8 +565,8 @@
 
       document.getElementById('modalTaskTitle').innerText = task.title;
       document.getElementById('openAppBtn').href = task.watchUrl;
-      document.getElementById('timerBadge').innerText = "App button par click karke video dekhein (25s)";
-      document.getElementById('uploadSection').style.opacity = '0.5';
+      document.getElementById('timerBadge').innerText = "Pehle 'Open Video App' button par click karein (25s)";
+      document.getElementById('uploadSection').style.opacity = '0.4';
       document.getElementById('uploadSection').style.pointerEvents = 'none';
       document.getElementById('imgPreview').style.display = 'none';
       document.getElementById('imgPreview').src = '';
@@ -581,24 +576,23 @@
       document.getElementById('taskModal').style.display = 'flex';
     };
 
-    // START TIMER WHEN USER CLICKS OPEN APP
+    // START 25s TIMER ON APP OPEN CLICK
     window.startTaskTimer = function() {
       clearInterval(timerInterval);
       secondsLeft = TASK_TIMER_SECONDS;
       const timerBadge = document.getElementById('timerBadge');
 
-      timerBadge.innerText = `Timer Running: ${secondsLeft}s (Video dekhein)`;
+      timerBadge.innerText = `Timer Running: ${secondsLeft}s (Video dekhte rahein)`;
 
       timerInterval = setInterval(() => {
         secondsLeft--;
-        timerBadge.innerText = `Timer Running: ${secondsLeft}s (Video dekhein)`;
+        timerBadge.innerText = `Timer Running: ${secondsLeft}s (Video dekhte rahein)`;
 
         if (secondsLeft <= 0) {
           clearInterval(timerInterval);
           timerFinished = true;
-          timerBadge.innerText = "25 Seconds Completed! Ab Screenshot Upload Karein.";
+          timerBadge.innerText = "25s Complete! Ab Screenshot Upload Karein.";
           
-          // Enable Upload Area
           const uploadSec = document.getElementById('uploadSection');
           uploadSec.style.opacity = '1';
           uploadSec.style.pointerEvents = 'auto';
@@ -608,7 +602,7 @@
       }, 1000);
     };
 
-    // IMAGE SELECT & COMPRESSION (FOR SLIM BASE64)
+    // IMAGE COMPRESSION & SELECT
     window.handleImageSelect = function(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -633,7 +627,6 @@
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Compress to WebP / JPEG 60%
           compressedBase64Image = canvas.toDataURL('image/jpeg', 0.6);
           
           const imgPreview = document.getElementById('imgPreview');
@@ -656,7 +649,7 @@
       }
     }
 
-    // SUBMIT SCREENSHOT TO FIREBASE ADMIN QUEUE
+    // SUBMIT TO ADMIN QUEUE
     window.submitScreenshotForReview = async function() {
       if (!currentTask || !compressedBase64Image || !timerFinished) return;
 
@@ -683,17 +676,16 @@
           [currentTask.id]: 'pending'
         });
 
-        alert("Screenshot kamyabi se submit ho gaya hai! Admin review ke baad Rs. 0.20 mil jayenge.");
+        alert("Screenshot submit ho gaya hai! Admin approval ke baad Rs. 0.20 mil jayenge.");
         closeModal();
       } catch (err) {
-        alert("Submit karne me masla aaya: " + err.message);
+        alert("Error: " + err.message);
       } finally {
         submitBtn.disabled = false;
         submitBtn.innerText = "Submit to Admin";
       }
     };
 
-    // CLOSE MODAL
     window.closeModal = function() {
       clearInterval(timerInterval);
       document.getElementById('taskModal').style.display = 'none';

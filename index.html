@@ -247,6 +247,7 @@
       display: none;
       padding: 10px;
       border-radius: 8px;
+      word-break: break-word;
     }
 
     .status-msg.error {
@@ -303,13 +304,13 @@
 
     <!-- Tabs -->
     <div class="tab-switcher">
-      <button class="tab-btn active" id="registerTabBtn" onclick="switchTab('register')">Register</button>
-      <button class="tab-btn" id="loginTabBtn" onclick="switchTab('login')">Login</button>
+      <button class="tab-btn active" id="registerTabBtn">Register</button>
+      <button class="tab-btn" id="loginTabBtn">Login</button>
     </div>
 
     <!-- REGISTER FORM -->
     <div class="form-panel active" id="registerPanel">
-      <form id="registerForm" onsubmit="handleRegister(event)">
+      <form id="registerForm">
         <div class="form-grid">
           
           <div class="input-group full-width">
@@ -368,7 +369,7 @@
             </div>
           </div>
 
-          <!-- REFERRAL CODE FIELD (OPTIONAL / AUTO-FILLED) -->
+          <!-- REFERRAL CODE FIELD -->
           <div class="input-group full-width">
             <label>Referral Code (Optional)</label>
             <div class="field-wrapper">
@@ -390,7 +391,7 @@
 
     <!-- LOGIN FORM -->
     <div class="form-panel" id="loginPanel">
-      <form id="loginForm" onsubmit="handleLogin(event)">
+      <form id="loginForm">
         
         <div class="input-group full-width">
           <label>Username or Email</label>
@@ -421,7 +422,7 @@
       <span>OR CONTINUE WITH</span>
     </div>
 
-    <button type="button" class="google-btn" onclick="handleGoogleSignIn()">
+    <button type="button" class="google-btn" id="googleBtn">
       <svg width="18" height="18" viewBox="0 0 24 24">
         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
         <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
@@ -467,45 +468,45 @@
       window.location.replace("dashboard.html");
     }
 
-    // Switch Tab
-    window.switchTab = function(type) {
-      const regTab = document.getElementById('registerTabBtn');
-      const loginTab = document.getElementById('loginTabBtn');
-      const regPanel = document.getElementById('registerPanel');
-      const loginPanel = document.getElementById('loginPanel');
+    // Tab Event Listeners
+    const regTabBtn = document.getElementById('registerTabBtn');
+    const loginTabBtn = document.getElementById('loginTabBtn');
+    const regPanel = document.getElementById('registerPanel');
+    const loginPanel = document.getElementById('loginPanel');
 
+    regTabBtn.addEventListener('click', () => switchTab('register'));
+    loginTabBtn.addEventListener('click', () => switchTab('login'));
+
+    function switchTab(type) {
       if(type === 'register') {
-        regTab.classList.add('active'); loginTab.classList.remove('active');
+        regTabBtn.classList.add('active'); loginTabBtn.classList.remove('active');
         regPanel.classList.add('active'); loginPanel.classList.remove('active');
       } else {
-        loginTab.classList.add('active'); regTab.classList.remove('active');
+        loginTabBtn.classList.add('active'); regTabBtn.classList.remove('active');
         loginPanel.classList.add('active'); regPanel.classList.remove('active');
       }
-    };
+    }
 
-    // Helper Function to Process Referral Rewards & Anti-Fraud Logic
+    // Helper Function to Process Referral Rewards
     async function processReferral(newUser, referrerUsername) {
       if (!referrerUsername || referrerUsername === newUser) return;
 
       try {
         const refSnap = await get(ref(db, 'users/' + referrerUsername));
-        if (!refSnap.exists()) return; // Referrer doesn't exist
+        if (!refSnap.exists()) return;
 
-        // Check Anti-Fraud (Same Device Check)
+        // Anti-Fraud Check
         const isDeviceRegistered = localStorage.getItem('sew_device_registered') === 'true';
         const refStatus = isDeviceRegistered ? 'fake' : 'valid';
 
-        // Add Record in Referral History
         await set(ref(db, `referrals/${referrerUsername}/${newUser}`), {
           referredUsername: newUser,
           status: refStatus,
           createdAt: new Date().toISOString()
         });
 
-        // Mark device as registered to prevent fraud multiple accounts
         localStorage.setItem('sew_device_registered', 'true');
 
-        // If Valid, Add Rs 20 to Referrer's Referral Balance
         if (refStatus === 'valid') {
           const referrerData = refSnap.val();
           const currentRefBal = parseFloat(referrerData.referralBalance || 0);
@@ -520,8 +521,8 @@
       }
     }
 
-    // REGISTER WITHOUT REQUIRING FIREBASE INDEX RULES
-    window.handleRegister = async function(e) {
+    // REGISTER HANDLER
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       
       const fullName = document.getElementById('regFullName').value.trim();
@@ -540,20 +541,17 @@
       regSubmitBtn.innerHTML = `<span class="spinner"></span> Checking details...`;
 
       try {
-        // Fetch all users snapshot to avoid Index requirement error
         const usersSnap = await get(ref(db, 'users'));
         
         if (usersSnap.exists()) {
           const allUsers = usersSnap.val();
 
-          // 1. Check Username Duplicate
           if (allUsers[username]) {
-            showStatus(regStatus, "This Username is already taken! Try another.", "error");
+            showStatus(regStatus, "This Username is already taken!", "error");
             resetRegBtn();
             return;
           }
 
-          // 2. Check Email Duplicate
           const emailExists = Object.values(allUsers).some(u => u && u.email === email);
           if (emailExists) {
             showStatus(regStatus, "This Email is already registered! Please Login.", "error");
@@ -562,7 +560,6 @@
           }
         }
 
-        // 3. Save User Data directly to Firebase RTDB
         const userData = { 
           fullName, 
           username, 
@@ -579,19 +576,17 @@
 
         await set(ref(db, 'users/' + username), userData);
         
-        // Process Referral Reward Logic
         if (referralBy) {
           await processReferral(username, referralBy);
         }
 
-        // Store Session Token
         localStorage.setItem('sew_session', JSON.stringify(userData));
 
         showStatus(regStatus, "Account Created Successfully! Redirecting...", "success");
         setTimeout(() => { window.location.replace("dashboard.html"); }, 600);
 
       } catch (err) {
-        showStatus(regStatus, "Firebase Error: " + err.message, "error");
+        showStatus(regStatus, "Error: " + err.message, "error");
         resetRegBtn();
       }
 
@@ -599,10 +594,10 @@
         regSubmitBtn.disabled = false;
         regSubmitBtn.innerHTML = `<span>Create Account</span> <i class="fa-solid fa-arrow-right"></i>`;
       }
-    };
+    });
 
-    // LOGIN VIA FIREBASE REALTIME DB
-    window.handleLogin = async function(e) {
+    // LOGIN HANDLER
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
       e.preventDefault();
 
       const inputVal = document.getElementById('loginIdentifier').value.trim().toLowerCase();
@@ -623,7 +618,6 @@
         if (usersSnap.exists()) {
           const allUsers = usersSnap.val();
 
-          // Match by username or email
           if (allUsers[cleanUsername]) {
             userData = allUsers[cleanUsername];
           } else {
@@ -641,31 +635,49 @@
           loginSubmitBtn.innerHTML = `<span>Login Now</span> <i class="fa-solid fa-right-to-bracket"></i>`;
         }
       } catch (err) {
-        showStatus(loginStatus, "Firebase Error: " + err.message, "error");
+        showStatus(loginStatus, "Error: " + err.message, "error");
         loginSubmitBtn.disabled = false;
         loginSubmitBtn.innerHTML = `<span>Login Now</span> <i class="fa-solid fa-right-to-bracket"></i>`;
       }
-    };
+    });
 
-    // GOOGLE SIGN-IN
-    window.handleGoogleSignIn = async function() {
+    // GOOGLE SIGN-IN HANDLER (FIXED & IMPROVED)
+    document.getElementById('googleBtn').addEventListener('click', async function() {
+      const activeStatus = document.querySelector('.form-panel.active .status-msg');
       const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
+
       try {
+        if (activeStatus) showStatus(activeStatus, "Opening Google Sign-In...", "success");
+
         const result = await signInWithPopup(auth, provider);
         const gUser = result.user;
 
         const email = gUser.email.toLowerCase();
         const fullName = gUser.displayName || email.split('@')[0];
-        const username = email.split('@')[0].replace(/[^a-z0-9]/g, "");
+        let username = email.split('@')[0].replace(/[^a-z0-9]/g, "");
         const referralBy = (document.getElementById('regReferral').value.trim() || localStorage.getItem('sew_pending_ref') || '').toLowerCase();
 
-        // Fetch User Data from Firebase Realtime DB
-        const snap = await get(ref(db, 'users/' + username));
+        // Database mein check karo ke kya yeh email pehle se registered hai
+        const usersSnap = await get(ref(db, 'users'));
+        let existingUser = null;
+
+        if (usersSnap.exists()) {
+          const allUsers = usersSnap.val();
+          existingUser = Object.values(allUsers).find(u => u && u.email === email);
+        }
+
         let userData;
 
-        if (snap.exists()) {
-          userData = snap.val();
+        if (existingUser) {
+          // Existing user ko sidha login karao
+          userData = existingUser;
         } else {
+          // Unique Username Ensure karo
+          if (usersSnap.exists() && usersSnap.val()[username]) {
+            username = username + Math.floor(1000 + Math.random() * 9000);
+          }
+
           userData = {
             fullName: fullName,
             username: username,
@@ -679,23 +691,45 @@
             referredBy: referralBy || "none",
             createdAt: new Date().toISOString()
           };
+
           await set(ref(db, 'users/' + username), userData);
 
-          // Process Referral for New Google User
           if (referralBy) {
             await processReferral(username, referralBy);
           }
         }
 
         localStorage.setItem('sew_session', JSON.stringify(userData));
-        window.location.replace("dashboard.html");
+        if (activeStatus) showStatus(activeStatus, "Google Auth Success! Redirecting...", "success");
+        
+        setTimeout(() => {
+          window.location.replace("dashboard.html");
+        }, 500);
 
       } catch (err) {
-        alert("Google Sign-In Error: " + err.message);
+        console.error("Google Auth Error:", err);
+        let errorMsg = err.message;
+        
+        if (err.code === 'auth/unauthorized-domain') {
+          errorMsg = "Domain Not Authorized! Firebase Console -> Authentication -> Settings -> Authorized Domains mein apni website ka URL add karein.";
+        } else if (err.code === 'auth/operation-not-allowed') {
+          errorMsg = "Google Sign-In is disabled in Firebase Console! Enable it from Auth -> Sign-in method.";
+        } else if (err.code === 'auth/popup-blocked') {
+          errorMsg = "Browser popup was blocked! Please allow popups for this site.";
+        } else if (err.code === 'auth/popup-closed-by-user') {
+          errorMsg = "Sign-In popup close kar diya gaya.";
+        }
+
+        if (activeStatus) {
+          showStatus(activeStatus, errorMsg, "error");
+        } else {
+          alert("Google Sign-In Error: " + errorMsg);
+        }
       }
-    };
+    });
 
     function showStatus(element, message, type) {
+      if (!element) return;
       element.innerText = message;
       element.className = "status-msg " + type;
     }

@@ -210,12 +210,13 @@
       background: var(--primary);
       color: #ffffff;
       border: none;
-      padding: 7px 14px;
+      padding: 8px 14px;
       border-radius: 8px;
-      font-size: 10.5px;
+      font-size: 11px;
       font-weight: 800;
       cursor: pointer;
       transition: all 0.2s;
+      text-align: center;
     }
 
     .watch-btn:disabled {
@@ -269,15 +270,15 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
+      font-size: 24px;
       margin: 10px auto;
     }
 
     .timer-text {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 800;
       color: var(--primary);
-      margin-top: 6px;
+      margin-top: 8px;
     }
 
     .warning-text {
@@ -345,15 +346,21 @@
       <button class="close-modal" onclick="cancelVideoTask()">✕</button>
 
       <div class="timer-circle-icon">
-        <i class="fa-solid fa-hourglass-half fa-spin"></i>
+        <i class="fa-solid fa-play"></i>
       </div>
 
       <h4 style="font-size:14px; font-weight:800; color:var(--text-main);" id="modalTaskTitle">Task In Progress</h4>
       
-      <div class="timer-text" id="timerCount">Timer: 40s</div>
       <div class="warning-text" id="statusMessage">
-        Video naye tab me khull chuki hai. Kripya 40 seconds tak wait karein aur wapas aakar reward claim karein.
+        Neeche diye gaye button par click karke video kholein. Video open hote hi 40-second timer shuru ho jayega.
       </div>
+
+      <!-- DIRECT USER CLICK LINK (PREVENTS POPUP BLOCK) -->
+      <a id="openVideoBtn" href="#" target="_blank" class="watch-btn" style="display:block; text-decoration:none; margin:10px 0; padding:12px; font-size:12px;" onclick="startTimerAfterClick()">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Video & Start Timer
+      </a>
+
+      <div class="timer-text" id="timerCount" style="display:none;">Timer: 40s</div>
 
       <button id="claimBtn" class="claim-btn" onclick="completeVideoTask()">
         <i class="fa-solid fa-gift"></i> Claim Rs. 0.22 Reward
@@ -471,7 +478,7 @@
       });
     }
 
-    // START TASK
+    // START TASK (SHOW MODAL)
     window.startVideoTask = function(taskId) {
       const task = VIDEO_TASKS.find(t => t.id === taskId);
       if (!task) return;
@@ -479,15 +486,23 @@
       currentActiveTask = task;
       remainingTime = TASK_TIMER_SECONDS;
 
-      // Open Streamtape in New Tab
-      window.open(task.watchUrl, '_blank');
+      const openBtn = document.getElementById('openVideoBtn');
+      openBtn.href = task.watchUrl;
+      openBtn.style.display = 'block';
 
-      // Start Dashboard Modal Countdown
       document.getElementById('modalTaskTitle').innerText = task.title;
-      document.getElementById('timerCount').innerText = `Timer: ${remainingTime}s`;
-      document.getElementById('statusMessage').innerText = "Video dusre tab me chal rahi hai. Timer poora hone tak wait karein.";
+      document.getElementById('statusMessage').innerText = "Neeche button par click karke video kholein. Video open hone ke baad 40-second timer shuru ho jayega.";
+      document.getElementById('timerCount').style.display = 'none';
       document.getElementById('claimBtn').style.display = 'none';
       document.getElementById('playerModal').style.display = 'flex';
+    };
+
+    // START TIMER AFTER USER CLICK
+    window.startTimerAfterClick = function() {
+      document.getElementById('openVideoBtn').style.display = 'none';
+      document.getElementById('timerCount').style.display = 'block';
+      document.getElementById('timerCount').innerText = `Timer: ${remainingTime}s`;
+      document.getElementById('statusMessage').innerText = "Video dusre tab me chal rahi hai. Timer complete hone tak is page par bane rahein.";
 
       clearInterval(countdownInterval);
       countdownInterval = setInterval(() => {
@@ -497,7 +512,7 @@
         if (remainingTime <= 0) {
           clearInterval(countdownInterval);
           document.getElementById('timerCount').innerText = "Task Complete!";
-          document.getElementById('statusMessage').innerText = "Shabash! Neeche diye gaye button par click karke apna reward claim karein.";
+          document.getElementById('statusMessage').innerText = "Shabash! Reward claim karne ke liye neeche button par click karein.";
           document.getElementById('claimBtn').style.display = 'block';
         }
       }, 1000);

@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SEW - Video Tasks Hub</title>
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-body: #f8fafc;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-soft: #eff6ff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --accent-green: #059669;
+      --accent-red: #ef4444;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      background: #ffffff;
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .back-btn {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid #dbeafe;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .profile-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-soft);
+      padding: 4px 8px;
+      border-radius: 20px;
+      border: 1px solid #dbeafe;
+    }
+
+    .avatar {
+      width: 22px;
+      height: 22px;
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 11px;
+    }
+
+    .user-name-short {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      max-width: 80px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 500px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* BALANCE CARD */
+    .balance-card {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      border-radius: 14px;
+      padding: 14px 16px;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-md);
+    }
+
+    .balance-info p {
+      font-size: 10px;
+      opacity: 0.9;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .balance-amount {
+      font-size: 22px;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
+    .reward-rate-badge {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #34d399;
+    }
+
+    /* VIDEO LIST */
+    .video-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .video-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .video-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .play-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #fef2f2;
+      color: #ef4444;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .video-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .video-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .watch-btn {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 10.5px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .watch-btn:disabled {
+      background: #94a3b8 !important;
+      cursor: not-allowed;
+    }
+
+    /* MODAL PLAYER */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+      padding: 12px;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      width: 100%;
+      max-width: 450px;
+      border-radius: 16px;
+      padding: 14px;
+      position: relative;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: #f1f5f9;
+      border: none;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 12px;
+      color: var(--text-muted);
+      z-index: 10;
+    }
+
+    .player-wrapper {
+      width: 100%;
+      height: 250px;
+      background: #000;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .player-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .timer-box {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .timer-text {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+
+    .warning-text {
+      font-size: 9.5px;
+      color: var(--accent-red);
+      margin-top: 4px;
+      font-weight: 700;
+    }
+
+    .claim-btn {
+      width: 100%;
+      padding: 10px;
+      background: var(--accent-green);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <a href="task.html" class="back-btn">
+      <i class="fa-solid fa-arrow-left"></i> Tasks Hub
+    </a>
+
+    <div class="brand-title">Video Tasks</div>
+
+    <div class="profile-pill">
+      <div class="avatar" id="navAvatar">U</div>
+      <span class="user-name-short" id="navUserName">User</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- BALANCE CARD -->
+    <div class="balance-card">
+      <div class="balance-info">
+        <p>Current Balance</p>
+        <div class="balance-amount" id="userBalance">Rs. 0.00</div>
+      </div>
+      <div class="reward-rate-badge">
+        +Rs. 0.22 / Video
+      </div>
+    </div>
+
+    <!-- VIDEO TASK LIST -->
+    <div class="video-list" id="videoTaskList">
+      <div style="text-align:center; color:var(--text-muted); font-size:11px; padding:20px;">
+        <i class="fa-solid fa-spinner fa-spin" style="font-size:20px; color:var(--primary); margin-bottom:6px;"></i>
+        <p>Tasks load ho rahe hain...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PLAYER MODAL -->
+  <div class="modal-overlay" id="playerModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="cancelVideoTask()">✕</button>
+
+      <h4 style="font-size:13px; font-weight:800; color:var(--text-main);" id="modalTaskTitle">Watch Video Task</h4>
+      
+      <div class="player-wrapper">
+        <iframe id="videoIframe" src="" allowfullscreen scrolling="no"></iframe>
+      </div>
+
+      <div class="timer-box">
+        <div class="timer-text" id="timerCount">Timer: 40s</div>
+        <div class="warning-text"><i class="fa-solid fa-circle-exclamation"></i> Video poori dekhein. Screen band karne ya cancel karne par reward nahi milega!</div>
+      </div>
+
+      <button id="claimBtn" class="claim-btn" onclick="completeVideoTask()">
+        <i class="fa-solid fa-gift"></i> Claim Rs. 0.22 Reward
+      </button>
+    </div>
+  </div>
+
+  <!-- FIREBASE & TASK LOGIC -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
+      authDomain: "newweb-d50af.firebaseapp.com",
+      databaseURL: "https://newweb-d50af-default-rtdb.firebaseio.com",
+      projectId: "newweb-d50af",
+      storageBucket: "newweb-d50af.firebasestorage.app",
+      messagingSenderId: "358603295768",
+      appId: "1:358603295768:web:82a9666514a7cb468c476d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // 10 CONVERTED STREAMTAPE EMBED LINKS
+    const VIDEO_TASKS = [
+      { id: "v1", title: "Video Task #1", embedUrl: "https://streamtape.com/e/6kJQOy2xYRULar/" },
+      { id: "v2", title: "Video Task #2", embedUrl: "https://streamtape.com/e/2kvwkGWk1oFZbP7/" },
+      { id: "v3", title: "Video Task #3", embedUrl: "https://streamtape.com/e/6W8xPQwKvrUxop/" },
+      { id: "v4", title: "Video Task #4", embedUrl: "https://streamtape.com/e/j42LPXB67BUzR0q/" },
+      { id: "v5", title: "Video Task #5", embedUrl: "https://streamtape.com/e/eKGAMvmaZRIk8V/" },
+      { id: "v6", title: "Video Task #6", embedUrl: "https://streamtape.com/e/BBA7KVvX3zIy1jP/" },
+      { id: "v7", title: "Video Task #7", embedUrl: "https://streamtape.com/e/7z4QAMoXBAFxqL/" },
+      { id: "v8", title: "Video Task #8", embedUrl: "https://streamtape.com/e/ydy169lR2VH1DDY/" },
+      { id: "v9", title: "Video Task #9", embedUrl: "https://streamtape.com/e/QJPvoABMo3I0DlM/" },
+      { id: "v10", title: "Video Task #10", embedUrl: "https://streamtape.com/e/q8jkV4G0qrFzb7w/" }
+    ];
+
+    const REWARD_AMOUNT = 0.22;
+    const TASK_TIMER_SECONDS = 40;
+
+    // SESSION VERIFICATION
+    const rawSession = localStorage.getItem('sew_session');
+    if (!rawSession) {
+      window.location.replace("index.html");
+    }
+
+    let userData = JSON.parse(rawSession || '{}');
+    let userTaskLocks = {};
+    let currentActiveTask = null;
+    let countdownInterval = null;
+    let remainingTime = TASK_TIMER_SECONDS;
+
+    function renderUserUI(data) {
+      if (!data) return;
+      const displayTitle = data.fullName || data.username || "User";
+      document.getElementById('navUserName').innerText = displayTitle;
+      document.getElementById('navAvatar').innerText = displayTitle.charAt(0).toUpperCase();
+      document.getElementById('userBalance').innerText = "Rs. " + (parseFloat(data.balance) || 0).toFixed(2);
+    }
+
+    renderUserUI(userData);
+
+    // LIVE FIREBASE LISTENER (BALANCE & LOCKS)
+    if (userData.username) {
+      onValue(ref(db, 'users/' + userData.username), (snapshot) => {
+        if (snapshot.exists()) {
+          const freshData = snapshot.val();
+          userData = freshData;
+          userTaskLocks = freshData.videoLocks || {};
+          renderUserUI(freshData);
+          localStorage.setItem('sew_session', JSON.stringify(freshData));
+          renderTaskList();
+        }
+      });
+    }
+
+    // RENDER TASK CARDS WITH 24H LOCK CHECK
+    function renderTaskList() {
+      const container = document.getElementById('videoTaskList');
+      container.innerHTML = '';
+
+      const now = Date.now();
+
+      VIDEO_TASKS.forEach((task) => {
+        const lockUntil = userTaskLocks[task.id] || 0;
+        const isLocked = now < lockUntil;
+
+        const card = document.createElement('div');
+        card.className = 'video-card';
+
+        let buttonHTML = '';
+        if (isLocked) {
+          const diffMs = lockUntil - now;
+          const hoursLeft = Math.floor(diffMs / (1000 * 60 * 60));
+          const minsLeft = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+          buttonHTML = `<button class="watch-btn" disabled><i class="fa-solid fa-lock"></i> Locked (${hoursLeft}h ${minsLeft}m)</button>`;
+        } else {
+          buttonHTML = `<button class="watch-btn" onclick="startVideoTask('${task.id}')"><i class="fa-solid fa-play"></i> Watch (40s)</button>`;
+        }
+
+        card.innerHTML = `
+          <div class="video-info">
+            <div class="play-icon-box"><i class="fa-solid fa-circle-play"></i></div>
+            <div>
+              <div class="video-title">${task.title}</div>
+              <div class="video-sub">Reward: <strong style="color:var(--accent-green)">Rs. 0.22</strong></div>
+            </div>
+          </div>
+          ${buttonHTML}
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // START TASK & TIMER
+    window.startVideoTask = function(taskId) {
+      const task = VIDEO_TASKS.find(t => t.id === taskId);
+      if (!task) return;
+
+      currentActiveTask = task;
+      remainingTime = TASK_TIMER_SECONDS;
+
+      document.getElementById('modalTaskTitle').innerText = task.title;
+      document.getElementById('videoIframe').src = task.embedUrl;
+      document.getElementById('timerCount').innerText = `Timer: ${remainingTime}s`;
+      document.getElementById('claimBtn').style.display = 'none';
+      document.getElementById('playerModal').style.display = 'flex';
+
+      clearInterval(countdownInterval);
+      countdownInterval = setInterval(() => {
+        remainingTime--;
+        document.getElementById('timerCount').innerText = `Timer: ${remainingTime}s`;
+
+        if (remainingTime <= 0) {
+          clearInterval(countdownInterval);
+          document.getElementById('timerCount').innerText = "Task Complete! Reward claim karein.";
+          document.getElementById('claimBtn').style.display = 'block';
+        }
+      }, 1000);
+    };
+
+    // TAB SWITCH / CANCEL ANTI-CHEAT RESET
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden && currentActiveTask && remainingTime > 0) {
+        cancelVideoTask();
+        alert("Tab badalne ki waja se timer cancel ho gaya hai. Reward hasil karne ke liye dobara video poori dekhein!");
+      }
+    });
+
+    window.cancelVideoTask = function() {
+      clearInterval(countdownInterval);
+      document.getElementById('videoIframe').src = '';
+      document.getElementById('playerModal').style.display = 'none';
+      currentActiveTask = null;
+      remainingTime = TASK_TIMER_SECONDS;
+    };
+
+    // COMPLETE TASK & UPDATE FIREBASE
+    window.completeVideoTask = async function() {
+      if (!currentActiveTask || remainingTime > 0) return;
+
+      const claimBtn = document.getElementById('claimBtn');
+      claimBtn.disabled = true;
+      claimBtn.innerText = "Updating Balance...";
+
+      const currentBal = parseFloat(userData.balance) || 0;
+      const updatedBal = currentBal + REWARD_AMOUNT;
+      const lockTimestamp = Date.now() + (24 * 60 * 60 * 1000); // 24-Hour Lock
+
+      const updates = {};
+      updates[`users/${userData.username}/balance`] = updatedBal;
+      updates[`users/${userData.username}/videoLocks/${currentActiveTask.id}`] = lockTimestamp;
+
+      try {
+        await update(ref(db), updates);
+        alert(`Mubarak ho! Rs. ${REWARD_AMOUNT.toFixed(2)} aapke wallet me add ho gaye hain.`);
+        cancelVideoTask();
+      } catch (err) {
+        alert("Balance update hone me masla aaya: " + err.message);
+      } finally {
+        claimBtn.disabled = false;
+        claimBtn.innerText = "Claim Rs. 0.22 Reward";
+      }
+    };
+  </script>
+</body>
+</html>

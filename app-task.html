@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SEW - App Download Tasks</title>
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-body: #f8fafc;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-soft: #eff6ff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --accent-green: #059669;
+      --accent-yellow: #d97706;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* NAVBAR */
+    .navbar {
+      background: #ffffff;
+      padding: 10px 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .back-btn {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid #dbeafe;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+
+    .brand-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .profile-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-soft);
+      padding: 4px 8px;
+      border-radius: 20px;
+      border: 1px solid #dbeafe;
+    }
+
+    .avatar {
+      width: 22px;
+      height: 22px;
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 11px;
+    }
+
+    .user-name-short {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      max-width: 80px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 500px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* BALANCE CARD */
+    .balance-card {
+      background: linear-gradient(135deg, #047857 0%, #10b981 100%);
+      border-radius: 14px;
+      padding: 14px 16px;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-md);
+    }
+
+    .balance-info p {
+      font-size: 10px;
+      opacity: 0.9;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .balance-amount {
+      font-size: 22px;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
+    .reward-rate-badge {
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(4px);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    /* POLICY BANNER */
+    .policy-box {
+      background: #fffbeb;
+      border: 1px solid #fef3c7;
+      border-left: 4px solid var(--accent-yellow);
+      border-radius: 10px;
+      padding: 10px 12px;
+    }
+
+    .policy-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: #92400e;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .policy-list {
+      font-size: 10px;
+      color: #78350f;
+      line-height: 1.5;
+      padding-left: 16px;
+    }
+
+    .policy-list li {
+      margin-bottom: 4px;
+    }
+
+    .ad-highlight {
+      color: #dc2626;
+      background: #fee2e2;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 800;
+      display: inline-block;
+      margin-bottom: 2px;
+    }
+
+    /* APP LIST */
+    .app-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .app-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .app-info {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .app-icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: #eff6ff;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+    }
+
+    .app-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .app-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .action-btn {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .action-btn.pending {
+      background: #f59e0b !important;
+      cursor: not-allowed;
+    }
+
+    .action-btn.locked {
+      background: #64748b !important;
+      cursor: not-allowed;
+    }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(4px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+      padding: 12px;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 16px;
+      padding: 18px;
+      position: relative;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 10px; right: 10px;
+      background: #f1f5f9;
+      border: none;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .open-app-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 11px;
+      background: var(--primary);
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .timer-badge {
+      text-align: center;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary);
+      margin: 10px 0;
+      background: var(--primary-soft);
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    .upload-area {
+      border: 2px dashed #cbd5e1;
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      margin-top: 8px;
+      background: #f8fafc;
+    }
+
+    .img-preview {
+      width: 100%;
+      max-height: 130px;
+      object-fit: contain;
+      border-radius: 8px;
+      margin-top: 8px;
+      display: none;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--accent-green);
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    .submit-btn:disabled {
+      background: #cbd5e1 !important;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <a href="task.html" class="back-btn">
+      <i class="fa-solid fa-arrow-left"></i> Tasks Hub
+    </a>
+
+    <div class="brand-title">App Download Tasks</div>
+
+    <div class="profile-pill">
+      <div class="avatar" id="navAvatar">U</div>
+      <span class="user-name-short" id="navUserName">User</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- BALANCE CARD -->
+    <div class="balance-card">
+      <div class="balance-info">
+        <p>Current Balance</p>
+        <div class="balance-amount" id="userBalance">Rs. 0.00</div>
+      </div>
+      <div class="reward-rate-badge">
+        +Rs. 0.10 / App Task
+      </div>
+    </div>
+
+    <!-- POLICY BANNER -->
+    <div class="policy-box">
+      <div class="policy-title">
+        <i class="fa-solid fa-triangle-exclamation"></i> Download & Install Rules
+      </div>
+      <ul class="policy-list">
+        <li><span class="ad-highlight">⚠️ MANDATORY AD TASK:</span> Link kholne par pehle <strong>Jo Ads (Aalaanaat) aayen unko complete/clear karein</strong>.</li>
+        <li>Us ke baad <strong>Game / App ko lazmi Download & Install</strong> karna hai.</li>
+        <li>Install hone ke baad Game ko mobile me <strong>open karke uska Screenshot</strong> lein.</li>
+        <li>Upload section mein screenshot submit karein. Admin verification ke baad <strong>Rs. 0.10</strong> account mein add honge aur task 24 ghante ke liye lock ho jayega.</li>
+      </ul>
+    </div>
+
+    <!-- APP TASK LIST -->
+    <div class="app-list" id="appTaskList"></div>
+  </div>
+
+  <!-- SCREENSHOT SUBMIT MODAL -->
+  <div class="modal-overlay" id="taskModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeModal()">✕</button>
+
+      <h4 style="font-size:14px; font-weight:800; color:var(--text-main); text-align:center;" id="modalTaskTitle">Download & Submit</h4>
+
+      <!-- OPEN UP4EVER LINK -->
+      <a id="openAppBtn" href="#" target="_blank" class="open-app-btn" onclick="startTaskTimer()">
+        <i class="fa-solid fa-download"></i> Download Game (Up-4ever)
+      </a>
+
+      <!-- TIMER STATUS -->
+      <div class="timer-badge" id="timerBadge">
+        Pehle "Download Game" button par click karein (25s)
+      </div>
+
+      <!-- SCREENSHOT UPLOAD -->
+      <div id="uploadSection" style="opacity: 0.4; pointer-events: none;">
+        <label style="font-size:11px; font-weight:700; color:var(--text-main);">Upload Installed Game Screenshot:</label>
+        
+        <div class="upload-area" onclick="document.getElementById('screenshotInput').click()">
+          <i class="fa-solid fa-cloud-arrow-up" style="font-size:22px; color:var(--primary);"></i>
+          <p style="font-size:11px; font-weight:700; color:var(--text-muted); margin-top:4px;">Click to select Screenshot</p>
+          <input type="file" id="screenshotInput" accept="image/*" style="display:none;" onchange="handleImageSelect(event)" />
+        </div>
+
+        <img id="imgPreview" class="img-preview" alt="Screenshot Preview" />
+      </div>
+
+      <!-- SUBMIT BUTTON -->
+      <button id="submitBtn" class="submit-btn" disabled onclick="submitScreenshotForReview()">
+        <i class="fa-solid fa-paper-plane"></i> Submit to Admin
+      </button>
+    </div>
+  </div>
+
+  <!-- FIREBASE LOGIC -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue, push, set, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
+      authDomain: "newweb-d50af.firebaseapp.com",
+      databaseURL: "https://newweb-d50af-default-rtdb.firebaseio.com",
+      projectId: "newweb-d50af",
+      storageBucket: "newweb-d50af.firebasestorage.app",
+      messagingSenderId: "358603295768",
+      appId: "1:358603295768:web:82a9666514a7cb468c476d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    // UP-4EVER TASKS WITH RS. 0.10 REWARD
+    const APP_TASKS = [
+      { 
+        id: "app1", 
+        title: "Special Game Download #1", 
+        downloadUrl: "https://www.up-4ever.net/ilz2eouwav0q",
+        reward: 0.10 
+      }
+    ];
+
+    const TASK_TIMER_SECONDS = 25;
+    const COOLDOWN_24H = 24 * 60 * 60 * 1000; // 24 Hours in ms
+
+    let userData = {};
+    try {
+      const rawSession = localStorage.getItem('sew_session');
+      if (rawSession) {
+        userData = JSON.parse(rawSession);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+
+    let userSubmissions = userData.appSubmissions || {};
+    let currentTask = null;
+    let timerInterval = null;
+    let secondsLeft = TASK_TIMER_SECONDS;
+    let timerFinished = false;
+    let compressedBase64Image = null;
+    let countdownTicker = null;
+
+    function renderUserUI(data) {
+      if (!data) return;
+      const displayTitle = data.fullName || data.username || "User";
+      document.getElementById('navUserName').innerText = displayTitle;
+      document.getElementById('navAvatar').innerText = displayTitle.charAt(0).toUpperCase();
+      document.getElementById('userBalance').innerText = "Rs. " + (parseFloat(data.balance) || 0).toFixed(2);
+    }
+
+    // FORMAT REMAINING TIME FOR 24H LOCK
+    function formatTimeRemaining(ms) {
+      if (ms <= 0) return "00h 00m 00s";
+      const totalSec = Math.floor(ms / 1000);
+      const hours = Math.floor(totalSec / 3600);
+      const minutes = Math.floor((totalSec % 3600) / 60);
+      const seconds = totalSec % 60;
+      return `${hours}h ${minutes}m ${seconds}s`;
+    }
+
+    function renderTaskList() {
+      const container = document.getElementById('appTaskList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const now = Date.now();
+
+      APP_TASKS.forEach((task) => {
+        const subData = userSubmissions[task.id];
+        let status = 'available';
+        let approvedAt = 0;
+
+        if (subData) {
+          if (typeof subData === 'string') {
+            status = subData;
+          } else {
+            status = subData.status || 'available';
+            approvedAt = subData.approvedAt || subData.timestamp || 0;
+          }
+        }
+
+        const card = document.createElement('div');
+        card.className = 'app-card';
+
+        let buttonHTML = '';
+
+        if (status === 'pending') {
+          buttonHTML = `<button class="action-btn pending" disabled><i class="fa-solid fa-clock"></i> Under Review</button>`;
+        } else if (status === 'approved') {
+          const elapsedTime = now - approvedAt;
+          
+          if (elapsedTime < COOLDOWN_24H) {
+            const timeLeft = COOLDOWN_24H - elapsedTime;
+            buttonHTML = `<button class="action-btn locked" disabled id="lockBtn_${task.id}">
+              <i class="fa-solid fa-lock"></i> Locked (${formatTimeRemaining(timeLeft)})
+            </button>`;
+          } else {
+            // 24 hours passed -> Auto Unlock
+            buttonHTML = `<button class="action-btn" onclick="openTaskModal('${task.id}')"><i class="fa-solid fa-download"></i> Install & Earn</button>`;
+          }
+        } else {
+          buttonHTML = `<button class="action-btn" onclick="openTaskModal('${task.id}')"><i class="fa-solid fa-download"></i> Install & Earn</button>`;
+        }
+
+        card.innerHTML = `
+          <div class="app-info">
+            <div class="app-icon-box"><i class="fa-solid fa-gamepad"></i></div>
+            <div>
+              <div class="app-title">${task.title}</div>
+              <div class="app-sub">Reward: <strong style="color:var(--accent-green)">Rs. ${task.reward.toFixed(2)}</strong></div>
+            </div>
+          </div>
+          ${buttonHTML}
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // LIVE TICKER FOR 24H LOCK COUNTDOWN
+    if (countdownTicker) clearInterval(countdownTicker);
+    countdownTicker = setInterval(() => {
+      const now = Date.now();
+      APP_TASKS.forEach((task) => {
+        const subData = userSubmissions[task.id];
+        if (subData && (subData.status === 'approved' || subData === 'approved')) {
+          const approvedAt = subData.approvedAt || subData.timestamp || 0;
+          const elapsedTime = now - approvedAt;
+          const lockBtn = document.getElementById(`lockBtn_${task.id}`);
+          
+          if (elapsedTime < COOLDOWN_24H) {
+            if (lockBtn) {
+              const timeLeft = COOLDOWN_24H - elapsedTime;
+              lockBtn.innerHTML = `<i class="fa-solid fa-lock"></i> Locked (${formatTimeRemaining(timeLeft)})`;
+            }
+          } else {
+            renderTaskList(); // Re-render to unlock
+          }
+        }
+      });
+    }, 1000);
+
+    // INSTANT LOCAL RENDER
+    renderUserUI(userData);
+    renderTaskList();
+
+    // LIVE FIREBASE SYNC
+    if (userData.username) {
+      onValue(ref(db, 'users/' + userData.username), (snapshot) => {
+        if (snapshot.exists()) {
+          const freshData = snapshot.val();
+          userData = freshData;
+          userSubmissions = freshData.appSubmissions || {};
+          renderUserUI(freshData);
+          localStorage.setItem('sew_session', JSON.stringify(freshData));
+          renderTaskList();
+        }
+      });
+    }
+
+    window.openTaskModal = function(taskId) {
+      const task = APP_TASKS.find(t => t.id === taskId);
+      if (!task) return;
+
+      currentTask = task;
+      secondsLeft = TASK_TIMER_SECONDS;
+      timerFinished = false;
+      compressedBase64Image = null;
+
+      document.getElementById('modalTaskTitle').innerText = task.title;
+      document.getElementById('openAppBtn').href = task.downloadUrl;
+      document.getElementById('timerBadge').innerText = "Pehle 'Download Game' button par click karein (25s)";
+      document.getElementById('uploadSection').style.opacity = '0.4';
+      document.getElementById('uploadSection').style.pointerEvents = 'none';
+      document.getElementById('imgPreview').style.display = 'none';
+      document.getElementById('imgPreview').src = '';
+      document.getElementById('screenshotInput').value = '';
+      document.getElementById('submitBtn').disabled = true;
+
+      document.getElementById('taskModal').style.display = 'flex';
+    };
+
+    window.startTaskTimer = function() {
+      clearInterval(timerInterval);
+      secondsLeft = TASK_TIMER_SECONDS;
+      const timerBadge = document.getElementById('timerBadge');
+
+      timerBadge.innerText = `Timer Running: ${secondsLeft}s (Ads clear karke game download karein)`;
+
+      timerInterval = setInterval(() => {
+        secondsLeft--;
+        timerBadge.innerText = `Timer Running: ${secondsLeft}s (Ads clear karke game download karein)`;
+
+        if (secondsLeft <= 0) {
+          clearInterval(timerInterval);
+          timerFinished = true;
+          timerBadge.innerText = "25s Complete! Install ke baad Screenshot Upload Karein.";
+          
+          const uploadSec = document.getElementById('uploadSection');
+          uploadSec.style.opacity = '1';
+          uploadSec.style.pointerEvents = 'auto';
+
+          checkFormValidity();
+        }
+      }, 1000);
+    };
+
+    window.handleImageSelect = function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          let width = img.width;
+          let height = img.height;
+          const maxDim = 800;
+
+          if (width > height) {
+            if (width > maxDim) { height *= maxDim / width; width = maxDim; }
+          } else {
+            if (height > maxDim) { width *= maxDim / height; height = maxDim; }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+
+          compressedBase64Image = canvas.toDataURL('image/jpeg', 0.6);
+          
+          const imgPreview = document.getElementById('imgPreview');
+          imgPreview.src = compressedBase64Image;
+          imgPreview.style.display = 'block';
+
+          checkFormValidity();
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    };
+
+    function checkFormValidity() {
+      const submitBtn = document.getElementById('submitBtn');
+      if (timerFinished && compressedBase64Image) {
+        submitBtn.disabled = false;
+      } else {
+        submitBtn.disabled = true;
+      }
+    }
+
+    // REAL-TIME FIREBASE SUBMISSION TO ADMIN
+    window.submitScreenshotForReview = async function() {
+      if (!currentTask || !compressedBase64Image || !timerFinished) return;
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.innerText = "Submitting...";
+
+      const newRef = push(ref(db, 'adminPendingApps'));
+      const submissionData = {
+        submissionId: newRef.key,
+        username: userData.username || 'unknown',
+        userFullName: userData.fullName || userData.username || 'User',
+        taskId: currentTask.id,
+        taskTitle: currentTask.title,
+        reward: 0.10, // Rs. 0.10 Reward
+        screenshot: compressedBase64Image,
+        timestamp: Date.now(),
+        status: 'pending'
+      };
+
+      try {
+        await set(newRef, submissionData);
+        if (userData.username) {
+          await update(ref(db, `users/${userData.username}/appSubmissions/${currentTask.id}`), {
+            status: 'pending',
+            timestamp: Date.now()
+          });
+        }
+
+        alert("Screenshot submit ho gaya hai! Admin verify karke Rs. 0.10 reward wallet me add kar dega.");
+        closeModal();
+      } catch (err) {
+        alert("Error: " + err.message);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerText = "Submit to Admin";
+      }
+    };
+
+    window.closeModal = function() {
+      clearInterval(timerInterval);
+      document.getElementById('taskModal').style.display = 'none';
+      currentTask = null;
+    };
+  </script>
+</body>
+</html>

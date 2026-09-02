@@ -22,7 +22,6 @@
       --border-color: #e2e8f0;
       --accent-green: #059669;
       --accent-yellow: #d97706;
-      --accent-red: #ef4444;
       --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
       --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.08);
     }
@@ -400,12 +399,7 @@
     </div>
 
     <!-- VIDEO TASK LIST -->
-    <div class="video-list" id="videoTaskList">
-      <div style="text-align:center; color:var(--text-muted); font-size:11px; padding:20px;">
-        <i class="fa-solid fa-spinner fa-spin" style="font-size:20px; color:var(--primary); margin-bottom:6px;"></i>
-        <p>Tasks load ho rahe hain...</p>
-      </div>
-    </div>
+    <div class="video-list" id="videoTaskList"></div>
   </div>
 
   <!-- SCREENSHOT SUBMIT MODAL -->
@@ -415,9 +409,9 @@
 
       <h4 style="font-size:14px; font-weight:800; color:var(--text-main); text-align:center;" id="modalTaskTitle">Watch & Submit</h4>
 
-      <!-- STEP 1: OPEN EXTERNAL LINK -->
+      <!-- OPEN EXTERNAL LINK -->
       <a id="openAppBtn" href="#" target="_blank" class="open-app-btn" onclick="startTaskTimer()">
-        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Video App (Streamtape)
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Video App
       </a>
 
       <!-- TIMER STATUS -->
@@ -425,7 +419,7 @@
         Pehle "Open Video App" button par click karein (25s)
       </div>
 
-      <!-- STEP 2: SCREENSHOT UPLOAD -->
+      <!-- SCREENSHOT UPLOAD -->
       <div id="uploadSection" style="opacity: 0.4; pointer-events: none;">
         <label style="font-size:11px; font-weight:700; color:var(--text-main);">Upload Video End Screenshot:</label>
         
@@ -463,7 +457,6 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // 10 STREAMTAPE VIDEO TASKS
     const VIDEO_TASKS = [
       { id: "v1", title: "Video Task #1", watchUrl: "https://streamtape.com/v/6kJQOy2xYRULar/" },
       { id: "v2", title: "Video Task #2", watchUrl: "https://streamtape.com/v/2kvwkGWk1oFZbP7/" },
@@ -480,14 +473,17 @@
     const TASK_TIMER_SECONDS = 25;
     const REWARD_AMOUNT = 0.20;
 
-    // SESSION CHECK
-    const rawSession = localStorage.getItem('sew_session');
-    if (!rawSession) {
-      window.location.replace("index.html");
+    let userData = {};
+    try {
+      const rawSession = localStorage.getItem('sew_session');
+      if (rawSession) {
+        userData = JSON.parse(rawSession);
+      }
+    } catch (e) {
+      console.error(e);
     }
 
-    let userData = JSON.parse(rawSession || '{}');
-    let userSubmissions = {};
+    let userSubmissions = userData.videoSubmissions || {};
     let currentTask = null;
     let timerInterval = null;
     let secondsLeft = TASK_TIMER_SECONDS;
@@ -502,25 +498,9 @@
       document.getElementById('userBalance').innerText = "Rs. " + (parseFloat(data.balance) || 0).toFixed(2);
     }
 
-    renderUserUI(userData);
-
-    // FIREBASE SYNC
-    if (userData.username) {
-      onValue(ref(db, 'users/' + userData.username), (snapshot) => {
-        if (snapshot.exists()) {
-          const freshData = snapshot.val();
-          userData = freshData;
-          userSubmissions = freshData.videoSubmissions || {};
-          renderUserUI(freshData);
-          localStorage.setItem('sew_session', JSON.stringify(freshData));
-          renderTaskList();
-        }
-      });
-    }
-
-    // RENDER LIST
     function renderTaskList() {
       const container = document.getElementById('videoTaskList');
+      if (!container) return;
       container.innerHTML = '';
 
       VIDEO_TASKS.forEach((task) => {
@@ -553,7 +533,24 @@
       });
     }
 
-    // OPEN MODAL
+    // INSTANT RENDER ON PAGE LOAD
+    renderUserUI(userData);
+    renderTaskList();
+
+    // LIVE FIREBASE SYNC IN BACKGROUND
+    if (userData.username) {
+      onValue(ref(db, 'users/' + userData.username), (snapshot) => {
+        if (snapshot.exists()) {
+          const freshData = snapshot.val();
+          userData = freshData;
+          userSubmissions = freshData.videoSubmissions || {};
+          renderUserUI(freshData);
+          localStorage.setItem('sew_session', JSON.stringify(freshData));
+          renderTaskList();
+        }
+      });
+    }
+
     window.openTaskModal = function(taskId) {
       const task = VIDEO_TASKS.find(t => t.id === taskId);
       if (!task) return;
@@ -576,7 +573,6 @@
       document.getElementById('taskModal').style.display = 'flex';
     };
 
-    // START 25s TIMER ON APP OPEN CLICK
     window.startTaskTimer = function() {
       clearInterval(timerInterval);
       secondsLeft = TASK_TIMER_SECONDS;
@@ -602,7 +598,6 @@
       }, 1000);
     };
 
-    // IMAGE COMPRESSION & SELECT
     window.handleImageSelect = function(event) {
       const file = event.target.files[0];
       if (!file) return;
@@ -649,7 +644,6 @@
       }
     }
 
-    // SUBMIT TO ADMIN QUEUE
     window.submitScreenshotForReview = async function() {
       if (!currentTask || !compressedBase64Image || !timerFinished) return;
 
@@ -660,8 +654,8 @@
       const newRef = push(ref(db, 'adminPendingVideos'));
       const submissionData = {
         submissionId: newRef.key,
-        username: userData.username,
-        userFullName: userData.fullName || userData.username,
+        username: userData.username || 'unknown',
+        userFullName: userData.fullName || userData.username || 'User',
         taskId: currentTask.id,
         taskTitle: currentTask.title,
         reward: REWARD_AMOUNT,
@@ -672,9 +666,11 @@
 
       try {
         await set(newRef, submissionData);
-        await update(ref(db, `users/${userData.username}/videoSubmissions`), {
-          [currentTask.id]: 'pending'
-        });
+        if (userData.username) {
+          await update(ref(db, `users/${userData.username}/videoSubmissions`), {
+            [currentTask.id]: 'pending'
+          });
+        }
 
         alert("Screenshot submit ho gaya hai! Admin approval ke baad Rs. 0.20 mil jayenge.");
         closeModal();

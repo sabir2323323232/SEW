@@ -2,317 +2,1411 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SEW - Premium Bhole & Task Dashboard</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SEW - Premium Market & Dashboard</title>
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
   <style>
     :root {
-      --bg-color: #0b0e14;
-      --card-bg: #151b26;
-      --accent-green: #208b3a;
-      --accent-gold: #ffc107;
-      --accent-blue: #0d6efd;
-      --text-main: #f8f9fa;
-      --text-muted: #9bc1bc;
-      --border: #232d3f;
-      --danger: #dc3545;
+      --bg-body: #f8fafc;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-soft: #eff6ff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --accent-green: #059669;
+      --accent-orange: #d97706;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.06);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: var(--bg-color); color: var(--text-main); padding-bottom: 70px; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-    /* Top Bar */
-    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: var(--card-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
-    .brand-title { font-size: 16px; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
-    .btn-helpline { background: var(--accent-blue); color: #fff; border: none; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+      background-color: var(--bg-body);
+    }
 
-    /* Balance Banner */
-    .balance-card { margin: 15px; background: linear-gradient(135deg, #1f2937, #111827); border: 1px solid var(--border); border-radius: 12px; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
-    .balance-val { font-size: 18px; font-weight: bold; color: var(--accent-gold); margin-top: 2px; }
+    body {
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-    /* Action Grid (Only Affiliate & Free Ads) */
-    .action-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 15px; }
-    .action-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: 0.2s; }
-    .action-card:active { transform: scale(0.97); }
-    .action-card i { font-size: 22px; color: var(--accent-gold); margin-bottom: 6px; display: block; }
-    .action-card span { font-size: 12px; font-weight: 600; }
+    /* NAVBAR */
+    .navbar {
+      background: #ffffff;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
 
-    /* Section Headers */
-    .section-title { font-size: 14px; font-weight: bold; padding: 20px 15px 8px 15px; color: #fff; display: flex; align-items: center; gap: 8px; }
+    .logout-btn {
+      background: #fef2f2;
+      color: #ef4444;
+      border: 1px solid #fee2e2;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
 
-    /* Horizontal Round Scroll Container */
-    .round-scroll-container { display: flex; gap: 12px; overflow-x: auto; padding: 0 15px 10px 15px; scrollbar-width: none; }
-    .round-scroll-container::-webkit-scrollbar { display: none; }
+    .brand-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 1.5px;
+    }
 
-    /* Round Cards (Gol Shakal) */
-    .round-card { min-width: 105px; text-align: center; flex-shrink: 0; background: var(--card-bg); padding: 10px 8px; border-radius: 12px; border: 1px solid var(--border); }
-    .round-img-box { width: 75px; height: 75px; border-radius: 50%; border: 2.5px solid var(--accent-green); margin: 0 auto 8px auto; overflow: hidden; position: relative; background: #000; display: flex; align-items: center; justify-content: center; }
-    .round-img-box img { width: 100%; height: 100%; object-fit: cover; }
-    .free-badge { position: absolute; top: 0; background: var(--accent-green); color: #fff; font-size: 8px; font-weight: 800; padding: 2px 5px; border-radius: 8px; }
-    .round-title { font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90px; margin: 0 auto; }
-    .btn-action-sm { background: var(--accent-green); border: none; color: white; padding: 5px 10px; font-size: 10px; font-weight: bold; border-radius: 12px; margin-top: 6px; cursor: pointer; width: 100%; }
-    .btn-voted { background: var(--border) !important; color: var(--text-muted) !important; cursor: not-allowed; }
+    .nav-right-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-    /* Bhole Request Banner */
-    .bhole-banner { margin: 15px; background: linear-gradient(135deg, #15803d, #1d4ed8); border-radius: 12px; padding: 15px; text-align: center; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-    .bhole-btn { background: #fff; color: #000; border: none; padding: 8px 18px; font-weight: bold; font-size: 12px; border-radius: 20px; margin-top: 10px; cursor: pointer; }
+    .helpline-btn {
+      background: #ecfdf5;
+      color: #10b981;
+      border: 1px solid #a7f3d0;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
 
-    /* Modals */
-    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 15px; }
-    .modal-content { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; width: 100%; max-width: 400px; padding: 20px; position: relative; max-height: 85vh; overflow-y: auto; }
-    .close-btn { position: absolute; top: 12px; right: 15px; font-size: 20px; color: var(--text-muted); cursor: pointer; }
+    .profile-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-soft);
+      padding: 4px 8px;
+      border-radius: 20px;
+      cursor: pointer;
+      border: 1px solid #dbeafe;
+    }
 
-    input, textarea { width: 100%; background: #0b0e14; border: 1px solid var(--border); padding: 10px; color: #fff; border-radius: 8px; margin-top: 8px; margin-bottom: 12px; font-size: 12px; }
-    .btn-submit { width: 100%; background: var(--accent-green); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+    .avatar {
+      width: 22px;
+      height: 22px;
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 11px;
+    }
 
-    .urdu-text { direction: rtl; text-align: right; line-height: 1.8; font-size: 13px; color: #e2e8f0; }
+    .user-name-short {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      max-width: 70px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 500px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 8px 8px 75px 8px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* EARNING SECTION */
+    .earning-section {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .balance-card {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      border-radius: 10px;
+      padding: 8px 12px;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+    }
+
+    .balance-info p {
+      font-size: 9px;
+      opacity: 0.9;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .balance-amount {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .balance-icon {
+      font-size: 16px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(4px);
+      padding: 6px 10px;
+      border-radius: 8px;
+    }
+
+    /* 6 COLUMNS GRID */
+    .earning-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 3px;
+    }
+
+    .earn-btn {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 6px 1px;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-weight: 700;
+      font-size: 8px;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.1s;
+    }
+
+    .earn-btn:active {
+      transform: scale(0.95);
+      background: #e2e8f0;
+    }
+
+    .earn-btn i {
+      font-size: 11px;
+      color: var(--primary);
+    }
+
+    /* BANNER */
+    .market-banner {
+      background: #0f172a;
+      color: #ffffff;
+      border-radius: 10px;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .market-banner-text h2 {
+      font-size: 12px;
+      font-weight: 800;
+      color: #fbbf24;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .discount-badge {
+      background: #ef4444;
+      color: #ffffff;
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 9px;
+      letter-spacing: 0.5px;
+    }
+
+    /* MARKET SECTION */
+    .market-section {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 10px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .market-top-bar {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .search-box {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 12px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 7px 8px 7px 28px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 11px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .search-box input:focus {
+      border-color: var(--primary);
+    }
+
+    .orders-icon-btn {
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid #dbeafe;
+      padding: 7px 8px;
+      border-radius: 8px;
+      font-size: 10.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .orders-icon-btn:hover {
+      background: var(--primary);
+      color: #ffffff;
+    }
+
+    .affiliate-icon-btn {
+      background: #fef3c7;
+      color: #d97706;
+      border: 1px solid #fde68a;
+      padding: 7px 8px;
+      border-radius: 8px;
+      font-size: 10.5px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .affiliate-icon-btn:hover {
+      background: #d97706;
+      color: #ffffff;
+    }
+
+    /* PRODUCT GRID */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      padding: 2px 0 6px 0;
+      min-height: 150px;
+    }
+
+    .product-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: #cbd5e1;
+    }
+
+    .product-card:active {
+      transform: scale(0.98);
+    }
+
+    .product-img-wrapper {
+      width: 100%;
+      height: 100px;
+      border-radius: 8px;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4px;
+      margin-bottom: 6px;
+      border: 1px solid #f1f5f9;
+    }
+
+    .product-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+
+    .product-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 2px;
+    }
+
+    .product-desc {
+      font-size: 9px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      height: 14px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .product-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 6px;
+      border-top: 1px dashed var(--border-color);
+    }
+
+    .product-price {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--accent-green);
+    }
+
+    .order-btn {
+      background: var(--primary);
+      color: #ffffff;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 9.5px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+      transition: background 0.2s;
+    }
+
+    .order-btn:hover {
+      background: var(--primary-dark);
+    }
+
+    /* FIXED CATEGORIES BAR */
+    .categories-wrapper {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 500px;
+      background: #ffffff;
+      padding: 8px 10px;
+      border-top: 1px solid var(--border-color);
+      box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.06);
+      z-index: 100;
+    }
+
+    .category-section-title {
+      font-size: 9px;
+      font-weight: 800;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .category-grid {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+      padding-bottom: 2px;
+    }
+
+    .category-grid::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cat-btn {
+      background: #f1f5f9;
+      border: 1px solid var(--border-color);
+      padding: 6px 12px;
+      border-radius: 20px;
+      color: var(--text-main);
+      font-weight: 700;
+      font-size: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      user-select: none;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+
+    .cat-btn.active {
+      background: var(--primary);
+      color: #ffffff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+    }
+
+    .cat-btn.active i { color: #ffffff; }
+
+    /* MODALS */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(3px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+      padding: 12px;
+    }
+
+    .modal-box {
+      background: #ffffff;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 16px;
+      padding: 16px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: #f1f5f9;
+      border: none;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .modal-photos-wrapper {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .photo-card-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .modal-photo-img {
+      width: 100%;
+      height: 90px;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: #f8fafc;
+      padding: 2px;
+    }
+
+    .download-photo-btn {
+      background: #0f172a;
+      color: #ffffff;
+      border: none;
+      padding: 4px 0;
+      border-radius: 6px;
+      font-size: 9px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .download-photo-btn:hover {
+      background: var(--primary);
+    }
+
+    .order-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .order-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin: 4px 0 8px 0;
+      line-height: 1.4;
+      white-space: pre-line;
+      background: #f8fafc;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+    }
+
+    .order-price-tag {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--accent-green);
+      margin-bottom: 8px;
+    }
+
+    .form-group {
+      margin-bottom: 8px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 10px;
+      font-weight: 700;
+      margin-bottom: 3px;
+      color: var(--text-main);
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 8px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      font-size: 11px;
+      outline: none;
+    }
+
+    .confirm-btn {
+      width: 100%;
+      padding: 10px;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-top: 6px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+
+    .modal-avatar {
+      width: 44px; height: 44px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 16px; font-weight: 800;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 6px auto;
+    }
+
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 10px;
+    }
+
+    .status-alert {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 6px;
+      border-radius: 6px;
+      margin-top: 6px;
+      text-align: center;
+      display: none;
+    }
+    .status-alert.success { background: #ecfdf5; color: #10b981; display: block; }
+    .status-alert.error { background: #fef2f2; color: #ef4444; display: block; }
+
+    /* HELPLINE */
+    .helpline-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      padding: 10px 12px;
+      border-radius: 10px;
+      margin-top: 8px;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: all 0.2s;
+    }
+
+    .helpline-option:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .helpline-icon-box {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #ffffff;
+    }
+
+    .helpline-whatsapp { background: #25D366; }
+    .helpline-email { background: #ea4335; }
+
+    .helpline-info-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .helpline-info-text strong { font-size: 11px; }
+    .helpline-info-text span { font-size: 9.5px; color: var(--text-muted); }
+
+    /* POPUP MY ORDERS LIST */
+    .orders-popup-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .order-popup-card {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .order-popup-card:hover { border-color: var(--primary); }
+
+    .order-status-badge {
+      display: inline-block;
+      font-size: 8px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .status-pending { background: #fef3c7; color: #d97706; }
+    .status-ok { background: #d1fae5; color: #059669; }
   </style>
 </head>
 <body>
 
-  <!-- Top Navigation -->
-  <div class="top-bar">
-    <div class="brand-title">SEW DASHBOARD</div>
-    <button class="btn-helpline" onclick="openModal('helplineModal')">
-      <i class="fa-solid fa-circle-question"></i> How Work Free Helpline
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <button class="logout-btn" onclick="handleLogout()">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
     </button>
-  </div>
 
-  <!-- Balance Section -->
-  <div class="balance-card">
-    <div>
-      <div style="font-size:11px; color:var(--text-muted);">Total User Balance</div>
-      <div class="balance-val" id="userBalance">Rs. 0.00</div>
+    <div class="brand-title">SEW</div>
+
+    <div class="nav-right-actions">
+      <button class="helpline-btn" onclick="openHelplineModal()" title="Helpline Support">
+        <i class="fa-solid fa-headset"></i>
+      </button>
+
+      <div class="profile-pill" onclick="openProfileModal()">
+        <div class="avatar" id="navAvatar">U</div>
+        <span class="user-name-short" id="navUserName">User</span>
+      </div>
     </div>
-    <i class="fa-solid fa-wallet" style="font-size: 24px; color: var(--accent-gold);"></i>
-  </div>
+  </header>
 
-  <!-- Action Grid -->
-  <div class="action-grid">
-    <div class="action-card" onclick="alert('Affiliate panel opening...')">
-      <i class="fa-solid fa-users"></i>
-      <span>Affiliate</span>
+  <div class="container">
+
+    <!-- EARNING SECTION -->
+    <section class="earning-section">
+      <div class="balance-card">
+        <div class="balance-info">
+          <p>Total Balance</p>
+          <div class="balance-amount" id="userBalance">Rs. 0.00</div>
+        </div>
+        <div class="balance-icon">
+          <i class="fa-solid fa-wallet"></i>
+        </div>
+      </div>
+
+      <div class="earning-grid">
+        <div class="earn-btn" onclick="navigateTo('free-ads.html')">
+          <i class="fa-solid fa-rectangle-ad"></i>
+          <span>Free Ads</span>
+        </div>
+
+        <div class="earn-btn" onclick="navigateTo('task.html')">
+          <i class="fa-solid fa-list-check"></i>
+          <span>Task</span>
+        </div>
+
+        <div class="earn-btn" onclick="navigateTo('referral.html')">
+          <i class="fa-solid fa-users"></i>
+          <span>Referral</span>
+        </div>
+
+        <div class="earn-btn" onclick="navigateTo('gmail-selling.html')">
+          <i class="fa-solid fa-envelope"></i>
+          <span>Gmail</span>
+        </div>
+
+        <div class="earn-btn" onclick="navigateTo('withdraw.html')">
+          <i class="fa-solid fa-money-bill-transfer"></i>
+          <span>Withdraw</span>
+        </div>
+
+        <div class="earn-btn" onclick="navigateTo('free-jobs.html')">
+          <i class="fa-solid fa-briefcase"></i>
+          <span>Jobs</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- BANNER -->
+    <div class="market-banner">
+      <div class="market-banner-text">
+        <h2><i class="fa-solid fa-bolt"></i> MEGA MARKET 50% OFF</h2>
+      </div>
+      <div class="discount-badge">50% OFF</div>
     </div>
-    <div class="action-card" onclick="alert('Free Ads section opening...')">
-      <i class="fa-solid fa-rectangle-ad"></i>
-      <span>Free Ads</span>
+
+    <!-- MARKET SECTION -->
+    <section class="market-section">
+      <div class="market-top-bar">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="searchInput" placeholder="Search..." onkeyup="filterProducts()" />
+        </div>
+
+        <button class="orders-icon-btn" onclick="openMyOrdersModal()" title="My Placed Orders">
+          <i class="fa-solid fa-box-open"></i> Orders
+        </button>
+
+        <button class="affiliate-icon-btn" onclick="navigateTo('market.html')" title="Affiliate Marketing">
+          <i class="fa-solid fa-share-nodes"></i> Affiliate
+        </button>
+      </div>
+
+      <!-- PRODUCT GRID WITH LOADING INDICATOR -->
+      <div class="product-grid" id="productGrid">
+        <div style="grid-column: 1 / -1; text-align: center; padding: 30px 10px; color: var(--text-muted); font-size: 11px;">
+          <i class="fa-solid fa-spinner fa-spin" style="font-size: 24px; color: var(--primary); margin-bottom: 8px;"></i>
+          <p>Products load ho rahe hain, baraaye meharbani intazar karein...</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FIXED CATEGORIES BAR AT SCREEN BOTTOM -->
+  <div class="categories-wrapper">
+    <div class="category-section-title">Categories</div>
+    <div class="category-grid">
+      <div class="cat-btn active" onclick="filterByCategory('all', this)"><i class="fa-solid fa-border-all"></i> All</div>
+      <div class="cat-btn" onclick="filterByCategory('clothes', this)"><i class="fa-solid fa-shirt"></i> Clothes</div>
+      <div class="cat-btn" onclick="filterByCategory('tools', this)"><i class="fa-solid fa-screwdriver-wrench"></i> Tools</div>
+      <div class="cat-btn" onclick="filterByCategory('mobiles', this)"><i class="fa-solid fa-mobile-screen-button"></i> Mobiles</div>
+      <div class="cat-btn" onclick="filterByCategory('motors', this)"><i class="fa-solid fa-motorcycle"></i> Motors</div>
+      <div class="cat-btn" onclick="filterByCategory('jewelry', this)"><i class="fa-solid fa-gem"></i> Jewelry</div>
     </div>
   </div>
 
-  <!-- 1. Task Section (Gol Shakal Cards) -->
-  <div class="section-title">
-    <i class="fa-solid fa-layer-group" style="color:var(--accent-gold);"></i> Daily Tasks (24 Hours)
-  </div>
-  <div class="round-scroll-container" id="tasksListContainer">
-    <!-- Firebase Dynamic Tasks -->
+  <!-- HELPLINE MODAL -->
+  <div class="modal-overlay" id="helplineModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeHelplineModal()">✕</button>
+      
+      <h3 style="font-size:13px; font-weight:800; text-transform:uppercase; margin-bottom:4px; color:var(--primary);">
+        <i class="fa-solid fa-headset"></i> Support & Helpline
+      </h3>
+      <p style="font-size: 10px; color: var(--text-muted); margin-bottom: 8px;">Contact us directly for support & queries</p>
+
+      <a href="https://wa.me/923179774920" target="_blank" class="helpline-option">
+        <div class="helpline-icon-box helpline-whatsapp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </div>
+        <div class="helpline-info-text">
+          <strong>WhatsApp Helpline</strong>
+          <span>03179774920</span>
+        </div>
+      </a>
+
+      <a href="mailto:sabirkhansadre@gmail.com" target="_blank" class="helpline-option">
+        <div class="helpline-icon-box helpline-email">
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+        <div class="helpline-info-text">
+          <strong>Official Email Support</strong>
+          <span>sabirkhansadre@gmail.com</span>
+        </div>
+      </a>
+    </div>
   </div>
 
-  <!-- 2. Voting Section (Gol Shakal Cards) -->
-  <div class="section-title">
-    <i class="fa-solid fa-check-to-slot" style="color:var(--accent-blue);"></i> User Voting Arena
-  </div>
-  <div class="round-scroll-container" id="votingListContainer">
-    <!-- Firebase Dynamic Voting Items -->
-  </div>
+  <!-- MY PLACED ORDERS POPUP MODAL -->
+  <div class="modal-overlay" id="myOrdersModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeMyOrdersModal()">✕</button>
+      
+      <h3 style="font-size:13px; font-weight:800; text-transform:uppercase; margin-bottom:8px; color:var(--primary);">
+        <i class="fa-solid fa-box-open"></i> My Placed Orders
+      </h3>
 
-  <!-- 3. Upload Bhole Request Banner -->
-  <div class="bhole-banner">
-    <h3 style="font-size: 15px;"><i class="fa-solid fa-gavel"></i> Bhole System Request</h3>
-    <p style="font-size: 11px; margin-top: 4px; opacity: 0.9;">Kam votes wale users Rs. 20 charges ke sath request bhej sakte hain!</p>
-    <button class="bhole-btn" onclick="openModal('bholeModal')">Upload Bhole Request</button>
-  </div>
-
-  <!-- MODAL: Urdu How Work Helpline -->
-  <div class="modal" id="helplineModal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('helplineModal')">&times;</span>
-      <h3 style="text-align: center; margin-bottom: 15px; color: var(--accent-gold);">کیسے کام کرنا ہے؟ (مکمل معلومات)</h3>
-      <div class="urdu-text">
-        <p><b>1. روزانہ کا ٹاسک (Free Task):</b><br>
-        ایڈمن روزانہ ایک نیا ٹاسک (جیسے فرنیچر شاپ کا لوگو) اپلوڈ کرے گا۔ آپ گول شکل والے کارڈ پر کلک کر کے تفصیل دیکھ سکتے ہیں اور نیچے موجود <b>(+) Upload</b> بٹن کے ذریعے اپنا بنایا ہوا کام جمع کروا سکتے ہیں۔ یہ ٹاسک 1 دن (24 گھنٹے) کے لیے شو ہوگا۔</p>
-        <br>
-        <p><b>2. ووٹنگ کا طریقہ (Voting Arena):</b><br>
-        1 دن بعد ایڈمن یوزرز کے جمع شدہ کام ووٹنگ سیکشن میں لگائے گا۔ آپ ایک ID سے صرف <b>1 ووٹ</b> دے سکتے ہیں۔ ایک بار ووٹ دینے کے بعد دوبارہ یا کسی اور کو ووٹ نہیں دیا جا سکتا۔</p>
-        <br>
-        <p><b>3. بھولے کی درخواست (Bhole Request):</b><br>
-        جن یوزرز کے ووٹ کم ہوں گے، وہ <b>Rs. 20</b> ایزی پیسہ جمع کروا کر 'Upload Bhole Request' بٹن کے ذریعے اپلائی کر سکتے ہیں۔<br>
-        <b>Easypaisa No:</b> 03329553010<br>
-        <b>Name:</b> Mohamed Rashid</p>
-        <br>
-        <p><b>4. بھولے کا آغاز:</b><br>
-        بھولے کا آغاز <b>رات 10 بجے</b> ہوگا جو <b>3 دن</b> تک جاری رہے گا۔ اس میں کل <b>10 لوگوں</b> کو منتخب کیا جائے گا (ٹاپ 3 ہائیسٹ ووٹ والے + باقی بھولے ریکویسٹ والے)۔</p>
+      <div class="orders-popup-list" id="myOrdersPopupList">
+        <div class="no-orders-text" style="font-size:10px; color:var(--text-muted); text-align:center;">Loading orders...</div>
       </div>
     </div>
   </div>
 
-  <!-- MODAL: Task Details & Upload Work -->
-  <div class="modal" id="taskDetailModal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('taskDetailModal')">&times;</span>
-      <h3 id="mTaskTitle" style="color:var(--accent-gold);">Task Title</h3>
-      <p id="mTaskDesc" style="font-size: 12px; color: var(--text-muted); margin: 10px 0;"></p>
+  <!-- PROFILE MODAL -->
+  <div class="modal-overlay" id="profileModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeProfileModal()">✕</button>
       
-      <hr style="border-color: var(--border); margin: 15px 0;">
-      <h4 style="font-size:12px;"><i class="fa-solid fa-upload"></i> Apna Design Upload Karein:</h4>
-      <input type="text" id="workImgUrl" placeholder="Image Link / URL enter karein">
-      <textarea id="workNotes" rows="2" placeholder="Koi notes/details (optional)..."></textarea>
-      <button class="btn-submit" id="btnSubmitWork">Admin Ko Submit Karein</button>
+      <div style="text-align: center; margin-bottom: 10px;">
+        <div class="modal-avatar" id="modalAvatar">U</div>
+        <h4 id="modalFullName" style="font-size: 13px; font-weight: 800;">User Name</h4>
+        <p id="modalUsername" style="font-size: 10px; color: var(--text-muted);">@username</p>
+      </div>
+
+      <div class="detail-item"><span style="color:var(--text-muted)">Mobile:</span> <strong id="modalMobile">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Email:</span> <strong id="modalEmail">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">City:</span> <strong id="modalCity">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Country:</span> <strong id="modalCountry">-</strong></div>
     </div>
   </div>
 
-  <!-- MODAL: Bhole Request Form -->
-  <div class="modal" id="bholeModal">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('bholeModal')">&times;</span>
-      <h3>Upload Bhole Request</h3>
-      <p style="font-size:11px; color:var(--text-muted); margin-top:5px;">
-        Fee: <b>Rs. 20</b> | Easypaisa: <b>03329553010</b> (Mohamed Rashid)
-      </p>
-      <input type="text" id="bholeTrxId" placeholder="Easypaisa TRX ID">
-      <input type="text" id="bholeUserPhone" placeholder="Aapka Mobile Number">
-      <button class="btn-submit" onclick="submitBholeRequest()">Request Submit Karein</button>
+  <!-- PRODUCT DETAILS & ORDER MODAL -->
+  <div class="modal-overlay" id="orderModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeOrderModal()">✕</button>
+      
+      <div class="modal-photos-wrapper" id="modalPhotosContainer"></div>
+
+      <div id="orderModalTitle" class="order-title">Product Name</div>
+      <div id="orderModalPrice" class="order-price-tag">Rs. 0</div>
+      <div id="orderModalDesc" class="order-desc">Product Details</div>
+
+      <form id="orderForm">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="orderFullNameInput" placeholder="Your Name" required />
+        </div>
+
+        <div class="form-group">
+          <label>Mobile Number</label>
+          <input type="tel" id="orderMobileInput" placeholder="03001234567" required />
+        </div>
+
+        <div class="form-group">
+          <label>WhatsApp Number</label>
+          <input type="tel" id="orderWhatsappInput" placeholder="03001234567" required />
+        </div>
+
+        <div class="form-group">
+          <label>City Name</label>
+          <input type="text" id="orderCityInput" placeholder="e.g. Lahore, Karachi" required />
+        </div>
+
+        <div class="form-group">
+          <label>Quantity</label>
+          <input type="number" id="orderQuantity" value="1" min="1" required />
+        </div>
+
+        <div class="form-group">
+          <label>Delivery Full Address</label>
+          <textarea id="orderLocationInput" rows="2" placeholder="House / Street / Area Details" required></textarea>
+        </div>
+
+        <div style="font-size: 11px; font-weight: 800; margin: 4px 0; color: var(--text-main);">
+          Total Price: <span id="orderTotalPrice" style="color:var(--accent-green)">Rs. 0</span>
+        </div>
+
+        <div id="orderStatusAlert" class="status-alert"></div>
+
+        <button type="submit" id="confirmOrderBtn" class="confirm-btn">Confirm Order</button>
+      </form>
     </div>
   </div>
 
-  <!-- Firebase Logic -->
+  <!-- VIEW ORDER DETAILS MODAL -->
+  <div class="modal-overlay" id="viewOrderDetailModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeViewOrderModal()">✕</button>
+      
+      <h3 style="font-size:13px; font-weight:800; text-transform:uppercase; margin-bottom:10px; color:var(--primary);">
+        <i class="fa-solid fa-file-invoice"></i> Order Details
+      </h3>
+
+      <div class="detail-item"><span style="color:var(--text-muted)">Product Name:</span> <strong id="vProductTitle">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Customer Name:</span> <strong id="vCustomerName">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Mobile Number:</span> <strong id="vMobile">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">WhatsApp Number:</span> <strong id="vWhatsapp">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">City:</span> <strong id="vCity">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Full Address:</span> <strong id="vLocation" style="max-width:180px; text-align:right;">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Quantity:</span> <strong id="vQuantity">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Total Price:</span> <strong id="vTotalPrice" style="color:var(--accent-green);">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Order Status:</span> <strong id="vStatus">-</strong></div>
+    </div>
+  </div>
+
+  <!-- GLOBAL HELPER FUNCTIONS -->
+  <script>
+    function navigateTo(pageUrl) {
+      if (!pageUrl) return;
+      window.location.href = pageUrl;
+    }
+
+    function handleLogout() {
+      localStorage.removeItem('sew_session');
+      window.location.replace("index.html");
+    }
+
+    function openProfileModal() {
+      document.getElementById('profileModal').style.display = 'flex';
+    }
+
+    function closeProfileModal() {
+      document.getElementById('profileModal').style.display = 'none';
+    }
+
+    function openHelplineModal() {
+      document.getElementById('helplineModal').style.display = 'flex';
+    }
+
+    function closeHelplineModal() {
+      document.getElementById('helplineModal').style.display = 'none';
+    }
+
+    function openMyOrdersModal() {
+      document.getElementById('myOrdersModal').style.display = 'flex';
+    }
+
+    function closeMyOrdersModal() {
+      document.getElementById('myOrdersModal').style.display = 'none';
+    }
+
+    function closeOrderModal() {
+      document.getElementById('orderModal').style.display = 'none';
+    }
+
+    function closeViewOrderModal() {
+      document.getElementById('viewOrderDetailModal').style.display = 'none';
+    }
+
+    async function downloadImage(url, filename) {
+      try {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const blobUrl = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename || 'product-image.jpg';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(blobUrl);
+      } catch (err) {
+        window.open(url, '_blank');
+      }
+    }
+  </script>
+
+  <!-- FIREBASE INTEGRATION & PRODUCTS LOADING SCRIPT -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, push, set, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
-      databaseURL: "https://newweb-d50af-default-rtdb.firebaseio.com"
+      apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
+      authDomain: "newweb-d50af.firebaseapp.com",
+      databaseURL: "https://newweb-d50af-default-rtdb.firebaseio.com",
+      projectId: "newweb-d50af",
+      storageBucket: "newweb-d50af.firebasestorage.app",
+      messagingSenderId: "358603295768",
+      appId: "1:358603295768:web:82a9666514a7cb468c476d"
     };
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // Dynamic active user state
-    const userData = { username: "user_" + Math.floor(1000 + Math.random() * 9000) };
-    let currentSelectedTaskId = null;
-
-    window.openModal = (id) => document.getElementById(id).style.display = 'flex';
-    window.closeModal = (id) => document.getElementById(id).style.display = 'none';
-
-    // 1. LOAD ADMIN TASKS
-    onValue(ref(db, 'tasks'), (snapshot) => {
-      const container = document.getElementById('tasksListContainer');
-      container.innerHTML = '';
-      if (!snapshot.exists()) {
-        container.innerHTML = `<div style="font-size:11px; color:var(--text-muted); padding:10px;">Filhal koi task maujood nahi hai.</div>`;
-        return;
-      }
-
-      snapshot.forEach((child) => {
-        const task = child.val();
-        const taskId = child.key;
-
-        const card = document.createElement('div');
-        card.className = 'round-card';
-        card.innerHTML = `
-          <div class="round-img-box">
-            <span class="free-badge">FREE</span>
-            <i class="fa-solid fa-pen-nib" style="font-size:22px; color:var(--accent-gold);"></i>
-          </div>
-          <div class="round-title">${task.title || 'Logo Task'}</div>
-          <button class="btn-action-sm"><i class="fa-solid fa-plus"></i> Upload</button>
-        `;
-
-        card.onclick = () => {
-          currentSelectedTaskId = taskId;
-          document.getElementById('mTaskTitle').innerText = task.title;
-          document.getElementById('mTaskDesc').innerText = task.description || "Is task ka design bana kar link paste karein.";
-          openModal('taskDetailModal');
-        };
-        container.appendChild(card);
-      });
-    });
-
-    // 2. SUBMIT USER WORK
-    document.getElementById('btnSubmitWork').onclick = async () => {
-      const url = document.getElementById('workImgUrl').value;
-      const notes = document.getElementById('workNotes').value;
-
-      if (!url) return alert("Meherbani karke Image Link enter karein!");
-
-      await push(ref(db, 'submissions'), {
-        taskId: currentSelectedTaskId,
-        username: userData.username,
-        workUrl: url,
-        notes: notes,
-        timestamp: Date.now()
-      });
-
-      alert("Aapka work Admin ko kamyabi se bheja gaya!");
-      closeModal('taskDetailModal');
-      document.getElementById('workImgUrl').value = '';
-      document.getElementById('workNotes').value = '';
-    };
-
-    // 3. LOAD VOTING ITEMS
-    onValue(ref(db, 'voting'), async (snapshot) => {
-      const container = document.getElementById('votingListContainer');
-      container.innerHTML = '';
-      if (!snapshot.exists()) {
-        container.innerHTML = `<div style="font-size:11px; color:var(--text-muted); padding:10px;">Abhi voting start nahi hui.</div>`;
-        return;
-      }
-
-      const userVoteSnap = await get(ref(db, `user_votes/${userData.username}`));
-      const hasVoted = userVoteSnap.exists();
-
-      snapshot.forEach((child) => {
-        const item = child.val();
-        const voteId = child.key;
-
-        const card = document.createElement('div');
-        card.className = 'round-card';
-        card.innerHTML = `
-          <div class="round-img-box">
-            <img src="${item.imageUrl || 'https://via.placeholder.com/80'}" alt="Design">
-          </div>
-          <div class="round-title">${item.username || 'User'}</div>
-          <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">${item.votesCount || 0} Votes</div>
-          <button class="btn-action-sm ${hasVoted ? 'btn-voted' : ''}" ${hasVoted ? 'disabled' : ''} id="voteBtn_${voteId}">
-            ${hasVoted ? 'Voted' : 'Vote'}
-          </button>
-        `;
-
-        if (!hasVoted) {
-          card.querySelector(`#voteBtn_${voteId}`).onclick = (e) => {
-            e.stopPropagation();
-            castVote(voteId, item.votesCount || 0);
-          };
-        }
-        container.appendChild(card);
-      });
-    });
-
-    async function castVote(voteId, currentVotes) {
-      await set(ref(db, `user_votes/${userData.username}`), true);
-      await set(ref(db, `voting/${voteId}/votesCount`), currentVotes + 1);
-      alert("Aapka vote shamil kar liya gaya hai!");
+    // SESSION VERIFICATION
+    const rawSession = localStorage.getItem('sew_session');
+    if (!rawSession) {
+      window.location.replace("index.html");
     }
 
-    // 4. SUBMIT BHOLE REQUEST
-    window.submitBholeRequest = async () => {
-      const trx = document.getElementById('bholeTrxId').value;
-      const phone = document.getElementById('bholeUserPhone').value;
+    const userData = JSON.parse(rawSession || '{}');
+    let allProductsMap = {};
+    let selectedProduct = null;
+    let selectedCategory = 'all';
 
-      if (!trx || !phone) return alert("Tamam details pur karein!");
+    // RENDER USER PROFILE DATA
+    function renderUserUI(data) {
+      if (!data) return;
+      const displayTitle = data.fullName || data.username || "User";
+      document.getElementById('navUserName').innerText = displayTitle;
+      const initial = displayTitle.charAt(0).toUpperCase();
+      document.getElementById('navAvatar').innerText = initial;
+      document.getElementById('userBalance').innerText = "Rs. " + (data.balance || "0.00");
 
-      await push(ref(db, 'bhole_requests'), {
-        username: userData.username,
-        trxId: trx,
-        phone: phone,
-        amount: 20,
-        timestamp: Date.now()
+      document.getElementById('modalAvatar').innerText = initial;
+      document.getElementById('modalFullName').innerText = data.fullName || "User";
+      document.getElementById('modalUsername').innerText = "@" + (data.username || "");
+      document.getElementById('modalMobile').innerText = data.mobile || "N/A";
+      document.getElementById('modalEmail').innerText = data.email || "N/A";
+      document.getElementById('modalCity').innerText = data.city || "N/A";
+      document.getElementById('modalCountry').innerText = data.country || "N/A";
+
+      // Prefill order form inputs
+      if (document.getElementById('orderFullNameInput')) document.getElementById('orderFullNameInput').value = data.fullName || '';
+      if (document.getElementById('orderMobileInput')) document.getElementById('orderMobileInput').value = data.mobile || '';
+      if (document.getElementById('orderWhatsappInput')) document.getElementById('orderWhatsappInput').value = data.mobile || '';
+      if (document.getElementById('orderCityInput')) document.getElementById('orderCityInput').value = data.city || '';
+    }
+
+    renderUserUI(userData);
+
+    // FETCH LIVE USER DATA FROM FIREBASE
+    if (userData.username) {
+      const userRef = ref(db, 'users/' + userData.username);
+      onValue(userRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const liveUserData = snapshot.val();
+          renderUserUI(liveUserData);
+        }
+      });
+    }
+
+    // PRODUCTS REALTIME LISTENER
+    const productsRef = ref(db, 'products');
+    onValue(productsRef, (snapshot) => {
+      allProductsMap = snapshot.val() || {};
+      renderProducts();
+    });
+
+    // RENDER PRODUCTS GRID
+    function renderProducts() {
+      const productGrid = document.getElementById('productGrid');
+      const searchVal = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+      productGrid.innerHTML = '';
+
+      const productKeys = Object.keys(allProductsMap);
+      let count = 0;
+
+      productKeys.forEach((key) => {
+        const p = allProductsMap[key];
+        const title = (p.title || p.name || '').toLowerCase();
+        const category = (p.category || '').toLowerCase();
+
+        // Category Filter
+        if (selectedCategory !== 'all' && category !== selectedCategory) {
+          return;
+        }
+
+        // Search Filter
+        if (searchVal && !title.includes(searchVal)) {
+          return;
+        }
+
+        count++;
+
+        // Image Handling
+        let imgUrl = 'https://via.placeholder.com/150';
+        if (p.images && p.images.length > 0) imgUrl = p.images[0];
+        else if (p.image) imgUrl = p.image;
+        else if (p.photo1) imgUrl = p.photo1;
+
+        const card = document.createElement('div');
+        card.className = 'product-card';
+        card.onclick = () => window.openOrderModal(key);
+
+        card.innerHTML = `
+          <div class="product-img-wrapper">
+            <img src="${imgUrl}" alt="${p.title || 'Product'}" class="product-img" onerror="this.src='https://via.placeholder.com/150'" />
+          </div>
+          <div class="product-title">${p.title || p.name || 'Untitled'}</div>
+          <div class="product-desc">${p.description || p.desc || ''}</div>
+          <div class="product-bottom">
+            <div class="product-price">Rs. ${p.price || 0}</div>
+            <button class="order-btn" onclick="event.stopPropagation(); window.openOrderModal('${key}')">Order</button>
+          </div>
+        `;
+        productGrid.appendChild(card);
       });
 
-      alert("Aap ki Bhole request Rs. 20 charges ke sath submit ho gayi hai!");
-      closeModal('bholeModal');
-      document.getElementById('bholeTrxId').value = '';
-      document.getElementById('bholeUserPhone').value = '';
+      if (count === 0) {
+        productGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 30px 10px; color: var(--text-muted); font-size: 11px;">
+            <i class="fa-solid fa-box-open" style="font-size: 24px; color: var(--text-muted); margin-bottom: 8px;"></i>
+            <p>Koi product nahi mila.</p>
+          </div>
+        `;
+      }
+    }
+
+    // EXPOSE FILTER FUNCTIONS GLOBALLY
+    window.filterProducts = function() {
+      renderProducts();
+    };
+
+    window.filterByCategory = function(category, element) {
+      selectedCategory = category.toLowerCase();
+      document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
+      if (element) element.classList.add('active');
+      renderProducts();
+    };
+
+    // OPEN PRODUCT DETAIL & ORDER MODAL
+    window.openOrderModal = function(productId) {
+      selectedProduct = allProductsMap[productId];
+      if (!selectedProduct) return;
+
+      selectedProduct.id = productId;
+
+      // Populate Photos
+      const photosContainer = document.getElementById('modalPhotosContainer');
+      photosContainer.innerHTML = '';
+
+      let photos = [];
+      if (selectedProduct.images && Array.isArray(selectedProduct.images)) photos = selectedProduct.images;
+      else {
+        if (selectedProduct.photo1) photos.push(selectedProduct.photo1);
+        if (selectedProduct.photo2) photos.push(selectedProduct.photo2);
+        if (selectedProduct.photo3) photos.push(selectedProduct.photo3);
+        if (photos.length === 0 && selectedProduct.image) photos.push(selectedProduct.image);
+      }
+
+      if (photos.length === 0) photos.push('https://via.placeholder.com/150');
+
+      photos.forEach((photoUrl, idx) => {
+        const photoCard = document.createElement('div');
+        photoCard.className = 'photo-card-item';
+        photoCard.innerHTML = `
+          <img src="${photoUrl}" class="modal-photo-img" onerror="this.src='https://via.placeholder.com/150'" />
+          <button class="download-photo-btn" onclick="downloadImage('${photoUrl}', 'product-${idx+1}.jpg')">
+            <i class="fa-solid fa-download"></i> Save
+          </button>
+        `;
+        photosContainer.appendChild(photoCard);
+      });
+
+      document.getElementById('orderModalTitle').innerText = selectedProduct.title || selectedProduct.name || 'Product';
+      document.getElementById('orderModalPrice').innerText = 'Rs. ' + (selectedProduct.price || 0);
+      document.getElementById('orderModalDesc').innerText = selectedProduct.description || selectedProduct.desc || '';
+
+      // Reset Quantity & Total
+      const qtyInput = document.getElementById('orderQuantity');
+      qtyInput.value = 1;
+      updateTotalPrice();
+
+      document.getElementById('orderStatusAlert').className = 'status-alert';
+      document.getElementById('orderStatusAlert').style.display = 'none';
+
+      document.getElementById('orderModal').style.display = 'flex';
+    };
+
+    // UPDATE TOTAL PRICE
+    const qtyInput = document.getElementById('orderQuantity');
+    if (qtyInput) {
+      qtyInput.addEventListener('input', updateTotalPrice);
+    }
+
+    function updateTotalPrice() {
+      if (!selectedProduct) return;
+      const price = parseFloat(selectedProduct.price || 0);
+      const qty = parseInt(document.getElementById('orderQuantity').value || 1, 10);
+      const total = price * (qty > 0 ? qty : 1);
+      document.getElementById('orderTotalPrice').innerText = 'Rs. ' + total.toLocaleString();
+    }
+
+    // CONFIRM ORDER SUBMISSION
+    const orderForm = document.getElementById('orderForm');
+    if (orderForm) {
+      orderForm.onsubmit = async function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('confirmOrderBtn');
+        const alertBox = document.getElementById('orderStatusAlert');
+
+        btn.disabled = true;
+        btn.innerText = 'Processing...';
+
+        const qty = parseInt(document.getElementById('orderQuantity').value || 1, 10);
+        const price = parseFloat(selectedProduct.price || 0);
+        const total = price * qty;
+
+        const orderPayload = {
+          productId: selectedProduct.id || '',
+          productTitle: selectedProduct.title || selectedProduct.name || '',
+          productPrice: price,
+          quantity: qty,
+          totalPrice: total,
+          customerName: document.getElementById('orderFullNameInput').value.trim(),
+          mobile: document.getElementById('orderMobileInput').value.trim(),
+          whatsapp: document.getElementById('orderWhatsappInput').value.trim(),
+          city: document.getElementById('orderCityInput').value.trim(),
+          location: document.getElementById('orderLocationInput').value.trim(),
+          username: userData.username || '',
+          userEmail: userData.email || '',
+          status: 'pending',
+          timestamp: Date.now(),
+          date: new Date().toLocaleDateString()
+        };
+
+        try {
+          const ordersRef = ref(db, 'orders');
+          await push(ordersRef, orderPayload);
+
+          alertBox.innerText = 'Order kamyabi se place ho gaya hai!';
+          alertBox.className = 'status-alert success';
+
+          setTimeout(() => {
+            document.getElementById('orderModal').style.display = 'none';
+            btn.disabled = false;
+            btn.innerText = 'Confirm Order';
+          }, 1500);
+
+        } catch (error) {
+          alertBox.innerText = 'Order place karne me masla aya. Dobara koshish karein.';
+          alertBox.className = 'status-alert error';
+          btn.disabled = false;
+          btn.innerText = 'Confirm Order';
+        }
+      };
+    }
+
+    // USER ORDERS REALTIME LISTENER
+    let userOrdersMap = {};
+    const allOrdersRef = ref(db, 'orders');
+    onValue(allOrdersRef, (snapshot) => {
+      userOrdersMap = snapshot.val() || {};
+      renderMyOrdersPopup();
+    });
+
+    function renderMyOrdersPopup() {
+      const popupList = document.getElementById('myOrdersPopupList');
+      if (!popupList) return;
+
+      popupList.innerHTML = '';
+      let count = 0;
+
+      Object.keys(userOrdersMap).forEach((orderId) => {
+        const o = userOrdersMap[orderId];
+        if (o.username === userData.username || o.userEmail === userData.email) {
+          count++;
+          const card = document.createElement('div');
+          card.className = 'order-popup-card';
+          card.onclick = () => window.viewOrderDetails(orderId);
+
+          const statusClass = o.status === 'completed' || o.status === 'ok' || o.status === 'delivered' ? 'status-ok' : 'status-pending';
+
+          card.innerHTML = `
+            <div>
+              <strong style="font-size:11px; display:block; color:var(--text-main);">${o.productTitle || 'Product'}</strong>
+              <span style="font-size:9.5px; color:var(--text-muted);">Total: Rs. ${o.totalPrice || 0} (${o.quantity || 1} x)</span>
+            </div>
+            <span class="order-status-badge ${statusClass}">${o.status || 'pending'}</span>
+          `;
+          popupList.appendChild(card);
+        }
+      });
+
+      if (count === 0) {
+        popupList.innerHTML = `
+          <div style="font-size:10px; color:var(--text-muted); text-align:center; padding:15px 0;">
+            Aap ne abhi tak koi order place nahi kiya.
+          </div>
+        `;
+      }
+    }
+
+    // VIEW ORDER DETAILS MODAL
+    window.viewOrderDetails = function(orderId) {
+      const o = userOrdersMap[orderId];
+      if (!o) return;
+
+      document.getElementById('vProductTitle').innerText = o.productTitle || '-';
+      document.getElementById('vCustomerName').innerText = o.customerName || '-';
+      document.getElementById('vMobile').innerText = o.mobile || '-';
+      document.getElementById('vWhatsapp').innerText = o.whatsapp || '-';
+      document.getElementById('vCity').innerText = o.city || '-';
+      document.getElementById('vLocation').innerText = o.location || '-';
+      document.getElementById('vQuantity').innerText = o.quantity || '1';
+      document.getElementById('vTotalPrice').innerText = 'Rs. ' + (o.totalPrice || 0);
+      document.getElementById('vStatus').innerText = (o.status || 'pending').toUpperCase();
+
+      document.getElementById('viewOrderDetailModal').style.display = 'flex';
     };
   </script>
 </body>

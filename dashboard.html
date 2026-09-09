@@ -1,131 +1,152 @@
+
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SEW - Dynamic Bhole & Task Dashboard</title>
+  <title>SEW - Premium Bhole & Task Dashboard</title>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <style>
     :root {
-      --bg-color: #0d1117;
-      --card-bg: #161b22;
-      --accent: #238636;
-      --accent-gold: #f1e05a;
-      --text-main: #c9d1d9;
-      --text-muted: #8b949e;
-      --border: #30363d;
-      --danger: #da3633;
+      --bg-color: #0b0e14;
+      --card-bg: #151b26;
+      --accent-green: #208b3a;
+      --accent-gold: #ffc107;
+      --accent-blue: #0d6efd;
+      --text-main: #f8f9fa;
+      --text-muted: #9bc1bc;
+      --border: #232d3f;
+      --danger: #dc3545;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: var(--bg-color); color: var(--text-main); padding-bottom: 80px; }
+    body { background-color: var(--bg-color); color: var(--text-main); padding-bottom: 70px; }
 
     /* Top Bar */
-    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px; background: var(--card-bg); border-bottom: 1px solid var(--border); }
-    .brand-title { font-size: 18px; font-weight: bold; color: #fff; }
-    .btn-helpline { background: #1f6beb; color: #fff; border: none; padding: 8px 12px; border-radius: 20px; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 15px; background: var(--card-bg); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    .brand-title { font-size: 16px; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
+    .btn-helpline { background: var(--accent-blue); color: #fff; border: none; padding: 6px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
 
-    /* Action Grid */
-    .action-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 15px; }
-    .action-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; }
-    .action-card i { font-size: 24px; color: var(--accent-gold); margin-bottom: 8px; }
+    /* Balance Banner */
+    .balance-card { margin: 15px; background: linear-gradient(135deg, #1f2937, #111827); border: 1px solid var(--border); border-radius: 12px; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+    .balance-val { font-size: 18px; font-weight: bold; color: var(--accent-gold); margin-top: 2px; }
 
-    /* Main Sections */
-    .section-title { font-size: 15px; font-weight: bold; padding: 15px 15px 5px 15px; color: #fff; display: flex; align-items: center; gap: 8px; }
-    
-    /* Round Items Container */
-    .round-scroll-container { display: flex; gap: 15px; overflow-x: auto; padding: 15px; scrollbar-width: none; }
+    /* Action Grid (Only Affiliate & Free Ads) */
+    .action-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; padding: 0 15px; }
+    .action-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 12px; padding: 15px; text-align: center; cursor: pointer; transition: 0.2s; }
+    .action-card:active { transform: scale(0.97); }
+    .action-card i { font-size: 22px; color: var(--accent-gold); margin-bottom: 6px; display: block; }
+    .action-card span { font-size: 12px; font-weight: 600; }
+
+    /* Section Headers */
+    .section-title { font-size: 14px; font-weight: bold; padding: 20px 15px 8px 15px; color: #fff; display: flex; align-items: center; gap: 8px; }
+
+    /* Horizontal Round Scroll Container */
+    .round-scroll-container { display: flex; gap: 12px; overflow-x: auto; padding: 0 15px 10px 15px; scrollbar-width: none; }
     .round-scroll-container::-webkit-scrollbar { display: none; }
 
-    /* Gol Shakal Card */
-    .round-card { min-width: 110px; text-align: center; position: relative; flex-shrink: 0; }
-    .round-img-box { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--accent); margin: 0 auto 8px auto; overflow: hidden; position: relative; background: #21262d; display: flex; align-items: center; justify-content: center; }
+    /* Round Cards (Gol Shakal) */
+    .round-card { min-width: 105px; text-align: center; flex-shrink: 0; background: var(--card-bg); padding: 10px 8px; border-radius: 12px; border: 1px solid var(--border); }
+    .round-img-box { width: 75px; height: 75px; border-radius: 50%; border: 2.5px solid var(--accent-green); margin: 0 auto 8px auto; overflow: hidden; position: relative; background: #000; display: flex; align-items: center; justify-content: center; }
     .round-img-box img { width: 100%; height: 100%; object-fit: cover; }
-    .free-badge { position: absolute; top: 0; background: var(--accent); color: #fff; font-size: 9px; font-weight: bold; padding: 2px 6px; border-radius: 10px; text-transform: uppercase; }
-    .round-title { font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; margin: 0 auto; }
-    .btn-action-sm { background: var(--accent); border: none; color: white; padding: 4px 10px; font-size: 10px; border-radius: 12px; margin-top: 5px; cursor: pointer; }
+    .free-badge { position: absolute; top: 0; background: var(--accent-green); color: #fff; font-size: 8px; font-weight: 800; padding: 2px 5px; border-radius: 8px; }
+    .round-title { font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90px; margin: 0 auto; }
+    .btn-action-sm { background: var(--accent-green); border: none; color: white; padding: 5px 10px; font-size: 10px; font-weight: bold; border-radius: 12px; margin-top: 6px; cursor: pointer; width: 100%; }
     .btn-voted { background: var(--border) !important; color: var(--text-muted) !important; cursor: not-allowed; }
 
-    /* Bhole Section */
-    .bhole-banner { margin: 15px; background: linear-gradient(135deg, #238636, #1f6beb); border-radius: 12px; padding: 15px; text-align: center; color: white; }
-    .bhole-btn { background: #fff; color: #000; border: none; padding: 10px 20px; font-weight: bold; border-radius: 20px; margin-top: 10px; cursor: pointer; }
+    /* Bhole Request Banner */
+    .bhole-banner { margin: 15px; background: linear-gradient(135deg, #15803d, #1d4ed8); border-radius: 12px; padding: 15px; text-align: center; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+    .bhole-btn { background: #fff; color: #000; border: none; padding: 8px 18px; font-weight: bold; font-size: 12px; border-radius: 20px; margin-top: 10px; cursor: pointer; }
 
     /* Modals */
     .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 1000; align-items: center; justify-content: center; padding: 15px; }
     .modal-content { background: var(--card-bg); border: 1px solid var(--border); border-radius: 15px; width: 100%; max-width: 400px; padding: 20px; position: relative; max-height: 85vh; overflow-y: auto; }
     .close-btn { position: absolute; top: 12px; right: 15px; font-size: 20px; color: var(--text-muted); cursor: pointer; }
-    
-    input, textarea { width: 100%; background: #0d1117; border: 1px solid var(--border); padding: 10px; color: #fff; border-radius: 8px; margin-top: 8px; margin-bottom: 12px; font-size: 12px; }
-    .btn-submit { width: 100%; background: var(--accent); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
-    .urdu-text { direction: rtl; text-align: right; line-height: 1.8; font-size: 13px; }
+    input, textarea { width: 100%; background: #0b0e14; border: 1px solid var(--border); padding: 10px; color: #fff; border-radius: 8px; margin-top: 8px; margin-bottom: 12px; font-size: 12px; }
+    .btn-submit { width: 100%; background: var(--accent-green); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+    .urdu-text { direction: rtl; text-align: right; line-height: 1.8; font-size: 13px; color: #e2e8f0; }
   </style>
 </head>
 <body>
 
-  <!-- Top Bar -->
+  <!-- Top Navigation -->
   <div class="top-bar">
-    <div class="brand-title">SEW Bhole System</div>
+    <div class="brand-title">SEW DASHBOARD</div>
     <button class="btn-helpline" onclick="openModal('helplineModal')">
       <i class="fa-solid fa-circle-question"></i> How Work Free Helpline
     </button>
   </div>
 
-  <!-- Action Grid (Only Ads & Affiliate) -->
+  <!-- Balance Section -->
+  <div class="balance-card">
+    <div>
+      <div style="font-size:11px; color:var(--text-muted);">Total User Balance</div>
+      <div class="balance-val" id="userBalance">Rs. 0.00</div>
+    </div>
+    <i class="fa-solid fa-wallet" style="font-size: 24px; color: var(--accent-gold);"></i>
+  </div>
+
+  <!-- Action Grid -->
   <div class="action-grid">
-    <div class="action-card" onclick="alert('Affiliate Section Loading...')">
+    <div class="action-card" onclick="alert('Affiliate panel opening...')">
       <i class="fa-solid fa-users"></i>
-      <div style="font-size:12px; font-weight:bold;">Affiliate</div>
+      <span>Affiliate</span>
     </div>
-    <div class="action-card" onclick="alert('Free Ads Section Loading...')">
+    <div class="action-card" onclick="alert('Free Ads section opening...')">
       <i class="fa-solid fa-rectangle-ad"></i>
-      <div style="font-size:12px; font-weight:bold;">Free Ads</div>
+      <span>Free Ads</span>
     </div>
   </div>
 
-  <!-- 1. Daily Admin Tasks Section -->
-  <div class="section-title"><i class="fa-solid fa-list-check" style="color:var(--accent-gold);"></i> Aaj Ka Task (24 Hours)</div>
+  <!-- 1. Task Section (Gol Shakal Cards) -->
+  <div class="section-title">
+    <i class="fa-solid fa-layer-group" style="color:var(--accent-gold);"></i> Daily Tasks (24 Hours)
+  </div>
   <div class="round-scroll-container" id="tasksListContainer">
-    <!-- Dynamic Tasks Loaded from Firebase -->
+    <!-- Firebase Dynamic Tasks -->
   </div>
 
-  <!-- 2. Voting System Section -->
-  <div class="section-title"><i class="fa-solid fa-check-to-slot" style="color:#1f6beb;"></i> User Voting (1 Vote Per ID)</div>
+  <!-- 2. Voting Section (Gol Shakal Cards) -->
+  <div class="section-title">
+    <i class="fa-solid fa-check-to-slot" style="color:var(--accent-blue);"></i> User Voting Arena
+  </div>
   <div class="round-scroll-container" id="votingListContainer">
-    <!-- Dynamic Voting Items Loaded from Firebase -->
+    <!-- Firebase Dynamic Voting Items -->
   </div>
 
-  <!-- 3. Request Bhole Section -->
+  <!-- 3. Upload Bhole Request Banner -->
   <div class="bhole-banner">
-    <h3><i class="fa-solid fa-gavel"></i> Bhole System Request</h3>
-    <p style="font-size: 11px; margin-top: 5px;">Kam votes wale users Rs. 20 charges ada karke Bhole request bhej sakte hain!</p>
+    <h3 style="font-size: 15px;"><i class="fa-solid fa-gavel"></i> Bhole System Request</h3>
+    <p style="font-size: 11px; margin-top: 4px; opacity: 0.9;">Kam votes wale users Rs. 20 charges ke sath request bhej sakte hain!</p>
     <button class="bhole-btn" onclick="openModal('bholeModal')">Upload Bhole Request</button>
   </div>
 
-  <!-- MODAL 1: Urdu Helpline Guide -->
+  <!-- MODAL: Urdu How Work Helpline -->
   <div class="modal" id="helplineModal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal('helplineModal')">&times;</span>
       <h3 style="text-align: center; margin-bottom: 15px; color: var(--accent-gold);">کیسے کام کرنا ہے؟ (مکمل معلومات)</h3>
       <div class="urdu-text">
         <p><b>1. روزانہ کا ٹاسک (Free Task):</b><br>
-        ایڈمن روزانہ ایک نیا ٹاسک (جیسے فرنیچر شاپ کا لوگو) اپلوڈ کرے گا۔ آپ گول شکل والے کارڈ پر کلک کر کے تفصیل دیکھ سکتے ہیں اور نیچے موجود <b>(+) Upload</b> بٹن کے ذریعے اپنا بنایا ہوا ڈیزائن جمع کروا سکتے ہیں۔ یہ ٹاسک 1 دن (24 گھنٹے) کے لیے شو ہوگا۔</p>
+        ایڈمن روزانہ ایک نیا ٹاسک (جیسے فرنیچر شاپ کا لوگو) اپلوڈ کرے گا۔ آپ گول شکل والے کارڈ پر کلک کر کے تفصیل دیکھ سکتے ہیں اور نیچے موجود <b>(+) Upload</b> بٹن کے ذریعے اپنا بنایا ہوا کام جمع کروا سکتے ہیں۔ یہ ٹاسک 1 دن (24 گھنٹے) کے لیے شو ہوگا۔</p>
         <br>
         <p><b>2. ووٹنگ کا طریقہ (Voting Arena):</b><br>
-        1 دن بعد ایڈمن یوزرز کے جمع شدہ کام ووٹنگ سیکشن میں لگائے گا۔ آپ ایک ID سے صرف **1 ووٹ** دے سکتے ہیں۔ ایک بار ووٹ دینے کے بعد دوبارہ یا کسی اور کو ووٹ نہیں دیا جا سکتا۔</p>
+        1 دن بعد ایڈمن یوزرز کے جمع شدہ کام ووٹنگ سیکشن میں لگائے گا۔ آپ ایک ID سے صرف <b>1 ووٹ</b> دے سکتے ہیں۔ ایک بار ووٹ دینے کے بعد دوبارہ یا کسی اور کو ووٹ نہیں دیا جا سکتا۔</p>
         <br>
         <p><b>3. بھولے کی درخواست (Bhole Request):</b><br>
-        جن یوزرز کے ووٹ کم ہوں گے، وہ **Rs. 20** ایزی پیسہ جمع کروا کر 'Upload Bhole Request' بٹن کے ذریعے اپلائی کر سکتے ہیں۔<br>
+        جن یوزرز کے ووٹ کم ہوں گے، وہ <b>Rs. 20</b> ایزی پیسہ جمع کروا کر 'Upload Bhole Request' بٹن کے ذریعے اپلائی کر سکتے ہیں۔<br>
         <b>Easypaisa No:</b> 03329553010<br>
         <b>Name:</b> Mohamed Rashid</p>
         <br>
         <p><b>4. بھولے کا آغاز:</b><br>
-        بھولے کا آغاز **رات 10 بجے** ہوگا جو **3 دن** تک جاری رہے گا۔ اس میں کل **10 لوگوں** کو منتخب کیا جائے گا (ٹاپ 3 ہائیسٹ ووٹ والے + باقی بھولے ریکویسٹ والے)۔</p>
+        بھولے کا آغاز <b>رات 10 بجے</b> ہوگا جو <b>3 دن</b> تک جاری رہے گا۔ اس میں کل <b>10 لوگوں</b> کو منتخب کیا جائے گا (ٹاپ 3 ہائیسٹ ووٹ والے + باقی بھولے ریکویسٹ والے)۔</p>
       </div>
     </div>
   </div>
 
-  <!-- MODAL 2: Task Detail & Work Submission -->
+  <!-- MODAL: Task Details & Upload Work -->
   <div class="modal" id="taskDetailModal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal('taskDetailModal')">&times;</span>
@@ -133,14 +154,14 @@
       <p id="mTaskDesc" style="font-size: 12px; color: var(--text-muted); margin: 10px 0;"></p>
       
       <hr style="border-color: var(--border); margin: 15px 0;">
-      <h4 style="font-size:12px;"><i class="fa-solid fa-plus-circle"></i> Apna Banya Hua Work Upload Karein:</h4>
-      <input type="text" id="workImgUrl" placeholder="Image URL ya Link daalein">
-      <textarea id="workNotes" rows="2" placeholder="Koi izafi tafseel (optional)..."></textarea>
-      <button class="btn-submit" id="btnSubmitWork">Admin Ko Bhejein</button>
+      <h4 style="font-size:12px;"><i class="fa-solid fa-upload"></i> Apna Design Upload Karein:</h4>
+      <input type="text" id="workImgUrl" placeholder="Image Link / URL enter karein">
+      <textarea id="workNotes" rows="2" placeholder="Koi notes/details (optional)..."></textarea>
+      <button class="btn-submit" id="btnSubmitWork">Admin Ko Submit Karein</button>
     </div>
   </div>
 
-  <!-- MODAL 3: Bhole Request Form -->
+  <!-- MODAL: Bhole Request Form -->
   <div class="modal" id="bholeModal">
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal('bholeModal')">&times;</span>
@@ -148,13 +169,13 @@
       <p style="font-size:11px; color:var(--text-muted); margin-top:5px;">
         Fee: <b>Rs. 20</b> | Easypaisa: <b>03329553010</b> (Mohamed Rashid)
       </p>
-      <input type="text" id="bholeTrxId" placeholder="Easypaisa TRX ID / Transaction Proof">
+      <input type="text" id="bholeTrxId" placeholder="Easypaisa TRX ID">
       <input type="text" id="bholeUserPhone" placeholder="Aapka Mobile Number">
       <button class="btn-submit" onclick="submitBholeRequest()">Request Submit Karein</button>
     </div>
   </div>
 
-  <!-- Firebase Integration -->
+  <!-- Firebase Logic -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue, push, set, get } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -166,20 +187,19 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // Mock Current User Data (Real app se sync karein)
-    const activeUser = { username: "user_" + Math.floor(1000 + Math.random() * 9000) };
+    // Dynamic active user state
+    const userData = { username: "user_" + Math.floor(1000 + Math.random() * 9000) };
     let currentSelectedTaskId = null;
 
-    // Helper Modal Controls
     window.openModal = (id) => document.getElementById(id).style.display = 'flex';
     window.closeModal = (id) => document.getElementById(id).style.display = 'none';
 
-    // 1. FETCH & DISPLAY TASKS (Admin Uploaded)
+    // 1. LOAD ADMIN TASKS
     onValue(ref(db, 'tasks'), (snapshot) => {
       const container = document.getElementById('tasksListContainer');
       container.innerHTML = '';
       if (!snapshot.exists()) {
-        container.innerHTML = `<p style="font-size:11px; color:var(--text-muted);">Filhal koi task maujood nahi hai.</p>`;
+        container.innerHTML = `<div style="font-size:11px; color:var(--text-muted); padding:10px;">Filhal koi task maujood nahi hai.</div>`;
         return;
       }
 
@@ -192,32 +212,32 @@
         card.innerHTML = `
           <div class="round-img-box">
             <span class="free-badge">FREE</span>
-            <i class="fa-solid fa-paintbrush" style="font-size:24px; color:var(--accent-gold);"></i>
+            <i class="fa-solid fa-pen-nib" style="font-size:22px; color:var(--accent-gold);"></i>
           </div>
-          <div class="round-title">${task.title || 'Logo Design'}</div>
-          <button class="btn-action-sm"><i class="fa-solid fa-plus"></i> View & Upload</button>
+          <div class="round-title">${task.title || 'Logo Task'}</div>
+          <button class="btn-action-sm"><i class="fa-solid fa-plus"></i> Upload</button>
         `;
 
         card.onclick = () => {
           currentSelectedTaskId = taskId;
           document.getElementById('mTaskTitle').innerText = task.title;
-          document.getElementById('mTaskDesc').innerText = task.description || "Is task ka logo bana kar niche link/URL paste karein.";
+          document.getElementById('mTaskDesc').innerText = task.description || "Is task ka design bana kar link paste karein.";
           openModal('taskDetailModal');
         };
         container.appendChild(card);
       });
     });
 
-    // 2. SUBMIT COMPLETED WORK TO ADMIN
+    // 2. SUBMIT USER WORK
     document.getElementById('btnSubmitWork').onclick = async () => {
       const url = document.getElementById('workImgUrl').value;
       const notes = document.getElementById('workNotes').value;
 
-      if (!url) return alert("Meherbani karke apne kaam ka Link/URL darj karein!");
+      if (!url) return alert("Meherbani karke Image Link enter karein!");
 
       await push(ref(db, 'submissions'), {
         taskId: currentSelectedTaskId,
-        username: activeUser.username,
+        username: userData.username,
         workUrl: url,
         notes: notes,
         timestamp: Date.now()
@@ -229,17 +249,16 @@
       document.getElementById('workNotes').value = '';
     };
 
-    // 3. FETCH & DISPLAY VOTING ITEMS
+    // 3. LOAD VOTING ITEMS
     onValue(ref(db, 'voting'), async (snapshot) => {
       const container = document.getElementById('votingListContainer');
       container.innerHTML = '';
       if (!snapshot.exists()) {
-        container.innerHTML = `<p style="font-size:11px; color:var(--text-muted);">Abhi voting start nahi hui.</p>`;
+        container.innerHTML = `<div style="font-size:11px; color:var(--text-muted); padding:10px;">Abhi voting start nahi hui.</div>`;
         return;
       }
 
-      // Check if current user has already voted in this cycle
-      const userVoteSnap = await get(ref(db, `user_votes/${activeUser.username}`));
+      const userVoteSnap = await get(ref(db, `user_votes/${userData.username}`));
       const hasVoted = userVoteSnap.exists();
 
       snapshot.forEach((child) => {
@@ -250,10 +269,10 @@
         card.className = 'round-card';
         card.innerHTML = `
           <div class="round-img-box">
-            <img src="${item.imageUrl || 'https://via.placeholder.com/100'}" alt="Design">
+            <img src="${item.imageUrl || 'https://via.placeholder.com/80'}" alt="Design">
           </div>
-          <div class="round-title">${item.username || 'Participant'}</div>
-          <div style="font-size:9px; color:var(--text-muted);">${item.votesCount || 0} Votes</div>
+          <div class="round-title">${item.username || 'User'}</div>
+          <div style="font-size:9.5px; color:var(--text-muted); margin-top:2px;">${item.votesCount || 0} Votes</div>
           <button class="btn-action-sm ${hasVoted ? 'btn-voted' : ''}" ${hasVoted ? 'disabled' : ''} id="voteBtn_${voteId}">
             ${hasVoted ? 'Voted' : 'Vote'}
           </button>
@@ -269,9 +288,8 @@
       });
     });
 
-    // Cast Vote Logic (Strict 1 Vote per ID)
     async function castVote(voteId, currentVotes) {
-      await set(ref(db, `user_votes/${activeUser.username}`), true);
+      await set(ref(db, `user_votes/${userData.username}`), true);
       await set(ref(db, `voting/${voteId}/votesCount`), currentVotes + 1);
       alert("Aapka vote shamil kar liya gaya hai!");
     }
@@ -284,7 +302,7 @@
       if (!trx || !phone) return alert("Tamam details pur karein!");
 
       await push(ref(db, 'bhole_requests'), {
-        username: activeUser.username,
+        username: userData.username,
         trxId: trx,
         phone: phone,
         amount: 20,
@@ -293,6 +311,8 @@
 
       alert("Aap ki Bhole request Rs. 20 charges ke sath submit ho gayi hai!");
       closeModal('bholeModal');
+      document.getElementById('bholeTrxId').value = '';
+      document.getElementById('bholeUserPhone').value = '';
     };
   </script>
 </body>

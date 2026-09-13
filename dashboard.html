@@ -349,94 +349,93 @@
       gap: 10px;
     }
 
-    .voting-card {
+    /* BOLI / AUCTION SYSTEM STYLES */
+    .boli-card {
       background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 10px 8px;
+      border: 1.5px solid #3b82f6;
+      border-radius: 14px;
+      padding: 12px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      text-align: center;
-      gap: 6px;
-      box-shadow: var(--shadow-sm);
+      gap: 10px;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.08);
+      margin-bottom: 12px;
     }
 
-    .voting-img-wrapper {
-      width: 68px;
-      height: 68px;
+    .boli-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed var(--border-color);
+      padding-bottom: 6px;
+    }
+
+    .timer-badge {
+      background: #fef2f2;
+      color: #ef4444;
+      border: 1px solid #fee2e2;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .boli-body {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .boli-img {
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
       border: 3px solid var(--primary);
-      padding: 2px;
-      background: #ffffff;
-      overflow: hidden;
-      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);
-    }
-
-    .voting-img-wrapper img {
-      width: 100%;
-      height: 100%;
       object-fit: cover;
-      border-radius: 50%;
+      flex-shrink: 0;
     }
 
-    .creator-tag {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--primary);
-      background: var(--primary-soft);
-      padding: 2px 8px;
-      border-radius: 10px;
-      max-width: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .voting-title {
-      font-size: 11px;
-      font-weight: 800;
-      color: var(--text-main);
-      max-width: 100%;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .vote-count-badge {
-      font-size: 11px;
-      font-weight: 800;
-      color: #ef4444;
-      background: #fef2f2;
-      padding: 2px 8px;
-      border-radius: 12px;
-      border: 1px solid #fee2e2;
+    .boli-info {
+      flex: 1;
       display: flex;
-      align-items: center;
-      gap: 4px;
+      flex-direction: column;
+      gap: 2px;
     }
 
-    .vote-action-btn {
-      width: 100%;
-      background: var(--primary);
-      color: #ffffff;
-      border: none;
-      padding: 6px 10px;
+    .bid-options-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .bid-btn {
+      background: #eff6ff;
+      border: 1px solid #bfdbfe;
+      color: var(--primary-dark);
+      font-weight: 800;
+      font-size: 11px;
+      padding: 6px;
       border-radius: 8px;
-      font-size: 11px;
-      font-weight: 700;
       cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
+      text-align: center;
     }
 
-    .vote-action-btn:disabled {
-      background: #cbd5e1;
-      color: #64748b;
-      cursor: not-allowed;
+    .bid-btn:active {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .winner-payment-box {
+      background: #f0fdf4;
+      border: 1.5px solid #22c55e;
+      border-radius: 10px;
+      padding: 10px;
+      text-align: center;
+      margin-top: 8px;
     }
 
     /* FLOATING ACTION PLUS BUTTON */
@@ -685,41 +684,59 @@
       </div>
     </section>
 
-    <!-- LOGOS, THUMBNAILS & DESIGNS SECTION -->
-    <section class="products-section">
-      <!-- DYNAMIC DAYS NOTICE BOX (Editable by Admin) -->
-      <div class="days-notice-box">
-        <i class="fa-solid fa-calendar-check" style="font-size:16px;"></i>
-        <span id="daysNoticeText">Loading notice...</span>
-      </div>
+    <!-- NORMAL SECTIONS (LOGOS + VOTING) CONTAINER -->
+    <div id="normalSectionsContainer">
+      <!-- LOGOS, THUMBNAILS & DESIGNS SECTION -->
+      <section class="products-section">
+        <div class="days-notice-box">
+          <i class="fa-solid fa-calendar-check" style="font-size:16px;"></i>
+          <span id="daysNoticeText">Loading notice...</span>
+        </div>
 
-      <h3 class="section-title">
-        <i class="fa-solid fa-palette" style="color:var(--primary)"></i> 
-        Logos, Thumbnails & Designs
-      </h3>
+        <h3 class="section-title">
+          <i class="fa-solid fa-palette" style="color:var(--primary)"></i> 
+          Logos, Thumbnails & Designs
+        </h3>
 
-      <!-- CIRCLE LOGOS / DESIGNS GRID -->
-      <div class="circle-products-grid" id="productsContainer">
-        <p style="font-size: 10px; color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 10px;">
-          Loading items...
-        </p>
-      </div>
-    </section>
+        <!-- CIRCLE LOGOS / DESIGNS GRID -->
+        <div class="circle-products-grid" id="productsContainer">
+          <p style="font-size: 10px; color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 10px;">
+            Loading items...
+          </p>
+        </div>
+      </section>
 
-    <!-- LIVE CONTEST & VOTING SECTION -->
-    <section class="products-section">
+      <!-- LIVE CONTEST & VOTING SECTION -->
+      <section class="products-section" style="margin-top: 12px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <h3 class="section-title">
+            <i class="fa-solid fa-trophy" style="color:#f59e0b"></i> 
+            Live Contest & Voting
+          </h3>
+          <span class="live-badge"><i class="fa-solid fa-circle"></i> LIVE</span>
+        </div>
+
+        <div class="voting-grid" id="votingContainer">
+          <p style="font-size: 10px; color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 10px;">
+            Voting items loading...
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <!-- LIVE BOLI / AUCTION SECTION (Toggled via Admin) -->
+    <section class="products-section" id="liveBoliSection" style="display: none;">
       <div style="display: flex; justify-content: space-between; align-items: center;">
         <h3 class="section-title">
-          <i class="fa-solid fa-trophy" style="color:#f59e0b"></i> 
-          Live Contest & Voting
+          <i class="fa-solid fa-gavel" style="color:#2563eb"></i> 
+          Live Boli / Auction (Top 10 Designs)
         </h3>
-        <span class="live-badge"><i class="fa-solid fa-circle"></i> LIVE</span>
+        <span class="live-badge"><i class="fa-solid fa-circle"></i> BOLI ACTIVE</span>
       </div>
 
-      <!-- CIRCLE VOTING ITEMS GRID -->
-      <div class="voting-grid" id="votingContainer">
-        <p style="font-size: 10px; color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 10px;">
-          Voting items loading...
+      <div id="boliCardsContainer">
+        <p style="font-size: 11px; color: var(--text-muted); text-align: center; padding: 15px;">
+          Live Boli Designs load ho rahe hain...
         </p>
       </div>
     </section>
@@ -898,7 +915,7 @@
   <!-- FIREBASE INTEGRATION & REALTIME LOGIC SCRIPT -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, push, set, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue, push, set, update, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
@@ -965,7 +982,7 @@
       }
     });
 
-    // 2. REALTIME LOGOS & DESIGNS SYSTEM (Gol Shakal Items)
+    // 2. REALTIME LOGOS & DESIGNS SYSTEM
     const productsRef = ref(db, 'products');
     onValue(productsRef, (snapshot) => {
       const container = document.getElementById('productsContainer');
@@ -1016,7 +1033,156 @@
       });
     });
 
-    // 3. FILE PREVIEW CONVERSION
+    // ========================================================
+    // 3. ADMIN TOGGLE FOR LIVE BOLI & AUCTION SYSTEM
+    // ========================================================
+    const boliStateRef = ref(db, 'systemState/boliActive');
+    onValue(boliStateRef, (snapshot) => {
+      const isBoliActive = snapshot.exists() ? snapshot.val() : false;
+      const normalSections = document.getElementById('normalSectionsContainer');
+      const boliSection = document.getElementById('liveBoliSection');
+
+      if (isBoliActive) {
+        normalSections.style.display = 'none';
+        boliSection.style.display = 'block';
+      } else {
+        normalSections.style.display = 'block';
+        boliSection.style.display = 'none';
+      }
+    });
+
+    // 4. REALTIME BOLI / AUCTION SYSTEM (TOP 10 DESIGNS + 5 MIN TIMER + BIDDING)
+    const boliRef = ref(db, 'liveBoli');
+    let timerIntervals = {};
+
+    onValue(boliRef, (snapshot) => {
+      const container = document.getElementById('boliCardsContainer');
+      container.innerHTML = '';
+
+      if (!snapshot.exists()) {
+        container.innerHTML = `<p style="font-size:11px; color:var(--text-muted); text-align:center; padding:15px;">Filhal koi Boli active nahi hai.</p>`;
+        return;
+      }
+
+      const boliData = snapshot.val();
+      const keys = Object.keys(boliData).slice(0, 10); // Top 10 designs
+
+      // Clear existing interval timers
+      Object.keys(timerIntervals).forEach(k => clearInterval(timerIntervals[k]));
+
+      keys.forEach((key) => {
+        const item = boliData[key];
+        const defaultImg = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+        
+        const currentPrice = item.currentBid || item.startingPrice || 100;
+        const highestBidder = item.highestBidderName || "Koi Nahi";
+        const isUserWinner = (item.highestBidderId === userId);
+
+        const card = document.createElement('div');
+        card.className = 'boli-card';
+
+        const nextOption1 = currentPrice + 50;
+        const nextOption2 = currentPrice + 100;
+        const nextOption3 = currentPrice + 200;
+
+        card.innerHTML = `
+          <div class="boli-header">
+            <span style="font-size:12px; font-weight:800; color:var(--text-main);">${item.title || 'Live Boli Design'}</span>
+            <div class="timer-badge">
+              <i class="fa-solid fa-clock"></i> <span id="timer-${key}">05:00</span>
+            </div>
+          </div>
+
+          <div class="boli-body">
+            <img src="${item.imageUrl || defaultImg}" class="boli-img" alt="Boli Design" />
+            <div class="boli-info">
+              <span style="font-size:10px; color:var(--text-muted);">Starting Price: <strong>Rs. ${item.startingPrice || 100}</strong></span>
+              <span style="font-size:13px; font-weight:800; color:#16a34a;">Highest Bid: Rs. <span id="price-${key}">${currentPrice}</span></span>
+              <span style="font-size:10px; color:var(--primary); font-weight:700;">Top Bidder: ${highestBidder}</span>
+            </div>
+          </div>
+
+          <!-- Bidding Buttons -->
+          <div style="margin-top:4px;" id="bidControls-${key}">
+            <span style="font-size:10px; font-weight:700; color:var(--text-muted);">Apni Boli Lagayen (Tap Karen):</span>
+            <div class="bid-options-grid">
+              <button class="bid-btn" onclick="submitBid('${key}', ${nextOption1})">Rs. ${nextOption1}</button>
+              <button class="bid-btn" onclick="submitBid('${key}', ${nextOption2})">Rs. ${nextOption2}</button>
+              <button class="bid-btn" onclick="submitBid('${key}', ${nextOption3})">Rs. ${nextOption3}</button>
+            </div>
+          </div>
+
+          <!-- Winner EasyPaisa Payment Box (Only visible to highest bidder) -->
+          <div id="winnerBox-${key}" class="winner-payment-box" style="${isUserWinner ? 'display:block;' : 'display:none;'}">
+            <p style="font-size:11px; font-weight:800; color:#15803d; margin-bottom:4px;">
+              🎉 Aap Sab Se Ziada Bid Laga Chuke Hain!
+            </p>
+            <p style="font-size:11px; font-weight:700; color:#0f172a;">
+              <strong>03428051256 sajjad Ali</strong> es per <strong>Rs. ${currentPrice}</strong> easypaisa karo pir design unlock Hoga.
+            </p>
+            ${item.unlocked ? `
+              <button class="download-btn" style="margin-top:8px; background:#16a34a;" onclick="window.open('${item.hdUrl || item.imageUrl}', '_blank')">
+                <i class="fa-solid fa-download"></i> Download HD Quality Design
+              </button>
+            ` : `
+              <div style="font-size:10px; color:#d97706; margin-top:6px; font-weight:700;">
+                ⏳ Payment ke baad admin confirmation ka intezar karen...
+              </div>
+            `}
+          </div>
+        `;
+
+        container.appendChild(card);
+
+        // 5-Minute Countdown Timer Handler
+        const startTime = item.startTime || Date.now();
+        const endTime = startTime + (5 * 60 * 1000); // 5 minutes duration
+
+        timerIntervals[key] = setInterval(() => {
+          const now = Date.now();
+          const distance = endTime - now;
+
+          if (distance <= 0) {
+            clearInterval(timerIntervals[key]);
+            const timerElem = document.getElementById(`timer-${key}`);
+            if (timerElem) timerElem.innerText = "Time Ended!";
+            
+            const bidCtrls = document.getElementById(`bidControls-${key}`);
+            if (bidCtrls) bidCtrls.style.display = 'none';
+          } else {
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const timerElem = document.getElementById(`timer-${key}`);
+            if (timerElem) {
+              timerElem.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            }
+          }
+        }, 1000);
+
+      });
+    });
+
+    // 5. SUBMIT BID FUNCTION
+    window.submitBid = function(boliId, newAmount) {
+      const itemRef = ref(db, `liveBoli/${boliId}`);
+      runTransaction(itemRef, (item) => {
+        if (item) {
+          const currentMax = item.currentBid || item.startingPrice || 0;
+          if (newAmount > currentMax) {
+            item.currentBid = newAmount;
+            item.highestBidderId = userId;
+            item.highestBidderName = currentUserName;
+          }
+        }
+        return item;
+      }).then(() => {
+        alert(`Aap ki Rs. ${newAmount} ki Boli lag gayi hai!`);
+      }).catch((err) => {
+        console.error("Bid error: ", err);
+      });
+    };
+
+    // 6. FILE PREVIEW CONVERSION
     let uploadedBase64 = "";
     document.getElementById('submitFileInput').addEventListener('change', (e) => {
       const file = e.target.files[0];
@@ -1036,7 +1202,7 @@
       }
     });
 
-    // 4. SUBMIT DESIGN TO ADMIN PANEL (Via FAB + Button)
+    // 7. SUBMIT DESIGN TO ADMIN PANEL
     document.getElementById('sendToAdminBtn').addEventListener('click', async () => {
       const title = document.getElementById('submitTitle').value.trim();
       const category = document.getElementById('submitCategory').value;
@@ -1061,106 +1227,17 @@
         category: category,
         imageUrl: finalImg,
         description: desc,
-        timestamp: Date.now(),
-        status: 'pending'
+        status: 'pending',
+        timestamp: Date.now()
       };
 
       try {
         await set(newSubRef, payload);
-        alert("Aap ka design kamyabi se admin panel ko bhej diya gaya hai!");
-        
-        // Reset Form
-        document.getElementById('submitTitle').value = '';
-        document.getElementById('submitImgUrl').value = '';
-        document.getElementById('submitDesc').value = '';
-        document.getElementById('submitFileInput').value = '';
-        document.getElementById('previewContainer').style.display = 'none';
-        uploadedBase64 = "";
-        
-        window.closeUploadModal();
-      } catch (err) {
-        alert("Bhejte waqt masla aya: " + err.message);
+        alert("Aapka design admin ko review ke liye bhej diya gaya hai!");
+        closeUploadModal();
+      } catch (e) {
+        alert("Submission fail hua. Dobara koshish karen.");
       }
-    });
-
-    // 5. LIVE VOTING SYSTEM (Gol Shakal Items + Realtime Voting)
-    const votingRef = ref(db, 'voting_items');
-    onValue(votingRef, (snapshot) => {
-      const container = document.getElementById('votingContainer');
-      container.innerHTML = '';
-
-      if (!snapshot.exists()) {
-        container.innerHTML = `<p style="font-size: 10px; color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 10px;">Filhal koi voting item active nahi hai.</p>`;
-        return;
-      }
-
-      const votingData = snapshot.val();
-      let hasUserVotedInAny = false;
-
-      // Check if user has already voted for ANY active item
-      Object.keys(votingData).forEach((key) => {
-        const item = votingData[key];
-        if (item.voters && item.voters[userId]) {
-          hasUserVotedInAny = true;
-        }
-      });
-
-      Object.keys(votingData).forEach((key) => {
-        const item = votingData[key];
-        const defaultImg = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
-        const votes = item.votesCount || 0;
-        const isVotedByMe = item.voters && item.voters[userId];
-
-        const card = document.createElement('div');
-        card.className = 'voting-card';
-        card.innerHTML = `
-          <div class="voting-img-wrapper">
-            <img src="${item.imageUrl || defaultImg}" alt="${item.title || 'Design'}" onerror="this.src='${defaultImg}'" />
-          </div>
-          <span class="creator-tag">By: ${item.creatorName || 'User'}</span>
-          <span class="voting-title">${item.title || 'Logo'}</span>
-          <div class="vote-count-badge">
-            <i class="fa-solid fa-heart"></i> ${votes} Votes
-          </div>
-          <button class="vote-action-btn" id="voteBtn_${key}" ${hasUserVotedInAny ? 'disabled' : ''}>
-            <i class="fa-solid ${isVotedByMe ? 'fa-check' : 'fa-thumbs-up'}"></i>
-            ${isVotedByMe ? 'Voted' : (hasUserVotedInAny ? 'Already Voted' : 'Vote Now')}
-          </button>
-        `;
-
-        // Vote Click Listener
-        const btn = card.querySelector(`#voteBtn_${key}`);
-        btn.addEventListener('click', () => {
-          if (hasUserVotedInAny) {
-            alert("Aap pehle hi ek item ko vote de chuke hain! Naya contest aane tak aap doosra vote nahi de sakte.");
-            return;
-          }
-
-          const targetRef = ref(db, `voting_items/${key}`);
-          runTransaction(targetRef, (currentItem) => {
-            if (currentItem) {
-              if (!currentItem.voters) {
-                currentItem.voters = {};
-              }
-              if (currentItem.voters[userId]) {
-                // Already voted check
-                return;
-              }
-              currentItem.votesCount = (currentItem.votesCount || 0) + 1;
-              currentItem.voters[userId] = true;
-            }
-            return currentItem;
-          }).then((res) => {
-            if (res.committed) {
-              alert("Aap ka vote kamyabi se shamil ho gaya hai!");
-            }
-          }).catch((err) => {
-            alert("Vote karne me error: " + err.message);
-          });
-        });
-
-        container.appendChild(card);
-      });
     });
   </script>
 </body>

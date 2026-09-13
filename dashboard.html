@@ -89,6 +89,25 @@
       gap: 6px;
     }
 
+    .how-work-btn {
+      background: #e0f2fe;
+      color: #0284c7;
+      border: 1px solid #bae6fd;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .how-work-btn:active {
+      transform: scale(0.95);
+    }
+
     .helpline-btn {
       background: #ecfdf5;
       color: #10b981;
@@ -613,6 +632,29 @@
 
     .helpline-info-text strong { font-size: 11px; }
     .helpline-info-text span { font-size: 9.5px; color: var(--text-muted); }
+
+    /* HOW WORK STEPS */
+    .how-work-step {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px;
+      margin-top: 8px;
+      text-align: left;
+    }
+    .how-work-step h5 {
+      font-size: 11px;
+      color: var(--primary);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .how-work-step p {
+      font-size: 10px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body>
@@ -626,6 +668,10 @@
     <div class="brand-title">SEW</div>
 
     <div class="nav-right-actions">
+      <button class="how-work-btn" onclick="openHowWorkModal()">
+        <i class="fa-solid fa-circle-question"></i> How work
+      </button>
+
       <button class="helpline-btn" onclick="openHelplineModal()" title="Helpline Support">
         <i class="fa-solid fa-headset"></i>
       </button>
@@ -699,11 +745,7 @@
         </h3>
 
         <!-- CIRCLE LOGOS / DESIGNS GRID -->
-        <div class="circle-products-grid" id="productsContainer">
-          <p style="font-size: 10px; color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 10px;">
-            Loading items...
-          </p>
-        </div>
+        <div class="circle-products-grid" id="productsContainer"></div>
       </section>
 
       <!-- LIVE CONTEST & VOTING SECTION -->
@@ -716,11 +758,7 @@
           <span class="live-badge"><i class="fa-solid fa-circle"></i> LIVE</span>
         </div>
 
-        <div class="voting-grid" id="votingContainer">
-          <p style="font-size: 10px; color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 10px;">
-            Voting items loading...
-          </p>
-        </div>
+        <div class="voting-grid" id="votingContainer"></div>
       </section>
     </div>
 
@@ -734,11 +772,7 @@
         <span class="live-badge"><i class="fa-solid fa-circle"></i> BOLI ACTIVE</span>
       </div>
 
-      <div id="boliCardsContainer">
-        <p style="font-size: 11px; color: var(--text-muted); text-align: center; padding: 15px;">
-          Live Boli Designs load ho rahe hain...
-        </p>
-      </div>
+      <div id="boliCardsContainer"></div>
     </section>
 
   </div>
@@ -747,6 +781,37 @@
   <button class="fab-upload-btn" onclick="openUploadModal()" title="Admin Ko Apni Cheez Bhejen">
     <i class="fa-solid fa-plus"></i>
   </button>
+
+  <!-- HOW WORK MODAL -->
+  <div class="modal-overlay" id="howWorkModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeHowWorkModal()">✕</button>
+      
+      <h3 style="font-size:13px; font-weight:800; text-transform:uppercase; margin-bottom:6px; color:var(--primary);">
+        <i class="fa-solid fa-circle-question"></i> How Work (Kaam Kaise Karta Hai)
+      </h3>
+      <p style="font-size: 10px; color: var(--text-muted); margin-bottom: 10px;">SEW Design & Voting Process</p>
+
+      <div class="how-work-step">
+        <h5><i class="fa-solid fa-1" style="color:var(--primary)"></i> Step 1: Design Banayein</h5>
+        <p>Aap pehle voting ke liye apna behtareen logo ya design bana kar upload karenge.</p>
+      </div>
+
+      <div class="how-work-step">
+        <h5><i class="fa-solid fa-2" style="color:var(--primary)"></i> Step 2: Live Voting</h5>
+        <p>Upload karne ke baad aapka design voting section par jaega jahan users is par vote karenge.</p>
+      </div>
+
+      <div class="how-work-step">
+        <h5><i class="fa-solid fa-3" style="color:var(--primary)"></i> Step 3: Live Boli & Selling</h5>
+        <p>Jis design ke sabse zyada votes honge, wo design Boli (Auction) par jaega aur aapka design sell ho jaiga!</p>
+      </div>
+
+      <button class="download-btn" onclick="speakHowWorkText()" style="margin-top: 12px;">
+        <i class="fa-solid fa-volume-high"></i> Voice Sunen (Play Audio)
+      </button>
+    </div>
+  </div>
 
   <!-- USER SUBMISSION MODAL -->
   <div class="modal-overlay" id="uploadModal">
@@ -910,6 +975,29 @@
     function closeUploadModal() {
       document.getElementById('uploadModal').style.display = 'none';
     }
+
+    function openHowWorkModal() {
+      document.getElementById('howWorkModal').style.display = 'flex';
+      speakHowWorkText();
+    }
+
+    function closeHowWorkModal() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      document.getElementById('howWorkModal').style.display = 'none';
+    }
+
+    function speakHowWorkText() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const speechText = "Pehle aap voting ke liye design banaoge, phir aapka design voting par jaega. Phir is par boli lagegi aur aapka design sell hoga. Jiske zyada voting hogi, wahi boli par jaega.";
+        const utterance = new SpeechSynthesisUtterance(speechText);
+        utterance.lang = 'hi-IN'; // Roman Urdu/Hindi clear pronunciation
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
   </script>
 
   <!-- FIREBASE INTEGRATION & REALTIME LOGIC SCRIPT -->
@@ -982,15 +1070,14 @@
       }
     });
 
-    // 2. REALTIME LOGOS & DESIGNS SYSTEM
+    // 2. REALTIME LOGOS & DESIGNS SYSTEM (If no design, show nothing)
     const productsRef = ref(db, 'products');
     onValue(productsRef, (snapshot) => {
       const container = document.getElementById('productsContainer');
       container.innerHTML = '';
 
       if (!snapshot.exists()) {
-        container.innerHTML = `<p style="font-size: 10px; color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 10px;">Koi design majood nahi hai.</p>`;
-        return;
+        return; // Empty if no designs
       }
 
       const productsData = snapshot.val();
@@ -1033,9 +1120,7 @@
       });
     });
 
-    // ========================================================
     // 3. ADMIN TOGGLE FOR LIVE BOLI & AUCTION SYSTEM
-    // ========================================================
     const boliStateRef = ref(db, 'systemState/boliActive');
     onValue(boliStateRef, (snapshot) => {
       const isBoliActive = snapshot.exists() ? snapshot.val() : false;
@@ -1051,7 +1136,7 @@
       }
     });
 
-    // 4. REALTIME BOLI / AUCTION SYSTEM (TOP 10 DESIGNS + 5 MIN TIMER + BIDDING)
+    // 4. REALTIME BOLI / AUCTION SYSTEM (If no items, show nothing)
     const boliRef = ref(db, 'liveBoli');
     let timerIntervals = {};
 
@@ -1060,185 +1145,135 @@
       container.innerHTML = '';
 
       if (!snapshot.exists()) {
-        container.innerHTML = `<p style="font-size:11px; color:var(--text-muted); text-align:center; padding:15px;">Filhal koi Boli active nahi hai.</p>`;
-        return;
+        return; // Empty if no live Boli items
       }
 
       const boliData = snapshot.val();
       const keys = Object.keys(boliData).slice(0, 10); // Top 10 designs
 
       // Clear existing interval timers
-      Object.keys(timerIntervals).forEach(k => clearInterval(timerIntervals[k]));
+      Object.keys(timerIntervals).forEach(key => clearInterval(timerIntervals[key]));
 
       keys.forEach((key) => {
-        const item = boliData[key];
-        const defaultImg = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
-        
-        const currentPrice = item.currentBid || item.startingPrice || 100;
-        const highestBidder = item.highestBidderName || "Koi Nahi";
-        const isUserWinner = (item.highestBidderId === userId);
-
+        const boliItem = boliData[key];
         const card = document.createElement('div');
         card.className = 'boli-card';
 
-        const nextOption1 = currentPrice + 50;
-        const nextOption2 = currentPrice + 100;
-        const nextOption3 = currentPrice + 200;
+        const endTime = (boliItem.startTime || Date.now()) + (5 * 60 * 1000);
 
         card.innerHTML = `
           <div class="boli-header">
-            <span style="font-size:12px; font-weight:800; color:var(--text-main);">${item.title || 'Live Boli Design'}</span>
-            <div class="timer-badge">
-              <i class="fa-solid fa-clock"></i> <span id="timer-${key}">05:00</span>
+            <span style="font-weight:800; font-size:12px; color:var(--text-main);">${boliItem.title || 'Design Boli'}</span>
+            <div class="timer-badge" id="timer-${key}">
+              <i class="fa-solid fa-clock"></i> <span id="time-val-${key}">05:00</span>
             </div>
           </div>
-
           <div class="boli-body">
-            <img src="${item.imageUrl || defaultImg}" class="boli-img" alt="Boli Design" />
+            <img class="boli-img" src="${boliItem.imageUrl || 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'}" alt="Boli Image" />
             <div class="boli-info">
-              <span style="font-size:10px; color:var(--text-muted);">Starting Price: <strong>Rs. ${item.startingPrice || 100}</strong></span>
-              <span style="font-size:13px; font-weight:800; color:#16a34a;">Highest Bid: Rs. <span id="price-${key}">${currentPrice}</span></span>
-              <span style="font-size:10px; color:var(--primary); font-weight:700;">Top Bidder: ${highestBidder}</span>
+              <span style="font-size:10px; color:var(--text-muted)">Current Highest Bid:</span>
+              <strong style="font-size:16px; color:#16a34a;" id="bid-price-${key}">Rs. ${boliItem.highestBid || boliItem.basePrice || 100}</strong>
+              <span style="font-size:9.5px; color:var(--text-muted)">By: <span id="bidder-${key}">${boliItem.highestBidder || 'None'}</span></span>
             </div>
           </div>
-
-          <!-- Bidding Buttons -->
-          <div style="margin-top:4px;" id="bidControls-${key}">
-            <span style="font-size:10px; font-weight:700; color:var(--text-muted);">Apni Boli Lagayen (Tap Karen):</span>
-            <div class="bid-options-grid">
-              <button class="bid-btn" onclick="submitBid('${key}', ${nextOption1})">Rs. ${nextOption1}</button>
-              <button class="bid-btn" onclick="submitBid('${key}', ${nextOption2})">Rs. ${nextOption2}</button>
-              <button class="bid-btn" onclick="submitBid('${key}', ${nextOption3})">Rs. ${nextOption3}</button>
-            </div>
-          </div>
-
-          <!-- Winner EasyPaisa Payment Box (Only visible to highest bidder) -->
-          <div id="winnerBox-${key}" class="winner-payment-box" style="${isUserWinner ? 'display:block;' : 'display:none;'}">
-            <p style="font-size:11px; font-weight:800; color:#15803d; margin-bottom:4px;">
-              🎉 Aap Sab Se Ziada Bid Laga Chuke Hain!
-            </p>
-            <p style="font-size:11px; font-weight:700; color:#0f172a;">
-              <strong>03428051256 sajjad Ali</strong> es per <strong>Rs. ${currentPrice}</strong> easypaisa karo pir design unlock Hoga.
-            </p>
-            ${item.unlocked ? `
-              <button class="download-btn" style="margin-top:8px; background:#16a34a;" onclick="window.open('${item.hdUrl || item.imageUrl}', '_blank')">
-                <i class="fa-solid fa-download"></i> Download HD Quality Design
-              </button>
-            ` : `
-              <div style="font-size:10px; color:#d97706; margin-top:6px; font-weight:700;">
-                ⏳ Payment ke baad admin confirmation ka intezar karen...
-              </div>
-            `}
+          <div class="bid-options-grid">
+            <button class="bid-btn" data-add="50">+ Rs. 50</button>
+            <button class="bid-btn" data-add="100">+ Rs. 100</button>
+            <button class="bid-btn" data-add="200">+ Rs. 200</button>
           </div>
         `;
 
         container.appendChild(card);
 
-        // 5-Minute Countdown Timer Handler
-        const startTime = item.startTime || Date.now();
-        const endTime = startTime + (5 * 60 * 1000); // 5 minutes duration
+        // Bidding Handler
+        const bidBtns = card.querySelectorAll('.bid-btn');
+        bidBtns.forEach(btn => {
+          btn.onclick = () => {
+            const addAmount = parseInt(btn.getAttribute('data-add'));
+            const itemRef = ref(db, 'liveBoli/' + key);
+            runTransaction(itemRef, (current) => {
+              if (current) {
+                const currentBid = current.highestBid || current.basePrice || 100;
+                current.highestBid = currentBid + addAmount;
+                current.highestBidder = currentUserName;
+              }
+              return current;
+            });
+          };
+        });
 
+        // Timer Interval
+        const timerVal = card.querySelector(`#time-val-${key}`);
         timerIntervals[key] = setInterval(() => {
           const now = Date.now();
-          const distance = endTime - now;
-
-          if (distance <= 0) {
+          const diff = endTime - now;
+          if (diff <= 0) {
             clearInterval(timerIntervals[key]);
-            const timerElem = document.getElementById(`timer-${key}`);
-            if (timerElem) timerElem.innerText = "Time Ended!";
-            
-            const bidCtrls = document.getElementById(`bidControls-${key}`);
-            if (bidCtrls) bidCtrls.style.display = 'none';
+            timerVal.innerText = "ENDED";
+            card.querySelector('.bid-options-grid').innerHTML = `
+              <div class="winner-payment-box" style="grid-column: 1/-1;">
+                <strong style="font-size:11px; color:#15803d;"><i class="fa-solid fa-trophy"></i> Boli Completed! Winner: ${boliItem.highestBidder || 'N/A'}</strong>
+              </div>
+            `;
           } else {
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            const timerElem = document.getElementById(`timer-${key}`);
-            if (timerElem) {
-              timerElem.innerText = `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-            }
+            const mins = Math.floor(diff / 60000);
+            const secs = Math.floor((diff % 60000) / 1000);
+            timerVal.innerText = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
           }
         }, 1000);
-
       });
     });
 
-    // 5. SUBMIT BID FUNCTION
-    window.submitBid = function(boliId, newAmount) {
-      const itemRef = ref(db, `liveBoli/${boliId}`);
-      runTransaction(itemRef, (item) => {
-        if (item) {
-          const currentMax = item.currentBid || item.startingPrice || 0;
-          if (newAmount > currentMax) {
-            item.currentBid = newAmount;
-            item.highestBidderId = userId;
-            item.highestBidderName = currentUserName;
-          }
-        }
-        return item;
-      }).then(() => {
-        alert(`Aap ki Rs. ${newAmount} ki Boli lag gayi hai!`);
-      }).catch((err) => {
-        console.error("Bid error: ", err);
-      });
-    };
-
-    // 6. FILE PREVIEW CONVERSION
-    let uploadedBase64 = "";
-    document.getElementById('submitFileInput').addEventListener('change', (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        if (file.size > 2 * 1024 * 1024) {
-          alert("Tasveer ka size 2MB se kam hona chahiye!");
-          e.target.value = "";
-          return;
-        }
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-          uploadedBase64 = evt.target.result;
-          document.getElementById('imagePreview').src = uploadedBase64;
-          document.getElementById('previewContainer').style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-
-    // 7. SUBMIT DESIGN TO ADMIN PANEL
+    // Send Design to Admin Form Handler
     document.getElementById('sendToAdminBtn').addEventListener('click', async () => {
       const title = document.getElementById('submitTitle').value.trim();
       const category = document.getElementById('submitCategory').value;
-      const customUrl = document.getElementById('submitImgUrl').value.trim();
+      const imgUrl = document.getElementById('submitImgUrl').value.trim();
       const desc = document.getElementById('submitDesc').value.trim();
-
-      const finalImg = uploadedBase64 || customUrl || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+      const fileInput = document.getElementById('submitFileInput');
 
       if (!title) {
-        alert("Meherbani karke Title likhen!");
+        alert("Meharbani karke Title likhein!");
         return;
       }
 
-      const submissionsRef = ref(db, 'submissions');
-      const newSubRef = push(submissionsRef);
+      let finalImg = imgUrl;
 
-      const payload = {
-        id: newSubRef.key,
+      if (fileInput.files && fileInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          finalImg = e.target.result;
+          saveSubmission(title, category, finalImg, desc);
+        };
+        reader.readAsDataURL(fileInput.files[0]);
+      } else {
+        saveSubmission(title, category, finalImg, desc);
+      }
+    });
+
+    function saveSubmission(title, category, imageUrl, description) {
+      const submissionsRef = ref(db, 'adminSubmissions');
+      const newSubRef = push(submissionsRef);
+      set(newSubRef, {
         userId: userId,
         userName: currentUserName,
         title: title,
         category: category,
-        imageUrl: finalImg,
-        description: desc,
-        status: 'pending',
-        timestamp: Date.now()
-      };
-
-      try {
-        await set(newSubRef, payload);
-        alert("Aapka design admin ko review ke liye bhej diya gaya hai!");
+        imageUrl: imageUrl || '',
+        description: description || '',
+        timestamp: Date.now(),
+        status: 'pending'
+      }).then(() => {
+        alert("Aapka design Admin ko kamyabi se bheja ja chuka hai!");
         closeUploadModal();
-      } catch (e) {
-        alert("Submission fail hua. Dobara koshish karen.");
-      }
-    });
+        document.getElementById('submitTitle').value = '';
+        document.getElementById('submitImgUrl').value = '';
+        document.getElementById('submitDesc').value = '';
+        document.getElementById('submitFileInput').value = '';
+      }).catch((error) => {
+        alert("Error sending design: " + error.message);
+      });
+    }
   </script>
 </body>
 </html>

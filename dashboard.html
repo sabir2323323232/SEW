@@ -1,536 +1,546 @@
+
 <!DOCTYPE html>
-<html lang="ur">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Bhole & Voting System</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #4f46e5;
-            --success: #10b981;
-            --accent: #f59e0b;
-            --bg: #0f172a;
-            --card-bg: #1e293b;
-            --text: #f8fafc;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SEW - Earning Dashboard</title>
+  
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <style>
+    :root {
+      --bg-body: #f8fafc;
+      --card-bg: #ffffff;
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-soft: #eff6ff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.06);
+    }
 
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            padding: 15px;
-            max-width: 500px;
-            margin: 0 auto;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-        /* Top Header & Help Button */
-        .top-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #334155;
-        }
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+      background-color: var(--bg-body);
+    }
 
-        .btn-stylish {
-            background: linear-gradient(135deg, #6366f1, #4f46e5);
-            color: white;
-            border: none;
-            padding: 7px 14px;
-            font-size: 12px;
-            font-weight: bold;
-            border-radius: 20px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
+    body {
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-        .btn-stylish:active {
-            transform: scale(0.95);
-        }
+    /* NAVBAR */
+    .navbar {
+      background: #ffffff;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
 
-        .btn-amber {
-            background: linear-gradient(135deg, #f59e0b, #d97706);
-            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
-        }
+    .logout-btn {
+      background: #fef2f2;
+      color: #ef4444;
+      border: 1px solid #fee2e2;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 11px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
 
-        .btn-green {
-            background: linear-gradient(135deg, #10b981, #059669);
-            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
-        }
+    .brand-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 1.5px;
+    }
 
-        /* Main Navigation Buttons */
-        .nav-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
+    .nav-right-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-        /* Section Cards */
-        .section-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 15px;
-            margin-bottom: 20px;
-            border: 1px solid #334155;
-        }
+    .helpline-btn {
+      background: #ecfdf5;
+      color: #10b981;
+      border: 1px solid #a7f3d0;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
 
-        .section-title {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #94a3b8;
-        }
+    .profile-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--primary-soft);
+      padding: 4px 8px;
+      border-radius: 20px;
+      cursor: pointer;
+      border: 1px solid #dbeafe;
+    }
 
-        /* Circular Task & Voting Items */
-        .circle-grid {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding: 5px 0;
-        }
+    .avatar {
+      width: 22px;
+      height: 22px;
+      background: var(--primary);
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 11px;
+    }
 
-        .circle-item {
-            flex: 0 0 auto;
-            width: 100px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-        }
+    .user-name-short {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--primary);
+      max-width: 70px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-        .circle-img-wrap {
-            width: 75px;
-            height: 75px;
-            border-radius: 50%;
-            border: 2px solid var(--primary);
-            margin: 0 auto 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #0f172a;
-            position: relative;
-            overflow: hidden;
-        }
+    /* MAIN CONTAINER */
+    .container {
+      max-width: 500px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 12px 10px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-        .circle-img-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+    /* EARNING SECTION */
+    .earning-section {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 12px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
 
-        .badge-free {
-            position: absolute;
-            top: 0;
-            right: 5px;
-            background: var(--success);
-            color: white;
-            font-size: 9px;
-            font-weight: bold;
-            padding: 2px 6px;
-            border-radius: 10px;
-        }
+    .balance-card {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+      border-radius: 10px;
+      padding: 12px 14px;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+    }
 
-        .item-label {
-            font-size: 11px;
-            font-weight: 600;
-            line-height: 1.2;
-            color: var(--text);
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
+    .balance-info p {
+      font-size: 10px;
+      opacity: 0.9;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
-        .vote-count {
-            font-size: 10px;
-            color: #f59e0b;
-            margin-top: 3px;
-        }
+    .balance-amount {
+      font-size: 20px;
+      font-weight: 800;
+    }
 
-        /* Action Footer Buttons */
-        .action-row {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 15px;
-        }
+    .balance-icon {
+      font-size: 18px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(4px);
+      padding: 8px 12px;
+      border-radius: 8px;
+    }
 
-        /* Modals / Popups */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
+    /* EARNING GRID */
+    .earning-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
 
-        .modal-content {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 20px;
-            width: 100%;
-            max-width: 400px;
-            border: 1px solid #475569;
-            max-height: 85vh;
-            overflow-y: auto;
-        }
+    @media (min-width: 400px) {
+      .earning-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: 4px;
+      }
+    }
 
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
+    .earn-btn {
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 10px 4px;
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-weight: 700;
+      font-size: 9px;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.2s;
+    }
 
-        .close-btn {
-            background: none;
-            border: none;
-            color: #94a3b8;
-            font-size: 18px;
-            cursor: pointer;
-        }
+    .earn-btn:active, .earn-btn:hover {
+      transform: translateY(-2px);
+      background: var(--primary-soft);
+      border-color: #dbeafe;
+    }
 
-        /* Urdu Text Formatting */
-        .urdu-text {
-            direction: rtl;
-            text-align: right;
-            line-height: 1.8;
-            font-size: 13px;
-            color: #cbd5e1;
-        }
+    .earn-btn i {
+      font-size: 14px;
+      color: var(--primary);
+    }
 
-        .payment-box {
-            background: #0f172a;
-            border: 1px dashed var(--accent);
-            padding: 12px;
-            border-radius: 10px;
-            margin: 10px 0;
-            text-align: center;
-        }
+    /* MODALS */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(3px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 200;
+      padding: 12px;
+    }
 
-        input[type="text"], input[type="file"] {
-            width: 100%;
-            padding: 8px;
-            margin: 8px 0;
-            border-radius: 8px;
-            border: 1px solid #475569;
-            background: #0f172a;
-            color: white;
-        }
-    </style>
+    .modal-box {
+      background: #ffffff;
+      width: 100%;
+      max-width: 420px;
+      border-radius: 16px;
+      padding: 16px;
+      position: relative;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: #f1f5f9;
+      border: none;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .modal-avatar {
+      width: 48px; height: 48px;
+      background: var(--primary);
+      color: #ffffff;
+      font-size: 18px; font-weight: 800;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 8px auto;
+    }
+
+    .detail-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 11px;
+    }
+
+    /* HELPLINE */
+    .helpline-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #f8fafc;
+      border: 1px solid var(--border-color);
+      padding: 10px 12px;
+      border-radius: 10px;
+      margin-top: 8px;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: all 0.2s;
+    }
+
+    .helpline-option:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+
+    .helpline-icon-box {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #ffffff;
+    }
+
+    .helpline-whatsapp { background: #25D366; }
+    .helpline-email { background: #ea4335; }
+
+    .helpline-info-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .helpline-info-text strong { font-size: 11px; }
+    .helpline-info-text span { font-size: 9.5px; color: var(--text-muted); }
+  </style>
 </head>
 <body>
 
-    <!-- Top Header -->
-    <div class="top-header">
-        <h2 style="font-size: 16px;">Dashboard</h2>
-        <button class="btn-stylish btn-amber" onclick="openModal('helpModal')">
-            <i class="fas fa-question-circle"></i> How Work / Free Helpline
-        </button>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <button class="logout-btn" onclick="handleLogout()">
+      <i class="fa-solid fa-right-from-bracket"></i> Logout
+    </button>
+
+    <div class="brand-title">SEW</div>
+
+    <div class="nav-right-actions">
+      <button class="helpline-btn" onclick="openHelplineModal()" title="Helpline Support">
+        <i class="fa-solid fa-headset"></i>
+      </button>
+
+      <div class="profile-pill" onclick="openProfileModal()">
+        <div class="avatar" id="navAvatar">U</div>
+        <span class="user-name-short" id="navUserName">User</span>
+      </div>
     </div>
+  </header>
 
-    <!-- Main Navigation (Only Affiliate & Ads) -->
-    <div class="nav-buttons">
-        <button class="btn-stylish" onclick="alert('Affiliate System Active')">
-            <i class="fas fa-link"></i> Affiliate
-        </button>
-        <button class="btn-stylish btn-green" onclick="alert('Ads Watch Active')">
-            <i class="fas fa-play-circle"></i> Ads Watch
-        </button>
+  <div class="container">
+
+    <!-- EARNING SECTION -->
+    <section class="earning-section">
+      <div class="balance-card">
+        <div class="balance-info">
+          <p>Total Balance</p>
+          <div class="balance-amount" id="userBalance">Rs. 0.00</div>
+        </div>
+        <div class="balance-icon">
+          <i class="fa-solid fa-wallet"></i>
+        </div>
+      </div>
+
+      <div class="earning-grid">
+        <div class="earn-btn" onclick="navigateTo('free-ads.html')">
+          <i class="fa-solid fa-rectangle-ad"></i>
+          <span>Free Ads</span>
+        </div>
+
+        <div class="earn-btn" onclick="navigateTo('task.html')">
+          <i class="fa-solid fa-list-check"></i>
+          <span>Task</span>
+        </div>
+
+        <div class="earn-btn" onclick="navigateTo('referral.html')">
+          <i class="fa-solid fa-users"></i>
+          <span>Referral</span>
+        </div>
+
+        <div class="earn-btn" onclick="navigateTo('gmail-selling.html')">
+          <i class="fa-solid fa-envelope"></i>
+          <span>Gmail</span>
+        </div>
+
+        <div class="earn-btn" onclick="navigateTo('withdraw.html')">
+          <i class="fa-solid fa-money-bill-transfer"></i>
+          <span>Withdraw</span>
+        </div>
+
+        <div class="earn-btn" onclick="navigateTo('free-jobs.html')">
+          <i class="fa-solid fa-briefcase"></i>
+          <span>Jobs</span>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- HELPLINE MODAL -->
+  <div class="modal-overlay" id="helplineModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeHelplineModal()">✕</button>
+      
+      <h3 style="font-size:13px; font-weight:800; text-transform:uppercase; margin-bottom:4px; color:var(--primary);">
+        <i class="fa-solid fa-headset"></i> Support & Helpline
+      </h3>
+      <p style="font-size: 10px; color: var(--text-muted); margin-bottom: 8px;">Contact us directly for support & queries</p>
+
+      <a href="https://wa.me/923179774920" target="_blank" class="helpline-option">
+        <div class="helpline-icon-box helpline-whatsapp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </div>
+        <div class="helpline-info-text">
+          <strong>WhatsApp Helpline</strong>
+          <span>03179774920</span>
+        </div>
+      </a>
+
+      <a href="mailto:sabirkhansadre@gmail.com" target="_blank" class="helpline-option">
+        <div class="helpline-icon-box helpline-email">
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+        <div class="helpline-info-text">
+          <strong>Official Email Support</strong>
+          <span>sabirkhansadre@gmail.com</span>
+        </div>
+      </a>
     </div>
+  </div>
 
-    <!-- Active Tasks Section (Daily Task uploaded by Admin) -->
-    <div class="section-card">
-        <div class="section-title">
-            <span><i class="fas fa-tasks"></i> Today's Task (1 Day Only)</span>
-        </div>
-        <div class="circle-grid" id="taskList">
-            <!-- Dynamic Task Circles from Admin Panel -->
-        </div>
+  <!-- PROFILE MODAL -->
+  <div class="modal-overlay" id="profileModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeProfileModal()">✕</button>
+      
+      <div style="text-align: center; margin-bottom: 10px;">
+        <div class="modal-avatar" id="modalAvatar">U</div>
+        <h4 id="modalFullName" style="font-size: 13px; font-weight: 800;">User Name</h4>
+        <p id="modalUsername" style="font-size: 10px; color: var(--text-muted);">@username</p>
+      </div>
+
+      <div class="detail-item"><span style="color:var(--text-muted)">Mobile:</span> <strong id="modalMobile">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Email:</span> <strong id="modalEmail">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">City:</span> <strong id="modalCity">-</strong></div>
+      <div class="detail-item"><span style="color:var(--text-muted)">Country:</span> <strong id="modalCountry">-</strong></div>
     </div>
+  </div>
 
-    <!-- Voting Section -->
-    <div class="section-card">
-        <div class="section-title">
-            <span><i class="fas fa-poll"></i> User Submissions & Voting</span>
-        </div>
-        <div class="circle-grid" id="votingList">
-            <!-- Dynamic Voting Items uploaded by Admin -->
-        </div>
+  <!-- GLOBAL HELPER FUNCTIONS -->
+  <script>
+    function navigateTo(pageUrl) {
+      if (!pageUrl) return;
+      window.location.href = pageUrl;
+    }
 
-        <!-- Action Row -->
-        <div class="action-row">
-            <button class="btn-stylish btn-amber" style="width: 100%; justify-content: center;" onclick="openModal('bholeModal')">
-                <i class="fas fa-gavel"></i> Upload Bhole Request (Rs. 20)
-            </button>
-        </div>
-    </div>
+    function handleLogout() {
+      localStorage.removeItem('sew_session');
+      window.location.replace("index.html");
+    }
 
-    <!-- Control Toggle for Demo Admin Simulation -->
-    <div style="text-align: center; margin-top: 20px;">
-        <button class="btn-stylish" style="background: #334155;" onclick="openModal('adminModal')">
-            <i class="fas fa-cog"></i> Admin Control Panel
-        </button>
-    </div>
+    function openProfileModal() {
+      document.getElementById('profileModal').style.display = 'flex';
+    }
 
-    <!-- MODAL 1: Urdu Help Line -->
-    <div class="modal" id="helpModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>طریقہ کار (How it Works)</h3>
-                <button class="close-btn" onclick="closeModal('helpModal')">&times;</button>
-            </div>
-            <div class="urdu-text">
-                <p><strong>1. روزانہ کا ٹاسک:</strong> ایڈمن ڈیش بورڈ پر ٹاسک (جیسے لوگو بنانا) اپ لوڈ کرے گا۔ یہ بالکل <strong>Free</strong> ہوتا ہے۔</p>
-                <p><strong>2. کام جمع کروانا:</strong> ٹاسک پر کلک کر کے تفصیل دیکھیں اور <strong>(+)</strong> بٹن پر کلک کر کے اپنا بنایا ہوا لوگو اپ لوڈ کریں۔</p>
-                <p><strong>3. ووٹنگ سسٹم:</strong> 1 دن کے بعد اپ لوڈ کردہ ڈیزائنز یہاں ووٹنگ کے لیے شو ہوں گے۔ ایک صارف صرف ایک ووٹ دے سکتا ہے۔</p>
-                <p><strong>4. بھول (Bhole) ریکویسٹ:</strong> جس صارف کے ووٹ کم ہوں وہ <strong>Rs. 20</strong> فیس ادا کر کے بھول ریکویسٹ بھیج سکتا ہے۔</p>
-                <p><strong>5. بولی کی تفصیلات:</strong> بھول بولی ہر رات 10:00 بجے شروع ہوگی اور 3 دن تک چلے گی۔ زیادہ ووٹ یا بہترین ڈیزائن والے ٹاپ 10 لوگوں کو منتخب کیا جائے گا۔</p>
-            </div>
-        </div>
-    </div>
+    function closeProfileModal() {
+      document.getElementById('profileModal').style.display = 'none';
+    }
 
-    <!-- MODAL 2: Task Details & User Upload -->
-    <div class="modal" id="taskDetailModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 id="modalTaskTitle">Task Details</h3>
-                <button class="close-btn" onclick="closeModal('taskDetailModal')">&times;</button>
-            </div>
-            <p id="modalTaskDesc" style="font-size: 13px; color: #94a3b8; margin-bottom: 15px;"></p>
-            
-            <div style="border-top: 1px solid #334155; padding-top: 15px;">
-                <label style="font-size: 12px;">Upload Your Created Work:</label>
-                <input type="file" id="userWorkInput" accept="image/*">
-                <button class="btn-stylish btn-green" style="width: 100%; margin-top: 10px; justify-content: center;" onclick="submitUserWork()">
-                    <i class="fas fa-plus"></i> Submit Work to Admin
-                </button>
-            </div>
-        </div>
-    </div>
+    function openHelplineModal() {
+      document.getElementById('helplineModal').style.display = 'flex';
+    }
 
-    <!-- MODAL 3: Bhole Request (Rs 20) -->
-    <div class="modal" id="bholeModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Request Bhole Entry</h3>
-                <button class="close-btn" onclick="closeModal('bholeModal')">&times;</button>
-            </div>
-            <p style="font-size: 12px; color: #94a3b8;">اگر آپ کے ووٹ کم ہیں تو Rs. 20 ادا کر کے بھول میں شامل ہو سکتے ہیں۔</p>
-            
-            <div class="payment-box">
-                <p style="font-size: 11px; color: #f59e0b;">Easypaisa Payment Method</p>
-                <p style="font-size: 14px; font-weight: bold; margin: 4px 0;">03329553010</p>
-                <p style="font-size: 12px;">Mohamed Rashid</p>
-                <p style="font-size: 10px; color: #94a3b8; margin-top: 5px;">Charges: Rs. 20 | Start Time: 10:00 PM (3 Days)</p>
-            </div>
+    function closeHelplineModal() {
+      document.getElementById('helplineModal').style.display = 'none';
+    }
+  </script>
 
-            <input type="text" id="trxIdInput" placeholder="Enter Easypaisa Transaction ID (Trx ID)">
-            <button class="btn-stylish btn-amber" style="width: 100%; justify-content: center; margin-top: 8px;" onclick="submitBholeRequest()">
-                Send Bhole Request
-            </button>
-        </div>
-    </div>
+  <!-- FIREBASE INTEGRATION & USER DATA SCRIPT -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-    <!-- MODAL 4: Admin Control Simulation -->
-    <div class="modal" id="adminModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Admin Control Panel</h3>
-                <button class="close-btn" onclick="closeModal('adminModal')">&times;</button>
-            </div>
-            
-            <div style="margin-bottom: 15px;">
-                <h4 style="font-size: 12px; color: #f59e0b; margin-bottom: 5px;">1. Add New Task</h4>
-                <input type="text" id="adminTaskTitle" placeholder="Task Title (e.g. Create Furniture Shop Logo)">
-                <input type="text" id="adminTaskDesc" placeholder="Task Instructions Details">
-                <button class="btn-stylish" onclick="adminAddTask()">Publish Task (1 Day)</button>
-            </div>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
+      authDomain: "newweb-d50af.firebaseapp.com",
+      databaseURL: "https://newweb-d50af-default-rtdb.firebaseio.com",
+      projectId: "newweb-d50af",
+      storageBucket: "newweb-d50af.firebasestorage.app",
+      messagingSenderId: "358603295768",
+      appId: "1:358603295768:web:82a9666514a7cb468c476d"
+    };
 
-            <div style="border-top: 1px solid #334155; padding-top: 15px;">
-                <h4 style="font-size: 12px; color: #10b981; margin-bottom: 5px;">2. Publish User Entry for Voting</h4>
-                <input type="text" id="adminUserName" placeholder="User / Entry Name">
-                <button class="btn-stylish btn-green" onclick="adminAddVotingItem()">Add to Voting</button>
-            </div>
-        </div>
-    </div>
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
 
-    <script>
-        // Data State Management
-        let tasks = JSON.parse(localStorage.getItem('app_tasks')) || [
-            { id: 1, title: "Create Furniture Shop Logo", desc: "Design a modern circular logo for 'Furniture Hub'. Make it stylish with brown/gold accents." }
-        ];
+    // SESSION VERIFICATION
+    const rawSession = localStorage.getItem('sew_session');
+    if (!rawSession) {
+      window.location.replace("index.html");
+    }
 
-        let votingItems = JSON.parse(localStorage.getItem('app_votes')) || [
-            { id: 1, name: "Ali Ahmed Logo", votes: 12, img: "https://via.placeholder.com/150/4f46e5/ffffff?text=Logo+1" },
-            { id: 2, name: "Usman Design", votes: 19, img: "https://via.placeholder.com/150/10b981/ffffff?text=Logo+2" }
-        ];
+    const sessionData = JSON.parse(rawSession || '{}');
+    const userId = sessionData.uid || sessionData.username || sessionData.key;
 
-        let userHasVoted = localStorage.getItem('user_has_voted') === 'true';
+    // RENDER USER PROFILE DATA
+    function renderUserUI(data) {
+      if (!data) return;
+      const displayTitle = data.fullName || data.username || "User";
+      document.getElementById('navUserName').innerText = displayTitle;
+      const initial = displayTitle.charAt(0).toUpperCase();
+      document.getElementById('navAvatar').innerText = initial;
+      document.getElementById('userBalance').innerText = "Rs. " + (data.balance || "0.00");
 
-        // Render Functions
-        function renderTasks() {
-            const list = document.getElementById('taskList');
-            list.innerHTML = '';
-            
-            if (tasks.length === 0) {
-                list.innerHTML = `<p style="font-size: 11px; color: #64748b;">No active tasks today.</p>`;
-                return;
-            }
+      document.getElementById('modalAvatar').innerText = initial;
+      document.getElementById('modalFullName').innerText = data.fullName || "User";
+      document.getElementById('modalUsername').innerText = "@" + (data.username || "");
+      document.getElementById('modalMobile').innerText = data.mobile || "N/A";
+      document.getElementById('modalEmail').innerText = data.email || "N/A";
+      document.getElementById('modalCity').innerText = data.city || "N/A";
+      document.getElementById('modalCountry').innerText = data.country || "N/A";
+    }
 
-            tasks.forEach(task => {
-                list.innerHTML += `
-                    <div class="circle-item" onclick="openTaskDetail(${task.id})">
-                        <div class="circle-img-wrap">
-                            <i class="fas fa-paint-brush" style="font-size: 24px; color: #6366f1;"></i>
-                            <span class="badge-free">FREE</span>
-                        </div>
-                        <div class="item-label">${task.title}</div>
-                    </div>
-                `;
-            });
+    // INITIAL SETUP FROM SESSION
+    renderUserUI(sessionData);
+
+    // REALTIME USER DATA LISTENER
+    if (userId) {
+      const userRef = ref(db, 'users/' + userId);
+      onValue(userRef, (snapshot) => {
+        if (snapshot.exists()) {
+          const liveData = snapshot.val();
+          renderUserUI(liveData);
         }
-
-        function renderVoting() {
-            const list = document.getElementById('votingList');
-            list.innerHTML = '';
-
-            if (votingItems.length === 0) {
-                list.innerHTML = `<p style="font-size: 11px; color: #64748b;">Voting session ended or empty.</p>`;
-                return;
-            }
-
-            votingItems.forEach(item => {
-                list.innerHTML += `
-                    <div class="circle-item" onclick="castVote(${item.id})">
-                        <div class="circle-img-wrap" style="border-color: #f59e0b;">
-                            <img src="${item.img}" alt="${item.name}">
-                        </div>
-                        <div class="item-label">${item.name}</div>
-                        <div class="vote-count"><i class="fas fa-thumbs-up"></i> ${item.votes} Votes</div>
-                    </div>
-                `;
-            });
-        }
-
-        // Voting Mechanism
-        function castVote(itemId) {
-            if (userHasVoted) {
-                alert("آپ ایک ہی بار ووٹ دے سکتے ہیں! آئندہ راؤنڈ کا انتظار کریں۔");
-                return;
-            }
-
-            const item = votingItems.find(v => v.id === itemId);
-            if (item) {
-                item.votes += 1;
-                userHasVoted = true;
-                localStorage.setItem('user_has_voted', 'true');
-                localStorage.setItem('app_votes', JSON.stringify(votingItems));
-                renderVoting();
-                alert(`آپ کا ووٹ "${item.name}" کو کامیابی سے مل گیا ہے!`);
-            }
-        }
-
-        // Task Detail & Submissions
-        let currentTaskId = null;
-        function openTaskDetail(id) {
-            const task = tasks.find(t => t.id === id);
-            if (task) {
-                currentTaskId = id;
-                document.getElementById('modalTaskTitle').innerText = task.title;
-                document.getElementById('modalTaskDesc').innerText = task.desc;
-                openModal('taskDetailModal');
-            }
-        }
-
-        function submitUserWork() {
-            const fileInput = document.getElementById('userWorkInput');
-            if (!fileInput.files[0]) {
-                alert("براہ کرم اپنی بنائی ہوئی فائل کا انتخاب کریں۔");
-                return;
-            }
-            alert("آپ کا ورک ایڈمن کو بھیج دیا گیا ہے! ریویو کے بعد ووٹنگ لسٹ میں ایڈ ہو جائے گا۔");
-            fileInput.value = '';
-            closeModal('taskDetailModal');
-        }
-
-        // Bhole Request Submission
-        function submitBholeRequest() {
-            const trxId = document.getElementById('trxIdInput').value.trim();
-            if (!trxId) {
-                alert("براہ کرم ایزی پیسہ Trx ID درج کریں۔");
-                return;
-            }
-            alert("آپ کی Rs. 20 بھول درخواست موصول ہو گئی ہے۔ رات 10:00 بجے ٹاپ 10 لسٹ چیک کریں۔");
-            document.getElementById('trxIdInput').value = '';
-            closeModal('bholeModal');
-        }
-
-        // Admin Functions
-        function adminAddTask() {
-            const title = document.getElementById('adminTaskTitle').value.trim();
-            const desc = document.getElementById('adminTaskDesc').value.trim();
-
-            if (!title) return alert("Enter task title");
-
-            const newTask = { id: Date.now(), title, desc };
-            tasks.push(newTask);
-            localStorage.setItem('app_tasks', JSON.stringify(tasks));
-            renderTasks();
-            alert("ٹاسک ڈیش بورڈ پر اپ لوڈ ہو گیا ہے!");
-            closeModal('adminModal');
-        }
-
-        function adminAddVotingItem() {
-            const name = document.getElementById('adminUserName').value.trim();
-            if (!name) return alert("Enter User Name");
-
-            const newItem = {
-                id: Date.now(),
-                name,
-                votes: 0,
-                img: `https://via.placeholder.com/150/f59e0b/ffffff?text=${encodeURIComponent(name)}`
-            };
-
-            votingItems.push(newItem);
-            localStorage.setItem('app_votes', JSON.stringify(votingItems));
-            renderVoting();
-            alert("ووٹنگ آئٹم ایڈ ہو گیا ہے!");
-            closeModal('adminModal');
-        }
-
-        // Modal Helpers
-        function openModal(id) {
-            document.getElementById(id).style.display = 'flex';
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
-        }
-
-        // Initialize App
-        renderTasks();
-        renderVoting();
-    </script>
+      });
+    }
+  </script>
 </body>
 </html>

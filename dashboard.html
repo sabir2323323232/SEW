@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>SEW - Earning Dashboard</title>
+  <title>SEW - Earning & Design Dashboard</title>
   
   <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -44,6 +44,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      padding-bottom: 70px;
     }
 
     /* NAVBAR */
@@ -234,7 +235,7 @@
       color: var(--primary);
     }
 
-    /* PRODUCTS & NOTICE SECTION */
+    /* LOGOS & DESIGNS SECTION */
     .products-section {
       background: #ffffff;
       border-radius: 14px;
@@ -269,7 +270,23 @@
       gap: 6px;
     }
 
-    /* CIRCLE PRODUCTS GRID */
+    .live-badge {
+      font-size: 9px;
+      font-weight: 800;
+      background: #ef4444;
+      color: #ffffff;
+      padding: 2px 6px;
+      border-radius: 10px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    /* CIRCLE LOGOS GRID */
     .circle-products-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -323,6 +340,157 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+    }
+
+    /* LIVE VOTING GRID */
+    .voting-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .voting-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 10px 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 6px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .voting-img-wrapper {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      border: 3px solid var(--primary);
+      padding: 2px;
+      background: #ffffff;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.15);
+    }
+
+    .voting-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .creator-tag {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 2px 8px;
+      border-radius: 10px;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .voting-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-main);
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .vote-count-badge {
+      font-size: 11px;
+      font-weight: 800;
+      color: #ef4444;
+      background: #fef2f2;
+      padding: 2px 8px;
+      border-radius: 12px;
+      border: 1px solid #fee2e2;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .vote-action-btn {
+      width: 100%;
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+    }
+
+    .vote-action-btn:disabled {
+      background: #cbd5e1;
+      color: #64748b;
+      cursor: not-allowed;
+    }
+
+    /* FLOATING ACTION PLUS BUTTON */
+    .fab-upload-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      border: none;
+      font-size: 22px;
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 150;
+      transition: transform 0.2s;
+    }
+
+    .fab-upload-btn:active {
+      transform: scale(0.92);
+    }
+
+    /* FORM STYLES IN MODAL */
+    .form-group {
+      text-align: left;
+      margin-bottom: 10px;
+    }
+
+    .form-group label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-main);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 8px 10px;
+      font-size: 11px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      outline: none;
+      background: #f8fafc;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary);
+      background: #ffffff;
     }
 
     /* MODALS */
@@ -517,7 +685,7 @@
       </div>
     </section>
 
-    <!-- PRODUCT & NOTICE SECTION -->
+    <!-- LOGOS, THUMBNAILS & DESIGNS SECTION -->
     <section class="products-section">
       <!-- DYNAMIC DAYS NOTICE BOX (Editable by Admin) -->
       <div class="days-notice-box">
@@ -525,9 +693,12 @@
         <span id="daysNoticeText">Loading notice...</span>
       </div>
 
-      <h3 class="section-title"><i class="fa-solid fa-cubes-stacked" style="color:var(--primary)"></i> Products & Designs</h3>
+      <h3 class="section-title">
+        <i class="fa-solid fa-palette" style="color:var(--primary)"></i> 
+        Logos, Thumbnails & Designs
+      </h3>
 
-      <!-- CIRCLE LOGOS / PRODUCTS GRID -->
+      <!-- CIRCLE LOGOS / DESIGNS GRID -->
       <div class="circle-products-grid" id="productsContainer">
         <p style="font-size: 10px; color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 10px;">
           Loading items...
@@ -535,6 +706,79 @@
       </div>
     </section>
 
+    <!-- LIVE CONTEST & VOTING SECTION -->
+    <section class="products-section">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h3 class="section-title">
+          <i class="fa-solid fa-trophy" style="color:#f59e0b"></i> 
+          Live Contest & Voting
+        </h3>
+        <span class="live-badge"><i class="fa-solid fa-circle"></i> LIVE</span>
+      </div>
+
+      <!-- CIRCLE VOTING ITEMS GRID -->
+      <div class="voting-grid" id="votingContainer">
+        <p style="font-size: 10px; color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 10px;">
+          Voting items loading...
+        </p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FLOATING PLUS BUTTON TO SUBMIT DESIGN TO ADMIN -->
+  <button class="fab-upload-btn" onclick="openUploadModal()" title="Admin Ko Apni Cheez Bhejen">
+    <i class="fa-solid fa-plus"></i>
+  </button>
+
+  <!-- USER SUBMISSION MODAL -->
+  <div class="modal-overlay" id="uploadModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeUploadModal()">✕</button>
+      
+      <h3 style="font-size:13px; font-weight:800; text-transform:uppercase; margin-bottom:4px; color:var(--primary);">
+        <i class="fa-solid fa-paper-plane"></i> Admin Ko Design Bhejen
+      </h3>
+      <p style="font-size: 10px; color: var(--text-muted); margin-bottom: 12px;">Apna banaya hua logo ya thumbnail admin ko review ke liye bhejen</p>
+
+      <div class="form-group">
+        <label>Design Title / Naam</label>
+        <input type="text" id="submitTitle" class="form-control" placeholder="Maslan: My New Logo Design" />
+      </div>
+
+      <div class="form-group">
+        <label>Category Select Karen</label>
+        <select id="submitCategory" class="form-control">
+          <option value="Logo">Logo</option>
+          <option value="Thumbnail">Thumbnail</option>
+          <option value="Banner">Banner / Art</option>
+          <option value="Other">Other Design</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Tasveer Select Karen (File Upload)</label>
+        <input type="file" id="submitFileInput" class="form-control" accept="image/*" />
+      </div>
+
+      <div class="form-group">
+        <label>Ya Image Link Paste Karen (Optional)</label>
+        <input type="url" id="submitImgUrl" class="form-control" placeholder="https://..." />
+      </div>
+
+      <div class="form-group" id="previewContainer" style="display:none; text-align:center; margin-bottom:10px;">
+        <img id="imagePreview" src="" style="width:70px; height:70px; object-fit:cover; border-radius:50%; border:2px solid var(--primary);" alt="Preview" />
+      </div>
+
+      <div class="form-group">
+        <label>Details / Description</label>
+        <textarea id="submitDesc" class="form-control" rows="2" placeholder="Apne design ke baare me thora bataen..."></textarea>
+      </div>
+
+      <button id="sendToAdminBtn" class="download-btn" style="margin-top: 6px;">
+        <i class="fa-solid fa-paper-plane"></i> Submit To Admin
+      </button>
+    </div>
   </div>
 
   <!-- PRODUCT DETAIL & DOWNLOAD MODAL -->
@@ -543,11 +787,11 @@
       <button class="close-modal" onclick="closeProductModal()">✕</button>
       
       <div style="width: 80px; height: 80px; margin: 0 auto 10px auto; border-radius: 50%; border: 3px solid var(--primary); padding: 2px; overflow: hidden; background: #fff;">
-        <img id="productModalImg" src="" style="width:100%; height:100%; object-fit:cover; border-radius:50%;" alt="Product Logo" />
+        <img id="productModalImg" src="" style="width:100%; height:100%; object-fit:cover; border-radius:50%;" alt="Design Logo" />
       </div>
 
       <h3 id="productModalTitle" style="font-size: 14px; font-weight: 800; color: var(--text-main); margin-bottom: 6px;">
-        Product Title
+        Design Title
       </h3>
 
       <div id="productModalDesc" style="font-size: 11px; color: var(--text-muted); line-height: 1.5; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); text-align: left; margin-bottom: 12px; max-height: 150px; overflow-y: auto;">
@@ -641,12 +885,20 @@
     function closeProductModal() {
       document.getElementById('productDetailModal').style.display = 'none';
     }
+
+    function openUploadModal() {
+      document.getElementById('uploadModal').style.display = 'flex';
+    }
+
+    function closeUploadModal() {
+      document.getElementById('uploadModal').style.display = 'none';
+    }
   </script>
 
-  <!-- FIREBASE INTEGRATION & USER DATA SCRIPT -->
+  <!-- FIREBASE INTEGRATION & REALTIME LOGIC SCRIPT -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue, push, set, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
@@ -669,6 +921,7 @@
 
     const sessionData = JSON.parse(rawSession || '{}');
     const userId = sessionData.uid || sessionData.username || sessionData.key;
+    const currentUserName = sessionData.fullName || sessionData.username || "Anonymous User";
 
     // RENDER USER PROFILE DATA
     function renderUserUI(data) {
@@ -688,7 +941,6 @@
       document.getElementById('modalCountry').innerText = data.country || "N/A";
     }
 
-    // INITIAL SETUP FROM SESSION
     renderUserUI(sessionData);
 
     // REALTIME USER DATA LISTENER
@@ -713,14 +965,14 @@
       }
     });
 
-    // 2. REALTIME PRODUCTS SYSTEM (Gol Shakal Items)
+    // 2. REALTIME LOGOS & DESIGNS SYSTEM (Gol Shakal Items)
     const productsRef = ref(db, 'products');
     onValue(productsRef, (snapshot) => {
       const container = document.getElementById('productsContainer');
       container.innerHTML = '';
 
       if (!snapshot.exists()) {
-        container.innerHTML = `<p style="font-size: 10px; color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 10px;">Koi product majood nahi hai.</p>`;
+        container.innerHTML = `<p style="font-size: 10px; color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 10px;">Koi design majood nahi hai.</p>`;
         return;
       }
 
@@ -734,27 +986,25 @@
         div.className = 'circle-product-item';
         div.innerHTML = `
           <div class="circle-img-wrapper">
-            <img src="${item.imageUrl || defaultImg}" alt="${item.title || 'Product'}" onerror="this.src='${defaultImg}'" />
+            <img src="${item.imageUrl || defaultImg}" alt="${item.title || 'Design'}" onerror="this.src='${defaultImg}'" />
           </div>
           <span class="circle-title">${item.title || 'Logo'}</span>
         `;
 
-        // Click event to show modal details & download button
         div.onclick = () => {
           document.getElementById('productModalImg').src = item.imageUrl || defaultImg;
-          document.getElementById('productModalTitle').innerText = item.title || 'Product Details';
-          document.getElementById('productModalDesc').innerText = item.description || 'Is product ki koi mazeed detail nahi hai.';
+          document.getElementById('productModalTitle').innerText = item.title || 'Design Details';
+          document.getElementById('productModalDesc').innerText = item.description || 'Is design ki koi mazeed detail nahi hai.';
 
           const downloadBtn = document.getElementById('productDownloadBtn');
           downloadBtn.onclick = () => {
             if (item.fileUrl) {
               window.open(item.fileUrl, '_blank');
             } else {
-              // Details text download file trigger
               const textBlob = new Blob([`Title: ${item.title}\n\nDetails:\n${item.description}`], { type: 'text/plain' });
               const link = document.createElement('a');
               link.href = URL.createObjectURL(textBlob);
-              link.download = `${item.title || 'Product-Details'}.txt`;
+              link.download = `${item.title || 'Design-Details'}.txt`;
               link.click();
             }
           };
@@ -763,6 +1013,153 @@
         };
 
         container.appendChild(div);
+      });
+    });
+
+    // 3. FILE PREVIEW CONVERSION
+    let uploadedBase64 = "";
+    document.getElementById('submitFileInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        if (file.size > 2 * 1024 * 1024) {
+          alert("Tasveer ka size 2MB se kam hona chahiye!");
+          e.target.value = "";
+          return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          uploadedBase64 = evt.target.result;
+          document.getElementById('imagePreview').src = uploadedBase64;
+          document.getElementById('previewContainer').style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // 4. SUBMIT DESIGN TO ADMIN PANEL (Via FAB + Button)
+    document.getElementById('sendToAdminBtn').addEventListener('click', async () => {
+      const title = document.getElementById('submitTitle').value.trim();
+      const category = document.getElementById('submitCategory').value;
+      const customUrl = document.getElementById('submitImgUrl').value.trim();
+      const desc = document.getElementById('submitDesc').value.trim();
+
+      const finalImg = uploadedBase64 || customUrl || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+
+      if (!title) {
+        alert("Meherbani karke Title likhen!");
+        return;
+      }
+
+      const submissionsRef = ref(db, 'submissions');
+      const newSubRef = push(submissionsRef);
+
+      const payload = {
+        id: newSubRef.key,
+        userId: userId,
+        userName: currentUserName,
+        title: title,
+        category: category,
+        imageUrl: finalImg,
+        description: desc,
+        timestamp: Date.now(),
+        status: 'pending'
+      };
+
+      try {
+        await set(newSubRef, payload);
+        alert("Aap ka design kamyabi se admin panel ko bhej diya gaya hai!");
+        
+        // Reset Form
+        document.getElementById('submitTitle').value = '';
+        document.getElementById('submitImgUrl').value = '';
+        document.getElementById('submitDesc').value = '';
+        document.getElementById('submitFileInput').value = '';
+        document.getElementById('previewContainer').style.display = 'none';
+        uploadedBase64 = "";
+        
+        window.closeUploadModal();
+      } catch (err) {
+        alert("Bhejte waqt masla aya: " + err.message);
+      }
+    });
+
+    // 5. LIVE VOTING SYSTEM (Gol Shakal Items + Realtime Voting)
+    const votingRef = ref(db, 'voting_items');
+    onValue(votingRef, (snapshot) => {
+      const container = document.getElementById('votingContainer');
+      container.innerHTML = '';
+
+      if (!snapshot.exists()) {
+        container.innerHTML = `<p style="font-size: 10px; color: var(--text-muted); grid-column: 1/-1; text-align: center; padding: 10px;">Filhal koi voting item active nahi hai.</p>`;
+        return;
+      }
+
+      const votingData = snapshot.val();
+      let hasUserVotedInAny = false;
+
+      // Check if user has already voted for ANY active item
+      Object.keys(votingData).forEach((key) => {
+        const item = votingData[key];
+        if (item.voters && item.voters[userId]) {
+          hasUserVotedInAny = true;
+        }
+      });
+
+      Object.keys(votingData).forEach((key) => {
+        const item = votingData[key];
+        const defaultImg = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+        const votes = item.votesCount || 0;
+        const isVotedByMe = item.voters && item.voters[userId];
+
+        const card = document.createElement('div');
+        card.className = 'voting-card';
+        card.innerHTML = `
+          <div class="voting-img-wrapper">
+            <img src="${item.imageUrl || defaultImg}" alt="${item.title || 'Design'}" onerror="this.src='${defaultImg}'" />
+          </div>
+          <span class="creator-tag">By: ${item.creatorName || 'User'}</span>
+          <span class="voting-title">${item.title || 'Logo'}</span>
+          <div class="vote-count-badge">
+            <i class="fa-solid fa-heart"></i> ${votes} Votes
+          </div>
+          <button class="vote-action-btn" id="voteBtn_${key}" ${hasUserVotedInAny ? 'disabled' : ''}>
+            <i class="fa-solid ${isVotedByMe ? 'fa-check' : 'fa-thumbs-up'}"></i>
+            ${isVotedByMe ? 'Voted' : (hasUserVotedInAny ? 'Already Voted' : 'Vote Now')}
+          </button>
+        `;
+
+        // Vote Click Listener
+        const btn = card.querySelector(`#voteBtn_${key}`);
+        btn.addEventListener('click', () => {
+          if (hasUserVotedInAny) {
+            alert("Aap pehle hi ek item ko vote de chuke hain! Naya contest aane tak aap doosra vote nahi de sakte.");
+            return;
+          }
+
+          const targetRef = ref(db, `voting_items/${key}`);
+          runTransaction(targetRef, (currentItem) => {
+            if (currentItem) {
+              if (!currentItem.voters) {
+                currentItem.voters = {};
+              }
+              if (currentItem.voters[userId]) {
+                // Already voted check
+                return;
+              }
+              currentItem.votesCount = (currentItem.votesCount || 0) + 1;
+              currentItem.voters[userId] = true;
+            }
+            return currentItem;
+          }).then((res) => {
+            if (res.committed) {
+              alert("Aap ka vote kamyabi se shamil ho gaya hai!");
+            }
+          }).catch((err) => {
+            alert("Vote karne me error: " + err.message);
+          });
+        });
+
+        container.appendChild(card);
       });
     });
   </script>

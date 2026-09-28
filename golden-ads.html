@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -309,14 +310,15 @@
     <div class="policy-box">
       <h4><i class="fa-solid fa-shield-halved"></i> Strict Policy Rules</h4>
       <ul>
-        <li>Ad click karne ke baad kam az kam <strong>20 seconds</strong> ad page/app par ruka lazmi hai.</li>
-        <li>Agar aap 20 seconds se pehle wapis aaye to <strong>warning</strong> milegi aur task cancel ho jayega.</li>
-        <li>App download ya register karke <strong>Proof Screenshot</strong> attach karna zaroori hai.</li>
-        <li>Earnings <strong>1 ghante ke baad auto-credit</strong> hongi. Tamaam 26 ads ke baad <strong>24h lock</strong> ho jayega.</li>
+        <li>Ad click karne ke baad kam az kam <strong>40 seconds</strong> ad page/app par ruka lazmi hai.</li>
+        <li>Agar koi App ya Website samne aaye to usme <strong>Register ya Download</strong> karna lazmi hai, warna paise nahi milenge.</li>
+        <li>Wapis aane par <strong>Proof Screenshot</strong> attach karke Admin approval ke liye bhejna zaroori hai.</li>
+        <li>Admin approve karega tabhi har ad ka <strong>Rs. 1.00</strong> account me add hoga.</li>
+        <li>Tamaam 50 ads mukammal hone ke baad <strong>24h lock</strong> ho jayega.</li>
       </ul>
     </div>
 
-    <!-- Live 1-Hour Reward Countdown Box (Placed Directly Above Ads Box) -->
+    <!-- Live 1-Hour Reward Countdown Box -->
     <div class="pending-box" id="pendingTimerBox">
       <div class="pending-title"><i class="fa-solid fa-clock-rotate-left"></i> Reward Unlocking Timer</div>
       <div class="pending-countdown" id="pendingCountdown">00m 00s</div>
@@ -325,16 +327,16 @@
 
     <!-- Ads Buttons Grid -->
     <div class="card" id="adsCard">
-      <div style="font-weight: 800; font-size: 15px; margin-bottom: 12px;">Click Any Ad Button:</div>
+      <div style="font-weight: 800; font-size: 15px; margin-bottom: 12px;">Click Any Ad Button (Earn Rs. 1 per Ad):</div>
       <div class="ads-grid" id="adsContainer">
-        <!-- 26 Buttons dynamically generated -->
+        <!-- 50 Buttons dynamically generated -->
       </div>
     </div>
 
     <!-- 24 Hour Lock Banner -->
     <div class="lock-box" id="lockBox">
       <i class="fa-solid fa-lock" style="font-size: 32px; margin-bottom: 8px;"></i>
-      <div>All 26 Ads Completed for Today!</div>
+      <div>All 50 Ads Completed for Today!</div>
       <div style="font-size: 13px; margin-top: 6px; font-weight: 500;">
         Next unlocked in: <span id="cooldownTimer">24:00:00</span>
       </div>
@@ -346,21 +348,21 @@
     <div class="modal-card">
       <h3 id="modalTitle" style="font-size: 16px; font-weight: 800;">Ad Task Verification</h3>
       
-      <!-- 20 Sec Timer Display -->
+      <!-- 40 Sec Timer Display -->
       <div class="timer-text" id="timerBox">
-        <i class="fa-solid fa-hourglass-half"></i> Stay on Ad: <span id="timerSec">20</span>s
+        <i class="fa-solid fa-hourglass-half"></i> Stay on Ad: <span id="timerSec">40</span>s
       </div>
 
       <!-- Screenshot Proof Box -->
       <div id="uploadBox" style="display: none; flex-direction: column; gap: 12px;">
         <p style="font-size: 12px; color: var(--text-muted); font-weight: 600;">
-          Attach app/register screenshot below to verify task.
+          App Download / Register screenshot attach karein taake Admin verify kar ke Rs. 1 approve kar sake.
         </p>
         <div class="file-input-box">
           <input type="file" id="proofInput" accept="image/*" onchange="checkProofSelected()" />
         </div>
         <button class="submit-btn" id="submitProofBtn" disabled onclick="confirmTaskCompletion()">
-          Submit Proof
+          Submit Screenshot
         </button>
       </div>
     </div>
@@ -403,18 +405,11 @@
       "https://omg10.com/4/11668529"
     ];
 
-    const adLinks = [...baseLinks, ...baseLinks, baseLinks[0], baseLinks[1]];
-
-    const payoutPattern = [
-      true,  false, false, false,
-      true,  false, false,
-      true,  false, false,
-      true,  false, false,
-      true,  false, false,
-      true,  false, false,
-      true,  false, false,
-      true,  false
-    ];
+    // Mix and generate exactly 50 Ads links
+    const adLinks = [];
+    for (let i = 0; i < 50; i++) {
+      adLinks.push(baseLinks[i % baseLinks.length]);
+    }
 
     let userData = null;
     let activeAdIndex = null;
@@ -434,7 +429,7 @@
       }
     });
 
-    // 100% Guaranteed Bulletproof Live Timer Counter (Runs every second)
+    // Countdown Box
     setInterval(() => {
       if (!userData) return;
 
@@ -454,7 +449,6 @@
         document.getElementById('pendingAmount').innerText = `Rs. ${pendingBal.toFixed(2)} Pending Reward`;
       } 
       else if (pendingBal > 0 && unlockTime <= now) {
-        // Automatically Transfer Pending to Main Balance when 1 Hour completes
         const currentBal = parseFloat(userData.balance || 0);
         const newBal = (currentBal + pendingBal).toFixed(2);
 
@@ -533,7 +527,7 @@
       document.getElementById('uploadBox').style.display = 'none';
       document.getElementById('proofInput').value = '';
 
-      let timeLeft = 20;
+      let timeLeft = 40; // 40 seconds requirement
       document.getElementById('timerSec').innerText = timeLeft;
 
       if (adTimerInterval) clearInterval(adTimerInterval);
@@ -557,7 +551,7 @@
         clearInterval(adTimerInterval);
         isAdActive = false;
         document.getElementById('taskModal').style.display = 'none';
-        alert("⚠️ WARNING: Aapne ad poore 20 seconds tak nahi dekha! Task cancel kar diya gaya hai. Dobara button par click karein.");
+        alert("⚠️ WARNING: Aapne ad poore 40 seconds tak nahi dekha! Task cancel kar diya gaya hai. Dobara button par click karein.");
       }
     });
 
@@ -569,9 +563,7 @@
     window.confirmTaskCompletion = async function() {
       const btn = document.getElementById('submitProofBtn');
       btn.disabled = true;
-      btn.innerText = "Verifying...";
-
-      const isPaid = payoutPattern[activeAdIndex];
+      btn.innerText = "Submitting...";
 
       setTimeout(async () => {
         try {
@@ -583,23 +575,17 @@
             updates.adLockTime = now;
           }
 
-          if (isPaid) {
-            const currentPending = parseFloat(userData.pendingBalance || 0) + 0.20;
-            // Set 1-hour unlock timestamp
-            updates.pendingBalance = currentPending;
-            updates.nextUnlockTime = now + (60 * 60 * 1000);
-          }
+          // Har ad ka 1 Rupee Reward Pending me set hoga (1 Hour timer)
+          const currentPending = parseFloat(userData.pendingBalance || 0) + 1.00;
+          updates.pendingBalance = currentPending;
+          updates.nextUnlockTime = now + (60 * 60 * 1000);
 
           await update(ref(db, 'users/' + sessionUser.username), updates);
 
-          if (isPaid) {
-            alert("Task Verified! 1-Hour Live Countdown starts now on top of Ads.");
-          } else {
-            alert("Task Verified & Completed!");
-          }
+          alert("Screenshot submitted successfully! Admin review ke baad Rs. 1.00 reward unlock timer start hoga.");
 
           document.getElementById('taskModal').style.display = 'none';
-          btn.innerText = "Submit Proof";
+          btn.innerText = "Submit Screenshot";
 
         } catch (e) {
           alert("Error: " + e.message);

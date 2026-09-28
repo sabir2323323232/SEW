@@ -40,8 +40,8 @@
 
     .ads-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 10px; }
     .ad-btn { background: var(--input-bg); border: 1.5px solid var(--border-color); border-radius: 14px; padding: 14px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; cursor: pointer; font-weight: 700; }
-    .ad-btn:disabled { opacity: 0.55; cursor: not-allowed; background: #e2e8f0; }
-    .ad-btn.completed { background: #ecfdf5; border-color: #a7f3d0; color: #047857; }
+    .ad-btn:disabled { opacity: 0.65; cursor: not-allowed; background: #e2e8f0; }
+    .ad-btn.locked { background: #fef2f2; border-color: #fecaca; color: #dc2626; }
 
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.65); z-index: 999; justify-content: center; align-items: center; padding: 16px; }
     .modal-card { background: #ffffff; border-radius: 20px; padding: 24px; width: 100%; max-width: 400px; text-align: center; display: flex; flex-direction: column; gap: 16px; }
@@ -72,6 +72,7 @@
       <ul>
         <li>Ad click karne ke baad <strong>40 seconds</strong> Ad page par stay karna zaroori hai.</li>
         <li>Pehle wapas aane par task cancel ho jayega aur earning nahi milegi.</li>
+        <li>Ek Ad complete hone ke baad <strong>24 ghante</strong> ke liye lock ho jayega.</li>
       </ul>
     </div>
 
@@ -138,32 +139,55 @@
     let adTimerInterval = null;
     let isTimerRunning = false;
     let timeLeft = 40;
+    let lockTimerInterval = null;
 
     onValue(ref(db, 'users/' + sessionUser.username), (snapshot) => {
       if (snapshot.exists()) {
         userData = snapshot.val();
         document.getElementById('userBalance').innerText = "Rs. " + parseFloat(userData.balance || 0).toFixed(2);
-        generateAdButtons(userData.completedAdsCount || 0);
+        generateAdButtons(userData.lastAdCompletedTimes || {});
       }
     });
 
-    function generateAdButtons(completedAdsCount) {
+    function generateAdButtons(lastCompletedTimes) {
       const container = document.getElementById('adsContainer');
       container.innerHTML = '';
-      for (let i = 0; i < adLinks.length; i++) {
-        const isDone = i < completedAdsCount;
-        const btn = document.createElement('button');
-        btn.className = `ad-btn ${isDone ? 'completed' : ''}`;
-        btn.disabled = (i !== completedAdsCount);
+      if(lockTimerInterval) clearInterval(lockTimerInterval);
 
-        if (isDone) {
-          btn.innerHTML = `<i class="fa-solid fa-circle-check"></i> Ad #${i + 1} Done`;
-        } else {
-          btn.innerHTML = `<i class="fa-solid fa-rectangle-ad"></i> Open Ad #${i + 1}`;
-          btn.onclick = () => handleAdButtonClick(i);
+      const LOCK_DURATION = 24 * 60 * 60 * 1000; // 24 Hours in ms
+
+      function updateButtonsUI() {
+        const now = Date.now();
+        container.innerHTML = '';
+
+        for (let i = 0; i < adLinks.length; i++) {
+          const lastTime = lastCompletedTimes[`ad_${i}`] || 0;
+          const timePassed = now - lastTime;
+          const isLocked = timePassed < LOCK_DURATION;
+
+          const btn = document.createElement('button');
+
+          if (isLocked) {
+            const remainingMs = LOCK_DURATION - timePassed;
+            const hoursLeft = Math.floor(remainingMs / (1000 * 60 * 60));
+            const minsLeft = Math.floor((remainingMs % (1000 * 60 * 60)) / (1000 * 60));
+            
+            btn.className = 'ad-btn locked';
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-lock"></i> Lock (${hoursLeft}h ${minsLeft}m)`;
+          } else {
+            btn.className = 'ad-btn';
+            btn.disabled = false;
+            btn.innerHTML = `<i class="fa-solid fa-rectangle-ad"></i> Open Ad #${i + 1}`;
+            btn.onclick = () => handleAdButtonClick(i);
+          }
+          container.appendChild(btn);
         }
-        container.appendChild(btn);
       }
+
+      updateButtonsUI();
+      // Har 1 minute baad timers refresh honge
+      lockTimerInterval = setInterval(updateButtonsUI, 60000);
     }
 
     window.handleAdButtonClick = function(index) {
@@ -256,6 +280,9 @@
         const compressedBase64 = await compressImage(fileInput.files[0]);
         btn.innerText = "Submitting to Admin...";
 
+        const nowTime = Date.now();
+
+        // 1. Save submission for admin
         const newSubRef = push(ref(db, 'ad_submissions'));
         await update(newSubRef, {
           username: sessionUser.username,
@@ -263,10 +290,15 @@
           adIndex: activeAdIndex + 1,
           rewardAmount: 1.00,
           screenshot: compressedBase64,
-          timestamp: Date.now()
+          timestamp: nowTime
         });
 
-        alert("Task submit ho gaya! Admin verify karke paise add karega.");
+        // 2. Update user's 24-hour lock timestamp in Firebase
+        const userUpdates = {};
+        userUpdates[`users/${sessionUser.username}/lastAdCompletedTimes/ad_${activeAdIndex}`] = nowTime;
+        await update(ref(db), userUpdates);
+
+        alert("Task submit ho gaya! Ye Ad ab 24 ghante ke liye lock ho gaya hai.");
         document.getElementById('taskModal').style.display = 'none';
       } catch(e) {
         alert("Upload Error: " + e.message);

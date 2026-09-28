@@ -335,7 +335,7 @@
       color: #16a34a;
     }
 
-    /* ACTIVE TASK BOX (SHOWS 5:40 PM - 8:30 PM) */
+    /* ACTIVE TASK BOX (SHOWS 9:30 PM - 10:00 PM) */
     .active-task-card {
       background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
       border: 1.5px solid #bfdbfe;
@@ -630,7 +630,7 @@
           <i class="fa-solid fa-fire"></i> High Marketing Task
         </div>
         <div class="time-badge closed" id="taskStatusBadge">
-          <i class="fa-solid fa-clock"></i> Open 5:40 PM - Close 8:30 PM
+          <i class="fa-solid fa-clock"></i> Open 9:30 PM - Close 10:00 PM
         </div>
       </div>
 
@@ -651,26 +651,26 @@
             <div class="winner-icon">🥇</div>
             <div class="winner-rank-label">1st Winner</div>
             <div class="winner-name" id="w1Name">Waiting...</div>
-            <div class="winner-prize" id="w1Prize">Rs. 0</div>
+            <div class="winner-prize" id="w1Prize">Rs. 100</div>
           </div>
           <!-- 2nd Winner -->
           <div class="winner-card rank-2">
             <div class="winner-icon">🥈</div>
             <div class="winner-rank-label">2nd Winner</div>
             <div class="winner-name" id="w2Name">Waiting...</div>
-            <div class="winner-prize" id="w2Prize">Rs. 0</div>
+            <div class="winner-prize" id="w2Prize">Rs. 50</div>
           </div>
           <!-- 3rd Winner -->
           <div class="winner-card rank-3">
             <div class="winner-icon">🥉</div>
             <div class="winner-rank-label">3rd Winner</div>
             <div class="winner-name" id="w3Name">Waiting...</div>
-            <div class="winner-prize" id="w3Prize">Rs. 0</div>
+            <div class="winner-prize" id="w3Prize">Rs. 30</div>
           </div>
         </div>
       </div>
 
-      <!-- LIVE 5:40 PM - 8:30 PM TASK CARD (AUTO SHOWS ONLY FROM 5:40 PM TO 8:30 PM) -->
+      <!-- LIVE 9:30 PM - 10:00 PM TASK CARD (AUTO SHOWS ONLY FROM 9:30 PM TO 10:00 PM) -->
       <div class="active-task-card" id="activeTaskCard">
         <div class="task-instructions">
           <i class="fa-solid fa-circle-info" style="color:var(--primary)"></i> 
@@ -873,29 +873,29 @@
         const winners = snapshot.val();
         if (winners.first) {
           document.getElementById('w1Name').innerText = winners.first.name || 'Winner Name';
-          document.getElementById('w1Prize').innerText = winners.first.prize || 'Rs. 0';
+          document.getElementById('w1Prize').innerText = winners.first.prize || 'Rs. 100';
         }
         if (winners.second) {
           document.getElementById('w2Name').innerText = winners.second.name || 'Runner Up';
-          document.getElementById('w2Prize').innerText = winners.second.prize || 'Rs. 0';
+          document.getElementById('w2Prize').innerText = winners.second.prize || 'Rs. 50';
         }
         if (winners.third) {
           document.getElementById('w3Name').innerText = winners.third.name || '3rd Place';
-          document.getElementById('w3Prize').innerText = winners.third.prize || 'Rs. 0';
+          document.getElementById('w3Prize').innerText = winners.third.prize || 'Rs. 30';
         }
       }
     });
 
-    // 5:40 PM TO 8:30 PM AUTOMATIC TASK TIMER LOGIC
+    // 9:30 PM TO 10:00 PM AUTOMATIC TASK TIMER LOGIC
     function checkTaskTiming() {
       const now = new Date();
       const hours = now.getHours();
       const minutes = now.getMinutes();
       const currentMins = hours * 60 + minutes;
 
-      // 5:40 PM = 17:40 (1060 mins), 8:30 PM = 20:30 (1230 mins)
-      const startMins = 17 * 60 + 40;
-      const endMins = 20 * 60 + 30;
+      // 9:30 PM = 21:30 (1290 mins), 10:00 PM = 22:00 (1320 mins)
+      const startMins = 21 * 60 + 30;
+      const endMins = 22 * 60;
 
       const isTaskActive = (currentMins >= startMins && currentMins < endMins);
 
@@ -906,13 +906,13 @@
         if (activeTaskCard) activeTaskCard.style.display = 'block';
         if (taskStatusBadge) {
           taskStatusBadge.className = 'time-badge live';
-          taskStatusBadge.innerHTML = '<i class="fa-solid fa-circle-dot fa-spin"></i> LIVE NOW (Closing at 8:30 PM)';
+          taskStatusBadge.innerHTML = '<i class="fa-solid fa-circle-dot fa-spin"></i> LIVE NOW (Closing at 10:00 PM)';
         }
       } else {
         if (activeTaskCard) activeTaskCard.style.display = 'none';
         if (taskStatusBadge) {
           taskStatusBadge.className = 'time-badge closed';
-          taskStatusBadge.innerHTML = '<i class="fa-solid fa-clock"></i> Open 5:40 PM - Close 8:30 PM';
+          taskStatusBadge.innerHTML = '<i class="fa-solid fa-clock"></i> Open 9:30 PM - Close 10:00 PM';
         }
       }
     }

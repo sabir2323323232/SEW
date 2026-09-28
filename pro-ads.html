@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -132,43 +133,6 @@
       font-weight: 600;
     }
 
-    /* Live 1-Hour Reward Countdown Box */
-    .pending-box {
-      display: none;
-      background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-      border: 2px solid #f59e0b;
-      border-radius: 16px;
-      padding: 14px;
-      text-align: center;
-      color: #78350f;
-      box-shadow: 0 8px 20px -6px rgba(245, 158, 11, 0.25);
-    }
-
-    .pending-title {
-      font-size: 13px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      color: #92400e;
-    }
-
-    .pending-countdown {
-      font-size: 30px;
-      font-weight: 900;
-      color: #b45309;
-      margin: 4px 0;
-      font-family: monospace;
-      letter-spacing: 1px;
-    }
-
-    .pending-amount {
-      font-size: 13px;
-      font-weight: 700;
-      color: #d97706;
-    }
-
     /* Policy Rules Box */
     .policy-box {
       background: #fffbeebf;
@@ -192,6 +156,27 @@
 
     .policy-box ul {
       padding-left: 18px;
+    }
+
+    /* Admin Approval Pending Status Box */
+    .admin-status-box {
+      display: none;
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border: 2px solid #3b82f6;
+      border-radius: 16px;
+      padding: 14px;
+      text-align: center;
+      color: #1e40af;
+      box-shadow: 0 8px 20px -6px rgba(59, 130, 246, 0.25);
+    }
+
+    .admin-status-title {
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
     }
 
     .section-title {
@@ -338,22 +323,23 @@
         <li>Ad open karke <strong>poore 1 Minute (60 Seconds)</strong> tak rukna lazmi hai.</li>
         <li>Ad page par aane wali App ko <strong>Download</strong> ya Site par <strong>Register</strong> zaroor karein.</li>
         <li>Download/Register ka <strong>Proof Screenshot</strong> upload karna mandatory hai.</li>
-        <li>Reward Verify hone ke baad <strong>1 Ghante ke andar auto-credit</strong> ho jayega.</li>
+        <li><strong>Har ad par Rs. 5 milenge.</strong> Proof submit hone ke baad jab <strong>Admin Approve</strong> karega tab balance account me add hoga.</li>
       </ul>
     </div>
 
-    <!-- Live 1-Hour Reward Countdown Box -->
-    <div class="pending-box" id="pendingTimerBox">
-      <div class="pending-title"><i class="fa-solid fa-clock-rotate-left"></i> Reward Unlocking Timer</div>
-      <div class="pending-countdown" id="pendingCountdown">00m 00s</div>
-      <div class="pending-amount" id="pendingAmount">Rs. 0.00 Pending Reward</div>
+    <!-- Admin Approval Notice Box -->
+    <div class="admin-status-box" id="adminStatusBox">
+      <div class="admin-status-title"><i class="fa-solid fa-user-clock"></i> Pending Admin Approval</div>
+      <div style="font-size: 12px; margin-top: 4px; font-weight: 600;" id="pendingAdminText">
+        Aapka task review me hai. Admin se approve hone ke baad reward aapke balance me add ho jayega.
+      </div>
     </div>
 
     <!-- INDEPENDENT ADS CARD -->
     <div class="card" id="adsCard">
-      <div class="section-title"><i class="fa-solid fa-bolt" style="color: var(--primary);"></i> Daily Available Ads</div>
+      <div class="section-title"><i class="fa-solid fa-bolt" style="color: var(--primary);"></i> Daily Available Ads (30 Ads)</div>
       <div class="ads-grid" id="adsContainer">
-        <!-- Dynamic Independent Ads Grid -->
+        <!-- Dynamic 30 Ads Grid -->
       </div>
     </div>
 
@@ -387,7 +373,7 @@
   <!-- Firebase Modular SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue, update, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
@@ -406,22 +392,17 @@
     if (!sessionStr) window.location.replace("index.html");
     const sessionUser = JSON.parse(sessionStr);
 
-    // List of 10 Ads Links
+    // List of 30 Ads Links
     const adLinks = [
-      "https://omg10.com/4/11668537",
-      "https://omg10.com/4/11668536",
-      "https://omg10.com/4/11668535",
-      "https://omg10.com/4/11668534",
-      "https://omg10.com/4/11668533",
-      "https://omg10.com/4/11668537",
-      "https://omg10.com/4/11668536",
-      "https://omg10.com/4/11668535",
-      "https://omg10.com/4/11668534",
-      "https://omg10.com/4/11668533"
+      "https://omg10.com/4/11668537", "https://omg10.com/4/11668536", "https://omg10.com/4/11668535", "https://omg10.com/4/11668534", "https://omg10.com/4/11668533",
+      "https://omg10.com/4/11668537", "https://omg10.com/4/11668536", "https://omg10.com/4/11668535", "https://omg10.com/4/11668534", "https://omg10.com/4/11668533",
+      "https://omg10.com/4/11668537", "https://omg10.com/4/11668536", "https://omg10.com/4/11668535", "https://omg10.com/4/11668534", "https://omg10.com/4/11668533",
+      "https://omg10.com/4/11668537", "https://omg10.com/4/11668536", "https://omg10.com/4/11668535", "https://omg10.com/4/11668534", "https://omg10.com/4/11668533",
+      "https://omg10.com/4/11668537", "https://omg10.com/4/11668536", "https://omg10.com/4/11668535", "https://omg10.com/4/11668534", "https://omg10.com/4/11668533",
+      "https://omg10.com/4/11668537", "https://omg10.com/4/11668536", "https://omg10.com/4/11668535", "https://omg10.com/4/11668534", "https://omg10.com/4/11668533"
     ];
 
-    // Payout allocation (e.g. Ad 1, 3, 6, 8 pay Rs 1.00)
-    const adPayouts = [true, false, true, false, false, true, false, true, false, false];
+    const AD_REWARD = 5.00; // Har Ad ka reward Rs. 5
 
     let userData = null;
     let activeAdIndex = null;
@@ -438,45 +419,19 @@
         const mainBal = parseFloat(userData.balance || 0);
         document.getElementById('userBalance').innerText = "Rs. " + mainBal.toFixed(2);
 
+        // Check if user has pending approval requests
+        const pendingCount = userData.pendingApprovalsCount || 0;
+        const statusBox = document.getElementById('adminStatusBox');
+        if (pendingCount > 0) {
+          statusBox.style.display = 'block';
+          document.getElementById('pendingAdminText').innerText = `${pendingCount} Task(s) Pending Admin Approval. Admin approve karega tab paise milenge.`;
+        } else {
+          statusBox.style.display = 'none';
+        }
+
         renderAdsSection();
       }
     });
-
-    // 1-Hour Live Pending Reward Countdown Loop
-    setInterval(() => {
-      if (!userData) return;
-
-      const now = Date.now();
-      const pendingBal = parseFloat(userData.pendingBalance || 0);
-      const unlockTime = parseInt(userData.nextUnlockTime || 0);
-      const timerBox = document.getElementById('pendingTimerBox');
-
-      if (pendingBal > 0 && unlockTime > now) {
-        timerBox.style.display = 'block';
-        const diff = unlockTime - now;
-
-        const mins = Math.floor(diff / (1000 * 60));
-        const secs = Math.floor((diff % (1000 * 60)) / 1000);
-
-        document.getElementById('pendingCountdown').innerText = `${mins.toString().padStart(2, '0')}m ${secs.toString().padStart(2, '0')}s`;
-        document.getElementById('pendingAmount').innerText = `Rs. ${pendingBal.toFixed(2)} Pending Reward`;
-      } 
-      else if (pendingBal > 0 && unlockTime <= now) {
-        const currentBal = parseFloat(userData.balance || 0);
-        const newBal = (currentBal + pendingBal).toFixed(2);
-
-        update(ref(db, 'users/' + sessionUser.username), {
-          balance: newBal,
-          pendingBalance: 0,
-          nextUnlockTime: 0
-        });
-
-        timerBox.style.display = 'none';
-      } 
-      else {
-        timerBox.style.display = 'none';
-      }
-    }, 1000);
 
     function renderAdsSection() {
       if (!userData) return;
@@ -508,7 +463,7 @@
         } else {
           btn.className = 'ad-btn';
           btn.disabled = false;
-          btn.innerHTML = `<i class="fa-solid fa-rectangle-ad"></i> Open Ad #${i + 1}`;
+          btn.innerHTML = `<i class="fa-solid fa-rectangle-ad"></i> Open Ad #${i + 1} <span style="font-size:10px; color:var(--success);">(Rs. 5)</span>`;
           btn.onclick = () => handleAdClick(i, adLinks[i]);
         }
 
@@ -553,7 +508,7 @@
       document.getElementById('uploadBox').style.display = 'none';
       document.getElementById('proofInput').value = '';
 
-      let timeLeft = 60; // 60 seconds strict stay
+      let timeLeft = 60; // 60 seconds strict stay (1 Minute)
       document.getElementById('timerSec').innerText = timeLeft;
 
       if (adTimerInterval) clearInterval(adTimerInterval);
@@ -589,32 +544,41 @@
 
     window.confirmTaskCompletion = async function() {
       const btn = document.getElementById('submitProofBtn');
-      btn.disabled = true;
-      btn.innerText = "Verifying...";
+      const fileInput = document.getElementById('proofInput');
 
-      const isPaid = adPayouts[activeAdIndex];
+      if (!fileInput.files[0]) {
+        alert("Screenshot attach karna lazmi hai!");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "Submitting for Admin Approval...";
 
       setTimeout(async () => {
         try {
           const now = Date.now();
           const updates = {};
 
-          // Lock ONLY THIS specific ad index for 24 hours
+          // Lock this specific ad index for 24 hours
           updates[`individualAdLocks/${activeAdIndex}`] = now;
 
-          if (isPaid) {
-            const currentPending = parseFloat(userData.pendingBalance || 0) + 1.00;
-            updates.pendingBalance = currentPending;
-            updates.nextUnlockTime = now + (60 * 60 * 1000); // 1-Hour reward timer
-          }
+          // Increase pending approval count
+          const currentPending = (userData.pendingApprovalsCount || 0) + 1;
+          updates.pendingApprovalsCount = currentPending;
 
           await update(ref(db, 'users/' + sessionUser.username), updates);
 
-          if (isPaid) {
-            alert("Task Verified! Rs. 1.00 ka 1-Hour Live Countdown start ho gaya hai.");
-          } else {
-            alert("Task Verified & Completed!");
-          }
+          // Submit task proof entry to Admin queue in Firebase
+          const pendingTaskRef = ref(db, 'admin_pending_tasks');
+          await push(pendingTaskRef, {
+            username: sessionUser.username,
+            adIndex: activeAdIndex + 1,
+            reward: AD_REWARD,
+            timestamp: now,
+            status: "pending"
+          });
+
+          alert("Proof Submit ho gaya hai! Jab Admin approve karega tab Rs. 5.00 aapke account me add honge.");
 
           document.getElementById('taskModal').style.display = 'none';
           btn.innerText = "Submit Proof Screenshot";
@@ -622,6 +586,7 @@
         } catch (e) {
           alert("Error: " + e.message);
           btn.disabled = false;
+          btn.innerText = "Submit Proof Screenshot";
         }
       }, 1200);
     };

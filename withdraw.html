@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -178,7 +179,7 @@
       font-size: 14px;
       font-weight: 500;
       outline: none;
-      transition: all 0.25s ease;
+      transition: all 0.2s ease;
       appearance: none;
     }
 
@@ -372,7 +373,7 @@
       <!-- Day Restriction Notice -->
       <div class="schedule-notice" id="dayNotice">
         <i class="fa-solid fa-calendar-check"></i>
-        <span>Withdrawals are processed only on <strong>Monday</strong> & <strong>Friday</strong>.</span>
+        <span>Withdrawals are processed only on <strong>Friday</strong>.</span>
       </div>
 
       <form id="withdrawForm" onsubmit="handleWithdraw(event)">
@@ -419,9 +420,9 @@
 
         <!-- Amount Input -->
         <div class="input-group">
-          <label>Withdraw Amount (Min: Rs. 350)</label>
+          <label>Withdraw Amount (Min: Rs. 400)</label>
           <div class="field-wrapper">
-            <input type="number" id="withdrawAmount" min="350" placeholder="Minimum 350" required />
+            <input type="number" id="withdrawAmount" min="400" placeholder="Minimum 400" required />
             <i class="fa-solid fa-money-bill-wave"></i>
           </div>
         </div>
@@ -492,7 +493,10 @@
       }
     });
 
-    // 3. Real-time Withdrawal History Listener
+    // Track processed approvals to avoid duplicate balance deductions
+    const processedApprovals = new Set();
+
+    // 3. Real-time Withdrawal History & Status Listener (Approve logic)
     const withdrawalsRef = ref(db, 'withdrawals');
     onValue(withdrawalsRef, (snapshot) => {
       const historyList = document.getElementById('historyList');
@@ -500,6 +504,47 @@
 
       if (snapshot.exists()) {
         const data = snapshot.val();
+        
+        // Dynamic deduction on approval
+        Object.keys(data).forEach(async (key) => {
+          const item = data[key];
+          if (item.username === sessionUser.username) {
+            const st = (item.status || 'pending').toLowerCase();
+            
+            // Deduct balance ONLY when admin approves request
+            if ((st === 'approved' || st === 'completed' || st === 'success') && !item.balanceDeducted && !processedApprovals.has(key)) {
+              processedApprovals.add(key);
+              
+              const userRefData = ref(db, 'users/' + sessionUser.username);
+              onValue(userRefData, async (userSnap) => {
+                if (userSnap.exists()) {
+                  const userData = userSnap.val();
+                  let mainBal = parseFloat(userData.balance || 0);
+                  let refBal = parseFloat(userData.referralBalance || 0);
+                  const reqAmount = parseFloat(item.amount);
+
+                  if (mainBal >= reqAmount) {
+                    mainBal -= reqAmount;
+                  } else {
+                    const remaining = reqAmount - mainBal;
+                    mainBal = 0;
+                    refBal = Math.max(0, refBal - remaining);
+                  }
+
+                  await update(ref(db, 'users/' + sessionUser.username), {
+                    balance: mainBal.toFixed(2),
+                    referralBalance: refBal
+                  });
+
+                  await update(ref(db, 'withdrawals/' + key), {
+                    balanceDeducted: true
+                  });
+                }
+              }, { onlyOnce: true });
+            }
+          }
+        });
+
         // Filter user requests and sort by date/timestamp (newest first)
         const myRequests = Object.values(data)
           .filter(item => item.username === sessionUser.username)
@@ -518,7 +563,7 @@
           if (st === 'approved' || st === 'completed' || st === 'success') {
             badgeClass = 'badge-approved';
             statusText = 'Approved';
-          } else if (st === 'rejected' || st === 'failed') {
+          } else if (st === 'rejected' || st === 'failed' || st === 'cancelled') {
             badgeClass = 'badge-rejected';
             statusText = 'Rejected';
           }
@@ -546,17 +591,17 @@
       }
     });
 
-    // 4. Day Validation Function (1 = Monday, 5 = Friday)
+    // 4. Day Validation Function (5 = Friday ONLY)
     function isWithdrawAllowedDay() {
       const today = new Date().getDay(); // 0: Sun, 1: Mon, 2: Tue, 3: Wed, 4: Thu, 5: Fri, 6: Sat
-      return (today === 1 || today === 5);
+      return (today === 5);
     }
 
     const btn = document.getElementById('withdrawBtn');
     const statusMsg = document.getElementById('withdrawStatus');
     
     if (!isWithdrawAllowedDay()) {
-      showStatus(statusMsg, "Today is not a withdrawal day. Requests open only on Monday & Friday.", "error");
+      showStatus(statusMsg, "Today is not Friday. Withdrawal requests open only on Friday.", "error");
     }
 
     // 5. Handle Withdraw Request Submission
@@ -570,12 +615,12 @@
       const amount = parseFloat(document.getElementById('withdrawAmount').value);
 
       if (!isWithdrawAllowedDay()) {
-        showStatus(statusMsg, "Withdrawal failed! Requests can only be submitted on Monday or Friday.", "error");
+        showStatus(statusMsg, "Withdrawal failed! Requests can only be submitted on Friday.", "error");
         return;
       }
 
-      if (amount < 350) {
-        showStatus(statusMsg, "Minimum withdrawal amount is Rs. 350!", "error");
+      if (amount < 400) {
+        showStatus(statusMsg, "Minimum withdrawal amount is Rs. 400!", "error");
         return;
       }
 
@@ -598,34 +643,12 @@
           accountNumber: number,
           amount: amount,
           status: "pending",
+          balanceDeducted: false,
           date: new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }),
           timestamp: new Date().toISOString()
         };
 
         await set(newWithdrawRef, requestData);
-
-        // Deduct balance in real-time
-        const userRefData = ref(db, 'users/' + sessionUser.username);
-        onValue(userRefData, async (snapshot) => {
-          if (snapshot.exists()) {
-            const data = snapshot.val();
-            let mainBal = parseFloat(data.balance || 0);
-            let refBal = parseFloat(data.referralBalance || 0);
-
-            if (mainBal >= amount) {
-              mainBal -= amount;
-            } else {
-              const remaining = amount - mainBal;
-              mainBal = 0;
-              refBal = Math.max(0, refBal - remaining);
-            }
-
-            await update(ref(db, 'users/' + sessionUser.username), {
-              balance: mainBal.toFixed(2),
-              referralBalance: refBal
-            });
-          }
-        }, { onlyOnce: true });
 
         showStatus(statusMsg, "Withdrawal request submitted successfully!", "success");
         document.getElementById('withdrawForm').reset();

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>SEW - Simple Ads (0.05 PKR)</title>
+  <title>SEW - Simple Ads (0.10 PKR)</title>
   
   <!-- Fonts & Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -159,7 +159,7 @@
       font-weight: 800;
     }
 
-    /* ADS GRID (40 BUTTONS) */
+    /* ADS GRID (100 BUTTONS) */
     .ads-header-info {
       display: flex;
       justify-content: space-between;
@@ -328,17 +328,17 @@
         <div class="balance-val" id="userBalance">Rs. 0.00</div>
       </div>
       <div class="reward-tag">
-        <i class="fa-solid fa-coins"></i> +0.05 / Ad
+        <i class="fa-solid fa-coins"></i> +0.10 / Ad
       </div>
     </div>
 
     <!-- INFO HEADER -->
     <div class="ads-header-info">
-      <span><i class="fa-solid fa-list-check"></i> Available Ads (40)</span>
+      <span><i class="fa-solid fa-list-check"></i> Available Ads (100)</span>
       <span><i class="fa-solid fa-clock"></i> 10s Timer Rule</span>
     </div>
 
-    <!-- 40 AD BUTTONS GRID -->
+    <!-- 100 AD BUTTONS GRID -->
     <div class="ads-grid" id="adsGrid">
       <!-- Generated Dynamically -->
     </div>
@@ -380,19 +380,8 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // 20 PROVIDED MONETAG LINKS (REPEATED TO MAKE 40 AD BUTTONS)
-    const monetagLinks = [
-      "https://omg10.com/4/10475294", "https://omg10.com/4/10475279",
-      "https://omg10.com/4/10475296", "https://omg10.com/4/10475282",
-      "https://omg10.com/4/10475278", "https://omg10.com/4/10475291",
-      "https://omg10.com/4/10475297", "https://omg10.com/4/10475280",
-      "https://omg10.com/4/10475284", "https://omg10.com/4/10475283",
-      "https://omg10.com/4/10475290", "https://omg10.com/4/10475295",
-      "https://omg10.com/4/10475281", "https://omg10.com/4/10475292",
-      "https://omg10.com/4/10475293", "https://omg10.com/4/10475299",
-      "https://omg10.com/4/10440633", "https://omg10.com/4/10475285",
-      "https://omg10.com/4/10475298", "https://omg10.com/4/10474554",
-      // Repeated for 21 to 40
+    // BASE 20 MONETAG LINKS
+    const baseLinks = [
       "https://omg10.com/4/10475294", "https://omg10.com/4/10475279",
       "https://omg10.com/4/10475296", "https://omg10.com/4/10475282",
       "https://omg10.com/4/10475278", "https://omg10.com/4/10475291",
@@ -404,6 +393,12 @@
       "https://omg10.com/4/10440633", "https://omg10.com/4/10475285",
       "https://omg10.com/4/10475298", "https://omg10.com/4/10474554"
     ];
+
+    // MIX & REPEAT LINKS TO MAKE EXACTLY 100 AD BUTTONS (5 TIMES REPEATED & INTERLEAVED)
+    const monetagLinks = [];
+    for (let i = 0; i < 100; i++) {
+      monetagLinks.push(baseLinks[i % baseLinks.length]);
+    }
 
     // Session Check
     const rawSession = localStorage.getItem('sew_session');
@@ -444,7 +439,7 @@
       });
     }
 
-    // RENDER 40 AD BUTTONS WITH LOCK TIMER
+    // RENDER 100 AD BUTTONS WITH LOCK TIMER
     function renderAdButtons() {
       const grid = document.getElementById('adsGrid');
       grid.innerHTML = "";
@@ -470,14 +465,14 @@
         card.innerHTML = `
           <div class="ad-top-row">
             <span class="ad-number">Simple Ad #${idx + 1}</span>
-            <span class="ad-payout">+Rs. 0.05</span>
+            <span class="ad-payout">+Rs. 0.10</span>
           </div>
           <div>${statusHtml}</div>
         `;
 
         card.onclick = () => {
           if (isLocked) {
-            showAlert("Ad Locked!", "Aap ye ad dekhe chuke hain. 24 hours bad dubara available hoga.", false);
+            showAlert("Ad Locked!", "Aap ye ad dekh chuke hain. 24 hours bad dubara available hoga.", false);
             return;
           }
           openAd(idx, link);
@@ -507,7 +502,7 @@
       pendingAdIndex = null;
       adStartTime = null;
 
-      // STAGE 1: LESS THAN 10 SECONDS (STRICT WARNING)
+      // STAGE 1: LESS THAN 10 SECONDS (STRICT WARNING - 0 REUPE)
       if (timeSpentSec < 10) {
         showAlert(
           "Warning! 10 Seconds Required",
@@ -538,9 +533,9 @@
       const lockExpiryTime = Date.now() + (24 * 60 * 60 * 1000); // 24 Hours Lock
 
       try {
-        // Atomic Balance Update (+0.05)
+        // Atomic Balance Update (+0.10)
         await runTransaction(ref(db, 'users/' + userData.username + '/balance'), (currentBal) => {
-          return (parseFloat(currentBal) || 0) + 0.05;
+          return (parseFloat(currentBal) || 0) + 0.10;
         });
 
         // Set 24h Lock for this user ad
@@ -550,7 +545,7 @@
 
         showAlert(
           "Reward Added!",
-          "Mubarak ho! Rs. 0.05 aap ke account balance me add ho gaye hain. Ab ye ad 24 hours ke liye lock ho gaya hai.",
+          "Mubarak ho! Rs. 0.10 aap ke account balance me add ho gaye hain. Ab ye ad 24 hours ke liye lock ho gaya hai.",
           true
         );
 

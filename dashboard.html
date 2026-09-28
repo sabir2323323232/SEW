@@ -246,6 +246,28 @@
       border: 1px solid #fecaca;
     }
 
+    /* COMPACT ALWAYS-VISIBLE RULE BOX */
+    .rule-box {
+      background: #fffbeb;
+      border: 1px solid #fef3c7;
+      border-left: 3px solid #f59e0b;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 10px;
+      font-weight: 600;
+      color: #92400e;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      line-height: 1.3;
+    }
+
+    .rule-box i {
+      font-size: 12px;
+      color: #d97706;
+      flex-shrink: 0;
+    }
+
     /* WINNER BOXES GRID */
     .winners-container {
       background: #f8fafc;
@@ -313,7 +335,7 @@
       color: #16a34a;
     }
 
-    /* ACTIVE TASK BOX (ONLY SHOWS 8:00 PM - 8:30 PM) */
+    /* ACTIVE TASK BOX (SHOWS 5:40 PM - 8:30 PM) */
     .active-task-card {
       background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
       border: 1.5px solid #bfdbfe;
@@ -608,8 +630,14 @@
           <i class="fa-solid fa-fire"></i> High Marketing Task
         </div>
         <div class="time-badge closed" id="taskStatusBadge">
-          <i class="fa-solid fa-clock"></i> Open 8:00 PM - Close 8:30 PM
+          <i class="fa-solid fa-clock"></i> Open 5:40 PM - Close 8:30 PM
         </div>
+      </div>
+
+      <!-- COMPACT ALWAYS-VISIBLE RULE BOX -->
+      <div class="rule-box">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span><strong>Rule:</strong> Jo sabse pehle High Paying task sahi se karega, wahi Winner aayega!</span>
       </div>
 
       <!-- WINNERS BOX (1ST, 2ND, 3RD) -->
@@ -642,7 +670,7 @@
         </div>
       </div>
 
-      <!-- LIVE 8:00 PM - 8:30 PM TASK CARD (AUTO SHOWS ONLY AT 8 PM) -->
+      <!-- LIVE 5:40 PM - 8:30 PM TASK CARD (AUTO SHOWS ONLY FROM 5:40 PM TO 8:30 PM) -->
       <div class="active-task-card" id="activeTaskCard">
         <div class="task-instructions">
           <i class="fa-solid fa-circle-info" style="color:var(--primary)"></i> 
@@ -858,14 +886,18 @@
       }
     });
 
-    // 8:00 PM TO 8:30 PM AUTOMATIC TASK TIMER LOGIC
+    // 5:40 PM TO 8:30 PM AUTOMATIC TASK TIMER LOGIC
     function checkTaskTiming() {
       const now = new Date();
       const hours = now.getHours();
       const minutes = now.getMinutes();
+      const currentMins = hours * 60 + minutes;
 
-      // Check if time is between 20:00 (8:00 PM) and 20:30 (8:30 PM)
-      const isTaskActive = (hours === 20 && minutes >= 0 && minutes < 30);
+      // 5:40 PM = 17:40 (1060 mins), 8:30 PM = 20:30 (1230 mins)
+      const startMins = 17 * 60 + 40;
+      const endMins = 20 * 60 + 30;
+
+      const isTaskActive = (currentMins >= startMins && currentMins < endMins);
 
       const activeTaskCard = document.getElementById('activeTaskCard');
       const taskStatusBadge = document.getElementById('taskStatusBadge');
@@ -880,7 +912,7 @@
         if (activeTaskCard) activeTaskCard.style.display = 'none';
         if (taskStatusBadge) {
           taskStatusBadge.className = 'time-badge closed';
-          taskStatusBadge.innerHTML = '<i class="fa-solid fa-clock"></i> Open 8:00 PM - Close 8:30 PM';
+          taskStatusBadge.innerHTML = '<i class="fa-solid fa-clock"></i> Open 5:40 PM - Close 8:30 PM';
         }
       }
     }

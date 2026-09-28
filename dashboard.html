@@ -44,7 +44,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding-bottom: 70px;
+      padding-bottom: 20px;
     }
 
     /* NAVBAR */
@@ -87,27 +87,6 @@
       display: flex;
       align-items: center;
       gap: 6px;
-    }
-
-    /* Smaller, compact How Work Button */
-    .how-work-btn {
-      background: #e0f2fe;
-      color: #0284c7;
-      border: 1px solid #bae6fd;
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-weight: 700;
-      font-size: 10px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 3px;
-      transition: all 0.2s;
-      margin-top: 1px;
-    }
-
-    .how-work-btn:active {
-      transform: scale(0.95);
     }
 
     .helpline-btn {
@@ -213,25 +192,18 @@
       border-radius: 8px;
     }
 
-    /* EARNING GRID (5 items without Task) */
+    /* EARNING GRID - PERFECT SINGLE LINE (5 ITEMS) */
     .earning-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-    }
-
-    @media (min-width: 400px) {
-      .earning-grid {
-        grid-template-columns: repeat(5, 1fr);
-        gap: 6px;
-      }
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
     }
 
     .earn-btn {
       background: #f8fafc;
       border: 1px solid var(--border-color);
       border-radius: 10px;
-      padding: 10px 4px;
+      padding: 10px 2px;
       color: var(--text-main);
       display: flex;
       flex-direction: column;
@@ -254,244 +226,6 @@
     .earn-btn i {
       font-size: 14px;
       color: var(--primary);
-    }
-
-    /* LOGOS & DESIGNS SECTION */
-    .products-section {
-      background: #ffffff;
-      border-radius: 14px;
-      padding: 12px;
-      border: 1px solid var(--border-color);
-      box-shadow: var(--shadow-sm);
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    /* ADMIN EDITABLE DAYS NOTICE BOX */
-    .days-notice-box {
-      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-      color: #ffffff;
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-size: 11px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 3px 10px rgba(217, 119, 6, 0.2);
-    }
-
-    .section-title {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--text-main);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .live-badge {
-      font-size: 9px;
-      font-weight: 800;
-      background: #ef4444;
-      color: #ffffff;
-      padding: 2px 6px;
-      border-radius: 10px;
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0% { opacity: 1; }
-      50% { opacity: 0.5; }
-      100% { opacity: 1; }
-    }
-
-    /* CIRCLE LOGOS GRID */
-    .circle-products-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px 8px;
-      justify-items: center;
-    }
-
-    .circle-product-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      cursor: pointer;
-      width: 100%;
-      text-align: center;
-    }
-
-    .circle-img-wrapper {
-      width: 62px;
-      height: 62px;
-      border-radius: 50%;
-      border: 2.5px solid var(--primary);
-      padding: 2px;
-      background: #ffffff;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: transform 0.2s, border-color 0.2s;
-    }
-
-    .circle-product-item:hover .circle-img-wrapper,
-    .circle-product-item:active .circle-img-wrapper {
-      transform: scale(1.08);
-      border-color: var(--primary-dark);
-    }
-
-    .circle-img-wrapper img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-    }
-
-    .circle-title {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--text-main);
-      max-width: 75px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* LIVE VOTING GRID */
-    .voting-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-
-    /* BOLI / AUCTION SYSTEM STYLES */
-    .boli-card {
-      background: #ffffff;
-      border: 1.5px solid #3b82f6;
-      border-radius: 14px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.08);
-      margin-bottom: 12px;
-    }
-
-    .boli-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px dashed var(--border-color);
-      padding-bottom: 6px;
-    }
-
-    .timer-badge {
-      background: #fef2f2;
-      color: #ef4444;
-      border: 1px solid #fee2e2;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 4px 8px;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .boli-body {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .boli-img {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      border: 3px solid var(--primary);
-      object-fit: cover;
-      flex-shrink: 0;
-    }
-
-    .boli-info {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .resell-notice-banner {
-      background: #f0fdf4;
-      border: 1px solid #bbf7d0;
-      color: #15803d;
-      font-size: 10px;
-      font-weight: 700;
-      padding: 8px 10px;
-      border-radius: 8px;
-      line-height: 1.4;
-      display: flex;
-      align-items: flex-start;
-      gap: 6px;
-    }
-
-    /* FLOATING ACTION PLUS BUTTON */
-    .fab-upload-btn {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: #ffffff;
-      border: none;
-      font-size: 22px;
-      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 150;
-      transition: transform 0.2s;
-    }
-
-    .fab-upload-btn:active {
-      transform: scale(0.92);
-    }
-
-    /* FORM STYLES IN MODAL */
-    .form-group {
-      text-align: left;
-      margin-bottom: 10px;
-    }
-
-    .form-group label {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-main);
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 8px 10px;
-      font-size: 11px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      outline: none;
-      background: #f8fafc;
-    }
-
-    .form-control:focus {
-      border-color: var(--primary);
-      background: #ffffff;
     }
 
     /* MODALS */
@@ -550,30 +284,6 @@
       font-size: 11px;
     }
 
-    /* DOWNLOAD BUTTON */
-    .download-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: var(--primary);
-      color: #ffffff;
-      padding: 10px 16px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 11px;
-      font-weight: 700;
-      width: 100%;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
-      transition: background 0.2s;
-    }
-
-    .download-btn:active, .download-btn:hover {
-      background: var(--primary-dark);
-    }
-
     /* HELPLINE */
     .helpline-option {
       display: flex;
@@ -615,29 +325,6 @@
 
     .helpline-info-text strong { font-size: 11px; }
     .helpline-info-text span { font-size: 9.5px; color: var(--text-muted); }
-
-    /* HOW WORK STEPS */
-    .how-work-step {
-      background: #f8fafc;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 10px;
-      margin-top: 8px;
-      text-align: left;
-    }
-    .how-work-step h5 {
-      font-size: 11px;
-      color: var(--primary);
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .how-work-step p {
-      font-size: 10px;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
   </style>
 </head>
 <body>
@@ -651,11 +338,6 @@
     <div class="brand-title">SEW</div>
 
     <div class="nav-right-actions">
-      <!-- How work button adjusted smaller & aligned -->
-      <button class="how-work-btn" onclick="openHowWorkModal()">
-        <i class="fa-solid fa-circle-question"></i> How work
-      </button>
-
       <button class="helpline-btn" onclick="openHelplineModal()" title="Helpline Support">
         <i class="fa-solid fa-headset"></i>
       </button>
@@ -681,6 +363,7 @@
         </div>
       </div>
 
+      <!-- SINGLE LINE BUTTONS GRID -->
       <div class="earning-grid">
         <div class="earn-btn" onclick="navigateTo('free-ads.html')">
           <i class="fa-solid fa-rectangle-ad"></i>
@@ -709,178 +392,6 @@
       </div>
     </section>
 
-    <!-- NORMAL SECTIONS (LOGOS + VOTING) CONTAINER -->
-    <div id="normalSectionsContainer">
-      <!-- LOGOS, THUMBNAILS & DESIGNS SECTION -->
-      <section class="products-section">
-        <div class="days-notice-box">
-          <i class="fa-solid fa-calendar-check" style="font-size:16px;"></i>
-          <span id="daysNoticeText">Loading notice...</span>
-        </div>
-
-        <h3 class="section-title">
-          <i class="fa-solid fa-palette" style="color:var(--primary)"></i> 
-          Logos, Thumbnails & Designs
-        </h3>
-
-        <!-- CIRCLE LOGOS / DESIGNS GRID -->
-        <div class="circle-products-grid" id="productsContainer"></div>
-      </section>
-
-      <!-- LIVE CONTEST & VOTING SECTION -->
-      <section class="products-section" style="margin-top: 12px;">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <h3 class="section-title">
-            <i class="fa-solid fa-trophy" style="color:#f59e0b"></i> 
-            Live Contest & Voting
-          </h3>
-          <span class="live-badge"><i class="fa-solid fa-circle"></i> LIVE</span>
-        </div>
-
-        <div class="voting-grid" id="votingContainer"></div>
-      </section>
-    </div>
-
-    <!-- LIVE BOLI / AUCTION SECTION (Toggled via Admin) -->
-    <section class="products-section" id="liveBoliSection" style="display: none;">
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-        <h3 class="section-title">
-          <i class="fa-solid fa-gavel" style="color:#2563eb"></i> 
-          Live Boli / Auction (Top 10 Designs)
-        </h3>
-        <span class="live-badge"><i class="fa-solid fa-circle"></i> BOLI ACTIVE</span>
-      </div>
-
-      <!-- Resell notice when Boli starts -->
-      <div class="resell-notice-banner" style="margin-bottom: 10px;">
-        <i class="fa-solid fa-circle-info" style="font-size: 14px; color: #16a34a; margin-top:2px;"></i>
-        <span><strong>Boli Rules:</strong> Jis user ne design khareed liya, wo ose usi time upload kare, website ose double paise me khareede gi aur us per dobara boli lage gi!</span>
-      </div>
-
-      <div id="boliCardsContainer"></div>
-    </section>
-
-  </div>
-
-  <!-- FLOATING PLUS BUTTON TO SUBMIT DESIGN TO ADMIN -->
-  <button class="fab-upload-btn" onclick="openUploadModal()" title="Admin Ko Apni Cheez Bhejen">
-    <i class="fa-solid fa-plus"></i>
-  </button>
-
-  <!-- HOW WORK MODAL (Updated with all user requested details) -->
-  <div class="modal-overlay" id="howWorkModal">
-    <div class="modal-box">
-      <button class="close-modal" onclick="closeHowWorkModal()">✕</button>
-      
-      <h3 style="font-size:13px; font-weight:800; text-transform:uppercase; margin-bottom:4px; color:var(--primary);">
-        <i class="fa-solid fa-circle-question"></i> How Work (Kaam Kaise Karta Hai)
-      </h3>
-      <p style="font-size: 10px; color: var(--text-muted); margin-bottom: 10px;">SEW Earning & Design Selling Complete Guide</p>
-
-      <div class="how-work-step">
-        <h5><i class="fa-solid fa-coins" style="color:var(--primary)"></i> Earning Sources (Kamai Ke Zariye)</h5>
-        <p>• <strong>Ads Area:</strong> Free Ads dekh kar paise earn kar sakte hain.<br>
-        • <strong>Product Sell:</strong> Logos & Designs sell karke paise kama sakte hain.<br>
-        • <strong>Jobs:</strong> Jobs section me mukhtalif kaam karke earning kar sakte hain.</p>
-      </div>
-
-      <div class="how-work-step">
-        <h5><i class="fa-solid fa-1" style="color:var(--primary)"></i> Step 1: Design Banayein (1 Day)</h5>
-        <p>Sabse pehle aapko ek design uthana hai aur ose 1 din me behtareen tariqe se banana hai.</p>
-      </div>
-
-      <div class="how-work-step">
-        <h5><i class="fa-solid fa-2" style="color:var(--primary)"></i> Step 2: Upload & Live Voting</h5>
-        <p>Dusre din aapna design upload karenge, jiske baad live voting start ho jayegi.</p>
-      </div>
-
-      <div class="how-work-step">
-        <h5><i class="fa-solid fa-3" style="color:var(--primary)"></i> Step 3: Top 10 & Boli (Selling)</h5>
-        <p>Agar aapke design ne <strong>Top 10 Voting</strong> hasil ki, to wo tesre din Boli (Auction) par jaiga. Log ose khareedenge. <strong>10% Website Fees</strong> hogi aur baki saare paise aapko milege!</p>
-      </div>
-
-      <div class="how-work-step" style="background:#f0fdf4; border-color:#bbf7d0;">
-        <h5 style="color:#15803d;"><i class="fa-solid fa-rotate-right"></i> Boli Double Price Resell Rule</h5>
-        <p style="color:#166534;">Jab Boli start hogi: <strong>Jis user ne design khareed liya, wo ose usi time upload kare, website ose double paise me khareede gi aur us per dobara boli lage gi!</strong></p>
-      </div>
-
-      <button class="download-btn" onclick="speakHowWorkText()" style="margin-top: 12px;">
-        <i class="fa-solid fa-volume-high"></i> Voice Sunen (Play Audio)
-      </button>
-    </div>
-  </div>
-
-  <!-- USER SUBMISSION MODAL -->
-  <div class="modal-overlay" id="uploadModal">
-    <div class="modal-box">
-      <button class="close-modal" onclick="closeUploadModal()">✕</button>
-      
-      <h3 style="font-size:13px; font-weight:800; text-transform:uppercase; margin-bottom:4px; color:var(--primary);">
-        <i class="fa-solid fa-paper-plane"></i> Admin Ko Design Bhejen
-      </h3>
-      <p style="font-size: 10px; color: var(--text-muted); margin-bottom: 12px;">Apna banaya hua logo ya thumbnail admin ko review ke liye bhejen</p>
-
-      <div class="form-group">
-        <label>Design Title / Naam</label>
-        <input type="text" id="submitTitle" class="form-control" placeholder="Maslan: My New Logo Design" />
-      </div>
-
-      <div class="form-group">
-        <label>Category Select Karen</label>
-        <select id="submitCategory" class="form-control">
-          <option value="Logo">Logo</option>
-          <option value="Thumbnail">Thumbnail</option>
-          <option value="Banner">Banner / Art</option>
-          <option value="Other">Other Design</option>
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label>Tasveer Select Karen (File Upload)</label>
-        <input type="file" id="submitFileInput" class="form-control" accept="image/*" />
-      </div>
-
-      <div class="form-group">
-        <label>Ya Image Link Paste Karen (Optional)</label>
-        <input type="url" id="submitImgUrl" class="form-control" placeholder="https://..." />
-      </div>
-
-      <div class="form-group" id="previewContainer" style="display:none; text-align:center; margin-bottom:10px;">
-        <img id="imagePreview" src="" style="width:70px; height:70px; object-fit:cover; border-radius:50%; border:2px solid var(--primary);" alt="Preview" />
-      </div>
-
-      <div class="form-group">
-        <label>Details / Description</label>
-        <textarea id="submitDesc" class="form-control" rows="2" placeholder="Apne design ke baare me thora bataen..."></textarea>
-      </div>
-
-      <button id="sendToAdminBtn" class="download-btn" style="margin-top: 6px;">
-        <i class="fa-solid fa-paper-plane"></i> Submit To Admin
-      </button>
-    </div>
-  </div>
-
-  <!-- PRODUCT DETAIL & DOWNLOAD MODAL -->
-  <div class="modal-overlay" id="productDetailModal">
-    <div class="modal-box" style="text-align: center;">
-      <button class="close-modal" onclick="closeProductModal()">✕</button>
-      
-      <div style="width: 80px; height: 80px; margin: 0 auto 10px auto; border-radius: 50%; border: 3px solid var(--primary); padding: 2px; overflow: hidden; background: #fff;">
-        <img id="productModalImg" src="" style="width:100%; height:100%; object-fit:cover; border-radius:50%;" alt="Design Logo" />
-      </div>
-
-      <h3 id="productModalTitle" style="font-size: 14px; font-weight: 800; color: var(--text-main); margin-bottom: 6px;">
-        Design Title
-      </h3>
-
-      <div id="productModalDesc" style="font-size: 11px; color: var(--text-muted); line-height: 1.5; background: #f8fafc; padding: 10px; border-radius: 8px; border: 1px solid var(--border-color); text-align: left; margin-bottom: 12px; max-height: 150px; overflow-y: auto;">
-        Details text...
-      </div>
-
-      <button id="productDownloadBtn" class="download-btn">
-        <i class="fa-solid fa-download"></i> Download Details / File
-      </button>
-    </div>
   </div>
 
   <!-- HELPLINE MODAL -->
@@ -960,47 +471,12 @@
     function closeHelplineModal() {
       document.getElementById('helplineModal').style.display = 'none';
     }
-
-    function closeProductModal() {
-      document.getElementById('productDetailModal').style.display = 'none';
-    }
-
-    function openUploadModal() {
-      document.getElementById('uploadModal').style.display = 'flex';
-    }
-
-    function closeUploadModal() {
-      document.getElementById('uploadModal').style.display = 'none';
-    }
-
-    function openHowWorkModal() {
-      document.getElementById('howWorkModal').style.display = 'flex';
-      speakHowWorkText();
-    }
-
-    function closeHowWorkModal() {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      }
-      document.getElementById('howWorkModal').style.display = 'none';
-    }
-
-    function speakHowWorkText() {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        const speechText = "Is website par aap ads dekh kar, products sell karke aur jobs se paise earn kar sakte hain. Sabse pehle aapko ek design bana kar upload karna hai. Dusre din voting start hogi. Agar aapka design Top 10 me aayega, to tesre din Boli par jayega aur sell hoga. 10 percent website fee ke baad baki paise aapko milege. Jis user ne design khareed liya, wo ose usi time upload kare, website ose double paise me khareede gi aur dobara boli lage gi.";
-        const utterance = new SpeechSynthesisUtterance(speechText);
-        utterance.lang = 'hi-IN'; // Roman Urdu/Hindi clear pronunciation
-        utterance.rate = 0.9;
-        window.speechSynthesis.speak(utterance);
-      }
-    }
   </script>
 
   <!-- FIREBASE INTEGRATION & REALTIME LOGIC SCRIPT -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, push, set, update, runTransaction } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
@@ -1023,7 +499,6 @@
 
     const sessionData = JSON.parse(rawSession || '{}');
     const userId = sessionData.uid || sessionData.username || sessionData.key;
-    const currentUserName = sessionData.fullName || sessionData.username || "Anonymous User";
 
     // RENDER USER PROFILE DATA
     function renderUserUI(data) {
@@ -1050,163 +525,11 @@
       const userRef = ref(db, 'users/' + userId);
       onValue(userRef, (snapshot) => {
         if (snapshot.exists()) {
-          const liveData = snapshot.val();
-          renderUserUI(liveData);
+          const freshData = snapshot.val();
+          renderUserUI(freshData);
+          localStorage.setItem('sew_session', JSON.stringify({ ...sessionData, ...freshData }));
         }
       });
-    }
-
-    // 1. DYNAMIC DAYS NOTICE BOX LISTENER (Admin Editable)
-    const noticeRef = ref(db, 'notice/daysText');
-    onValue(noticeRef, (snapshot) => {
-      const noticeBoxText = document.getElementById('daysNoticeText');
-      if (snapshot.exists() && snapshot.val()) {
-        noticeBoxText.innerText = snapshot.val();
-      } else {
-        noticeBoxText.innerText = "Yeh system active hai aur run ho raha hai.";
-      }
-    });
-
-    // 2. REALTIME LOGOS & DESIGNS SYSTEM
-    const productsRef = ref(db, 'products');
-    onValue(productsRef, (snapshot) => {
-      const container = document.getElementById('productsContainer');
-      if (!container) return;
-      container.innerHTML = '';
-
-      if (!snapshot.exists()) {
-        container.innerHTML = '<p style="font-size:10px; color:var(--text-muted); grid-column:span 4; text-align:center;">Koi design mojood nahi hai.</p>';
-        return;
-      }
-
-      snapshot.forEach((child) => {
-        const item = child.val();
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'circle-product-item';
-        itemDiv.onclick = () => showProductDetails(item);
-        itemDiv.innerHTML = `
-          <div class="circle-img-wrapper">
-            <img src="${item.imageUrl || 'https://via.placeholder.com/100'}" alt="${item.title || 'Design'}" />
-          </div>
-          <div class="circle-title">${item.title || 'Untitled'}</div>
-        `;
-        container.appendChild(itemDiv);
-      });
-    });
-
-    // 3. REALTIME VOTING SYSTEM
-    const votingRef = ref(db, 'voting');
-    onValue(votingRef, (snapshot) => {
-      const vContainer = document.getElementById('votingContainer');
-      if (!vContainer) return;
-      vContainer.innerHTML = '';
-
-      if (!snapshot.exists()) {
-        vContainer.innerHTML = '<p style="font-size:10px; color:var(--text-muted); grid-column:span 2; text-align:center;">Abhi koi live contest active nahi hai.</p>';
-        return;
-      }
-
-      snapshot.forEach((child) => {
-        const item = child.val();
-        const key = child.key;
-        const votesCount = item.votes || 0;
-        const cardDiv = document.createElement('div');
-        cardDiv.className = 'earn-btn';
-        cardDiv.style.cssText = 'padding:10px; flex-direction:column; gap:6px;';
-        cardDiv.innerHTML = `
-          <img src="${item.imageUrl || 'https://via.placeholder.com/100'}" style="width:50px; height:50px; border-radius:50%; object-fit:cover; border:2px solid var(--primary);" />
-          <div style="font-weight:800; font-size:11px;">${item.title || 'Design'}</div>
-          <button onclick="voteDesign('${key}')" style="background:var(--primary); color:#fff; border:none; padding:4px 10px; border-radius:6px; font-weight:700; font-size:10px; cursor:pointer;">
-            <i class="fa-solid fa-thumbs-up"></i> Vote (${votesCount})
-          </button>
-        `;
-        vContainer.appendChild(cardDiv);
-      });
-    });
-
-    window.voteDesign = function(designKey) {
-      const voteCountRef = ref(db, `voting/${designKey}/votes`);
-      runTransaction(voteCountRef, (currentVotes) => {
-        return (currentVotes || 0) + 1;
-      });
-    };
-
-    // 4. REALTIME BOLI / AUCTION SYSTEM
-    const boliRef = ref(db, 'boli');
-    onValue(boliRef, (snapshot) => {
-      const boliSection = document.getElementById('liveBoliSection');
-      const boliContainer = document.getElementById('boliCardsContainer');
-
-      if (!snapshot.exists()) {
-        if (boliSection) boliSection.style.display = 'none';
-        return;
-      }
-
-      if (boliSection) boliSection.style.display = 'block';
-      if (boliContainer) boliContainer.innerHTML = '';
-
-      snapshot.forEach((child) => {
-        const item = child.val();
-        const card = document.createElement('div');
-        card.className = 'boli-card';
-        card.innerHTML = `
-          <div class="boli-header">
-            <strong style="font-size:12px;">${item.title || 'Top 10 Design Boli'}</strong>
-            <div class="timer-badge"><i class="fa-solid fa-gavel"></i> BOLI ACTIVE</div>
-          </div>
-          <div class="boli-body">
-            <img src="${item.imageUrl || 'https://via.placeholder.com/100'}" class="boli-img" />
-            <div class="boli-info">
-              <span style="font-size:10px; color:var(--text-muted);">Current Price:</span>
-              <strong style="font-size:14px; color:var(--primary);">Rs. ${item.price || 0}</strong>
-              <span style="font-size:9px; color:var(--text-muted);">Top 10 Voting Winner</span>
-            </div>
-          </div>
-          <div style="font-size:10px; background:#f0fdf4; padding:8px; border-radius:6px; color:#15803d; font-weight:700;">
-            <i class="fa-solid fa-arrows-rotate"></i> Jis user ne design khareed liya, wo ose usi time upload kare, website ose double paise me khareede gi aur us per dobara boli lage gi!
-          </div>
-        `;
-        boliContainer.appendChild(card);
-      });
-    });
-
-    // 5. SUBMIT DESIGN TO ADMIN
-    const sendBtn = document.getElementById('sendToAdminBtn');
-    if (sendBtn) {
-      sendBtn.onclick = function() {
-        const title = document.getElementById('submitTitle').value;
-        const category = document.getElementById('submitCategory').value;
-        const imgUrl = document.getElementById('submitImgUrl').value;
-        const desc = document.getElementById('submitDesc').value;
-
-        if (!title) {
-          alert('Meherbani karke title likhen');
-          return;
-        }
-
-        const newSubmissionRef = push(ref(db, 'submissions'));
-        set(newSubmissionRef, {
-          title: title,
-          category: category,
-          imageUrl: imgUrl || 'https://via.placeholder.com/100',
-          description: desc,
-          userId: userId,
-          userName: currentUserName,
-          timestamp: Date.now()
-        }).then(() => {
-          alert('Aapka design admin ko review ke liye bhej diya gaya hai!');
-          closeUploadModal();
-        }).catch((err) => {
-          alert('Error: ' + err.message);
-        });
-      };
-    }
-
-    function showProductDetails(item) {
-      document.getElementById('productModalImg').src = item.imageUrl || 'https://via.placeholder.com/100';
-      document.getElementById('productModalTitle').innerText = item.title || 'Design Title';
-      document.getElementById('productModalDesc').innerText = item.description || 'Koi details mojood nahi hain.';
-      document.getElementById('productDetailModal').style.display = 'flex';
     }
   </script>
 </body>

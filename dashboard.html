@@ -44,7 +44,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding-bottom: 20px;
+      padding-bottom: 90px; /* Space for fixed bottom navigation bar */
     }
 
     /* NAVBAR */
@@ -167,7 +167,6 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
       box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
     }
 
@@ -192,25 +191,41 @@
       border-radius: 8px;
     }
 
-    /* EARNING GRID - PERFECT SINGLE LINE (5 ITEMS) */
+    /* FIXED BOTTOM SECTION - SINGLE LINE (5 ITEMS) */
+    .bottom-nav-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #ffffff;
+      border-top: 1px solid var(--border-color);
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+      padding: 8px 6px;
+      z-index: 150;
+      display: flex;
+      justify-content: center;
+    }
+
     .earning-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       gap: 4px;
+      width: 100%;
+      max-width: 500px;
     }
 
     .earn-btn {
       background: #f8fafc;
       border: 1px solid var(--border-color);
       border-radius: 10px;
-      padding: 10px 2px;
+      padding: 8px 2px;
       color: var(--text-main);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
+      gap: 3px;
       font-weight: 700;
-      font-size: 9px;
+      font-size: 8px;
       text-align: center;
       cursor: pointer;
       user-select: none;
@@ -226,6 +241,14 @@
     .earn-btn i {
       font-size: 14px;
       color: var(--primary);
+    }
+
+    .earn-btn span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+      line-height: 1.1;
     }
 
     /* MODALS */
@@ -362,36 +385,38 @@
           <i class="fa-solid fa-wallet"></i>
         </div>
       </div>
-
-      <!-- SINGLE LINE BUTTONS GRID -->
-      <div class="earning-grid">
-        <div class="earn-btn" onclick="navigateTo('free-ads.html')">
-          <i class="fa-solid fa-rectangle-ad"></i>
-          <span>Free Ads</span>
-        </div>
-
-        <div class="earn-btn" onclick="navigateTo('referral.html')">
-          <i class="fa-solid fa-users"></i>
-          <span>Referral</span>
-        </div>
-
-        <div class="earn-btn" onclick="navigateTo('gmail-selling.html')">
-          <i class="fa-solid fa-envelope"></i>
-          <span>Gmail</span>
-        </div>
-
-        <div class="earn-btn" onclick="navigateTo('withdraw.html')">
-          <i class="fa-solid fa-money-bill-transfer"></i>
-          <span>Withdraw</span>
-        </div>
-
-        <div class="earn-btn" onclick="navigateTo('free-jobs.html')">
-          <i class="fa-solid fa-briefcase"></i>
-          <span>Jobs</span>
-        </div>
-      </div>
     </section>
 
+  </div>
+
+  <!-- FIXED BOTTOM SINGLE LINE NAVIGATION (5 ITEMS) -->
+  <div class="bottom-nav-container">
+    <div class="earning-grid">
+      <div class="earn-btn" onclick="navigateTo('free-ads.html')">
+        <i class="fa-solid fa-rectangle-ad"></i>
+        <span>Free Ads</span>
+      </div>
+
+      <div class="earn-btn" onclick="navigateTo('referral.html')">
+        <i class="fa-solid fa-users"></i>
+        <span>Referral</span>
+      </div>
+
+      <div class="earn-btn" onclick="navigateTo('gmail-selling.html')">
+        <i class="fa-solid fa-envelope"></i>
+        <span>Gmail</span>
+      </div>
+
+      <div class="earn-btn" onclick="navigateTo('withdraw.html')">
+        <i class="fa-solid fa-money-bill-transfer"></i>
+        <span>Withdraw</span>
+      </div>
+
+      <div class="earn-btn" onclick="navigateTo('free-jobs.html')">
+        <i class="fa-solid fa-briefcase"></i>
+        <span>Affiliate Program</span>
+      </div>
+    </div>
   </div>
 
   <!-- HELPLINE MODAL -->

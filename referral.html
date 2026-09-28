@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -395,6 +396,7 @@
       <ul class="rules-list">
         <li>Apne doston ke saath apna link share karein.</li>
         <li>Har new valid user joining par aapko Rs. 20 milenge.</li>
+        <li>Jab aapka referral balance 1000 ho jaye ga tab wo aapke main wallet me add ho jayenge aur aap withdraw kar sakoge. Baaki balance bad me refund kiya jaye ga.</li>
         <li><strong>Strict Anti-Fraud:</strong> Ek hi mobile se multiple accounts banane par 0 Bonus milega aur referral Reject ho jayega.</li>
       </ul>
     </div>
@@ -461,7 +463,7 @@
       });
     };
 
-    // Realtime Listener for User Account & Secret Payout Trigger
+    // Realtime Listener for User Account & Payout Trigger
     onValue(ref(db, 'users/' + myUsername), (snapshot) => {
       if (!snapshot.exists()) return;
       const freshUser = snapshot.val();
@@ -470,18 +472,18 @@
       let walletBalance = parseFloat(freshUser.balance || 0);
 
       // ==============================================================
-      // SECRET TRICK LOGIC (User does not know):
-      // When pending referral balance reaches >= 1500 PKR:
-      // Give ONLY 300 PKR to main wallet, and clear/reset pending referral balance to 0.
+      // CONVERSION LOGIC:
+      // When pending referral balance reaches >= 1000 PKR:
+      // Give ONLY 200 PKR to main wallet, and clear/reset pending referral balance to 0.
       // ==============================================================
-      if (refBalance >= 1500) {
-        const newWalletBalance = walletBalance + 300;
+      if (refBalance >= 1000) {
+        const newWalletBalance = walletBalance + 200;
         
         update(ref(db, 'users/' + myUsername), {
           balance: newWalletBalance,
-          referralBalance: 0 // Remaining vanishes
+          referralBalance: 0
         }).then(() => {
-          console.log("Secret conversion processed: 1500 ref -> 300 main wallet.");
+          console.log("Conversion processed: 1000 ref -> 200 main wallet.");
         });
         return;
       }

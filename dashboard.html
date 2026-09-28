@@ -191,6 +191,220 @@
       border-radius: 8px;
     }
 
+    /* HIGH MARKETING TASK SECTION */
+    .marketing-task-section {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 14px;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .marketing-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    .marketing-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #1e293b;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .marketing-title i {
+      color: #f59e0b;
+    }
+
+    .time-badge {
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 4px 8px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .time-badge.live {
+      background: #ecfdf5;
+      color: #059669;
+      border: 1px solid #a7f3d0;
+    }
+
+    .time-badge.closed {
+      background: #fef2f2;
+      color: #dc2626;
+      border: 1px solid #fecaca;
+    }
+
+    /* WINNER BOXES GRID */
+    .winners-container {
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      border-radius: 12px;
+      padding: 10px;
+    }
+
+    .winners-title {
+      font-size: 11px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .winners-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .winner-card {
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 8px 4px;
+      text-align: center;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    }
+
+    .winner-card.rank-1 { border-top: 3px solid #f59e0b; background: #fffbe3; }
+    .winner-card.rank-2 { border-top: 3px solid #94a3b8; background: #f8fafc; }
+    .winner-card.rank-3 { border-top: 3px solid #d97706; background: #fef3c7; }
+
+    .winner-icon {
+      font-size: 16px;
+      margin-bottom: 2px;
+    }
+
+    .winner-rank-label {
+      font-size: 8px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .winner-name {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-main);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin: 2px 0;
+    }
+
+    .winner-prize {
+      font-size: 9px;
+      font-weight: 700;
+      color: #16a34a;
+    }
+
+    /* ACTIVE TASK BOX (ONLY SHOWS 8:00 PM - 8:30 PM) */
+    .active-task-card {
+      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+      border: 1.5px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 12px;
+      display: none; /* Auto-managed by JavaScript */
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .task-instructions {
+      font-size: 10.5px;
+      color: #1e3a8a;
+      line-height: 1.4;
+      font-weight: 600;
+      margin-bottom: 10px;
+      background: #ffffff;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border-left: 3px solid var(--primary);
+    }
+
+    .monetag-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+      color: #ffffff;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(22, 163, 74, 0.25);
+      margin-bottom: 10px;
+      transition: all 0.2s;
+    }
+
+    .monetag-btn:active {
+      transform: scale(0.98);
+    }
+
+    .screenshot-upload-box {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .screenshot-upload-box label {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .screenshot-upload-box input[type="file"] {
+      font-size: 10px;
+    }
+
+    .submit-proof-btn {
+      background: var(--primary);
+      color: #ffffff;
+      border: none;
+      padding: 7px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .submission-msg {
+      display: none;
+      margin-top: 6px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 9.5px;
+      font-weight: 700;
+      text-align: center;
+    }
+
     /* FIXED BOTTOM SECTION - SINGLE LINE (5 ITEMS) */
     .bottom-nav-container {
       position: fixed;
@@ -387,6 +601,73 @@
       </div>
     </section>
 
+    <!-- HIGH MARKETING TASK SECTION (MIDDLE SPACE) -->
+    <section class="marketing-task-section">
+      <div class="marketing-header">
+        <div class="marketing-title">
+          <i class="fa-solid fa-fire"></i> High Marketing Task
+        </div>
+        <div class="time-badge closed" id="taskStatusBadge">
+          <i class="fa-solid fa-clock"></i> Open 8:00 PM - Close 8:30 PM
+        </div>
+      </div>
+
+      <!-- WINNERS BOX (1ST, 2ND, 3RD) -->
+      <div class="winners-container">
+        <div class="winners-title">
+          <i class="fa-solid fa-trophy" style="color:#f59e0b"></i> Daily Top Winners
+        </div>
+        <div class="winners-grid">
+          <!-- 1st Winner -->
+          <div class="winner-card rank-1">
+            <div class="winner-icon">🥇</div>
+            <div class="winner-rank-label">1st Winner</div>
+            <div class="winner-name" id="w1Name">Waiting...</div>
+            <div class="winner-prize" id="w1Prize">Rs. 0</div>
+          </div>
+          <!-- 2nd Winner -->
+          <div class="winner-card rank-2">
+            <div class="winner-icon">🥈</div>
+            <div class="winner-rank-label">2nd Winner</div>
+            <div class="winner-name" id="w2Name">Waiting...</div>
+            <div class="winner-prize" id="w2Prize">Rs. 0</div>
+          </div>
+          <!-- 3rd Winner -->
+          <div class="winner-card rank-3">
+            <div class="winner-icon">🥉</div>
+            <div class="winner-rank-label">3rd Winner</div>
+            <div class="winner-name" id="w3Name">Waiting...</div>
+            <div class="winner-prize" id="w3Prize">Rs. 0</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIVE 8:00 PM - 8:30 PM TASK CARD (AUTO SHOWS ONLY AT 8 PM) -->
+      <div class="active-task-card" id="activeTaskCard">
+        <div class="task-instructions">
+          <i class="fa-solid fa-circle-info" style="color:var(--primary)"></i> 
+          <strong>Task Rules:</strong> Button par click karke direct link open karein. Jo bhi app/file aaye usko download karein ya website par sign up karein. Jo sabse achha task complete karega wo Winner banega aur usko High Payment milegi!
+        </div>
+
+        <!-- MONETAG DIRECT LINK BUTTON -->
+        <a href="https://www.google.com" target="_blank" class="monetag-btn" id="monetagDirectLink">
+          <i class="fa-solid fa-rocket"></i> Complete Task Now
+        </a>
+
+        <!-- SCREENSHOT PROOF SUBMISSION -->
+        <div class="screenshot-upload-box">
+          <label><i class="fa-solid fa-camera"></i> Submit Proof Screenshot:</label>
+          <input type="file" id="screenshotFileInput" accept="image/*" />
+          <button class="submit-proof-btn" onclick="submitTaskProof()">
+            <i class="fa-solid fa-paper-plane"></i> Submit Proof
+          </button>
+        </div>
+
+        <!-- SUBMISSION RESPONSE MSG -->
+        <div class="submission-msg" id="submissionStatusMsg"></div>
+      </div>
+    </section>
+
   </div>
 
   <!-- FIXED BOTTOM SINGLE LINE NAVIGATION (5 ITEMS) -->
@@ -501,7 +782,7 @@
   <!-- FIREBASE INTEGRATION & REALTIME LOGIC SCRIPT -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+    import { getDatabase, ref, onValue, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
@@ -556,6 +837,120 @@
         }
       });
     }
+
+    // WINNERS LISTENER FROM FIREBASE REALTIME DB
+    const winnersRef = ref(db, 'winners');
+    onValue(winnersRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const winners = snapshot.val();
+        if (winners.first) {
+          document.getElementById('w1Name').innerText = winners.first.name || 'Winner Name';
+          document.getElementById('w1Prize').innerText = winners.first.prize || 'Rs. 0';
+        }
+        if (winners.second) {
+          document.getElementById('w2Name').innerText = winners.second.name || 'Runner Up';
+          document.getElementById('w2Prize').innerText = winners.second.prize || 'Rs. 0';
+        }
+        if (winners.third) {
+          document.getElementById('w3Name').innerText = winners.third.name || '3rd Place';
+          document.getElementById('w3Prize').innerText = winners.third.prize || 'Rs. 0';
+        }
+      }
+    });
+
+    // 8:00 PM TO 8:30 PM AUTOMATIC TASK TIMER LOGIC
+    function checkTaskTiming() {
+      const now = new Date();
+      const hours = now.getHours();
+      const minutes = now.getMinutes();
+
+      // Check if time is between 20:00 (8:00 PM) and 20:30 (8:30 PM)
+      const isTaskActive = (hours === 20 && minutes >= 0 && minutes < 30);
+
+      const activeTaskCard = document.getElementById('activeTaskCard');
+      const taskStatusBadge = document.getElementById('taskStatusBadge');
+
+      if (isTaskActive) {
+        if (activeTaskCard) activeTaskCard.style.display = 'block';
+        if (taskStatusBadge) {
+          taskStatusBadge.className = 'time-badge live';
+          taskStatusBadge.innerHTML = '<i class="fa-solid fa-circle-dot fa-spin"></i> LIVE NOW (Closing at 8:30 PM)';
+        }
+      } else {
+        if (activeTaskCard) activeTaskCard.style.display = 'none';
+        if (taskStatusBadge) {
+          taskStatusBadge.className = 'time-badge closed';
+          taskStatusBadge.innerHTML = '<i class="fa-solid fa-clock"></i> Open 8:00 PM - Close 8:30 PM';
+        }
+      }
+    }
+
+    // Check every second automatically
+    setInterval(checkTaskTiming, 1000);
+    checkTaskTiming();
+
+    // LISTEN FOR USER TASK APPROVAL STATUS FROM ADMIN
+    if (userId) {
+      const taskSubmissionRef = ref(db, 'task_submissions/' + userId);
+      onValue(taskSubmissionRef, (snapshot) => {
+        const msgEl = document.getElementById('submissionStatusMsg');
+        if (snapshot.exists()) {
+          const data = snapshot.val();
+          if (data.status === 'approved') {
+            msgEl.style.display = 'block';
+            msgEl.style.background = '#ecfdf5';
+            msgEl.style.color = '#047857';
+            msgEl.style.border = '1px solid #a7f3d0';
+            msgEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> Admin ne aapka proof approve kar diya hai! Aapka chance hai Winner banne ka!';
+          } else if (data.status === 'pending') {
+            msgEl.style.display = 'block';
+            msgEl.style.background = '#eff6ff';
+            msgEl.style.color = '#1d4ed8';
+            msgEl.style.border = '1px solid #bfdbfe';
+            msgEl.innerHTML = '<i class="fa-solid fa-clock"></i> Proof Submit ho gaya hai! Admin Review ke baad Winner ka chance hai.';
+          }
+        }
+      });
+    }
+
+    // SUBMIT SCREENSHOT PROOF FUNCTION
+    window.submitTaskProof = function() {
+      const fileInput = document.getElementById('screenshotFileInput');
+      const msgEl = document.getElementById('submissionStatusMsg');
+
+      if (!fileInput.files || fileInput.files.length === 0) {
+        alert("Kripya screenshot file select karein!");
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(e) {
+        const base64Image = e.target.result;
+        const subRef = ref(db, 'task_submissions/' + userId);
+
+        set(subRef, {
+          userId: userId,
+          userName: sessionData.fullName || sessionData.username || "User",
+          mobile: sessionData.mobile || "N/A",
+          screenshot: base64Image,
+          status: "pending",
+          submittedAt: new Date().toISOString()
+        }).then(() => {
+          msgEl.style.display = 'block';
+          msgEl.style.background = '#eff6ff';
+          msgEl.style.color = '#1d4ed8';
+          msgEl.style.border = '1px solid #bfdbfe';
+          msgEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> Proof submit ho gaya! Admin review karega toh chance hai winner banne ka.';
+          fileInput.value = '';
+        }).catch((err) => {
+          alert("Error uploading screenshot: " + err.message);
+        });
+      };
+
+      reader.readAsDataURL(file);
+    };
   </script>
 </body>
 </html>

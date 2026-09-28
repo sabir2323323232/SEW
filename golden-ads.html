@@ -70,8 +70,8 @@
     <div class="policy-box">
       <h4><i class="fa-solid fa-shield-halved"></i> Strict Policy Rules</h4>
       <ul>
-        <li>Ad click karne ke baad <strong>40 seconds</strong> rukna zaroori hai.</li>
-        <li>Proof Screenshot upload karne par Admin email check karke approve karega.</li>
+        <li>Ad click karne ke baad <strong>40 seconds</strong> Ad page par stay karna zaroori hai.</li>
+        <li>Pehle wapas aane par task cancel ho jayega aur earning nahi milegi.</li>
       </ul>
     </div>
 
@@ -136,6 +136,8 @@
     let userData = null;
     let activeAdIndex = 0;
     let adTimerInterval = null;
+    let isTimerRunning = false;
+    let timeLeft = 40;
 
     onValue(ref(db, 'users/' + sessionUser.username), (snapshot) => {
       if (snapshot.exists()) {
@@ -173,7 +175,8 @@
       document.getElementById('timerBox').style.display = 'block';
       document.getElementById('uploadBox').style.display = 'none';
 
-      let timeLeft = 40;
+      timeLeft = 40;
+      isTimerRunning = true;
       document.getElementById('timerSec').innerText = timeLeft;
       if (adTimerInterval) clearInterval(adTimerInterval);
 
@@ -182,18 +185,36 @@
         document.getElementById('timerSec').innerText = timeLeft;
         if (timeLeft <= 0) {
           clearInterval(adTimerInterval);
+          isTimerRunning = false;
           document.getElementById('timerBox').style.display = 'none';
           document.getElementById('uploadBox').style.display = 'flex';
         }
       }, 1000);
     };
 
+    // Agar user 40s poore hone se pehle wapas tab par aaye toh task cancel
+    function checkEarlyReturn() {
+      if (isTimerRunning && timeLeft > 0) {
+        clearInterval(adTimerInterval);
+        isTimerRunning = false;
+        document.getElementById('taskModal').style.display = 'none';
+        alert("⚠️ Ad poora watch nahi hua! Aap 40 seconds se pehle wapas aa gaye. Aapko earning nahi milegi, dobara Ad watch karein.");
+      }
+    }
+
+    window.addEventListener('focus', checkEarlyReturn);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        checkEarlyReturn();
+      }
+    });
+
     window.checkProofSelected = function() {
       const file = document.getElementById('proofInput').files[0];
       document.getElementById('submitProofBtn').disabled = !file;
     };
 
-    // Fast Base64 Image Compression (500px, quality 0.4)
+    // Image Compression
     function compressImage(file) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();

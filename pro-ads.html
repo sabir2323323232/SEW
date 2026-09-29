@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +8,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <!-- Multi-Tag Script (Updated Tag) -->
   <script src="https://quge5.com/88/tag.min.js" data-zone="273760" async data-cfasync="false"></script>
 
   <style>
@@ -18,9 +16,7 @@
       --card-bg: #ffffff;
       --input-bg: #f1f5f9;
       --primary: #2563eb;
-      --primary-hover: #1d4ed8;
       --text-main: #0f172a;
-      --text-muted: #64748b;
       --border-color: #e2e8f0;
       --shadow-soft: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
       --success: #10b981;
@@ -28,173 +24,16 @@
       --warning: #f59e0b;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      min-height: 100vh;
-      background-color: var(--bg-body);
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 20px 16px;
-      color: var(--text-main);
-    }
-
-    .container {
-      width: 100%;
-      max-width: 520px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: 20px;
-      padding: 20px;
-      box-shadow: var(--shadow-soft);
-      border: 1px solid #ffffff;
-    }
-
-    .card-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-    }
-
-    .back-btn {
-      background: var(--input-bg);
-      border: none;
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--text-main);
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .header-title {
-      font-size: 18px;
-      font-weight: 800;
-    }
-
-    .balance-box {
-      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-      border-radius: 16px;
-      padding: 16px;
-      color: #ffffff;
-      text-align: center;
-      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
-    }
-
-    .balance-box label {
-      font-size: 12px;
-      opacity: 0.85;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    .balance-amount {
-      font-size: 28px;
-      font-weight: 800;
-      margin-top: 2px;
-    }
-
-    /* Multi-Tag Notice Banner */
-    .multitag-notice {
-      background: linear-gradient(135deg, #4f46e5 0%, #3730a3 100%);
-      color: #ffffff;
-      border-radius: 16px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      box-shadow: 0 8px 20px -4px rgba(79, 70, 229, 0.3);
-    }
-
-    .multitag-notice i {
-      font-size: 22px;
-      color: #fbbf24;
-    }
-
-    .multitag-notice-text {
-      font-size: 12px;
-      line-height: 1.4;
-      font-weight: 600;
-    }
-
-    /* Policy Rules Box */
-    .policy-box {
-      background: #fffbeebf;
-      border: 1.5px solid #fde68a;
-      border-radius: 16px;
-      padding: 14px 16px;
-      font-size: 12.5px;
-      color: #78350f;
-      line-height: 1.5;
-    }
-
-    .policy-box h4 {
-      font-size: 13.5px;
-      font-weight: 800;
-      color: #92400e;
-      margin-bottom: 6px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .policy-box ul {
-      padding-left: 18px;
-    }
-
-    /* Admin Approval Pending Status Box */
-    .admin-status-box {
-      display: none;
-      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-      border: 2px solid #3b82f6;
-      border-radius: 16px;
-      padding: 14px;
-      text-align: center;
-      color: #1e40af;
-      box-shadow: 0 8px 20px -6px rgba(59, 130, 246, 0.25);
-    }
-
-    .admin-status-title {
-      font-size: 13px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-    }
-
-    .section-title {
-      font-size: 16px;
-      font-weight: 800;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    /* Ad Buttons Grid */
-    .ads-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body { min-height: 100vh; background-color: var(--bg-body); display: flex; justify-content: center; padding: 20px 16px; color: var(--text-main); }
+    .container { width: 100%; max-width: 520px; display: flex; flex-direction: column; gap: 16px; }
+    .card { background: var(--card-bg); border-radius: 20px; padding: 20px; box-shadow: var(--shadow-soft); }
+    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+    .back-btn { background: var(--input-bg); border: none; width: 40px; height: 40px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--text-main); text-decoration: none; }
+    .balance-box { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); border-radius: 16px; padding: 16px; color: #ffffff; text-align: center; }
+    .balance-amount { font-size: 28px; font-weight: 800; }
+    .ads-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    
     .ad-btn {
       background: var(--input-bg);
       border: 1.5px solid var(--border-color);
@@ -203,92 +42,26 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
       gap: 6px;
       cursor: pointer;
-      transition: all 0.2s ease;
       font-weight: 700;
-      color: var(--text-main);
+      position: relative;
     }
 
-    .ad-btn:hover:not(:disabled) {
-      border-color: var(--primary);
-      background: #eff6ff;
+    .ad-btn.loading {
+      pointer-events: none;
+      opacity: 0.8;
+      background: #e2e8f0;
     }
 
-    /* Individual Locked Ad Style */
-    .ad-btn.locked {
-      background: #fee2e2 !important;
-      border-color: #fca5a5 !important;
-      color: #991b1b !important;
-      cursor: not-allowed;
-      opacity: 0.9;
-    }
+    .ad-btn.locked { background: #fee2e2 !important; border-color: #fca5a5 !important; color: #991b1b !important; cursor: not-allowed; }
 
-    .ad-btn.locked i {
-      color: #dc2626 !important;
-    }
-
-    .ad-btn i {
-      font-size: 18px;
-      color: var(--primary);
-    }
-
-    /* Verification Modal */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.65);
-      backdrop-filter: blur(4px);
-      z-index: 999;
-      justify-content: center;
-      align-items: center;
-      padding: 16px;
-    }
-
-    .modal-card {
-      background: #ffffff;
-      border-radius: 20px;
-      padding: 24px;
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
-    }
-
-    .timer-text {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--warning);
-    }
-
-    .file-input-box {
-      background: var(--input-bg);
-      padding: 12px;
-      border-radius: 12px;
-      border: 1px dashed #cbd5e1;
-      font-size: 12px;
-    }
-
-    .submit-btn {
-      padding: 12px;
-      border: none;
-      border-radius: 12px;
-      background: var(--success);
-      color: #fff;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    .submit-btn:disabled {
-      background: #94a3b8;
-      cursor: not-allowed;
-    }
+    /* Modal Styling */
+    .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.65); backdrop-filter: blur(4px); z-index: 999; justify-content: center; align-items: center; padding: 16px; }
+    .modal-card { background: #ffffff; border-radius: 20px; padding: 24px; width: 100%; max-width: 400px; text-align: center; display: flex; flex-direction: column; gap: 16px; }
+    .timer-text { font-size: 20px; font-weight: 800; color: var(--warning); }
+    .submit-btn { padding: 12px; border: none; border-radius: 12px; background: var(--success); color: #fff; font-weight: 700; cursor: pointer; }
+    .submit-btn:disabled { background: #94a3b8; cursor: not-allowed; }
   </style>
 </head>
 <body>
@@ -297,80 +70,34 @@
     <div class="card">
       <div class="card-header">
         <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
-        <div class="header-title">Watch Ads & Earn</div>
+        <div style="font-size: 18px; font-weight: 800;">Watch Ads & Earn</div>
         <div style="width: 40px;"></div>
       </div>
-
-      <!-- Realtime Balance -->
       <div class="balance-box">
-        <label>Current Balance</label>
+        <label style="font-size: 12px; opacity: 0.85;">Current Balance</label>
         <div class="balance-amount" id="userBalance">Rs. 0.00</div>
       </div>
     </div>
 
-    <!-- Multi-Tag Active Notice -->
-    <div class="multitag-notice">
-      <i class="fa-solid fa-bell fa-bounce"></i>
-      <div class="multitag-notice-text">
-        <strong>Multi-Tag Ads Active:</strong> Automatic Push ads background mein running hain. Har ad ko alag alag dekh kar earning karein.
-      </div>
+    <div class="card">
+      <div style="font-size: 16px; font-weight: 800; margin-bottom: 12px;"><i class="fa-solid fa-bolt" style="color: var(--primary);"></i> Daily Available Ads</div>
+      <div class="ads-grid" id="adsContainer"></div>
     </div>
-
-    <!-- Strict Policy Notice -->
-    <div class="policy-box">
-      <h4><i class="fa-solid fa-shield-cat"></i> STRICT POLICY RULES</h4>
-      <ul>
-        <li>Ad open karke <strong>poore 1 Minute (60 Seconds)</strong> tak rukna lazmi hai.</li>
-        <li>Ad page par aane wali App ko <strong>Download</strong> ya Site par <strong>Register</strong> zaroor karein.</li>
-        <li>Download/Register ka <strong>Proof Screenshot</strong> upload karna mandatory hai.</li>
-        <li><strong>Har ad par Rs. 5 milenge.</strong> Proof submit hone ke baad jab <strong>Admin Approve</strong> karega tab balance account me add hoga.</li>
-      </ul>
-    </div>
-
-    <!-- Admin Approval Notice Box -->
-    <div class="admin-status-box" id="adminStatusBox">
-      <div class="admin-status-title"><i class="fa-solid fa-user-clock"></i> Pending Admin Approval</div>
-      <div style="font-size: 12px; margin-top: 4px; font-weight: 600;" id="pendingAdminText">
-        Aapka task review me hai. Admin se approve hone ke baad reward aapke balance me add ho jayega.
-      </div>
-    </div>
-
-    <!-- INDEPENDENT ADS CARD -->
-    <div class="card" id="adsCard">
-      <div class="section-title"><i class="fa-solid fa-bolt" style="color: var(--primary);"></i> Daily Available Ads (30 Ads)</div>
-      <div class="ads-grid" id="adsContainer">
-        <!-- Dynamic 30 Ads Grid -->
-      </div>
-    </div>
-
   </div>
 
   <!-- Verification Modal -->
   <div class="modal-overlay" id="taskModal">
     <div class="modal-card">
       <h3 id="modalTitle" style="font-size: 16px; font-weight: 800;">Ad Task Verification</h3>
-      
-      <!-- 60 Sec Stay Timer -->
-      <div class="timer-text" id="timerBox">
-        <i class="fa-solid fa-hourglass-half"></i> Stay on Ad: <span id="timerSec">60</span>s
-      </div>
-
-      <!-- Screenshot Proof Box -->
+      <div class="timer-text" id="timerBox"><i class="fa-solid fa-hourglass-half"></i> Stay on Ad: <span id="timerSec">60</span>s</div>
       <div id="uploadBox" style="display: none; flex-direction: column; gap: 12px;">
-        <p style="font-size: 12px; color: var(--danger); font-weight: 700;">
-          ⚠️ Warning: App Download ya Registration Screenshot zaroor attach karein!
-        </p>
-        <div class="file-input-box">
-          <input type="file" id="proofInput" accept="image/*" onchange="checkProofSelected()" />
-        </div>
-        <button class="submit-btn" id="submitProofBtn" disabled onclick="confirmTaskCompletion()">
-          Submit Proof Screenshot
-        </button>
+        <p style="font-size: 12px; color: var(--danger); font-weight: 700;">⚠️ Attach Proof Screenshot (Required)</p>
+        <input type="file" id="proofInput" accept="image/*" onchange="checkProofSelected()" />
+        <button class="submit-btn" id="submitProofBtn" disabled onclick="confirmTaskCompletion()">Submit Proof Screenshot</button>
       </div>
     </div>
   </div>
 
-  <!-- Firebase Modular SDK -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getDatabase, ref, onValue, update, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
@@ -388,11 +115,9 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    const sessionStr = localStorage.getItem('sew_session');
-    if (!sessionStr) window.location.replace("index.html");
-    const sessionUser = JSON.parse(sessionStr);
+    const sessionUser = JSON.parse(localStorage.getItem('sew_session') || '{}');
+    if (!sessionUser.username) window.location.replace("index.html");
 
-    // List of 30 Ads Links
     const adLinks = [
       "https://omg10.com/4/11668537", "https://omg10.com/4/11668536", "https://omg10.com/4/11668535", "https://omg10.com/4/11668534", "https://omg10.com/4/11668533",
       "https://omg10.com/4/11668537", "https://omg10.com/4/11668536", "https://omg10.com/4/11668535", "https://omg10.com/4/11668534", "https://omg10.com/4/11668533",
@@ -402,133 +127,70 @@
       "https://omg10.com/4/11668537", "https://omg10.com/4/11668536", "https://omg10.com/4/11668535", "https://omg10.com/4/11668534", "https://omg10.com/4/11668533"
     ];
 
-    const AD_REWARD = 5.00; // Har Ad ka reward Rs. 5
+    let userData = null, activeAdIndex = null, adTimerInterval = null, isAdActive = false, adStartTime = 0;
+    const REQUIRED_STAY_TIME = 60;
 
-    let userData = null;
-    let activeAdIndex = null;
-    let adTimerInterval = null;
-    let isTimerFinished = false;
-    let isAdActive = false;
-    let adStartTime = 0; // Fixed timestamp tracking
-    const REQUIRED_STAY_TIME = 60; // 60 Seconds
-    const individualIntervals = {};
-
-    // Realtime User Data Listener
-    const userRef = ref(db, 'users/' + sessionUser.username);
-    onValue(userRef, (snapshot) => {
-      if (snapshot.exists()) {
-        userData = snapshot.val();
-        const mainBal = parseFloat(userData.balance || 0);
-        document.getElementById('userBalance').innerText = "Rs. " + mainBal.toFixed(2);
-
-        // Check if user has pending approval requests
-        const pendingCount = userData.pendingApprovalsCount || 0;
-        const statusBox = document.getElementById('adminStatusBox');
-        if (pendingCount > 0) {
-          statusBox.style.display = 'block';
-          document.getElementById('pendingAdminText').innerText = `${pendingCount} Task(s) Pending Admin Approval. Admin approve karega tab paise milenge.`;
-        } else {
-          statusBox.style.display = 'none';
-        }
-
+    onValue(ref(db, 'users/' + sessionUser.username), (snap) => {
+      if (snap.exists()) {
+        userData = snap.val();
+        document.getElementById('userBalance').innerText = "Rs. " + parseFloat(userData.balance || 0).toFixed(2);
         renderAdsSection();
       }
     });
 
     function renderAdsSection() {
-      if (!userData) return;
-
       const container = document.getElementById('adsContainer');
       container.innerHTML = '';
-      const now = Date.now();
-      const lockDuration = 24 * 60 * 60 * 1000;
-      const individualLocks = userData.individualAdLocks || {};
+      const now = Date.now(), lockDuration = 24 * 60 * 60 * 1000, locks = userData?.individualAdLocks || {};
 
-      for (let i = 0; i < adLinks.length; i++) {
-        const lockTime = individualLocks[i] || 0;
-        const isLocked = lockTime > 0 && (now - lockTime < lockDuration);
-
+      adLinks.forEach((url, i) => {
         const btn = document.createElement('button');
-
-        if (isLocked) {
+        const lockTime = locks[i] || 0;
+        
+        if (lockTime > 0 && (now - lockTime < lockDuration)) {
           btn.className = 'ad-btn locked';
           btn.disabled = true;
-          const timeLeft = lockDuration - (now - lockTime);
-
-          btn.innerHTML = `
-            <i class="fa-solid fa-lock"></i>
-            <span>Ad #${i + 1} Locked</span>
-            <small style="font-size:10px;" id="adTimer_${i}">${formatTime(timeLeft)}</small>
-          `;
-
-          startIndividualTimer(i, timeLeft);
+          btn.innerHTML = `<i class="fa-solid fa-lock"></i><span>Ad #${i + 1} Locked</span>`;
         } else {
           btn.className = 'ad-btn';
-          btn.disabled = false;
+          btn.id = `adBtn_${i}`;
           btn.innerHTML = `<i class="fa-solid fa-rectangle-ad"></i> Open Ad #${i + 1} <span style="font-size:10px; color:var(--success);">(Rs. 5)</span>`;
-          btn.onclick = () => handleAdClick(i, adLinks[i]);
+          btn.onclick = () => handleAdClick(i, url);
         }
-
         container.appendChild(btn);
-      }
-    }
-
-    function formatTime(ms) {
-      const hrs = Math.floor(ms / (1000 * 60 * 60));
-      const mins = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
-      const secs = Math.floor((ms % (1000 * 60)) / 1000);
-      return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    }
-
-    function startIndividualTimer(index, msLeft) {
-      if (individualIntervals[index]) clearInterval(individualIntervals[index]);
-
-      individualIntervals[index] = setInterval(() => {
-        msLeft -= 1000;
-        if (msLeft <= 0) {
-          clearInterval(individualIntervals[index]);
-          renderAdsSection();
-          return;
-        }
-        const timerElem = document.getElementById(`adTimer_${index}`);
-        if (timerElem) {
-          timerElem.innerText = formatTime(msLeft);
-        }
-      }, 1000);
+      });
     }
 
     window.handleAdClick = function(index, url) {
-      activeAdIndex = index;
-      isTimerFinished = false;
-      isAdActive = true;
-      adStartTime = Date.now(); // Record start time
+      const btn = document.getElementById(`adBtn_${index}`);
+      btn.classList.add('loading');
+      btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Opening Ad...`;
 
-      window.open(url, '_blank');
+      setTimeout(() => {
+        btn.classList.remove('loading');
+        btn.innerHTML = `<i class="fa-solid fa-rectangle-ad"></i> Open Ad #${index + 1} <span style="font-size:10px; color:var(--success);">(Rs. 5)</span>`;
+        
+        activeAdIndex = index;
+        isAdActive = true;
+        adStartTime = Date.now();
 
-      document.getElementById('modalTitle').innerText = `Ad Task #${index + 1} Verification`;
-      document.getElementById('taskModal').style.display = 'flex';
-      document.getElementById('timerBox').style.display = 'block';
-      document.getElementById('uploadBox').style.display = 'none';
-      document.getElementById('proofInput').value = '';
+        window.open(url, '_blank');
+        document.getElementById('taskModal').style.display = 'flex';
+        document.getElementById('timerBox').style.display = 'block';
+        document.getElementById('uploadBox').style.display = 'none';
 
-      document.getElementById('timerSec').innerText = REQUIRED_STAY_TIME;
-
-      if (adTimerInterval) clearInterval(adTimerInterval);
-
-      updateAdTimer();
-      adTimerInterval = setInterval(updateAdTimer, 1000);
+        if (adTimerInterval) clearInterval(adTimerInterval);
+        adTimerInterval = setInterval(updateAdTimer, 1000);
+      }, 1000);
     };
 
     function updateAdTimer() {
       if (!isAdActive) return;
-
-      const elapsedMs = Date.now() - adStartTime;
-      const elapsedSec = Math.floor(elapsedMs / 1000);
+      const elapsedSec = Math.floor((Date.now() - adStartTime) / 1000);
       const remainingSec = REQUIRED_STAY_TIME - elapsedSec;
 
       if (remainingSec <= 0) {
         clearInterval(adTimerInterval);
-        isTimerFinished = true;
         isAdActive = false;
         document.getElementById('timerBox').style.display = 'none';
         document.getElementById('uploadBox').style.display = 'flex';
@@ -537,84 +199,42 @@
       }
     }
 
-    // Fixed Tab Switch / Focus Check Logic
-    document.addEventListener("visibilitychange", checkTaskProgress);
-    window.addEventListener("focus", checkTaskProgress);
-
-    function checkTaskProgress() {
-      if (!document.hidden && isAdActive && !isTimerFinished) {
-        const elapsedSec = Math.floor((Date.now() - adStartTime) / 1000);
-
-        if (elapsedSec >= REQUIRED_STAY_TIME) {
-          // 60 seconds poore ho gaye hain
-          clearInterval(adTimerInterval);
-          isTimerFinished = true;
-          isAdActive = false;
-          document.getElementById('timerBox').style.display = 'none';
-          document.getElementById('uploadBox').style.display = 'flex';
-        } else {
-          // 60 seconds se pehle hi wapas aa gaya
-          clearInterval(adTimerInterval);
-          isAdActive = false;
-          document.getElementById('taskModal').style.display = 'none';
-          alert("⚠️ WARNING: Aap poore 1 Minute (60 Seconds) tak ad page par nahi rahe! Task cancel kar diya gaya hai.");
-        }
-      }
-    }
-
     window.checkProofSelected = function() {
-      const file = document.getElementById('proofInput').files[0];
-      document.getElementById('submitProofBtn').disabled = !file;
+      document.getElementById('submitProofBtn').disabled = !document.getElementById('proofInput').files[0];
     };
 
     window.confirmTaskCompletion = async function() {
+      const file = document.getElementById('proofInput').files[0];
       const btn = document.getElementById('submitProofBtn');
-      const fileInput = document.getElementById('proofInput');
-
-      if (!fileInput.files[0]) {
-        alert("Screenshot attach karna lazmi hai!");
-        return;
-      }
-
       btn.disabled = true;
-      btn.innerText = "Submitting for Admin Approval...";
+      btn.innerText = "Uploading Proof...";
 
-      setTimeout(async () => {
-        try {
-          const now = Date.now();
-          const updates = {};
+      const reader = new FileReader();
+      reader.onload = async function(e) {
+        const base64Img = e.target.result;
+        const now = Date.now();
 
-          // Lock this specific ad index for 24 hours
-          updates[`individualAdLocks/${activeAdIndex}`] = now;
+        await update(ref(db, `users/${sessionUser.username}`), {
+          [`individualAdLocks/${activeAdIndex}`]: now,
+          pendingApprovalsCount: (userData.pendingApprovalsCount || 0) + 1
+        });
 
-          // Increase pending approval count
-          const currentPending = (userData.pendingApprovalsCount || 0) + 1;
-          updates.pendingApprovalsCount = currentPending;
+        await push(ref(db, 'admin_pending_tasks'), {
+          username: sessionUser.username,
+          adIndex: activeAdIndex + 1,
+          reward: 5.00,
+          proofImage: base64Img,
+          timestamp: now,
+          status: "pending"
+        });
 
-          await update(ref(db, 'users/' + sessionUser.username), updates);
-
-          // Submit task proof entry to Admin queue in Firebase
-          const pendingTaskRef = ref(db, 'admin_pending_tasks');
-          await push(pendingTaskRef, {
-            username: sessionUser.username,
-            adIndex: activeAdIndex + 1,
-            reward: AD_REWARD,
-            timestamp: now,
-            status: "pending"
-          });
-
-          alert("Proof Submit ho gaya hai! Jab Admin approve karega tab Rs. 5.00 aapke account me add honge.");
-
-          document.getElementById('taskModal').style.display = 'none';
-          btn.innerText = "Submit Proof Screenshot";
-
-        } catch (e) {
-          alert("Error: " + e.message);
-          btn.disabled = false;
-          btn.innerText = "Submit Proof Screenshot";
-        }
-      }, 1200);
+        alert("Screenshot submitted! Admin approve karega tab Rs. 5 milenge.");
+        document.getElementById('taskModal').style.display = 'none';
+      };
+      reader.readAsDataURL(file);
     };
   </script>
 </body>
 </html>
+
+

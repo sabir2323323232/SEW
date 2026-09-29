@@ -44,7 +44,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding-bottom: 90px; /* Space for fixed bottom navigation bar */
+      padding-bottom: 90px;
     }
 
     /* NAVBAR */
@@ -273,7 +273,7 @@
       box-shadow: 0 4px 10px rgba(100, 116, 139, 0.2);
     }
 
-    /* COMPACT ALWAYS-VISIBLE RULE BOX */
+    /* COMPACT RULE BOX */
     .rule-box {
       background: #fffbeb;
       border: 1px solid #fef3c7;
@@ -362,7 +362,7 @@
       color: #16a34a;
     }
 
-    /* ACTIVE TASK BOX (TOGGLED VIA BUTTON) */
+    /* ACTIVE TASK CARD */
     .active-task-card {
       background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
       border: 1.5px solid #bfdbfe;
@@ -454,7 +454,7 @@
       text-align: center;
     }
 
-    /* FIXED BOTTOM SECTION - SINGLE LINE (5 ITEMS) */
+    /* FIXED BOTTOM SECTION */
     .bottom-nav-container {
       position: fixed;
       bottom: 0;
@@ -463,7 +463,7 @@
       background: #ffffff;
       border-top: 1px solid var(--border-color);
       box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
-      padding: 8px 6px;
+      padding: 14px 4px 8px 4px;
       z-index: 150;
       display: flex;
       justify-content: center;
@@ -472,7 +472,7 @@
     .earning-grid {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
-      gap: 4px;
+      gap: 3px;
       width: 100%;
       max-width: 500px;
     }
@@ -515,53 +515,68 @@
       line-height: 1.1;
     }
 
-    /* ANIMATED BADGE ABOVE FREE ADS BUTTON */
-    .free-ads-promo-badge {
+    /* ==========================================================
+       ANIMATED BADGES ABOVE EACH BUTTON (4 DIFFERENT STYLES)
+    ========================================================== */
+    .badge-common {
       position: absolute;
-      top: -24px;
+      top: -12px;
       left: 50%;
       transform: translateX(-50%);
-      background: linear-gradient(90deg, #ef4444 0%, #f59e0b 50%, #10b981 100%);
-      color: #ffffff;
-      padding: 2px 6px;
-      border-radius: 10px;
-      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
-      z-index: 180;
-      pointer-events: none;
-      white-space: nowrap;
-      max-width: 120px;
-      overflow: hidden;
-      animation: ederOderBounce 2.5s ease-in-out infinite alternate;
-    }
-
-    .free-ads-promo-text {
-      display: inline-block;
       font-size: 7.5px;
       font-weight: 800;
-      letter-spacing: 0.3px;
+      padding: 1.5px 5px;
+      border-radius: 8px;
       white-space: nowrap;
-      animation: textTicker 8s linear infinite;
+      z-index: 10;
+      pointer-events: none;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
-    @keyframes ederOderBounce {
-      0% {
-        transform: translateX(-68%);
-      }
-      100% {
-        transform: translateX(-32%);
-      }
+    /* 1. FREE ADS BADGE: Pulsing Glow Effect */
+    .free-ads-badge {
+      background: #ef4444;
+      color: #ffffff;
+      animation: pulseGlow 1.4s infinite ease-in-out;
+    }
+    @keyframes pulseGlow {
+      0% { transform: translateX(-50%) scale(0.92); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      50% { transform: translateX(-50%) scale(1.08); box-shadow: 0 0 8px 3px rgba(239, 68, 68, 0.4); }
+      100% { transform: translateX(-50%) scale(0.92); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
 
-    @keyframes textTicker {
-      0% {
-        transform: translateX(20%);
-      }
-      50% {
-        transform: translateX(-50%);
-      }
-      100% {
-        transform: translateX(20%);
-      }
+    /* 2. REFERRAL BADGE: Shimmer Light Wave Effect */
+    .referral-badge {
+      background: linear-gradient(90deg, #10b981 0%, #059669 50%, #10b981 100%);
+      background-size: 200% 100%;
+      color: #ffffff;
+      animation: shimmerWave 2s linear infinite;
+    }
+    @keyframes shimmerWave {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* 3. GMAIL BADGE: Floating 3D Bobbing Effect */
+    .gmail-badge {
+      background: #2563eb;
+      color: #ffffff;
+      animation: floatBob 1.8s ease-in-out infinite alternate;
+    }
+    @keyframes floatBob {
+      0% { transform: translateX(-50%) translateY(0px); }
+      100% { transform: translateX(-50%) translateY(-5px); }
+    }
+
+    /* 4. AFFILIATE PROGRAM BADGE: Golden Rainbow Shiny Effect */
+    .affiliate-badge {
+      background: linear-gradient(135deg, #f59e0b, #d97706, #b45309);
+      color: #ffffff;
+      animation: goldScale 1.5s ease-in-out infinite alternate;
+    }
+    @keyframes goldScale {
+      0% { transform: translateX(-50%) scale(1); filter: brightness(1); }
+      100% { transform: translateX(-50%) scale(1.06); filter: brightness(1.2); }
     }
 
     /* MODALS */
@@ -781,34 +796,39 @@
 
   </div>
 
-  <!-- FIXED BOTTOM SINGLE LINE NAVIGATION (5 ITEMS) -->
+  <!-- FIXED BOTTOM SINGLE LINE NAVIGATION WITH ANIMATED BADGES -->
   <div class="bottom-nav-container">
     <div class="earning-grid">
+      <!-- 1. FREE ADS BUTTON -->
       <div class="earn-btn" onclick="navigateTo('free-ads.html')">
-        <!-- ANIMATED PROMO BADGE ABOVE FREE ADS BUTTON -->
-        <div class="free-ads-promo-badge">
-          <span class="free-ads-promo-text">🔥 Free 300 | Referral: 20 | Gmail: 40 | Affiliate: Unlimited</span>
-        </div>
+        <div class="badge-common free-ads-badge">🔥 Earn 300</div>
         <i class="fa-solid fa-rectangle-ad"></i>
         <span>Free Ads</span>
       </div>
 
+      <!-- 2. REFERRAL BUTTON -->
       <div class="earn-btn" onclick="navigateTo('referral.html')">
+        <div class="badge-common referral-badge">👥 Earn 20</div>
         <i class="fa-solid fa-users"></i>
         <span>Referral</span>
       </div>
 
+      <!-- 3. GMAIL BUTTON -->
       <div class="earn-btn" onclick="navigateTo('gmail-selling.html')">
+        <div class="badge-common gmail-badge">📧 Earn 40</div>
         <i class="fa-solid fa-envelope"></i>
         <span>Gmail</span>
       </div>
 
+      <!-- 4. WITHDRAW BUTTON -->
       <div class="earn-btn" onclick="navigateTo('withdraw.html')">
         <i class="fa-solid fa-money-bill-transfer"></i>
         <span>Withdraw</span>
       </div>
 
+      <!-- 5. AFFILIATE PROGRAM BUTTON -->
       <div class="earn-btn" onclick="navigateTo('free-jobs.html')">
+        <div class="badge-common affiliate-badge">🚀 Unlimited</div>
         <i class="fa-solid fa-briefcase"></i>
         <span>Affiliate Program</span>
       </div>
@@ -998,7 +1018,6 @@
       const minutes = now.getMinutes();
       const currentMins = hours * 60 + minutes;
 
-      // 9:30 PM = 21:30 (1290 mins), 10:00 PM = 22:00 (1320 mins)
       const startMins = 21 * 60 + 30;
       const endMins = 22 * 60;
 
@@ -1035,7 +1054,6 @@
       }
     }
 
-    // Check every second automatically
     setInterval(checkTaskTiming, 1000);
     checkTaskTiming();
 
@@ -1092,15 +1110,15 @@
           msgEl.style.background = '#eff6ff';
           msgEl.style.color = '#1d4ed8';
           msgEl.style.border = '1px solid #bfdbfe';
-          msgEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> Proof submit ho gaya! Admin review karega toh chance hai winner banne ka.';
-          fileInput.value = '';
+          msgEl.innerHTML = '<i class="fa-solid fa-check"></i> Proof successfully submitted!';
         }).catch((err) => {
-          alert("Error uploading screenshot: " + err.message);
+          alert("Error: " + err.message);
         });
       };
 
       reader.readAsDataURL(file);
     };
   </script>
+
 </body>
 </html>

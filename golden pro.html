@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>SEW - Golden Pro Ads (Rs. 10)</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --bg-body: #f8fafc;
+      --card-bg: #ffffff;
+      --input-bg: #f1f5f9;
+      --primary: #f43f5e; /* Premium Rose/Red theme for Golden Pro */
+      --primary-hover: #e11d48;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border-color: #e2e8f0;
+      --shadow-soft: 0 20px 40px -15px rgba(0, 0, 0, 0.05);
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      background-color: var(--bg-body);
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px 16px;
+      color: var(--text-main);
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid #ffffff;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .back-btn {
+      background: var(--input-bg);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-main);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .header-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #be123c;
+    }
+
+    .balance-box {
+      background: linear-gradient(135deg, #f43f5e 0%, #be123c 100%);
+      border-radius: 16px;
+      padding: 16px;
+      color: #ffffff;
+      text-align: center;
+      box-shadow: 0 10px 25px -5px rgba(244, 63, 94, 0.35);
+    }
+
+    .balance-box label {
+      font-size: 12px;
+      opacity: 0.85;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .balance-amount {
+      font-size: 28px;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
+    /* Policy Rules Box */
+    .policy-box {
+      background: #fff1f2;
+      border: 1.5px solid #fecdd3;
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-size: 12.5px;
+      color: #881337;
+      line-height: 1.5;
+    }
+
+    .policy-box h4 {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #9f1239;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .policy-box ul {
+      padding-left: 18px;
+    }
+
+    /* Admin Approval Pending Status Box */
+    .admin-status-box {
+      display: none;
+      background: linear-gradient(135deg, #fff1f2 0%, #ffe4e6 100%);
+      border: 2px solid #f43f5e;
+      border-radius: 16px;
+      padding: 14px;
+      text-align: center;
+      color: #9f1239;
+      box-shadow: 0 8px 20px -6px rgba(244, 63, 94, 0.25);
+    }
+
+    .admin-status-title {
+      font-size: 13px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 800;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Ad Buttons Grid */
+    .ads-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .ad-btn {
+      background: var(--input-bg);
+      border: 1.5px solid var(--border-color);
+      border-radius: 14px;
+      padding: 14px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .ad-btn:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: #fff1f2;
+    }
+
+    /* Loading Ad Button State */
+    .ad-btn.loading-ad {
+      cursor: wait !important;
+      opacity: 0.8;
+      background: #f1f5f9 !important;
+    }
+
+    /* Individual Locked Ad Style */
+    .ad-btn.locked {
+      background: #fee2e2 !important;
+      border-color: #fca5a5 !important;
+      color: #991b1b !important;
+      cursor: not-allowed;
+      opacity: 0.9;
+    }
+
+    .ad-btn.locked i {
+      color: #dc2626 !important;
+    }
+
+    .ad-btn i {
+      font-size: 18px;
+      color: var(--primary);
+    }
+
+    /* Verification Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+
+    .modal-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 24px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);
+    }
+
+    .timer-text {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--warning);
+    }
+
+    .file-input-box {
+      background: var(--input-bg);
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px dashed #cbd5e1;
+      font-size: 12px;
+    }
+
+    .submit-btn {
+      padding: 12px;
+      border: none;
+      border-radius: 12px;
+      background: var(--success);
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .submit-btn:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+        <div class="header-title">Golden Pro Ads</div>
+        <div style="width: 40px;"></div>
+      </div>
+
+      <!-- Realtime Balance -->
+      <div class="balance-box">
+        <label>Current Balance</label>
+        <div class="balance-amount" id="userBalance">Rs. 0.00</div>
+      </div>
+    </div>
+
+    <!-- Strict Policy Notice -->
+    <div class="policy-box">
+      <h4><i class="fa-solid fa-shield-cat"></i> STRICT RULES (GOLDEN PRO)</h4>
+      <ul>
+        <li>Har ad par poore <strong>1 Minute (60 Seconds)</strong> rukna lazmi hai.</li>
+        <li>Ad par aane wali App ko <strong>Install</strong> karein ya Website par <strong>Register</strong> karein.</li>
+        <li>Wapis aakar App Install ya Registration ka <strong>Screenshot Proof</strong> submit karein.</li>
+        <li>Agar 1 Min se pehle wapas aaye to task cancel ho jayega. Ek bhi rule follow na karne par ad <strong>24 Hours tak lock</strong> kar diya jayega.</li>
+        <li><strong>Har Ad par Rs. 10 milenge.</strong> Proof submit hone par Admin approval ke baad balance add hoga.</li>
+      </ul>
+    </div>
+
+    <!-- Admin Approval Notice Box -->
+    <div class="admin-status-box" id="adminStatusBox">
+      <div class="admin-status-title"><i class="fa-solid fa-user-clock"></i> Pending Admin Approval</div>
+      <div style="font-size: 12px; margin-top: 4px; font-weight: 600;" id="pendingAdminText">
+        Aapka Golden Pro task review me hai. Admin approve karega tab Rs. 10 add honge.
+      </div>
+    </div>
+
+    <!-- INDEPENDENT GOLDEN PRO ADS CARD (10 ADS) -->
+    <div class="card" id="adsCard">
+      <div class="section-title"><i class="fa-solid fa-gem" style="color: var(--primary);"></i> Golden Pro Available Ads (10 Ads)</div>
+      <div class="ads-grid" id="adsContainer">
+        <!-- Dynamic 10 Ads Grid -->
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Verification Modal -->
+  <div class="modal-overlay" id="taskModal">
+    <div class="modal-card">
+      <h3 id="modalTitle" style="font-size: 16px; font-weight: 800;">Golden Pro Task Verification</h3>
+      
+      <!-- 60 Sec Stay Timer -->
+      <div class="timer-text" id="timerBox">
+        <i class="fa-solid fa-hourglass-half"></i> Stay on Ad: <span id="timerSec">60</span>s
+      </div>
+
+      <!-- Screenshot Proof Box -->
+      <div id="uploadBox" style="display: none; flex-direction: column; gap: 12px;">
+        <p style="font-size: 12px; color: var(--danger); font-weight: 700;">
+          ⚠️ Warning: App Download ya Registration Screenshot zaroor attach karein!
+        </p>
+        <div class="file-input-box">
+          <input type="file" id="proofInput" accept="image/*" onchange="checkProofSelected()" />
+        </div>
+        <button class="submit-btn" id="submitProofBtn" disabled onclick="confirmTaskCompletion()">
+          Submit Proof Screenshot
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase Modular SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getDatabase, ref, onValue, update, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
+      authDomain: "newweb-d50af.firebaseapp.com",
+      databaseURL: "https://newweb-d50af-default-rtdb.firebaseio.com",
+      projectId: "newweb-d50af",
+      storageBucket: "newweb-d50af.firebasestorage.app",
+      messagingSenderId: "358603295768",
+      appId: "1:358603295768:web:82a9666514a7cb468c476d"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    const sessionStr = localStorage.getItem('sew_session');
+    if (!sessionStr) window.location.replace("index.html");
+    const sessionUser = JSON.parse(sessionStr);
+
+    // List of 10 Exclusive Golden Pro Ads Links
+    const adLinks = [
+      "https://omg10.com/4/11668537",
+      "https://omg10.com/4/11668536",
+      "https://omg10.com/4/11668535",
+      "https://omg10.com/4/11668534",
+      "https://omg10.com/4/11668533",
+      "https://omg10.com/4/11668537",
+      "https://omg10.com/4/11668536",
+      "https://omg10.com/4/11668535",
+      "https://omg10.com/4/11668534",
+      "https://omg10.com/4/11668533"
+    ];
+
+    const AD_REWARD = 10.00; // Golden Pro Ads Reward: Rs. 10
+
+    let userData = null;
+    let activeAdIndex = null;
+    let adTimerInterval = null;
+    let isTimerFinished = false;
+    let isAdActive = false;
+    let adStartTime = 0;
+    const REQUIRED_STAY_TIME = 60; // 60 Seconds mandatory stay
+    const individualIntervals = {};
+    let isAdsLoaded = false;
+
+    // Show initial loading state on container load
+    renderLoadingAdsSection();
+
+    // Realtime User Data Listener
+    const userRef = ref(db, 'users/' + sessionUser.username);
+    onValue(userRef, (snapshot) => {
+      if (snapshot.exists()) {
+        userData = snapshot.val();
+        const mainBal = parseFloat(userData.balance || 0);
+        document.getElementById('userBalance').innerText = "Rs. " + mainBal.toFixed(2);
+
+        // Separate pending approvals count for Golden Pro tasks
+        const pendingCount = userData.pendingGoldenProApprovalsCount || 0;
+        const statusBox = document.getElementById('adminStatusBox');
+        if (pendingCount > 0) {
+          statusBox.style.display = 'block';
+          document.getElementById('pendingAdminText').innerText = `${pendingCount} Golden Pro Task(s) Pending Admin Approval. Admin approve karega tab Rs. 10 per ad add hongay.`;
+        } else {
+          statusBox.style.display = 'none';
+        }
+
+        isAdsLoaded = true;
+        renderAdsSection();
+      }
+    });
+
+    function renderLoadingAdsSection() {
+      const container = document.getElementById('adsContainer');
+      container.innerHTML = '';
+      for (let i = 0; i < adLinks.length; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'ad-btn loading-ad';
+        btn.disabled = true;
+        btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin" style="color:var(--primary);"></i> Loading Golden Ad #${i + 1}...`;
+        container.appendChild(btn);
+      }
+    }
+
+    function renderAdsSection() {
+      if (!userData || !isAdsLoaded) {
+        renderLoadingAdsSection();
+        return;
+      }
+
+      const container = document.getElementById('adsContainer');
+      container.innerHTML = '';
+      const now = Date.now();
+      const lockDuration = 24 * 60 * 60 * 1000;
+      // Independent locks store key for Golden Pro
+      const individualLocks = userData.goldenProAdLocks || {};
+
+      for (let i = 0; i < adLinks.length; i++) {
+        const lockTime = individualLocks[i] || 0;
+        const isLocked = lockTime > 0 && (now - lockTime < lockDuration);
+
+        const btn = document.createElement('button');
+
+        if (isLocked) {
+          btn.className = 'ad-btn locked';
+          btn.disabled = true;
+          const timeLeft = lockDuration - (now - lockTime);
+
+          btn.innerHTML = `
+            <i class="fa-solid fa-lock"></i>
+            <span>Golden Ad #${i + 1} Locked</span>
+            <small style="font-size:10px;" id="adTimer_${i}">${formatTime(timeLeft)}</small>
+          `;
+
+          startIndividualTimer(i, timeLeft);
+        } else {
+          btn.className = 'ad-btn';
+          btn.disabled = false;
+          btn.innerHTML = `<i class="fa-solid fa-gem"></i> Golden Ad #${i + 1} <span style="font-size:10px; color:var(--success);">(Rs. 10)</span>`;
+          btn.onclick = () => handleAdClick(i, adLinks[i]);
+        }
+
+        container.appendChild(btn);
+      }
+    }
+
+    function formatTime(ms) {
+      const hrs = Math.floor(ms / (1000 * 60 * 60));
+      const mins = Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((ms % (1000 * 60)) / 1000);
+      return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function startIndividualTimer(index, msLeft) {
+      if (individualIntervals[index]) clearInterval(individualIntervals[index]);
+
+      individualIntervals[index] = setInterval(() => {
+        msLeft -= 1000;
+        if (msLeft <= 0) {
+          clearInterval(individualIntervals[index]);
+          renderAdsSection();
+          return;
+        }
+        const timerElem = document.getElementById(`adTimer_${index}`);
+        if (timerElem) {
+          timerElem.innerText = formatTime(msLeft);
+        }
+      }, 1000);
+    }
+
+    window.handleAdClick = function(index, url) {
+      activeAdIndex = index;
+      isTimerFinished = false;
+      isAdActive = true;
+      adStartTime = Date.now();
+
+      window.open(url, '_blank');
+
+      document.getElementById('modalTitle').innerText = `Golden Pro Task #${index + 1} Verification`;
+      document.getElementById('taskModal').style.display = 'flex';
+      document.getElementById('timerBox').style.display = 'block';
+      document.getElementById('uploadBox').style.display = 'none';
+      document.getElementById('proofInput').value = '';
+
+      document.getElementById('timerSec').innerText = REQUIRED_STAY_TIME;
+
+      if (adTimerInterval) clearInterval(adTimerInterval);
+
+      updateAdTimer();
+      adTimerInterval = setInterval(updateAdTimer, 1000);
+    };
+
+    function updateAdTimer() {
+      if (!isAdActive) return;
+
+      const elapsedMs = Date.now() - adStartTime;
+      const elapsedSec = Math.floor(elapsedMs / 1000);
+      const remainingSec = REQUIRED_STAY_TIME - elapsedSec;
+
+      if (remainingSec <= 0) {
+        clearInterval(adTimerInterval);
+        isTimerFinished = true;
+        isAdActive = false;
+        document.getElementById('timerBox').style.display = 'none';
+        document.getElementById('uploadBox').style.display = 'flex';
+      } else {
+        document.getElementById('timerSec').innerText = remainingSec;
+      }
+    }
+
+    // Tab Switch / Focus Check Logic
+    document.addEventListener("visibilitychange", checkTaskProgress);
+    window.addEventListener("focus", checkTaskProgress);
+
+    function checkTaskProgress() {
+      if (!document.hidden && isAdActive && !isTimerFinished) {
+        const elapsedSec = Math.floor((Date.now() - adStartTime) / 1000);
+
+        if (elapsedSec >= REQUIRED_STAY_TIME) {
+          // 60 Seconds complete
+          clearInterval(adTimerInterval);
+          isTimerFinished = true;
+          isAdActive = false;
+          document.getElementById('timerBox').style.display = 'none';
+          document.getElementById('uploadBox').style.display = 'flex';
+        } else {
+          // Returned early before 60 seconds -> Warn and lock ad
+          clearInterval(adTimerInterval);
+          isAdActive = false;
+          document.getElementById('taskModal').style.display = 'none';
+          alert("⚠️ SAF WARNING: Aap poore 1 Minute (60 Seconds) tak ad page par nahi rahe! Rule follow na karne par yeh task cancel kar diya gaya hai.");
+        }
+      }
+    }
+
+    window.checkProofSelected = function() {
+      const file = document.getElementById('proofInput').files[0];
+      document.getElementById('submitProofBtn').disabled = !file;
+    };
+
+    window.confirmTaskCompletion = async function() {
+      const btn = document.getElementById('submitProofBtn');
+      const fileInput = document.getElementById('proofInput');
+
+      if (!fileInput.files[0]) {
+        alert("Screenshot attach karna lazmi hai!");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerText = "Submitting for Admin Approval...";
+
+      setTimeout(async () => {
+        try {
+          const now = Date.now();
+          const updates = {};
+
+          // Lock this specific Golden Pro ad index for 24 hours
+          updates[`goldenProAdLocks/${activeAdIndex}`] = now;
+
+          // Increase Golden Pro pending approval count
+          const currentPending = (userData.pendingGoldenProApprovalsCount || 0) + 1;
+          updates.pendingGoldenProApprovalsCount = currentPending;
+
+          await update(ref(db, 'users/' + sessionUser.username), updates);
+
+          // Submit task proof entry to the same Admin panel queue but labeled as "Golden Pro Ads (Rs. 10)"
+          const pendingTaskRef = ref(db, 'admin_pending_tasks');
+          await push(pendingTaskRef, {
+            username: sessionUser.username,
+            category: "Golden Pro Ads (Rs. 10)",
+            adIndex: activeAdIndex + 1,
+            reward: AD_REWARD,
+            timestamp: now,
+            status: "pending"
+          });
+
+          alert("Golden Pro Proof Submit ho gaya hai! Admin review karne ke baad Rs. 10 aapke account me add kar dega.");
+
+          document.getElementById('taskModal').style.display = 'none';
+          btn.innerText = "Submit Proof Screenshot";
+
+        } catch (e) {
+          alert("Error: " + e.message);
+          btn.disabled = false;
+          btn.innerText = "Submit Proof Screenshot";
+        }
+      }, 1200);
+    };
+  </script>
+</body>
+</html>

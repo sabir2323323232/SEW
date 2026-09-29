@@ -43,6 +43,9 @@
     .ad-btn:disabled { opacity: 0.65; cursor: not-allowed; background: #e2e8f0; }
     .ad-btn.locked { background: #fef2f2; border-color: #fecaca; color: #dc2626; }
 
+    .loading-box { text-align: center; padding: 30px; font-weight: 700; color: var(--primary); font-size: 16px; }
+    .loading-box i { font-size: 28px; margin-bottom: 8px; display: block; }
+
     .modal-overlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.65); z-index: 999; justify-content: center; align-items: center; padding: 16px; }
     .modal-card { background: #ffffff; border-radius: 20px; padding: 24px; width: 100%; max-width: 400px; text-align: center; display: flex; flex-direction: column; gap: 16px; }
     .timer-text { font-size: 20px; font-weight: 800; color: var(--warning); }
@@ -78,7 +81,10 @@
 
     <div class="card" id="adsCard">
       <div style="font-weight: 800; font-size: 15px; margin-bottom: 12px;">Click Any Ad Button (Earn Rs. 1 per Ad):</div>
-      <div class="ads-grid" id="adsContainer"></div>
+      <div id="loadingSign" class="loading-box">
+        <i class="fa-solid fa-spinner fa-spin"></i> Loading Ads...
+      </div>
+      <div class="ads-grid" id="adsContainer" style="display: none;"></div>
     </div>
   </div>
 
@@ -146,11 +152,15 @@
         userData = snapshot.val();
         document.getElementById('userBalance').innerText = "Rs. " + parseFloat(userData.balance || 0).toFixed(2);
         generateAdButtons(userData.lastAdCompletedTimes || {});
+      } else {
+        document.getElementById('loadingSign').style.display = 'none';
+        document.getElementById('adsContainer').style.display = 'grid';
       }
     });
 
     function generateAdButtons(lastCompletedTimes) {
       const container = document.getElementById('adsContainer');
+      const loadingSign = document.getElementById('loadingSign');
       container.innerHTML = '';
       if(lockTimerInterval) clearInterval(lockTimerInterval);
 
@@ -183,6 +193,10 @@
           }
           container.appendChild(btn);
         }
+
+        // Hide loading sign and display ads once loaded
+        if (loadingSign) loadingSign.style.display = 'none';
+        container.style.display = 'grid';
       }
 
       updateButtonsUI();

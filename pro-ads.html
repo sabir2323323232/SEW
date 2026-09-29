@@ -409,6 +409,8 @@
     let adTimerInterval = null;
     let isTimerFinished = false;
     let isAdActive = false;
+    let adStartTime = 0; // Fixed timestamp tracking
+    const REQUIRED_STAY_TIME = 60; // 60 Seconds
     const individualIntervals = {};
 
     // Realtime User Data Listener
@@ -499,6 +501,7 @@
       activeAdIndex = index;
       isTimerFinished = false;
       isAdActive = true;
+      adStartTime = Date.now(); // Record start time
 
       window.open(url, '_blank');
 
@@ -508,34 +511,56 @@
       document.getElementById('uploadBox').style.display = 'none';
       document.getElementById('proofInput').value = '';
 
-      let timeLeft = 60; // 60 seconds strict stay (1 Minute)
-      document.getElementById('timerSec').innerText = timeLeft;
+      document.getElementById('timerSec').innerText = REQUIRED_STAY_TIME;
 
       if (adTimerInterval) clearInterval(adTimerInterval);
 
-      adTimerInterval = setInterval(() => {
-        timeLeft--;
-        document.getElementById('timerSec').innerText = timeLeft;
+      updateAdTimer();
+      adTimerInterval = setInterval(updateAdTimer, 1000);
+    };
 
-        if (timeLeft <= 0) {
+    function updateAdTimer() {
+      if (!isAdActive) return;
+
+      const elapsedMs = Date.now() - adStartTime;
+      const elapsedSec = Math.floor(elapsedMs / 1000);
+      const remainingSec = REQUIRED_STAY_TIME - elapsedSec;
+
+      if (remainingSec <= 0) {
+        clearInterval(adTimerInterval);
+        isTimerFinished = true;
+        isAdActive = false;
+        document.getElementById('timerBox').style.display = 'none';
+        document.getElementById('uploadBox').style.display = 'flex';
+      } else {
+        document.getElementById('timerSec').innerText = remainingSec;
+      }
+    }
+
+    // Fixed Tab Switch / Focus Check Logic
+    document.addEventListener("visibilitychange", checkTaskProgress);
+    window.addEventListener("focus", checkTaskProgress);
+
+    function checkTaskProgress() {
+      if (!document.hidden && isAdActive && !isTimerFinished) {
+        const elapsedSec = Math.floor((Date.now() - adStartTime) / 1000);
+
+        if (elapsedSec >= REQUIRED_STAY_TIME) {
+          // 60 seconds poore ho gaye hain
           clearInterval(adTimerInterval);
           isTimerFinished = true;
           isAdActive = false;
           document.getElementById('timerBox').style.display = 'none';
           document.getElementById('uploadBox').style.display = 'flex';
+        } else {
+          // 60 seconds se pehle hi wapas aa gaya
+          clearInterval(adTimerInterval);
+          isAdActive = false;
+          document.getElementById('taskModal').style.display = 'none';
+          alert("⚠️ WARNING: Aap poore 1 Minute (60 Seconds) tak ad page par nahi rahe! Task cancel kar diya gaya hai.");
         }
-      }, 1000);
-    };
-
-    // Strict Tab Switch Check
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden && isAdActive && !isTimerFinished) {
-        clearInterval(adTimerInterval);
-        isAdActive = false;
-        document.getElementById('taskModal').style.display = 'none';
-        alert("⚠️ WARNING: Aap poore 1 Minute (60 Seconds) tak ad page par nahi rahe! Task cancel kar diya gaya hai.");
       }
-    });
+    }
 
     window.checkProofSelected = function() {
       const file = document.getElementById('proofInput').files[0];

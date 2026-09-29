@@ -246,6 +246,33 @@
       border: 1px solid #fecaca;
     }
 
+    /* DASHBOARD TASK TRIGGER BUTTON */
+    .high-paying-task-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #ffffff;
+      border: none;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.25);
+      transition: all 0.2s ease;
+    }
+
+    .high-paying-task-btn:active {
+      transform: scale(0.98);
+    }
+
+    .high-paying-task-btn.locked {
+      background: linear-gradient(135deg, #64748b 0%, #475569 100%);
+      box-shadow: 0 4px 10px rgba(100, 116, 139, 0.2);
+    }
+
     /* COMPACT ALWAYS-VISIBLE RULE BOX */
     .rule-box {
       background: #fffbeb;
@@ -335,13 +362,13 @@
       color: #16a34a;
     }
 
-    /* ACTIVE TASK BOX (SHOWS 9:30 PM - 10:00 PM) */
+    /* ACTIVE TASK BOX (TOGGLED VIA BUTTON) */
     .active-task-card {
       background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
       border: 1.5px solid #bfdbfe;
       border-radius: 12px;
       padding: 12px;
-      display: none; /* Auto-managed by JavaScript */
+      display: none; 
       animation: fadeIn 0.4s ease-in-out;
     }
 
@@ -634,6 +661,12 @@
         </div>
       </div>
 
+      <!-- HIGH PAYING TASK BUTTON ON DASHBOARD -->
+      <button class="high-paying-task-btn locked" id="highTaskBtn" onclick="handleTaskButtonClick()">
+        <span><i class="fa-solid fa-bolt"></i> High Paying Task (Per Task 100 Rupee)</span>
+        <i class="fa-solid fa-lock" id="highTaskBtnIcon"></i>
+      </button>
+
       <!-- COMPACT ALWAYS-VISIBLE RULE BOX -->
       <div class="rule-box">
         <i class="fa-solid fa-circle-exclamation"></i>
@@ -670,7 +703,7 @@
         </div>
       </div>
 
-      <!-- LIVE 9:30 PM - 10:00 PM TASK CARD (AUTO SHOWS ONLY FROM 9:30 PM TO 10:00 PM) -->
+      <!-- ACTIVE TASK CARD (SHOWS UPON CLICKING BUTTON WHEN LIVE) -->
       <div class="active-task-card" id="activeTaskCard">
         <div class="task-instructions">
           <i class="fa-solid fa-circle-info" style="color:var(--primary)"></i> 
@@ -780,6 +813,8 @@
 
   <!-- GLOBAL HELPER FUNCTIONS -->
   <script>
+    let isTaskLive = false;
+
     function navigateTo(pageUrl) {
       if (!pageUrl) return;
       window.location.href = pageUrl;
@@ -804,6 +839,22 @@
 
     function closeHelplineModal() {
       document.getElementById('helplineModal').style.display = 'none';
+    }
+
+    // BUTTON CLICK HANDLER ACCORDING TO TIMING
+    function handleTaskButtonClick() {
+      if (!isTaskLive) {
+        alert("Kripya 9:30 PM hone ka wait karein. Task 9:30 PM par start hoga!");
+      } else {
+        const activeTaskCard = document.getElementById('activeTaskCard');
+        if (activeTaskCard) {
+          if (activeTaskCard.style.display === 'block') {
+            activeTaskCard.style.display = 'none';
+          } else {
+            activeTaskCard.style.display = 'block';
+          }
+        }
+      }
     }
   </script>
 
@@ -897,22 +948,35 @@
       const startMins = 21 * 60 + 30;
       const endMins = 22 * 60;
 
-      const isTaskActive = (currentMins >= startMins && currentMins < endMins);
+      window.isTaskLive = (currentMins >= startMins && currentMins < endMins);
 
       const activeTaskCard = document.getElementById('activeTaskCard');
       const taskStatusBadge = document.getElementById('taskStatusBadge');
+      const highTaskBtn = document.getElementById('highTaskBtn');
+      const highTaskBtnIcon = document.getElementById('highTaskBtnIcon');
 
-      if (isTaskActive) {
-        if (activeTaskCard) activeTaskCard.style.display = 'block';
+      if (window.isTaskLive) {
         if (taskStatusBadge) {
           taskStatusBadge.className = 'time-badge live';
           taskStatusBadge.innerHTML = '<i class="fa-solid fa-circle-dot fa-spin"></i> LIVE NOW (Closing at 10:00 PM)';
+        }
+        if (highTaskBtn) {
+          highTaskBtn.classList.remove('locked');
+        }
+        if (highTaskBtnIcon) {
+          highTaskBtnIcon.className = 'fa-solid fa-chevron-right';
         }
       } else {
         if (activeTaskCard) activeTaskCard.style.display = 'none';
         if (taskStatusBadge) {
           taskStatusBadge.className = 'time-badge closed';
           taskStatusBadge.innerHTML = '<i class="fa-solid fa-clock"></i> Open 9:30 PM - Close 10:00 PM';
+        }
+        if (highTaskBtn) {
+          highTaskBtn.classList.add('locked');
+        }
+        if (highTaskBtnIcon) {
+          highTaskBtnIcon.className = 'fa-solid fa-lock';
         }
       }
     }

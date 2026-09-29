@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -157,6 +158,21 @@
       border-radius: 20px;
       font-size: 10px;
       font-weight: 800;
+    }
+
+    /* LOADING BOX */
+    .loading-box {
+      text-align: center;
+      padding: 30px;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 16px;
+    }
+
+    .loading-box i {
+      font-size: 28px;
+      margin-bottom: 8px;
+      display: block;
     }
 
     /* ADS GRID (100 BUTTONS) */
@@ -338,8 +354,13 @@
       <span><i class="fa-solid fa-clock"></i> 10s Timer Rule</span>
     </div>
 
+    <!-- LOADING SIGN -->
+    <div id="loadingSign" class="loading-box">
+      <i class="fa-solid fa-spinner fa-spin"></i> Loading Ads...
+    </div>
+
     <!-- 100 AD BUTTONS GRID -->
-    <div class="ads-grid" id="adsGrid">
+    <div class="ads-grid" id="adsGrid" style="display: none;">
       <!-- Generated Dynamically -->
     </div>
 
@@ -437,11 +458,15 @@
         userAdLocks = snapshot.exists() ? snapshot.val() : {};
         renderAdButtons();
       });
+    } else {
+      renderAdButtons();
     }
 
     // RENDER 100 AD BUTTONS WITH LOCK TIMER
     function renderAdButtons() {
       const grid = document.getElementById('adsGrid');
+      const loadingSign = document.getElementById('loadingSign');
+      
       grid.innerHTML = "";
       const now = Date.now();
 
@@ -480,6 +505,10 @@
 
         grid.appendChild(card);
       });
+
+      // Hide loading sign and display ads grid once loaded
+      if (loadingSign) loadingSign.style.display = 'none';
+      grid.style.display = 'grid';
     }
 
     // OPEN AD LINK AND TRACK TIMER

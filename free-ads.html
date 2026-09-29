@@ -246,6 +246,10 @@
       font-size: 11px;
     }
 
+    /* LOADING BOX */
+    .loading-box { text-align: center; padding: 30px; font-weight: 700; color: var(--primary); font-size: 16px; }
+    .loading-box i { font-size: 28px; margin-bottom: 8px; display: block; }
+
     /* NEXT-LEVEL 3 ADS BUTTONS SECTION */
     .ads-tier-section {
       display: flex;
@@ -435,8 +439,13 @@
       </div>
     </div>
 
+    <!-- LOADING SIGN -->
+    <div id="loadingSign" class="loading-box">
+      <i class="fa-solid fa-spinner fa-spin"></i> Loading Ads...
+    </div>
+
     <!-- 3 ANIMATED ADS BUTTONS (TIER SELECTION) -->
-    <section class="ads-tier-section">
+    <section class="ads-tier-section" id="adsTierSection" style="display: none;">
       <div class="section-heading">
         <i class="fa-solid fa-play-circle" style="color:var(--primary)"></i> Choose Ad Category
       </div>
@@ -536,6 +545,12 @@
       document.getElementById('navUserName').innerText = name;
       document.getElementById('navAvatar').innerText = name.charAt(0).toUpperCase();
       document.getElementById('userBalance').innerText = "Rs. " + (parseFloat(data.balance || 0).toFixed(2));
+      
+      // Hide loading spinner and show ad categories once loaded
+      const loadingSign = document.getElementById('loadingSign');
+      const adsTierSection = document.getElementById('adsTierSection');
+      if (loadingSign) loadingSign.style.display = 'none';
+      if (adsTierSection) adsTierSection.style.display = 'flex';
     }
 
     updateHeaderUI(userData);
@@ -547,8 +562,14 @@
           const freshData = snapshot.val();
           updateHeaderUI(freshData);
           localStorage.setItem('sew_session', JSON.stringify(freshData));
+        } else {
+          document.getElementById('loadingSign').style.display = 'none';
+          document.getElementById('adsTierSection').style.display = 'flex';
         }
       });
+    } else {
+      document.getElementById('loadingSign').style.display = 'none';
+      document.getElementById('adsTierSection').style.display = 'flex';
     }
   </script>
 </body>

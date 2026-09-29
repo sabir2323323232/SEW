@@ -493,6 +493,7 @@
       cursor: pointer;
       user-select: none;
       transition: all 0.2s;
+      position: relative;
     }
 
     .earn-btn:active, .earn-btn:hover {
@@ -512,6 +513,55 @@
       text-overflow: ellipsis;
       max-width: 100%;
       line-height: 1.1;
+    }
+
+    /* ANIMATED BADGE ABOVE FREE ADS BUTTON */
+    .free-ads-promo-badge {
+      position: absolute;
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, #ef4444 0%, #f59e0b 50%, #10b981 100%);
+      color: #ffffff;
+      padding: 2px 6px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(239, 68, 68, 0.4);
+      z-index: 180;
+      pointer-events: none;
+      white-space: nowrap;
+      max-width: 120px;
+      overflow: hidden;
+      animation: ederOderBounce 2.5s ease-in-out infinite alternate;
+    }
+
+    .free-ads-promo-text {
+      display: inline-block;
+      font-size: 7.5px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+      animation: textTicker 8s linear infinite;
+    }
+
+    @keyframes ederOderBounce {
+      0% {
+        transform: translateX(-68%);
+      }
+      100% {
+        transform: translateX(-32%);
+      }
+    }
+
+    @keyframes textTicker {
+      0% {
+        transform: translateX(20%);
+      }
+      50% {
+        transform: translateX(-50%);
+      }
+      100% {
+        transform: translateX(20%);
+      }
     }
 
     /* MODALS */
@@ -707,7 +757,7 @@
       <div class="active-task-card" id="activeTaskCard">
         <div class="task-instructions">
           <i class="fa-solid fa-circle-info" style="color:var(--primary)"></i> 
-          <strong>Task Rules:</strong> Button par click karke direct link open karein. Jo bhi app/file aaye usko download karein ya website par sign up karein. Jo sabse achha task complete karega wo Winner banega aur usko High Payment milegi!Task complete karne ka bad screen shot dena ha.
+          <strong>Task Rules:</strong> Button par click karke direct link open karein. Jo bhi app/file aaye usko download karein ya website par sign up karein. Jo sabse achha task complete karega wo Winner banega aur usko High Payment milegi!
         </div>
 
         <!-- MONETAG DIRECT LINK BUTTON -->
@@ -735,6 +785,10 @@
   <div class="bottom-nav-container">
     <div class="earning-grid">
       <div class="earn-btn" onclick="navigateTo('free-ads.html')">
+        <!-- ANIMATED PROMO BADGE ABOVE FREE ADS BUTTON -->
+        <div class="free-ads-promo-badge">
+          <span class="free-ads-promo-text">🔥 Free 300 | Referral: 20 | Gmail: 40 | Affiliate: Unlimited</span>
+        </div>
         <i class="fa-solid fa-rectangle-ad"></i>
         <span>Free Ads</span>
       </div>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +22,8 @@
       --accent-green: #10b981;
       --accent-gold: #f59e0b;
       --accent-purple: #8b5cf6;
+      --accent-rose: #f43f5e;
+      --accent-cyan: #06b6d4;
     }
 
     * {
@@ -250,7 +253,7 @@
     .loading-box { text-align: center; padding: 30px; font-weight: 700; color: var(--primary); font-size: 16px; }
     .loading-box i { font-size: 28px; margin-bottom: 8px; display: block; }
 
-    /* NEXT-LEVEL 3 ADS BUTTONS SECTION */
+    /* ADS BUTTONS SECTION */
     .ads-tier-section {
       display: flex;
       flex-direction: column;
@@ -305,11 +308,21 @@
       transform: scale(0.97);
     }
 
+    /* Disabled Coming Soon State */
+    .tier-card.disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      filter: grayscale(0.2);
+    }
+
+    .tier-card.disabled:active {
+      transform: none;
+    }
+
     /* CARD 1: SIMPLE ADS */
     .card-simple {
       border-left: 4px solid var(--primary);
     }
-
     .card-simple .tier-icon-box {
       background: rgba(59, 130, 246, 0.15);
       color: var(--primary);
@@ -320,7 +333,6 @@
       border-left: 4px solid var(--accent-gold);
       background: linear-gradient(135deg, #161f30 0%, rgba(245, 158, 11, 0.05) 100%);
     }
-
     .card-golden .tier-icon-box {
       background: rgba(245, 158, 11, 0.15);
       color: var(--accent-gold);
@@ -331,10 +343,29 @@
       border-left: 4px solid var(--accent-purple);
       background: linear-gradient(135deg, #161f30 0%, rgba(139, 92, 246, 0.08) 100%);
     }
-
     .card-pro .tier-icon-box {
       background: rgba(139, 92, 246, 0.15);
       color: var(--accent-purple);
+    }
+
+    /* CARD 4: GOLDEN PRO ADS */
+    .card-golden-pro {
+      border-left: 4px solid var(--accent-rose);
+      background: linear-gradient(135deg, #161f30 0%, rgba(244, 63, 94, 0.08) 100%);
+    }
+    .card-golden-pro .tier-icon-box {
+      background: rgba(244, 63, 94, 0.15);
+      color: var(--accent-rose);
+    }
+
+    /* CARD 5: COMING SOON ADS */
+    .card-coming-soon {
+      border-left: 4px solid var(--accent-cyan);
+      background: linear-gradient(135deg, #161f30 0%, rgba(6, 182, 212, 0.05) 100%);
+    }
+    .card-coming-soon .tier-icon-box {
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--accent-cyan);
     }
 
     .tier-left {
@@ -379,6 +410,8 @@
     .tag-simple { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
     .tag-golden { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
     .tag-pro { background: rgba(139, 92, 246, 0.2); color: #c084fc; }
+    .tag-golden-pro { background: rgba(244, 63, 94, 0.2); color: #fda4af; }
+    .tag-coming-soon { background: rgba(6, 182, 212, 0.2); color: #67e8f9; }
 
     .action-arrow {
       width: 32px;
@@ -393,7 +426,7 @@
       transition: all 0.2s;
     }
 
-    .tier-card:active .action-arrow {
+    .tier-card:not(.disabled):active .action-arrow {
       background: #ffffff;
       color: #000000;
       transform: translateX(3px);
@@ -444,20 +477,20 @@
       <i class="fa-solid fa-spinner fa-spin"></i> Loading Ads...
     </div>
 
-    <!-- 3 ANIMATED ADS BUTTONS (TIER SELECTION) -->
+    <!-- ANIMATED ADS BUTTONS (TIER SELECTION) -->
     <section class="ads-tier-section" id="adsTierSection" style="display: none;">
       <div class="section-heading">
         <i class="fa-solid fa-play-circle" style="color:var(--primary)"></i> Choose Ad Category
       </div>
 
-      <!-- 1. SIMPLE ADS BUTTON -->
+      <!-- 1. SIMPLE ADS BUTTON (Rs. 0.10) -->
       <div class="tier-card card-simple" onclick="navigateTo('simple-ads.html')">
         <div class="tier-left">
           <div class="tier-icon-box">
             <i class="fa-solid fa-feather"></i>
           </div>
           <div class="tier-details">
-            <h3>Simple Ads <span class="badge-tag tag-simple">Standard</span></h3>
+            <h3>Simple Ads <span class="badge-tag tag-simple">Rs. 0.10 / Ad</span></h3>
             <p>Watch quick Monetag short ads & earn balance</p>
           </div>
         </div>
@@ -466,14 +499,14 @@
         </div>
       </div>
 
-      <!-- 2. GOLDEN ADS BUTTON -->
+      <!-- 2. GOLDEN ADS BUTTON (Rs. 1) -->
       <div class="tier-card card-golden" onclick="navigateTo('golden-ads.html')">
         <div class="tier-left">
           <div class="tier-icon-box">
             <i class="fa-solid fa-crown"></i>
           </div>
           <div class="tier-details">
-            <h3>Golden Ads <span class="badge-tag tag-golden">2X Bonus</span></h3>
+            <h3>Golden Ads <span class="badge-tag tag-golden">Rs. 1 / Ad</span></h3>
             <p>High reward ads with premium instant payout</p>
           </div>
         </div>
@@ -482,14 +515,14 @@
         </div>
       </div>
 
-      <!-- 3. PRO ADS BUTTON -->
+      <!-- 3. PRO ADS BUTTON (Rs. 5) -->
       <div class="tier-card card-pro" onclick="navigateTo('pro-ads.html')">
         <div class="tier-left">
           <div class="tier-icon-box">
             <i class="fa-solid fa-bolt"></i>
           </div>
           <div class="tier-details">
-            <h3>Pro Ads <span class="badge-tag tag-pro">Max Earnings</span></h3>
+            <h3>Pro Ads <span class="badge-tag tag-pro">Rs. 5 / Ad</span></h3>
             <p>Exclusive direct link ads for maximum profits</p>
           </div>
         </div>
@@ -497,6 +530,39 @@
           <i class="fa-solid fa-chevron-right"></i>
         </div>
       </div>
+
+      <!-- 4. GOLDEN PRO ADS BUTTON (Rs. 10) -> golden pro.html -->
+      <div class="tier-card card-golden-pro" onclick="navigateTo('golden pro.html')">
+        <div class="tier-left">
+          <div class="tier-icon-box">
+            <i class="fa-solid fa-gem"></i>
+          </div>
+          <div class="tier-details">
+            <h3>Golden Pro Ads <span class="badge-tag tag-golden-pro">Rs. 10 / Ad</span></h3>
+            <p>Super high payout ads for premium users</p>
+          </div>
+        </div>
+        <div class="action-arrow">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+
+      <!-- 5. VIP ADS BUTTON (Rs. 50) -> COMING SOON -->
+      <div class="tier-card card-coming-soon disabled" onclick="alert('This section is Coming Soon!')">
+        <div class="tier-left">
+          <div class="tier-icon-box">
+            <i class="fa-solid fa-rocket"></i>
+          </div>
+          <div class="tier-details">
+            <h3>VIP Ads <span class="badge-tag tag-coming-soon">Rs. 50 / Ad</span></h3>
+            <p>Coming Soon - Ultimate earning category</p>
+          </div>
+        </div>
+        <div class="action-arrow">
+          <i class="fa-solid fa-lock"></i>
+        </div>
+      </div>
+
     </section>
 
   </div>

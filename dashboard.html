@@ -515,9 +515,7 @@
       line-height: 1.1;
     }
 
-    /* ==========================================================
-       ANIMATED BADGES ABOVE EACH BUTTON (4 DIFFERENT STYLES)
-    ========================================================== */
+    /* ANIMATED BADGES ABOVE EACH BUTTON */
     .badge-common {
       position: absolute;
       top: -12px;
@@ -533,7 +531,6 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
-    /* 1. FREE ADS BADGE: Pulsing Glow Effect */
     .free-ads-badge {
       background: #ef4444;
       color: #ffffff;
@@ -545,7 +542,6 @@
       100% { transform: translateX(-50%) scale(0.92); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
 
-    /* 2. REFERRAL BADGE: Shimmer Light Wave Effect */
     .referral-badge {
       background: linear-gradient(90deg, #10b981 0%, #059669 50%, #10b981 100%);
       background-size: 200% 100%;
@@ -557,7 +553,6 @@
       100% { background-position: -200% 0; }
     }
 
-    /* 3. GMAIL BADGE: Floating 3D Bobbing Effect */
     .gmail-badge {
       background: #2563eb;
       color: #ffffff;
@@ -568,7 +563,6 @@
       100% { transform: translateX(-50%) translateY(-5px); }
     }
 
-    /* 4. AFFILIATE PROGRAM BADGE: Golden Rainbow Shiny Effect */
     .affiliate-badge {
       background: linear-gradient(135deg, #f59e0b, #d97706, #b45309);
       color: #ffffff;
@@ -715,7 +709,7 @@
       </div>
     </section>
 
-    <!-- HIGH MARKETING TASK SECTION (MIDDLE SPACE) -->
+    <!-- HIGH MARKETING TASK SECTION -->
     <section class="marketing-task-section">
       <div class="marketing-header">
         <div class="marketing-title">
@@ -784,7 +778,7 @@
         <div class="screenshot-upload-box">
           <label><i class="fa-solid fa-camera"></i> Submit Proof Screenshot:</label>
           <input type="file" id="screenshotFileInput" accept="image/*" />
-          <button class="submit-proof-btn" onclick="submitTaskProof()">
+          <button class="submit-proof-btn" id="submitProofBtn">
             <i class="fa-solid fa-paper-plane"></i> Submit Proof
           </button>
         </div>
@@ -887,7 +881,7 @@
 
   <!-- GLOBAL HELPER FUNCTIONS -->
   <script>
-    let isTaskLive = false;
+    window.isTaskLive = false;
 
     function navigateTo(pageUrl) {
       if (!pageUrl) return;
@@ -917,7 +911,7 @@
 
     // BUTTON CLICK HANDLER ACCORDING TO TIMING
     function handleTaskButtonClick() {
-      if (!isTaskLive) {
+      if (!window.isTaskLive) {
         alert("Kripya 9:30 PM hone ka wait karein. Task 9:30 PM par start hoga!");
       } else {
         const activeTaskCard = document.getElementById('activeTaskCard');
@@ -1018,8 +1012,8 @@
       const minutes = now.getMinutes();
       const currentMins = hours * 60 + minutes;
 
-      const startMins = 21 * 60 + 30;
-      const endMins = 22 * 60;
+      const startMins = 21 * 60 + 30; // 9:30 PM (21:30)
+      const endMins = 22 * 60;      // 10:00 PM (22:00)
 
       window.isTaskLive = (currentMins >= startMins && currentMins < endMins);
 
@@ -1057,6 +1051,38 @@
     setInterval(checkTaskTiming, 1000);
     checkTaskTiming();
 
+    // PROOF SUBMISSION HANDLER
+    const submitBtn = document.getElementById('submitProofBtn');
+    if (submitBtn) {
+      submitBtn.addEventListener('click', () => {
+        const msgEl = document.getElementById('submissionStatusMsg');
+        const fileInput = document.getElementById('screenshotFileInput');
+
+        if (!fileInput.files || fileInput.files.length === 0) {
+          alert("Kripya proof ka screenshot select karein!");
+          return;
+        }
+
+        if (userId) {
+          set(ref(db, 'task_submissions/' + userId), {
+            submittedAt: new Date().toISOString(),
+            status: 'pending',
+            username: sessionData.username || sessionData.fullName || 'User'
+          }).then(() => {
+            if (msgEl) {
+              msgEl.style.display = 'block';
+              msgEl.style.background = '#eff6ff';
+              msgEl.style.color = '#1d4ed8';
+              msgEl.style.border = '1px solid #bfdbfe';
+              msgEl.innerHTML = '<i class="fa-solid fa-clock"></i> Aapka proof submit ho gaya hai! Admin review ke baad update karega.';
+            }
+          }).catch((err) => {
+            alert("Submission error: " + err.message);
+          });
+        }
+      });
+    }
+
     // LISTEN FOR USER TASK APPROVAL STATUS FROM ADMIN
     if (userId) {
       const taskSubmissionRef = ref(db, 'task_submissions/' + userId);
@@ -1064,61 +1090,30 @@
         const msgEl = document.getElementById('submissionStatusMsg');
         if (snapshot.exists()) {
           const data = snapshot.val();
-          if (data.status === 'approved') {
-            msgEl.style.display = 'block';
-            msgEl.style.background = '#ecfdf5';
-            msgEl.style.color = '#047857';
-            msgEl.style.border = '1px solid #a7f3d0';
-            msgEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> Admin ne aapka proof approve kar diya hai! Aapka chance hai Winner banne ka!';
-          } else if (data.status === 'pending') {
-            msgEl.style.display = 'block';
-            msgEl.style.background = '#eff6ff';
-            msgEl.style.color = '#1d4ed8';
-            msgEl.style.border = '1px solid #bfdbfe';
-            msgEl.innerHTML = '<i class="fa-solid fa-clock"></i> Proof Submit ho gaya hai! Admin Review ke baad Winner ka chance hai.';
+          if (msgEl) {
+            if (data.status === 'approved') {
+              msgEl.style.display = 'block';
+              msgEl.style.background = '#ecfdf5';
+              msgEl.style.color = '#047857';
+              msgEl.style.border = '1px solid #a7f3d0';
+              msgEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> Admin ne aapka proof approve kar diya hai! Aapka chance hai Winner banne ka!';
+            } else if (data.status === 'pending') {
+              msgEl.style.display = 'block';
+              msgEl.style.background = '#eff6ff';
+              msgEl.style.color = '#1d4ed8';
+              msgEl.style.border = '1px solid #bfdbfe';
+              msgEl.innerHTML = '<i class="fa-solid fa-clock"></i> Aapka proof review mein hai. Kripya intezar karein!';
+            } else if (data.status === 'rejected') {
+              msgEl.style.display = 'block';
+              msgEl.style.background = '#fef2f2';
+              msgEl.style.color = '#b91c1c';
+              msgEl.style.border = '1px solid #fecaca';
+              msgEl.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Aapka proof reject ho gaya hai. Dobara sahi task complete karein!';
+            }
           }
         }
       });
     }
-
-    // SUBMIT SCREENSHOT PROOF FUNCTION
-    window.submitTaskProof = function() {
-      const fileInput = document.getElementById('screenshotFileInput');
-      const msgEl = document.getElementById('submissionStatusMsg');
-
-      if (!fileInput.files || fileInput.files.length === 0) {
-        alert("Kripya screenshot file select karein!");
-        return;
-      }
-
-      const file = fileInput.files[0];
-      const reader = new FileReader();
-
-      reader.onload = function(e) {
-        const base64Image = e.target.result;
-        const subRef = ref(db, 'task_submissions/' + userId);
-
-        set(subRef, {
-          userId: userId,
-          userName: sessionData.fullName || sessionData.username || "User",
-          mobile: sessionData.mobile || "N/A",
-          screenshot: base64Image,
-          status: "pending",
-          submittedAt: new Date().toISOString()
-        }).then(() => {
-          msgEl.style.display = 'block';
-          msgEl.style.background = '#eff6ff';
-          msgEl.style.color = '#1d4ed8';
-          msgEl.style.border = '1px solid #bfdbfe';
-          msgEl.innerHTML = '<i class="fa-solid fa-check"></i> Proof successfully submitted!';
-        }).catch((err) => {
-          alert("Error: " + err.message);
-        });
-      };
-
-      reader.readAsDataURL(file);
-    };
   </script>
-
 </body>
 </html>

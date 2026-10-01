@@ -175,7 +175,7 @@
       display: block;
     }
 
-    /* ADS GRID (100 BUTTONS) */
+    /* ADS GRID */
     .ads-header-info {
       display: flex;
       justify-content: space-between;
@@ -350,7 +350,7 @@
 
     <!-- INFO HEADER -->
     <div class="ads-header-info">
-      <span><i class="fa-solid fa-list-check"></i> Available Ads (100)</span>
+      <span><i class="fa-solid fa-list-check"></i> Available Ads (<span id="totalAdsCount">0</span>)</span>
       <span><i class="fa-solid fa-clock"></i> 10s Timer Rule</span>
     </div>
 
@@ -359,7 +359,7 @@
       <i class="fa-solid fa-spinner fa-spin"></i> Loading Ads...
     </div>
 
-    <!-- 100 AD BUTTONS GRID -->
+    <!-- AD BUTTONS GRID -->
     <div class="ads-grid" id="adsGrid" style="display: none;">
       <!-- Generated Dynamically -->
     </div>
@@ -401,25 +401,121 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    // BASE 20 MONETAG LINKS
-    const baseLinks = [
-      "https://omg10.com/4/10475294", "https://omg10.com/4/10475279",
-      "https://omg10.com/4/10475296", "https://omg10.com/4/10475282",
-      "https://omg10.com/4/10475278", "https://omg10.com/4/10475291",
-      "https://omg10.com/4/10475297", "https://omg10.com/4/10475280",
-      "https://omg10.com/4/10475284", "https://omg10.com/4/10475283",
-      "https://omg10.com/4/10475290", "https://omg10.com/4/10475295",
-      "https://omg10.com/4/10475281", "https://omg10.com/4/10475292",
-      "https://omg10.com/4/10475293", "https://omg10.com/4/10475299",
-      "https://omg10.com/4/10440633", "https://omg10.com/4/10475285",
-      "https://omg10.com/4/10475298", "https://omg10.com/4/10474554"
+    // EXACT UPDATED LINKS LIST (TOTAL 109 LINKS)
+    const monetagLinks = [
+      "https://www.effectivecpmnetwork.com/qfjbqzciv?key=93a00ca334cd4bfd92815a644167f113",
+      "https://www.effectivecpmnetwork.com/rm77quyvvn?key=d31af3026469aa963374b3768483e3b3",
+      "https://www.effectivecpmnetwork.com/g1fy1xihms?key=0ca5100c06d8fb268f6cbe952aa6dd20",
+      "https://www.effectivecpmnetwork.com/js9hpju7?key=79be6bc2f4a4416cd03b5a21daaaa98b",
+      "https://www.effectivecpmnetwork.com/udfn2p9r?key=4fba4576aaf735abc3451e91f4538a8a",
+      "https://www.effectivecpmnetwork.com/ixu5s4q5v?key=06793917227d62e174c47fbc1062d144",
+      "https://www.effectivecpmnetwork.com/u53q67p6?key=7488dd9f56c5f077d85b7ce20cda54ce",
+      "https://www.effectivecpmnetwork.com/h58puxza6?key=c210d00625c9ad913a0ba4482f3c132f",
+      "https://www.effectivecpmnetwork.com/di2xr18xbb?key=3023ba860ef9f1ca815029e3390ab9e5",
+      "https://www.effectivecpmnetwork.com/rx9g101z?key=45c1caadee64d5c6759ceeef62cfe42f",
+      "https://www.effectivecpmnetwork.com/r0zjtikk?key=c9bbadccb09a936aba2abc1aa82d8fc0",
+      "https://www.effectivecpmnetwork.com/eph0z9r5zv?key=fc9674bdb44e23af2de473e2dc265a38",
+      "https://www.effectivecpmnetwork.com/wgw54e8kqr?key=b6a56da51351b61372ec49de5cbc5503",
+      "https://www.effectivecpmnetwork.com/gdrkgg4r?key=74111f177b6a14e04e457249203b2f73",
+      "https://www.effectivecpmnetwork.com/zss96w02g3?key=eb38e8f8e91068ba19cb2996e7238a50",
+      "https://www.effectivecpmnetwork.com/kamchx2vt?key=f5ed5b44a74da6bc237f3b8166bcd0fb",
+      "https://www.effectivecpmnetwork.com/k2bp0nek?key=b8366a94c2b4ab848e228d632605c64d",
+      "https://www.effectivecpmnetwork.com/rts5vfv6t?key=34a7431f7a86dab94bdb4f4ca6325321",
+      "https://www.effectivecpmnetwork.com/ns0r3cdqe?key=389f2e7cf6010a9a79cdfc970d806d53",
+      "https://www.effectivecpmnetwork.com/fxmpwh76kb?key=c812879d5be0f09851f9eeaf871c529f",
+      "https://www.effectivecpmnetwork.com/k9xwa37a0y?key=a26a04aa8ec95fc0b047a77562e2c820",
+      "https://www.effectivecpmnetwork.com/yh223arkru?key=77adc3cd4016c3027cc923a0329a259e",
+      "https://www.effectivecpmnetwork.com/um6e48tbn?key=cdd1e6b37e33e3f2d982eef6ac1ed76e",
+      "https://www.effectivecpmnetwork.com/prqgd8yr89?key=ce794e33e7309677b9b501faf28dddee",
+      "https://www.effectivecpmnetwork.com/cm47n5ki?key=5943d55b7139dada06fd6d2377d5ef7f",
+      "https://www.effectivecpmnetwork.com/ej4r3va0?key=3a67bfa4120afe8ce6dcdd346b33ec18",
+      "https://www.effectivecpmnetwork.com/fex2fptv?key=1e30d65aa402a9118ad1cc6c6c36edc5",
+      "https://www.effectivecpmnetwork.com/pjuyk7e7ag?key=c2547713b838835f491adaa3ab757025",
+      "https://www.effectivecpmnetwork.com/b74nfpem?key=1f1f8ab034c430ff354b5d44c44a5a4c",
+      "https://www.effectivecpmnetwork.com/gf60wts1?key=2503cbb38526bfcfd5888c86be57bb84",
+      "https://www.effectivecpmnetwork.com/yrt51skg?key=86b8a5c79f69d29742a735037c385f3e",
+      "https://www.effectivecpmnetwork.com/zuhg617xu?key=54385e8c27fe59428b1365497e7f80e3",
+      "https://www.effectivecpmnetwork.com/z84uymrf?key=dc8163653baea1f2a4e50fc3db94b6e0",
+      "https://www.effectivecpmnetwork.com/yide1i3mk4?key=58d0e5140a617cdedf8261dcc3466a48",
+      "https://www.effectivecpmnetwork.com/rx0mkizfd?key=0abec2ba9ff9dce8f26981799b83fe53",
+      "https://www.effectivecpmnetwork.com/q677b17xv1?key=2b904503a3f8078a919fc54b5254a4a9",
+      "https://www.effectivecpmnetwork.com/v12ynarp?key=7faec9b5913c54cd8e70a293b91207ba",
+      "https://www.effectivecpmnetwork.com/xtskvcguy?key=5ce734193feb39d619c2e1ef4f02d496",
+      "https://www.effectivecpmnetwork.com/zifms9dr?key=08431a66a3f5cd815fb4e7b838d9f175",
+      "https://www.effectivecpmnetwork.com/n9umjr02?key=7282cd47c362666b99c90346ef7c5b5f",
+      "https://www.effectivecpmnetwork.com/mnzytisu6?key=0f844a82b5491882ba142050078d9442",
+      "https://www.effectivecpmnetwork.com/bpie48twuk?key=487c1871ee3eaa6112f5fbb92a630c66",
+      "https://www.effectivecpmnetwork.com/ih226uds?key=10495391954b3a86daab2c3861d048d8",
+      "https://www.effectivecpmnetwork.com/gvk6zxqsh?key=eaac8fc9c09aaf3230280032bead3639",
+      "https://www.effectivecpmnetwork.com/k2w85t5d?key=61d1ecc66ca627b68f5b9d0d6cd3a43b",
+      "https://www.effectivecpmnetwork.com/a0rd35i4ne?key=4abb5debdd84082dd9c1aee527c9fc4d",
+      "https://www.effectivecpmnetwork.com/wnxgzc6n?key=1ae22c8d2e6b8901a7f0a653d6816abe",
+      "https://www.effectivecpmnetwork.com/zwdb9dupc?key=5af2a69627bfe252feb1f4157f2655cd",
+      "https://www.effectivecpmnetwork.com/j5y0s7izk?key=fdd66ec3c05ec9051be8061805ed9377",
+      "https://www.effectivecpmnetwork.com/njnwxxfnn8?key=5861f22fdfdb019801d7bf5b09ad1540",
+      "https://www.effectivecpmnetwork.com/phingt4xx?key=bfc4a8360d665383c40a8dd892e0243d",
+      "https://www.effectivecpmnetwork.com/i2uv1nwis?key=3d239f6f911755ecd3dbe1e02d1a4fdb",
+      "https://www.effectivecpmnetwork.com/gdf72j7t?key=cbf95cf112b5619b69e7c9c81c296279",
+      "https://www.effectivecpmnetwork.com/fuzyq81r8?key=5839ebcaa20e17f65ab92fca8b1f1542m",
+      "https://www.effectivecpmnetwork.com/psvukczt8b?key=caf0974ce48ad9419e6d9bbde801b388",
+      "https://www.effectivecpmnetwork.com/qkrq5nr2w?key=3e27c0ef3dd2876e413ef9669175be52",
+      "https://www.effectivecpmnetwork.com/vdfvj8pf15?key=7d69ee110f177a5d9381ea857184a973",
+      "https://www.effectivecpmnetwork.com/nbv0myu9j?key=b53a3ecdbd51e901a098b90e5119e900",
+      "https://www.effectivecpmnetwork.com/kyzzm800?key=5a0675f9484575e5f877016d81f44b2d",
+      "https://www.effectivecpmnetwork.com/sgvtd6y4h?key=a06ab92723a53bf2cca29b8970356d57",
+      "https://www.effectivecpmnetwork.com/jti224tn9?key=ed6d8dcb25c07290fa1342941508dd82",
+      "https://www.effectivecpmnetwork.com/qa1wgu545?key=2e26f40b5876b537584e744dcf81a3f8",
+      "https://www.effectivecpmnetwork.com/d3rrt88en?key=7ce8c4c13ae59d7565bf03663086ba49",
+      "https://www.effectivecpmnetwork.com/vswq2khr?key=f11e2c946dbcaa9e33a6937e9211ef7c",
+      "https://www.effectivecpmnetwork.com/i095rzsvh?key=024d7ad5ef4a408011dd33291959a58d",
+      "https://www.effectivecpmnetwork.com/s0xft7s8?key=3103173c6a7488afecf354039c0f4ac8",
+      "https://www.effectivecpmnetwork.com/qec5yq8qm?key=7c7bcdf1a72c2262cb85dcc7d8e97c37",
+      "https://www.effectivecpmnetwork.com/j63m95qgis?key=62c795283528bdf2b9a9a24c860cf670",
+      "https://www.effectivecpmnetwork.com/wvh7cdxn?key=296a8f996e105a84b7acee635f0d4807",
+      "https://www.effectivecpmnetwork.com/kf9wrqxwij?key=cbe90e244cd13b6e964977ffb021d956",
+      "https://www.effectivecpmnetwork.com/t3bgzk7yj?key=b911a35193136e3aadaf65d79c863799",
+      "https://www.effectivecpmnetwork.com/hmkgkm4g3v?key=8317023c4f8299e7bc01b61e3809972d",
+      "https://www.effectivecpmnetwork.com/fhyu9v8be?key=71af4bca78493c35ceafa9f102bf5f48",
+      "https://www.effectivecpmnetwork.com/aqye5is84j?key=09bdb10c54c8307544fef267fc6f097b",
+      "https://www.effectivecpmnetwork.com/ac0x80iw?key=8919a13e42fa1cd193b885a7f0cccd5c",
+      "https://www.effectivecpmnetwork.com/tqqbzeh9?key=bf87e005c7d4615c651101bb12f46945",
+      "https://www.effectivecpmnetwork.com/amxrb4h2s?key=748b95e3309ebeb26dbe28822f4314dc",
+      "https://www.effectivecpmnetwork.com/t3rdgz4w?key=2ab999ae7348c77ac1f523452d2aab7f",
+      "https://www.effectivecpmnetwork.com/t22yyyx0?key=48d36fd80c0023739956e46e2e1fb2aa",
+      "https://www.effectivecpmnetwork.com/k8xhr36q?key=4f6a3e487ec4620e222a9dd017a1126d",
+      "https://www.effectivecpmnetwork.com/pu14kj0ty7?key=a9f4de810f1e5fe4f679fe0b19de575e",
+      "https://www.effectivecpmnetwork.com/q6yvshm2?key=013f552de9f275e878b590e6762cd402",
+      "https://www.effectivecpmnetwork.com/cd88sn1k?key=19c00f7944ab18ca2392e373879c1595",
+      "https://www.effectivecpmnetwork.com/n8fn8hvi?key=1c81a661d1b0acc5b3408f08e33a33ee",
+      "https://www.effectivecpmnetwork.com/xs7pnk4t?key=933d8d6877deff095683b2f144911970",
+      "https://www.effectivecpmnetwork.com/ih0g20jf96?key=9f330808bf1523259e5ceb6c4559f7ab",
+      "https://www.effectivecpmnetwork.com/q33ite39?key=0af80036f8d3e825184b41da14306eb5",
+      "https://www.effectivecpmnetwork.com/rm77quayvvn?key=d31af3026469aa963374b3768483e3b3",
+      "https://www.effectivecpmnetwork.com/cer7wu1xt?key=76aa47cf04fcc015f8a3c6c9363a081b",
+      "https://www.effectivecpmnetwork.com/acj4t2ae?key=9ca9ead54e08cb783b0a7a087b4b98ed",
+      "https://omg10.com/4/10475294",
+      "https://omg10.com/4/10475279",
+      "https://omg10.com/4/10475296",
+      "https://omg10.com/4/10475282",
+      "https://omg10.com/4/10475278",
+      "https://omg10.com/4/10475291",
+      "https://omg10.com/4/10475297",
+      "https://omg10.com/4/10475280",
+      "https://omg10.com/4/10475284",
+      "https://omg10.com/4/10475283",
+      "https://omg10.com/4/10475290",
+      "https://omg10.com/4/10475295",
+      "https://omg10.com/4/10475281",
+      "https://omg10.com/4/10475292",
+      "https://omg10.com/4/10475293",
+      "https://omg10.com/4/10475299",
+      "https://omg10.com/4/10440633",
+      "https://omg10.com/4/10475298",
+      "https://omg10.com/4/10474554"
     ];
 
-    // MIX & REPEAT LINKS TO MAKE EXACTLY 100 AD BUTTONS (5 TIMES REPEATED & INTERLEAVED)
-    const monetagLinks = [];
-    for (let i = 0; i < 100; i++) {
-      monetagLinks.push(baseLinks[i % baseLinks.length]);
-    }
+    // Dynamic Ads Count Set
+    document.getElementById('totalAdsCount').innerText = monetagLinks.length;
 
     // Session Check
     const rawSession = localStorage.getItem('sew_session');
@@ -462,7 +558,7 @@
       renderAdButtons();
     }
 
-    // RENDER 100 AD BUTTONS WITH LOCK TIMER
+    // RENDER ALL AD BUTTONS WITH LOCK TIMER
     function renderAdButtons() {
       const grid = document.getElementById('adsGrid');
       const loadingSign = document.getElementById('loadingSign');
@@ -516,7 +612,7 @@
       pendingAdIndex = idx;
       adStartTime = Date.now();
 
-      // Open Monetag link in new tab
+      // Open link in new tab
       window.open(link, '_blank');
     }
 

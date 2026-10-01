@@ -132,13 +132,59 @@
     if (!sessionStr) window.location.replace("index.html");
     const sessionUser = JSON.parse(sessionStr);
 
-    const baseLinks = [
-      "https://omg10.com/4/11668510", "https://omg10.com/4/11668513", "https://omg10.com/4/11668514",
-      "https://omg10.com/4/11668515", "https://omg10.com/4/11668517", "https://omg10.com/4/11668518"
+    const adLinks = [
+      "https://www.effectivecpmnetwork.com/qstgbxwd1?key=061a015ba967ac843725770b21b9fecb",
+      "https://www.effectivecpmnetwork.com/qfjbqzciv?key=93a00ca334cd4bfd92815a644167f113",
+      "https://www.effectivecpmnetwork.com/rm77quyvvn?key=d31af3026469aa963374b3768483e3b3",
+      "https://www.effectivecpmnetwork.com/g1fy1xihms?key=0ca5100c06d8fb268f6cbe952aa6dd20",
+      "https://www.effectivecpmnetwork.com/js9hpju7?key=79be6bc2f4a4416cd03b5a21daaaa98b",
+      "https://www.effectivecpmnetwork.com/udfn2p9r?key=4fba4576aaf735abc3451e91f4538a8a",
+      "https://www.effectivecpmnetwork.com/ixu5s4q5v?key=06793917227d62e174c47fbc1062d144",
+      "https://www.effectivecpmnetwork.com/u53q67p6?key=7488dd9f56c5f077d85b7ce20cda54ce",
+      "https://www.effectivecpmnetwork.com/h58puxza6?key=c210d00625c9ad913a0ba4482f3c132f",
+      "https://www.effectivecpmnetwork.com/di2xr18xbb?key=3023ba860ef9f1ca815029e3390ab9e5",
+      "https://www.effectivecpmnetwork.com/rx9g101z?key=45c1caadee64d5c6759ceeef62cfe42f",
+      "https://www.effectivecpmnetwork.com/r0zjtikk?key=c9bbadccb09a936aba2abc1aa82d8fc0",
+      "https://www.effectivecpmnetwork.com/eph0z9r5zv?key=fc9674bdb44e23af2de473e2dc265a38",
+      "https://www.effectivecpmnetwork.com/wgw54e8kqr?key=b6a56da51351b61372ec49de5cbc5503",
+      "https://www.effectivecpmnetwork.com/gdrkgg4r?key=74111f177b6a14e04e457249203b2f73",
+      "https://www.effectivecpmnetwork.com/zss96w02g3?key=eb38e8f8e91068ba19cb2996e7238a50",
+      "https://www.effectivecpmnetwork.com/kamchx2vt?key=f5ed5b44a74da6bc237f3b8166bcd0fb",
+      "https://www.effectivecpmnetwork.com/k2bp0nek?key=b8366a94c2b4ab848e228d632605c64d",
+      "https://www.effectivecpmnetwork.com/rts5vfv6t?key=34a7431f7a86dab94bdb4f4ca6325321",
+      "https://www.effectivecpmnetwork.com/ns0r3cdqe?key=389f2e7cf6010a9a79cdfc970d806d53",
+      "https://www.effectivecpmnetwork.com/fxmpwh76kb?key=c812879d5be0f09851f9eeaf871c529f",
+      "https://www.effectivecpmnetwork.com/k9xwa37a0y?key=a26a04aa8ec95fc0b047a77562e2c820",
+      "https://www.effectivecpmnetwork.com/yh223arkru?key=77adc3cd4016c3027cc923a0329a259e",
+      "https://www.effectivecpmnetwork.com/um6e48tbn?key=cdd1e6b37e33e3f2d982eef6ac1ed76e",
+      "https://www.effectivecpmnetwork.com/prqgd8yr89?key=ce794e33e7309677b9b501faf28dddee",
+      "https://www.effectivecpmnetwork.com/cm47n5ki?key=5943d55b7139dada06fd6d2377d5ef7f",
+      "https://www.effectivecpmnetwork.com/ej4r3va0?key=3a67bfa4120afe8ce6dcdd346b33ec18",
+      "https://www.effectivecpmnetwork.com/fex2fptv?key=1e30d65aa402a9118ad1cc6c6c36edc5",
+      "https://www.effectivecpmnetwork.com/fex2fptv?key=1e30d65aa402a9118ad1cc6c6c36edc5",
+      "https://www.effectivecpmnetwork.com/pjuyk7e7ag?key=c2547713b838835f491adaa3ab757025",
+      "https://www.effectivecpmnetwork.com/b74nfpem?key=1f1f8ab034c430ff354b5d44c44a5a4c",
+      "https://www.effectivecpmnetwork.com/gf60wts1?key=2503cbb38526bfcfd5888c86be57bb84",
+      "https://www.effectivecpmnetwork.com/yrt51skg?key=86b8a5c79f69d29742a735037c385f3e",
+      "https://www.effectivecpmnetwork.com/zuhg617xu?key=54385e8c27fe59428b1365497e7f80e3",
+      "https://www.effectivecpmnetwork.com/z84uymrf?key=dc8163653baea1f2a4e50fc3db94b6e0",
+      "https://www.effectivecpmnetwork.com/yide1i3mk4?key=58d0e5140a617cdedf8261dcc3466a48",
+      "https://www.effectivecpmnetwork.com/rx0mkizfd?key=0abec2ba9ff9dce8f26981799b83fe53",
+      "https://www.effectivecpmnetwork.com/q677b17xv1?key=2b904503a3f8078a919fc54b5254a4a9",
+      "https://www.effectivecpmnetwork.com/v12ynarp?key=7faec9b5913c54cd8e70a293b91207ba",
+      "https://www.effectivecpmnetwork.com/xtskvcguy?key=5ce734193feb39d619c2e1ef4f02d496",
+      "https://www.effectivecpmnetwork.com/zifms9dr?key=08431a66a3f5cd815fb4e7b838d9f175",
+      "https://www.effectivecpmnetwork.com/n9umjr02?key=7282cd47c362666b99c90346ef7c5b5f",
+      "https://www.effectivecpmnetwork.com/mnzytisu6?key=0f844a82b5491882ba142050078d9442",
+      "https://www.effectivecpmnetwork.com/bpie48twuk?key=487c1871ee3eaa6112f5fbb92a630c66",
+      "https://www.effectivecpmnetwork.com/ih226uds?key=10495391954b3a86daab2c3861d048d8",
+      "https://www.effectivecpmnetwork.com/gvk6zxqsh?key=eaac8fc9c09aaf3230280032bead3639",
+      "https://www.effectivecpmnetwork.com/k2w85t5d?key=61d1ecc66ca627b68f5b9d0d6cd3a43b",
+      "https://www.effectivecpmnetwork.com/a0rd35i4ne?key=4abb5debdd84082dd9c1aee527c9fc4d",
+      "https://www.effectivecpmnetwork.com/wnxgzc6n?key=1ae22c8d2e6b8901a7f0a653d6816abe",
+      "https://www.effectivecpmnetwork.com/zwdb9dupc?key=5af2a69627bfe252feb1f4157f2655cd",
+      "https://www.effectivecpmnetwork.com/j5y0s7izk?key=fdd66ec3c05ec9051be8061805ed9377"
     ];
-
-    const adLinks = [];
-    for (let i = 0; i < 50; i++) { adLinks.push(baseLinks[i % baseLinks.length]); }
 
     let userData = null;
     let activeAdIndex = 0;

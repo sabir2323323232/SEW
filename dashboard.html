@@ -138,6 +138,41 @@
       text-overflow: ellipsis;
     }
 
+    /* NEWS TICKER BANNER */
+    .news-banner {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #ffffff;
+      padding: 8px 12px;
+      font-size: 11px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+    }
+
+    .news-banner i {
+      font-size: 13px;
+      color: #fef3c7;
+    }
+
+    .marquee {
+      white-space: nowrap;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .marquee p {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marqueeAnim 16s linear infinite;
+    }
+
+    @keyframes marqueeAnim {
+      0%   { transform: translate(0, 0); }
+      100% { transform: translate(-100%, 0); }
+    }
+
     /* MAIN CONTAINER */
     .container {
       max-width: 500px;
@@ -191,7 +226,7 @@
       border-radius: 8px;
     }
 
-    /* HIGH MARKETING TASK SECTION */
+    /* HIGH MARKETING TASK SECTION (CLEAN ON DASHBOARD) */
     .marketing-task-section {
       background: #ffffff;
       border-radius: 14px;
@@ -252,7 +287,7 @@
       background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
       color: #ffffff;
       border: none;
-      padding: 12px 14px;
+      padding: 14px;
       border-radius: 10px;
       font-size: 13px;
       font-weight: 800;
@@ -301,6 +336,7 @@
       border: 1px dashed #cbd5e1;
       border-radius: 12px;
       padding: 10px;
+      margin-bottom: 10px;
     }
 
     .winners-title {
@@ -368,7 +404,6 @@
       border: 1.5px solid #bfdbfe;
       border-radius: 12px;
       padding: 12px;
-      display: none; 
       animation: fadeIn 0.4s ease-in-out;
     }
 
@@ -452,6 +487,188 @@
       font-size: 9.5px;
       font-weight: 700;
       text-align: center;
+    }
+
+    /* FLOATING LIVE CHAT BUTTON & POPUP NOTIFICATION */
+    .chat-floating-btn {
+      position: fixed;
+      bottom: 80px;
+      right: 15px;
+      width: 52px;
+      height: 52px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+      cursor: pointer;
+      z-index: 180;
+      transition: transform 0.2s, background 0.2s;
+      border: 2px solid #ffffff;
+    }
+
+    .chat-floating-btn:active {
+      transform: scale(0.9);
+    }
+
+    .chat-badge-dot {
+      position: absolute;
+      top: 2px;
+      right: 2px;
+      width: 12px;
+      height: 12px;
+      background: #10b981;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+    }
+
+    /* CHAT NOTIFICATION POPUP (TOP RIGHT) */
+    .chat-toast {
+      position: fixed;
+      top: 60px;
+      right: 15px;
+      background: #ffffff;
+      border-left: 4px solid var(--primary);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      z-index: 300;
+      max-width: 280px;
+      animation: slideInRight 0.3s ease-out;
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .chat-toast i {
+      font-size: 18px;
+      color: var(--primary);
+    }
+
+    .chat-toast-content strong {
+      display: block;
+      font-size: 11px;
+      color: var(--text-main);
+    }
+
+    .chat-toast-content span {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* CHAT MODAL CONTAINER */
+    .chat-modal-box {
+      background: #ffffff;
+      width: 100%;
+      max-width: 420px;
+      height: 80vh;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .chat-header {
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-header h3 {
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chat-messages-area {
+      flex: 1;
+      padding: 12px;
+      overflow-y: auto;
+      background: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .msg-bubble {
+      background: #ffffff;
+      padding: 8px 12px;
+      border-radius: 10px;
+      max-width: 80%;
+      font-size: 11px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      border: 1px solid var(--border-color);
+      align-self: flex-start;
+    }
+
+    .msg-bubble.my-msg {
+      align-self: flex-end;
+      background: #dbeafe;
+      border-color: #bfdbfe;
+    }
+
+    .msg-sender {
+      font-weight: 800;
+      font-size: 9.5px;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+
+    .msg-text {
+      color: var(--text-main);
+      word-wrap: break-word;
+    }
+
+    .msg-time {
+      font-size: 8px;
+      color: var(--text-muted);
+      text-align: right;
+      margin-top: 3px;
+    }
+
+    .chat-input-area {
+      padding: 8px;
+      background: #ffffff;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      gap: 6px;
+    }
+
+    .chat-input-area input {
+      flex: 1;
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      font-size: 11px;
+      outline: none;
+    }
+
+    .chat-send-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
     }
 
     /* FIXED BOTTOM SECTION */
@@ -670,197 +887,9 @@
 
     .helpline-info-text strong { font-size: 11px; }
     .helpline-info-text span { font-size: 9.5px; color: var(--text-muted); }
-
-    /* ======================================= */
-    /* LIVE CHAT & NOTIFICATION FLOATING STYLE */
-    /* ======================================= */
-    .floating-chat-btn {
-      position: fixed;
-      bottom: 100px;
-      right: 16px;
-      width: 52px;
-      height: 52px;
-      background: linear-gradient(135deg, #2563eb, #1d4ed8);
-      color: #ffffff;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
-      cursor: pointer;
-      z-index: 180;
-      border: 2px solid #ffffff;
-      transition: transform 0.2s ease;
-    }
-
-    .floating-chat-btn:active {
-      transform: scale(0.92);
-    }
-
-    .chat-modal-box {
-      background: #ffffff;
-      width: 100%;
-      max-width: 440px;
-      height: 80vh;
-      max-height: 600px;
-      border-radius: 16px;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-      overflow: hidden;
-    }
-
-    .chat-header {
-      background: var(--primary);
-      color: #ffffff;
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .chat-header h4 {
-      font-size: 14px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .chat-body {
-      flex: 1;
-      padding: 12px;
-      overflow-y: auto;
-      background: #f8fafc;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .chat-msg {
-      max-width: 80%;
-      padding: 8px 12px;
-      border-radius: 12px;
-      font-size: 11px;
-      line-height: 1.4;
-      word-wrap: break-word;
-      position: relative;
-    }
-
-    .chat-msg.other {
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      align-self: flex-start;
-      color: var(--text-main);
-      border-top-left-radius: 2px;
-    }
-
-    .chat-msg.me {
-      background: var(--primary);
-      color: #ffffff;
-      align-self: flex-end;
-      border-top-right-radius: 2px;
-    }
-
-    .chat-sender {
-      font-size: 9px;
-      font-weight: 800;
-      color: #1e3a8a;
-      margin-bottom: 2px;
-    }
-
-    .chat-msg.me .chat-sender {
-      color: #bfdbfe;
-    }
-
-    .chat-time {
-      font-size: 8px;
-      opacity: 0.7;
-      text-align: right;
-      margin-top: 3px;
-    }
-
-    .chat-footer {
-      padding: 10px;
-      background: #ffffff;
-      border-top: 1px solid var(--border-color);
-      display: flex;
-      gap: 8px;
-    }
-
-    .chat-input {
-      flex: 1;
-      border: 1px solid var(--border-color);
-      padding: 8px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      outline: none;
-    }
-
-    .chat-send-btn {
-      background: var(--primary);
-      color: #ffffff;
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* TOP NOTIFICATION TOAST */
-    .chat-toast {
-      position: fixed;
-      top: 12px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-100px);
-      background: #ffffff;
-      border: 1px solid var(--primary);
-      padding: 10px 16px;
-      border-radius: 30px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      z-index: 300;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      transition: transform 0.4s ease-in-out;
-      max-width: 90%;
-    }
-
-    .chat-toast.show {
-      transform: translateX(-50%) translateY(0);
-    }
-
-    .toast-icon {
-      width: 28px;
-      height: 28px;
-      background: var(--primary-soft);
-      color: var(--primary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
-    }
-
-    .toast-text {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-main);
-    }
   </style>
 </head>
 <body>
-
-  <!-- TOP LIVE NOTIFICATION TOAST -->
-  <div class="chat-toast" id="chatToast">
-    <div class="toast-icon"><i class="fa-solid fa-comment-dots"></i></div>
-    <div class="toast-text" id="chatToastText">Sana ne message kiya hi</div>
-  </div>
 
   <!-- NAVBAR -->
   <header class="navbar">
@@ -882,6 +911,14 @@
     </div>
   </header>
 
+  <!-- WEEKLY OFFER NEWS TICKER BANNER -->
+  <div class="news-banner">
+    <i class="fa-solid fa-bullhorn"></i>
+    <div class="marquee">
+      <p>🎉 <strong>WEEKLY OFFER:</strong> Jo is week sabse zyada referral aur task karega usko <strong>Rs. 500</strong> milenge! 🏆</p>
+    </div>
+  </div>
+
   <div class="container">
 
     <!-- EARNING SECTION -->
@@ -897,7 +934,7 @@
       </div>
     </section>
 
-    <!-- HIGH MARKETING TASK SECTION -->
+    <!-- HIGH MARKETING TASK SECTION (CLEAN & MINIMAL) -->
     <section class="marketing-task-section">
       <div class="marketing-header">
         <div class="marketing-title">
@@ -913,152 +950,26 @@
         <span><i class="fa-solid fa-bolt"></i> Click Now High Paying Task (Per Task 100 Rupee)</span>
         <i class="fa-solid fa-lock" id="highTaskBtnIcon"></i>
       </button>
-
-      <!-- COMPACT ALWAYS-VISIBLE RULE BOX -->
-      <div class="rule-box">
-        <i class="fa-solid fa-circle-exclamation"></i>
-        <span><strong>Rule:</strong> Jo sabse pehle High Paying task sahi se karega, wahi Winner aayega!</span>
-      </div>
-
-      <!-- WINNERS BOX (1ST, 2ND, 3RD) -->
-      <div class="winners-container">
-        <div class="winners-title">
-          <i class="fa-solid fa-trophy" style="color:#f59e0b"></i> Daily Top Winners
-        </div>
-        <div class="winners-grid">
-          <!-- 1st Winner -->
-          <div class="winner-card rank-1">
-            <div class="winner-icon">🥇</div>
-            <div class="winner-rank-label">1st Winner</div>
-            <div class="winner-name" id="w1Name">Waiting...</div>
-            <div class="winner-prize" id="w1Prize">Rs. 100</div>
-          </div>
-          <!-- 2nd Winner -->
-          <div class="winner-card rank-2">
-            <div class="winner-icon">🥈</div>
-            <div class="winner-rank-label">2nd Winner</div>
-            <div class="winner-name" id="w2Name">Waiting...</div>
-            <div class="winner-prize" id="w2Prize">Rs. 50</div>
-          </div>
-          <!-- 3rd Winner -->
-          <div class="winner-card rank-3">
-            <div class="winner-icon">🥉</div>
-            <div class="winner-rank-label">3rd Winner</div>
-            <div class="winner-name" id="w3Name">Waiting...</div>
-            <div class="winner-prize" id="w3Prize">Rs. 30</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ACTIVE TASK CARD (IN-PAGE VIEW FOR BACKWARD COMPATIBILITY) -->
-      <div class="active-task-card" id="activeTaskCard">
-        <div class="task-instructions">
-          <i class="fa-solid fa-circle-info" style="color:var(--primary)"></i> 
-          <strong>Task Rules:</strong> Button par click karke direct link open karein. Jo bhi app/file aaye usko download karein ya website par sign up karein. Jo sabse achha task complete karega wo Winner banega aur usko High Payment milegi!
-        </div>
-
-        <!-- MONETAG DIRECT LINK BUTTON -->
-        <a href="https://omg10.com/4/10475294" target="_blank" rel="noopener noreferrer" class="monetag-btn" id="monetagDirectLink">
-          <i class="fa-solid fa-rocket"></i> Complete Task Now
-        </a>
-
-        <!-- SCREENSHOT PROOF SUBMISSION -->
-        <div class="screenshot-upload-box">
-          <label><i class="fa-solid fa-camera"></i> Submit Proof Screenshot:</label>
-          <input type="file" id="screenshotFileInput" accept="image/*" />
-          <button class="submit-proof-btn" id="submitProofBtn">
-            <i class="fa-solid fa-paper-plane"></i> Submit Proof
-          </button>
-        </div>
-
-        <!-- SUBMISSION RESPONSE MSG -->
-        <div class="submission-msg" id="submissionStatusMsg"></div>
-      </div>
     </section>
 
   </div>
 
   <!-- FLOATING LIVE CHAT BUTTON -->
-  <div class="floating-chat-btn" onclick="openChatModal()" title="Live Chat">
+  <div class="chat-floating-btn" onclick="openChatModal()" title="Live Chatting">
     <i class="fa-solid fa-comments"></i>
+    <div class="chat-badge-dot"></div>
   </div>
 
-  <!-- HIGH PAYING TASK DETAILS MODAL -->
-  <div class="modal-overlay" id="taskDetailModal">
-    <div class="modal-box">
-      <button class="close-modal" onclick="closeTaskDetailModal()">✕</button>
-
-      <h3 style="font-size:14px; font-weight:800; color:#d97706; margin-bottom:10px; display:flex; align-items:center; gap:6px;">
-        <i class="fa-solid fa-bolt"></i> High Paying Task Details (Rs. 100)
-      </h3>
-
-      <div class="task-instructions" style="margin-bottom:12px;">
-        <i class="fa-solid fa-circle-info" style="color:var(--primary)"></i> 
-        <strong>Instructions:</strong> Neeche diye gaye button par click karke task poora karein aur screenshot submit karein. Direct Rs. 100 earn karein!
-      </div>
-
-      <a href="https://omg10.com/4/10475294" target="_blank" rel="noopener noreferrer" class="monetag-btn">
-        <i class="fa-solid fa-rocket"></i> Open Task Link Now
-      </a>
-
-      <div class="screenshot-upload-box" style="margin-bottom:14px;">
-        <label><i class="fa-solid fa-camera"></i> Submit Proof Screenshot:</label>
-        <input type="file" id="modalScreenshotFileInput" accept="image/*" />
-        <button class="submit-proof-btn" id="modalSubmitProofBtn">
-          <i class="fa-solid fa-paper-plane"></i> Submit Task Proof
-        </button>
-      </div>
-
-      <div class="winners-container">
-        <div class="winners-title">
-          <i class="fa-solid fa-trophy" style="color:#f59e0b"></i> Task Winners
-        </div>
-        <div class="winners-grid">
-          <div class="winner-card rank-1">
-            <div class="winner-icon">🥇</div>
-            <div class="winner-rank-label">1st Winner</div>
-            <div class="winner-name" id="modalW1Name">Waiting...</div>
-            <div class="winner-prize" id="modalW1Prize">Rs. 100</div>
-          </div>
-          <div class="winner-card rank-2">
-            <div class="winner-icon">🥈</div>
-            <div class="winner-rank-label">2nd Winner</div>
-            <div class="winner-name" id="modalW2Name">Waiting...</div>
-            <div class="winner-prize" id="modalW2Prize">Rs. 50</div>
-          </div>
-          <div class="winner-card rank-3">
-            <div class="winner-icon">🥉</div>
-            <div class="winner-rank-label">3rd Winner</div>
-            <div class="winner-name" id="modalW3Name">Waiting...</div>
-            <div class="winner-prize" id="modalW3Prize">Rs. 30</div>
-          </div>
-        </div>
-      </div>
+  <!-- CHAT TOAST POPUP NOTIFICATION -->
+  <div class="chat-toast" id="chatToast">
+    <i class="fa-solid fa-comment-dots"></i>
+    <div class="chat-toast-content">
+      <strong id="toastSender">Sana</strong>
+      <span id="toastText">ne message kiya hai...</span>
     </div>
   </div>
 
-  <!-- LIVE CHAT MODAL -->
-  <div class="modal-overlay" id="chatModal">
-    <div class="chat-modal-box">
-      <div class="chat-header">
-        <h4><i class="fa-solid fa-comments"></i> Community Live Chat</h4>
-        <button class="close-modal" style="position:static; background:rgba(255,255,255,0.2); color:#fff;" onclick="closeChatModal()">✕</button>
-      </div>
-      
-      <div class="chat-body" id="chatMessageContainer">
-        <!-- Messages render here -->
-      </div>
-
-      <div class="chat-footer">
-        <input type="text" id="chatInputField" class="chat-input" placeholder="Type a message..." />
-        <button class="chat-send-btn" id="sendChatMsgBtn">
-          <i class="fa-solid fa-paper-plane"></i>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- FIXED BOTTOM NAVIGATION -->
+  <!-- FIXED BOTTOM SINGLE LINE NAVIGATION WITH ANIMATED BADGES -->
   <div class="bottom-nav-container">
     <div class="earning-grid">
       <!-- 1. FREE ADS BUTTON -->
@@ -1093,6 +1004,94 @@
         <div class="badge-common affiliate-badge">🚀 Unlimited</div>
         <i class="fa-solid fa-briefcase"></i>
         <span>Affiliate Program</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- TASK DETAILS & WINNERS MODAL -->
+  <div class="modal-overlay" id="highTaskModal">
+    <div class="modal-box">
+      <button class="close-modal" onclick="closeHighTaskModal()">✕</button>
+      
+      <h3 style="font-size:14px; font-weight:800; color:#d97706; margin-bottom:10px;">
+        <i class="fa-solid fa-bolt"></i> High Paying Task (Rs. 100)
+      </h3>
+
+      <!-- COMPACT RULE BOX -->
+      <div class="rule-box" style="margin-bottom: 12px;">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span><strong>Rule:</strong> Jo sabse pehle High Paying task sahi se karega, wahi Winner aayega!</span>
+      </div>
+
+      <!-- WINNERS BOX (1ST, 2ND, 3RD) -->
+      <div class="winners-container">
+        <div class="winners-title">
+          <i class="fa-solid fa-trophy" style="color:#f59e0b"></i> Daily Top Winners
+        </div>
+        <div class="winners-grid">
+          <div class="winner-card rank-1">
+            <div class="winner-icon">🥇</div>
+            <div class="winner-rank-label">1st Winner</div>
+            <div class="winner-name" id="w1Name">Waiting...</div>
+            <div class="winner-prize" id="w1Prize">Rs. 100</div>
+          </div>
+          <div class="winner-card rank-2">
+            <div class="winner-icon">🥈</div>
+            <div class="winner-rank-label">2nd Winner</div>
+            <div class="winner-name" id="w2Name">Waiting...</div>
+            <div class="winner-prize" id="w2Prize">Rs. 50</div>
+          </div>
+          <div class="winner-card rank-3">
+            <div class="winner-icon">🥉</div>
+            <div class="winner-rank-label">3rd Winner</div>
+            <div class="winner-name" id="w3Name">Waiting...</div>
+            <div class="winner-prize" id="w3Prize">Rs. 30</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ACTIVE TASK CONTENT -->
+      <div class="active-task-card" id="activeTaskCard">
+        <div class="task-instructions">
+          <i class="fa-solid fa-circle-info" style="color:var(--primary)"></i> 
+          <strong>Task Rules:</strong> Button par click karke direct link open karein. Jo bhi app/file aaye usko download karein ya website par sign up karein. Jo sabse achha task complete karega wo Winner banega!
+        </div>
+
+        <a href="https://omg10.com/4/10475294" target="_blank" rel="noopener noreferrer" class="monetag-btn" id="monetagDirectLink">
+          <i class="fa-solid fa-rocket"></i> Complete Task Now
+        </a>
+
+        <div class="screenshot-upload-box">
+          <label><i class="fa-solid fa-camera"></i> Submit Proof Screenshot:</label>
+          <input type="file" id="screenshotFileInput" accept="image/*" />
+          <button class="submit-proof-btn" id="submitProofBtn">
+            <i class="fa-solid fa-paper-plane"></i> Submit Proof
+          </button>
+        </div>
+
+        <div class="submission-msg" id="submissionStatusMsg"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- LIVE CHATTING MODAL -->
+  <div class="modal-overlay" id="chatModal">
+    <div class="chat-modal-box">
+      <div class="chat-header">
+        <h3><i class="fa-solid fa-comments"></i> Live Community Chat</h3>
+        <button class="close-modal" style="position:static; background:rgba(255,255,255,0.2); color:#fff;" onclick="closeChatModal()">✕</button>
+      </div>
+
+      <div class="chat-messages-area" id="chatMessagesArea">
+        <!-- Live Messages Will Render Here -->
+      </div>
+
+      <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChatKeyPress(event)" />
+        <button class="chat-send-btn" onclick="sendChatMessage()">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
       </div>
     </div>
   </div>
@@ -1177,31 +1176,42 @@
       document.getElementById('helplineModal').style.display = 'none';
     }
 
+    function openHighTaskModal() {
+      document.getElementById('highTaskModal').style.display = 'flex';
+    }
+
+    function closeHighTaskModal() {
+      document.getElementById('highTaskModal').style.display = 'none';
+    }
+
     function openChatModal() {
       document.getElementById('chatModal').style.display = 'flex';
-      const container = document.getElementById('chatMessageContainer');
-      if (container) container.scrollTop = container.scrollHeight;
+      const msgArea = document.getElementById('chatMessagesArea');
+      msgArea.scrollTop = msgArea.scrollHeight;
     }
 
     function closeChatModal() {
       document.getElementById('chatModal').style.display = 'none';
     }
 
-    function openTaskDetailModal() {
-      document.getElementById('taskDetailModal').style.display = 'flex';
-    }
-
-    function closeTaskDetailModal() {
-      document.getElementById('taskDetailModal').style.display = 'none';
-    }
-
-    // BUTTON CLICK HANDLER
+    // BUTTON CLICK HANDLER FOR HIGH PAYING TASK
     function handleTaskButtonClick() {
       if (!window.isTaskLive) {
         alert("Kripya 9:30 PM hone ka wait karein. Task 9:30 PM par start hoga!");
       } else {
-        openTaskDetailModal();
+        openHighTaskModal();
       }
+    }
+
+    function showChatPopup(senderName, textMsg) {
+      const toast = document.getElementById('chatToast');
+      document.getElementById('toastSender').innerText = senderName;
+      document.getElementById('toastText').innerText = textMsg;
+      toast.style.display = 'flex';
+      
+      setTimeout(() => {
+        toast.style.display = 'none';
+      }, 4000);
     }
   </script>
 
@@ -1231,7 +1241,7 @@
 
     const sessionData = JSON.parse(rawSession || '{}');
     const userId = sessionData.uid || sessionData.username || sessionData.key;
-    const currentUserName = sessionData.fullName || sessionData.username || 'User';
+    const currentUserName = sessionData.fullName || sessionData.username || "User";
 
     // RENDER USER PROFILE DATA
     function renderUserUI(data) {
@@ -1271,31 +1281,84 @@
       if (snapshot.exists()) {
         const winners = snapshot.val();
         if (winners.first) {
-          const name = winners.first.name || 'Winner Name';
-          const prize = winners.first.prize || 'Rs. 100';
-          document.getElementById('w1Name').innerText = name;
-          document.getElementById('w1Prize').innerText = prize;
-          document.getElementById('modalW1Name').innerText = name;
-          document.getElementById('modalW1Prize').innerText = prize;
+          document.getElementById('w1Name').innerText = winners.first.name || 'Winner Name';
+          document.getElementById('w1Prize').innerText = winners.first.prize || 'Rs. 100';
         }
         if (winners.second) {
-          const name = winners.second.name || 'Runner Up';
-          const prize = winners.second.prize || 'Rs. 50';
-          document.getElementById('w2Name').innerText = name;
-          document.getElementById('w2Prize').innerText = prize;
-          document.getElementById('modalW2Name').innerText = name;
-          document.getElementById('modalW2Prize').innerText = prize;
+          document.getElementById('w2Name').innerText = winners.second.name || 'Runner Up';
+          document.getElementById('w2Prize').innerText = winners.second.prize || 'Rs. 50';
         }
         if (winners.third) {
-          const name = winners.third.name || '3rd Place';
-          const prize = winners.third.prize || 'Rs. 30';
-          document.getElementById('w3Name').innerText = name;
-          document.getElementById('w3Prize').innerText = prize;
-          document.getElementById('modalW3Name').innerText = name;
-          document.getElementById('modalW3Prize').innerText = prize;
+          document.getElementById('w3Name').innerText = winners.third.name || '3rd Place';
+          document.getElementById('w3Prize').innerText = winners.third.prize || 'Rs. 30';
         }
       }
     });
+
+    // REALTIME LIVE CHAT LISTENER
+    let isFirstChatLoad = true;
+    const chatRef = ref(db, 'chat_messages');
+    onValue(chatRef, (snapshot) => {
+      const chatArea = document.getElementById('chatMessagesArea');
+      chatArea.innerHTML = '';
+      let lastSender = '';
+      let lastText = '';
+
+      if (snapshot.exists()) {
+        const messages = snapshot.val();
+        Object.keys(messages).forEach((key) => {
+          const msg = messages[key];
+          const isMe = msg.userId === userId;
+
+          const bubble = document.createElement('div');
+          bubble.className = `msg-bubble ${isMe ? 'my-msg' : ''}`;
+          bubble.innerHTML = `
+            <div class="msg-sender">${msg.senderName}</div>
+            <div class="msg-text">${msg.text}</div>
+            <div class="msg-time">${msg.time || ''}</div>
+          `;
+          chatArea.appendChild(bubble);
+
+          lastSender = msg.senderName;
+          lastText = msg.text;
+        });
+
+        chatArea.scrollTop = chatArea.scrollHeight;
+
+        // Show Toast Popup when a new message arrives from another user
+        if (!isFirstChatLoad && lastSender && lastSender !== currentUserName) {
+          showChatPopup(lastSender, lastText);
+        }
+        isFirstChatLoad = false;
+      }
+    });
+
+    // SEND CHAT MESSAGE FUNCTION
+    window.sendChatMessage = function() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const now = new Date();
+      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+      const newMsgRef = push(ref(db, 'chat_messages'));
+      set(newMsgRef, {
+        userId: userId,
+        senderName: currentUserName,
+        text: text,
+        time: timeStr,
+        timestamp: Date.now()
+      }).then(() => {
+        input.value = '';
+      });
+    };
+
+    window.handleChatKeyPress = function(e) {
+      if (e.key === 'Enter') {
+        window.sendChatMessage();
+      }
+    };
 
     // 9:30 PM TO 10:00 PM AUTOMATIC TASK TIMER LOGIC
     function checkTaskTiming() {
@@ -1309,7 +1372,6 @@
 
       window.isTaskLive = (currentMins >= startMins && currentMins < endMins);
 
-      const activeTaskCard = document.getElementById('activeTaskCard');
       const taskStatusBadge = document.getElementById('taskStatusBadge');
       const highTaskBtn = document.getElementById('highTaskBtn');
       const highTaskBtnIcon = document.getElementById('highTaskBtnIcon');
@@ -1326,7 +1388,6 @@
           highTaskBtnIcon.className = 'fa-solid fa-chevron-right';
         }
       } else {
-        if (activeTaskCard) activeTaskCard.style.display = 'none';
         if (taskStatusBadge) {
           taskStatusBadge.className = 'time-badge closed';
           taskStatusBadge.innerHTML = '<i class="fa-solid fa-clock"></i> Open 9:30 PM - Close 10:00 PM';
@@ -1344,102 +1405,33 @@
     checkTaskTiming();
 
     // PROOF SUBMISSION HANDLER
-    function submitProof(fileInputId) {
-      const fileInput = document.getElementById(fileInputId);
-      if (!fileInput.files || fileInput.files.length === 0) {
-        alert("Kripya proof ka screenshot select karein!");
-        return;
-      }
-
-      if (userId) {
-        set(ref(db, 'task_submissions/' + userId), {
-          submittedAt: new Date().toISOString(),
-          status: 'pending',
-          username: sessionData.username || sessionData.fullName || 'User'
-        }).then(() => {
-          alert("Proof kamyabi se submit ho gaya hai!");
-        });
-      }
-    }
-
     const submitBtn = document.getElementById('submitProofBtn');
-    if (submitBtn) submitBtn.addEventListener('click', () => submitProof('screenshotFileInput'));
+    if (submitBtn) {
+      submitBtn.addEventListener('click', () => {
+        const msgEl = document.getElementById('submissionStatusMsg');
+        const fileInput = document.getElementById('screenshotFileInput');
 
-    const modalSubmitBtn = document.getElementById('modalSubmitProofBtn');
-    if (modalSubmitBtn) modalSubmitBtn.addEventListener('click', () => submitProof('modalScreenshotFileInput'));
-
-    // ==========================================
-    // REALTIME LIVE CHAT & NOTIFICATION LOGIC
-    // ==========================================
-    const chatRef = ref(db, 'chat_messages');
-    let initialChatLoad = true;
-
-    function showNotificationToast(msg) {
-      const toast = document.getElementById('chatToast');
-      const toastText = document.getElementById('chatToastText');
-      if (toast && toastText) {
-        toastText.innerText = msg;
-        toast.classList.add('show');
-        setTimeout(() => {
-          toast.classList.remove('show');
-        }, 3500);
-      }
-    }
-
-    // Send Message
-    function sendChatMessage() {
-      const input = document.getElementById('chatInputField');
-      const text = input.value.trim();
-      if (!text) return;
-
-      const newMsgRef = push(chatRef);
-      set(newMsgRef, {
-        senderId: userId,
-        senderName: currentUserName,
-        message: text,
-        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-      });
-
-      input.value = '';
-    }
-
-    document.getElementById('sendChatMsgBtn').addEventListener('click', sendChatMessage);
-    document.getElementById('chatInputField').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') sendChatMessage();
-    });
-
-    // Receive Messages Realtime
-    onValue(chatRef, (snapshot) => {
-      const chatContainer = document.getElementById('chatMessageContainer');
-      chatContainer.innerHTML = '';
-      let lastMsg = null;
-
-      if (snapshot.exists()) {
-        const messages = snapshot.val();
-        Object.keys(messages).forEach((key) => {
-          const msg = messages[key];
-          lastMsg = msg;
-          const isMe = msg.senderId === userId;
-
-          const msgDiv = document.createElement('div');
-          msgDiv.className = `chat-msg ${isMe ? 'me' : 'other'}`;
-          msgDiv.innerHTML = `
-            <div class="chat-sender">${msg.senderName}</div>
-            <div>${msg.message}</div>
-            <div class="chat-time">${msg.timestamp || ''}</div>
-          `;
-          chatContainer.appendChild(msgDiv);
-        });
-
-        chatContainer.scrollTop = chatContainer.scrollHeight;
-
-        // Show Toast Notification for new message from other users
-        if (!initialChatLoad && lastMsg && lastMsg.senderId !== userId) {
-          showNotificationToast(`${lastMsg.senderName} ne message kiya: "${lastMsg.message}"`);
+        if (!fileInput.files || fileInput.files.length === 0) {
+          alert("Kripya proof ka screenshot select karein!");
+          return;
         }
-      }
-      initialChatLoad = false;
-    });
+
+        if (userId) {
+          set(ref(db, 'task_submissions/' + userId), {
+            submittedAt: new Date().toISOString(),
+            status: 'pending',
+            username: sessionData.username || sessionData.fullName || 'User'
+          }).then(() => {
+            if (msgEl) {
+              msgEl.style.display = 'block';
+              msgEl.style.background = '#dcfce7';
+              msgEl.style.color = '#15803d';
+              msgEl.innerText = "Proof successfully submit ho gaya hai! Verification ka wait karein.";
+            }
+          });
+        }
+      });
+    }
   </script>
 </body>
 </html>

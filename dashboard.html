@@ -226,19 +226,80 @@
       border-radius: 8px;
     }
 
-    /* HIGH MARKETING TASK SECTION (CLEAN ON DASHBOARD) */
-    .marketing-task-section {
+    /* TASK CATEGORIES GRID (NEW) */
+    .task-category-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .category-card {
+      background: #ffffff;
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 12px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+
+    .category-card:active {
+      transform: scale(0.97);
+    }
+
+    .category-card .icon-box {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    .cat-islamic .icon-box { background: linear-gradient(135deg, #10b981, #047857); }
+    .cat-review .icon-box { background: linear-gradient(135deg, #f59e0b, #b45309); }
+    .cat-app .icon-box { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+    .cat-social .icon-box { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+
+    .category-card h4 {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-bottom: 2px;
+    }
+
+    .category-card p {
+      font-size: 10px;
+      font-weight: 700;
+      color: #10b981;
+    }
+
+    /* WORK DISPLAY AREA */
+    .task-display-area {
       background: #ffffff;
       border-radius: 14px;
       padding: 14px;
       border: 1px solid var(--border-color);
       box-shadow: var(--shadow-sm);
-      display: flex;
+      display: none;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .marketing-header {
+    .task-display-area.active {
+      display: flex;
+    }
+
+    .task-display-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -246,250 +307,83 @@
       padding-bottom: 8px;
     }
 
-    .marketing-title {
-      font-size: 14px;
-      font-weight: 800;
-      color: #1e293b;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .marketing-title i {
-      color: #f59e0b;
-    }
-
-    .time-badge {
-      font-size: 9.5px;
-      font-weight: 800;
-      padding: 4px 8px;
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .time-badge.live {
-      background: #ecfdf5;
-      color: #059669;
-      border: 1px solid #a7f3d0;
-    }
-
-    .time-badge.closed {
-      background: #fef2f2;
-      color: #dc2626;
-      border: 1px solid #fecaca;
-    }
-
-    /* DASHBOARD TASK TRIGGER BUTTON */
-    .high-paying-task-btn {
-      width: 100%;
-      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-      color: #ffffff;
-      border: none;
-      padding: 14px;
-      border-radius: 10px;
+    .task-display-title {
       font-size: 13px;
       font-weight: 800;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 4px 10px rgba(245, 158, 11, 0.25);
-      transition: all 0.2s ease;
+      color: var(--primary);
     }
 
-    .high-paying-task-btn:active {
-      transform: scale(0.98);
-    }
-
-    .high-paying-task-btn.locked {
-      background: linear-gradient(135deg, #64748b 0%, #475569 100%);
-      box-shadow: 0 4px 10px rgba(100, 116, 139, 0.2);
-    }
-
-    /* COMPACT RULE BOX */
-    .rule-box {
-      background: #fffbeb;
-      border: 1px solid #fef3c7;
-      border-left: 3px solid #f59e0b;
-      border-radius: 8px;
-      padding: 6px 10px;
-      font-size: 10px;
-      font-weight: 600;
-      color: #92400e;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      line-height: 1.3;
-    }
-
-    .rule-box i {
-      font-size: 12px;
-      color: #d97706;
-      flex-shrink: 0;
-    }
-
-    /* WINNER BOXES GRID */
-    .winners-container {
+    .task-card-item {
       background: #f8fafc;
-      border: 1px dashed #cbd5e1;
-      border-radius: 12px;
-      padding: 10px;
-      margin-bottom: 10px;
-    }
-
-    .winners-title {
-      font-size: 11px;
-      font-weight: 800;
-      color: var(--text-main);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    .winners-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-    }
-
-    .winner-card {
-      background: #ffffff;
-      border-radius: 10px;
-      padding: 8px 4px;
-      text-align: center;
       border: 1px solid var(--border-color);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.03);
-    }
-
-    .winner-card.rank-1 { border-top: 3px solid #f59e0b; background: #fffbe3; }
-    .winner-card.rank-2 { border-top: 3px solid #94a3b8; background: #f8fafc; }
-    .winner-card.rank-3 { border-top: 3px solid #d97706; background: #fef3c7; }
-
-    .winner-icon {
-      font-size: 16px;
-      margin-bottom: 2px;
-    }
-
-    .winner-rank-label {
-      font-size: 8px;
-      font-weight: 800;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-
-    .winner-name {
-      font-size: 10px;
-      font-weight: 800;
-      color: var(--text-main);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin: 2px 0;
-    }
-
-    .winner-prize {
-      font-size: 9px;
-      font-weight: 700;
-      color: #16a34a;
-    }
-
-    /* ACTIVE TASK CARD */
-    .active-task-card {
-      background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-      border: 1.5px solid #bfdbfe;
-      border-radius: 12px;
+      border-radius: 10px;
       padding: 12px;
-      animation: fadeIn 0.4s ease-in-out;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(5px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .task-instructions {
-      font-size: 10.5px;
-      color: #1e3a8a;
-      line-height: 1.4;
-      font-weight: 600;
-      margin-bottom: 10px;
-      background: #ffffff;
-      padding: 8px 10px;
-      border-radius: 8px;
-      border-left: 3px solid var(--primary);
-    }
-
-    .monetag-btn {
-      width: 100%;
-      background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
-      color: #ffffff;
-      border: none;
-      padding: 10px;
-      border-radius: 8px;
+    .task-card-item h5 {
       font-size: 12px;
       font-weight: 800;
-      cursor: pointer;
-      display: flex;
+      color: var(--text-main);
+    }
+
+    .task-card-item p {
+      font-size: 10.5px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .task-input-box {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      font-size: 11px;
+      outline: none;
+    }
+
+    .action-link-btn {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
+      background: var(--primary-soft);
+      color: var(--primary);
+      border: 1px solid #bfdbfe;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
       text-decoration: none;
-      box-shadow: 0 4px 10px rgba(22, 163, 74, 0.25);
-      margin-bottom: 10px;
-      transition: all 0.2s;
+      width: fit-content;
     }
 
-    .monetag-btn:active {
-      transform: scale(0.98);
-    }
-
-    .screenshot-upload-box {
-      background: #ffffff;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      padding: 8px;
+    .file-input-wrapper {
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 4px;
     }
 
-    .screenshot-upload-box label {
-      font-size: 9.5px;
+    .file-input-wrapper label {
+      font-size: 10px;
       font-weight: 700;
       color: var(--text-muted);
     }
 
-    .screenshot-upload-box input[type="file"] {
-      font-size: 10px;
-    }
-
-    .submit-proof-btn {
+    .btn-submit-task {
       background: var(--primary);
       color: #ffffff;
       border: none;
-      padding: 7px;
+      padding: 8px;
       border-radius: 6px;
-      font-size: 10px;
+      font-size: 11px;
       font-weight: 700;
       cursor: pointer;
     }
 
-    .submission-msg {
-      display: none;
-      margin-top: 6px;
-      padding: 6px 8px;
-      border-radius: 6px;
-      font-size: 9.5px;
-      font-weight: 700;
-      text-align: center;
-    }
-
-    /* FLOATING LIVE CHAT BUTTON & POPUP NOTIFICATION */
+    /* FLOATING LIVE CHAT BUTTON */
     .chat-floating-btn {
       position: fixed;
       bottom: 80px;
@@ -506,12 +400,8 @@
       box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
       cursor: pointer;
       z-index: 180;
-      transition: transform 0.2s, background 0.2s;
+      transition: transform 0.2s;
       border: 2px solid #ffffff;
-    }
-
-    .chat-floating-btn:active {
-      transform: scale(0.9);
     }
 
     .chat-badge-dot {
@@ -525,153 +415,7 @@
       border-radius: 50%;
     }
 
-    /* CHAT NOTIFICATION POPUP (TOP RIGHT) */
-    .chat-toast {
-      position: fixed;
-      top: 60px;
-      right: 15px;
-      background: #ffffff;
-      border-left: 4px solid var(--primary);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      border-radius: 8px;
-      padding: 10px 14px;
-      display: none;
-      align-items: center;
-      gap: 10px;
-      z-index: 300;
-      max-width: 280px;
-      animation: slideInRight 0.3s ease-out;
-    }
-
-    @keyframes slideInRight {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-
-    .chat-toast i {
-      font-size: 18px;
-      color: var(--primary);
-    }
-
-    .chat-toast-content strong {
-      display: block;
-      font-size: 11px;
-      color: var(--text-main);
-    }
-
-    .chat-toast-content span {
-      font-size: 10px;
-      color: var(--text-muted);
-    }
-
-    /* CHAT MODAL CONTAINER */
-    .chat-modal-box {
-      background: #ffffff;
-      width: 100%;
-      max-width: 420px;
-      height: 80vh;
-      border-radius: 16px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .chat-header {
-      background: var(--primary);
-      color: #ffffff;
-      padding: 12px 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .chat-header h3 {
-      font-size: 14px;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .chat-messages-area {
-      flex: 1;
-      padding: 12px;
-      overflow-y: auto;
-      background: #f1f5f9;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .msg-bubble {
-      background: #ffffff;
-      padding: 8px 12px;
-      border-radius: 10px;
-      max-width: 80%;
-      font-size: 11px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-      border: 1px solid var(--border-color);
-      align-self: flex-start;
-    }
-
-    .msg-bubble.my-msg {
-      align-self: flex-end;
-      background: #dbeafe;
-      border-color: #bfdbfe;
-    }
-
-    .msg-sender {
-      font-weight: 800;
-      font-size: 9.5px;
-      color: var(--primary);
-      margin-bottom: 2px;
-    }
-
-    .msg-text {
-      color: var(--text-main);
-      word-wrap: break-word;
-    }
-
-    .msg-time {
-      font-size: 8px;
-      color: var(--text-muted);
-      text-align: right;
-      margin-top: 3px;
-    }
-
-    .chat-input-area {
-      padding: 8px;
-      background: #ffffff;
-      border-top: 1px solid var(--border-color);
-      display: flex;
-      gap: 6px;
-    }
-
-    .chat-input-area input {
-      flex: 1;
-      padding: 10px 12px;
-      border: 1px solid var(--border-color);
-      border-radius: 20px;
-      font-size: 11px;
-      outline: none;
-    }
-
-    .chat-send-btn {
-      background: var(--primary);
-      color: white;
-      border: none;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-    }
-
-    /* FIXED BOTTOM SECTION */
+    /* FIXED BOTTOM NAVIGATION */
     .bottom-nav-container {
       position: fixed;
       bottom: 0;
@@ -713,10 +457,9 @@
       position: relative;
     }
 
-    .earn-btn:active, .earn-btn:hover {
-      transform: translateY(-2px);
-      background: var(--primary-soft);
-      border-color: #dbeafe;
+    .earn-btn.locked-btn {
+      opacity: 0.75;
+      background: #f1f5f9;
     }
 
     .earn-btn i {
@@ -732,7 +475,6 @@
       line-height: 1.1;
     }
 
-    /* ANIMATED BADGES ABOVE EACH BUTTON */
     .badge-common {
       position: absolute;
       top: -12px;
@@ -748,46 +490,9 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
-    .free-ads-badge {
-      background: #ef4444;
+    .lock-badge {
+      background: #475569;
       color: #ffffff;
-      animation: pulseGlow 1.4s infinite ease-in-out;
-    }
-    @keyframes pulseGlow {
-      0% { transform: translateX(-50%) scale(0.92); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-      50% { transform: translateX(-50%) scale(1.08); box-shadow: 0 0 8px 3px rgba(239, 68, 68, 0.4); }
-      100% { transform: translateX(-50%) scale(0.92); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-    }
-
-    .referral-badge {
-      background: linear-gradient(90deg, #10b981 0%, #059669 50%, #10b981 100%);
-      background-size: 200% 100%;
-      color: #ffffff;
-      animation: shimmerWave 2s linear infinite;
-    }
-    @keyframes shimmerWave {
-      0% { background-position: 200% 0; }
-      100% { background-position: -200% 0; }
-    }
-
-    .gmail-badge {
-      background: #2563eb;
-      color: #ffffff;
-      animation: floatBob 1.8s ease-in-out infinite alternate;
-    }
-    @keyframes floatBob {
-      0% { transform: translateX(-50%) translateY(0px); }
-      100% { transform: translateX(-50%) translateY(-5px); }
-    }
-
-    .affiliate-badge {
-      background: linear-gradient(135deg, #f59e0b, #d97706, #b45309);
-      color: #ffffff;
-      animation: goldScale 1.5s ease-in-out infinite alternate;
-    }
-    @keyframes goldScale {
-      0% { transform: translateX(-50%) scale(1); filter: brightness(1); }
-      100% { transform: translateX(-50%) scale(1.06); filter: brightness(1.2); }
     }
 
     /* MODALS */
@@ -846,7 +551,6 @@
       font-size: 11px;
     }
 
-    /* HELPLINE */
     .helpline-option {
       display: flex;
       align-items: center;
@@ -858,12 +562,6 @@
       margin-top: 8px;
       text-decoration: none;
       color: var(--text-main);
-      transition: all 0.2s;
-    }
-
-    .helpline-option:hover {
-      background: #f1f5f9;
-      border-color: #cbd5e1;
     }
 
     .helpline-icon-box {
@@ -879,14 +577,6 @@
 
     .helpline-whatsapp { background: #25D366; }
     .helpline-email { background: #ea4335; }
-
-    .helpline-info-text {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .helpline-info-text strong { font-size: 11px; }
-    .helpline-info-text span { font-size: 9.5px; color: var(--text-muted); }
   </style>
 </head>
 <body>
@@ -911,7 +601,7 @@
     </div>
   </header>
 
-  <!-- WEEKLY OFFER NEWS TICKER BANNER -->
+  <!-- NEWS TICKER BANNER -->
   <div class="news-banner">
     <i class="fa-solid fa-bullhorn"></i>
     <div class="marquee">
@@ -934,22 +624,46 @@
       </div>
     </section>
 
-    <!-- HIGH MARKETING TASK SECTION (CLEAN & MINIMAL) -->
-    <section class="marketing-task-section">
-      <div class="marketing-header">
-        <div class="marketing-title">
-          <i class="fa-solid fa-fire"></i> High Marketing Task
-        </div>
-        <div class="time-badge closed" id="taskStatusBadge">
-          <i class="fa-solid fa-clock"></i> Open 9:30 PM - Close 10:00 PM
-        </div>
+    <!-- NEW TASK CATEGORY BUTTONS (BELOW BALANCE) -->
+    <div class="task-category-grid">
+      <!-- 1. ISLAMIC ADS -->
+      <div class="category-card cat-islamic" onclick="showTaskSection('islamic')">
+        <div class="icon-box"><i class="fa-solid fa-kaaba"></i></div>
+        <h4>Islamic Ads</h4>
+        <p>Rs. 0.20 / Ad</p>
       </div>
 
-      <!-- HIGH PAYING TASK BUTTON ON DASHBOARD -->
-      <button class="high-paying-task-btn locked" id="highTaskBtn" onclick="handleTaskButtonClick()">
-        <span><i class="fa-solid fa-bolt"></i> Click Now High Paying Task (Per Task 100 Rupee)</span>
-        <i class="fa-solid fa-lock" id="highTaskBtnIcon"></i>
-      </button>
+      <!-- 2. REVIEW WORK -->
+      <div class="category-card cat-review" onclick="showTaskSection('review')">
+        <div class="icon-box"><i class="fa-solid fa-star"></i></div>
+        <h4>Review Work</h4>
+        <p>Rs. 12.00 / Task</p>
+      </div>
+
+      <!-- 3. APP DOWNLOAD -->
+      <div class="category-card cat-app" onclick="showTaskSection('app')">
+        <div class="icon-box"><i class="fa-solid fa-download"></i></div>
+        <h4>App Download</h4>
+        <p>Rs. 5.00 / App</p>
+      </div>
+
+      <!-- 4. SOCIAL WORK -->
+      <div class="category-card cat-social" onclick="showTaskSection('social')">
+        <div class="icon-box"><i class="fa-solid fa-share-nodes"></i></div>
+        <h4>Social Work</h4>
+        <p>Rs. 1.00 / Task</p>
+      </div>
+    </div>
+
+    <!-- DYNAMIC TASK DISPLAY AREA -->
+    <section class="task-display-area" id="taskDisplayArea">
+      <div class="task-display-header">
+        <div class="task-display-title" id="sectionTitle">Selected Section</div>
+        <button onclick="closeTaskSection()" style="border:none; background:none; font-size:14px; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div id="taskContentContainer">
+        <!-- Content dynamically injected here -->
+      </div>
     </section>
 
   </div>
@@ -960,35 +674,26 @@
     <div class="chat-badge-dot"></div>
   </div>
 
-  <!-- CHAT TOAST POPUP NOTIFICATION -->
-  <div class="chat-toast" id="chatToast">
-    <i class="fa-solid fa-comment-dots"></i>
-    <div class="chat-toast-content">
-      <strong id="toastSender">Sana</strong>
-      <span id="toastText">ne message kiya hai...</span>
-    </div>
-  </div>
-
-  <!-- FIXED BOTTOM SINGLE LINE NAVIGATION WITH ANIMATED BADGES -->
+  <!-- FIXED BOTTOM NAVIGATION WITH LOCKED ADS BUTTON -->
   <div class="bottom-nav-container">
     <div class="earning-grid">
-      <!-- 1. FREE ADS BUTTON -->
-      <div class="earn-btn" onclick="navigateTo('free-ads.html')">
-        <div class="badge-common free-ads-badge">🔥 Earn 300</div>
-        <i class="fa-solid fa-rectangle-ad"></i>
-        <span>Free Ads</span>
+      <!-- 1. ADS BUTTON (LOCKED) -->
+      <div class="earn-btn locked-btn" onclick="handleLockedAdsClick()">
+        <div class="badge-common lock-badge"><i class="fa-solid fa-lock"></i> Locked</div>
+        <i class="fa-solid fa-lock" style="color:#64748b;"></i>
+        <span>Ads</span>
       </div>
 
       <!-- 2. REFERRAL BUTTON -->
       <div class="earn-btn" onclick="navigateTo('referral.html')">
-        <div class="badge-common referral-badge">👥 Earn 20</div>
+        <div class="badge-common" style="background:#10b981; color:#fff;">👥 Earn 20</div>
         <i class="fa-solid fa-users"></i>
         <span>Referral</span>
       </div>
 
       <!-- 3. GMAIL BUTTON -->
       <div class="earn-btn" onclick="navigateTo('gmail-selling.html')">
-        <div class="badge-common gmail-badge">📧 Earn 40</div>
+        <div class="badge-common" style="background:#2563eb; color:#fff;">📧 Earn 40</div>
         <i class="fa-solid fa-envelope"></i>
         <span>Gmail</span>
       </div>
@@ -1001,97 +706,9 @@
 
       <!-- 5. AFFILIATE PROGRAM BUTTON -->
       <div class="earn-btn" onclick="navigateTo('free-jobs.html')">
-        <div class="badge-common affiliate-badge">🚀 Unlimited</div>
+        <div class="badge-common" style="background:#f59e0b; color:#fff;">🚀 Unlimited</div>
         <i class="fa-solid fa-briefcase"></i>
-        <span>Affiliate Program</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- TASK DETAILS & WINNERS MODAL -->
-  <div class="modal-overlay" id="highTaskModal">
-    <div class="modal-box">
-      <button class="close-modal" onclick="closeHighTaskModal()">✕</button>
-      
-      <h3 style="font-size:14px; font-weight:800; color:#d97706; margin-bottom:10px;">
-        <i class="fa-solid fa-bolt"></i> High Paying Task (Rs. 100)
-      </h3>
-
-      <!-- COMPACT RULE BOX -->
-      <div class="rule-box" style="margin-bottom: 12px;">
-        <i class="fa-solid fa-circle-exclamation"></i>
-        <span><strong>Rule:</strong> Jo sabse pehle High Paying task sahi se karega, wahi Winner aayega!</span>
-      </div>
-
-      <!-- WINNERS BOX (1ST, 2ND, 3RD) -->
-      <div class="winners-container">
-        <div class="winners-title">
-          <i class="fa-solid fa-trophy" style="color:#f59e0b"></i> Daily Top Winners
-        </div>
-        <div class="winners-grid">
-          <div class="winner-card rank-1">
-            <div class="winner-icon">🥇</div>
-            <div class="winner-rank-label">1st Winner</div>
-            <div class="winner-name" id="w1Name">Waiting...</div>
-            <div class="winner-prize" id="w1Prize">Rs. 100</div>
-          </div>
-          <div class="winner-card rank-2">
-            <div class="winner-icon">🥈</div>
-            <div class="winner-rank-label">2nd Winner</div>
-            <div class="winner-name" id="w2Name">Waiting...</div>
-            <div class="winner-prize" id="w2Prize">Rs. 50</div>
-          </div>
-          <div class="winner-card rank-3">
-            <div class="winner-icon">🥉</div>
-            <div class="winner-rank-label">3rd Winner</div>
-            <div class="winner-name" id="w3Name">Waiting...</div>
-            <div class="winner-prize" id="w3Prize">Rs. 30</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ACTIVE TASK CONTENT -->
-      <div class="active-task-card" id="activeTaskCard">
-        <div class="task-instructions">
-          <i class="fa-solid fa-circle-info" style="color:var(--primary)"></i> 
-          <strong>Task Rules:</strong> Button par click karke direct link open karein. Jo bhi app/file aaye usko download karein ya website par sign up karein. Jo sabse achha task complete karega wo Winner banega!
-        </div>
-
-        <a href="https://omg10.com/4/10475294" target="_blank" rel="noopener noreferrer" class="monetag-btn" id="monetagDirectLink">
-          <i class="fa-solid fa-rocket"></i> Complete Task Now
-        </a>
-
-        <div class="screenshot-upload-box">
-          <label><i class="fa-solid fa-camera"></i> Submit Proof Screenshot:</label>
-          <input type="file" id="screenshotFileInput" accept="image/*" />
-          <button class="submit-proof-btn" id="submitProofBtn">
-            <i class="fa-solid fa-paper-plane"></i> Submit Proof
-          </button>
-        </div>
-
-        <div class="submission-msg" id="submissionStatusMsg"></div>
-      </div>
-
-    </div>
-  </div>
-
-  <!-- LIVE CHATTING MODAL -->
-  <div class="modal-overlay" id="chatModal">
-    <div class="chat-modal-box">
-      <div class="chat-header">
-        <h3><i class="fa-solid fa-comments"></i> Live Community Chat</h3>
-        <button class="close-modal" style="position:static; background:rgba(255,255,255,0.2); color:#fff;" onclick="closeChatModal()">✕</button>
-      </div>
-
-      <div class="chat-messages-area" id="chatMessagesArea">
-        <!-- Live Messages Will Render Here -->
-      </div>
-
-      <div class="chat-input-area">
-        <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChatKeyPress(event)" />
-        <button class="chat-send-btn" onclick="sendChatMessage()">
-          <i class="fa-solid fa-paper-plane"></i>
-        </button>
+        <span>Affiliate</span>
       </div>
     </div>
   </div>
@@ -1100,7 +717,6 @@
   <div class="modal-overlay" id="helplineModal">
     <div class="modal-box">
       <button class="close-modal" onclick="closeHelplineModal()">✕</button>
-      
       <h3 style="font-size:13px; font-weight:800; text-transform:uppercase; margin-bottom:4px; color:var(--primary);">
         <i class="fa-solid fa-headset"></i> Support & Helpline
       </h3>
@@ -1110,9 +726,9 @@
         <div class="helpline-icon-box helpline-whatsapp">
           <i class="fa-brands fa-whatsapp"></i>
         </div>
-        <div class="helpline-info-text">
-          <strong>WhatsApp Helpline</strong>
-          <span>03179774920</span>
+        <div style="display:flex; flex-direction:column;">
+          <strong style="font-size:11px;">WhatsApp Helpline</strong>
+          <span style="font-size:9.5px; color:var(--text-muted);">03179774920</span>
         </div>
       </a>
 
@@ -1120,9 +736,9 @@
         <div class="helpline-icon-box helpline-email">
           <i class="fa-solid fa-envelope"></i>
         </div>
-        <div class="helpline-info-text">
-          <strong>Official Email Support</strong>
-          <span>sabirkhansadre@gmail.com</span>
+        <div style="display:flex; flex-direction:column;">
+          <strong style="font-size:11px;">Official Email Support</strong>
+          <span style="font-size:9.5px; color:var(--text-muted);">sabirkhansadre@gmail.com</span>
         </div>
       </a>
     </div>
@@ -1132,13 +748,11 @@
   <div class="modal-overlay" id="profileModal">
     <div class="modal-box">
       <button class="close-modal" onclick="closeProfileModal()">✕</button>
-      
       <div style="text-align: center; margin-bottom: 10px;">
         <div class="modal-avatar" id="modalAvatar">U</div>
         <h4 id="modalFullName" style="font-size: 13px; font-weight: 800;">User Name</h4>
         <p id="modalUsername" style="font-size: 10px; color: var(--text-muted);">@username</p>
       </div>
-
       <div class="detail-item"><span style="color:var(--text-muted)">Mobile:</span> <strong id="modalMobile">-</strong></div>
       <div class="detail-item"><span style="color:var(--text-muted)">Email:</span> <strong id="modalEmail">-</strong></div>
       <div class="detail-item"><span style="color:var(--text-muted)">City:</span> <strong id="modalCity">-</strong></div>
@@ -1146,10 +760,7 @@
     </div>
   </div>
 
-  <!-- GLOBAL HELPER FUNCTIONS -->
   <script>
-    window.isTaskLive = false;
-
     function navigateTo(pageUrl) {
       if (!pageUrl) return;
       window.location.href = pageUrl;
@@ -1158,6 +769,10 @@
     function handleLogout() {
       localStorage.removeItem('sew_session');
       window.location.replace("index.html");
+    }
+
+    function handleLockedAdsClick() {
+      alert("Baraye mehrbani intezar karein, ads section jald kholega.");
     }
 
     function openProfileModal() {
@@ -1176,261 +791,78 @@
       document.getElementById('helplineModal').style.display = 'none';
     }
 
-    function openHighTaskModal() {
-      document.getElementById('highTaskModal').style.display = 'flex';
-    }
-
-    function closeHighTaskModal() {
-      document.getElementById('highTaskModal').style.display = 'none';
-    }
-
     function openChatModal() {
-      document.getElementById('chatModal').style.display = 'flex';
-      const msgArea = document.getElementById('chatMessagesArea');
-      msgArea.scrollTop = msgArea.scrollHeight;
+      alert("Live Chat section is opening...");
     }
 
-    function closeChatModal() {
-      document.getElementById('chatModal').style.display = 'none';
+    function closeTaskSection() {
+      document.getElementById('taskDisplayArea').classList.remove('active');
     }
 
-    // BUTTON CLICK HANDLER FOR HIGH PAYING TASK
-    function handleTaskButtonClick() {
-      if (!window.isTaskLive) {
-        alert("Kripya 9:30 PM hone ka wait karein. Task 9:30 PM par start hoga!");
-      } else {
-        openHighTaskModal();
+    // TASK DISPLAY LOGIC (ADMIN PANEL SYNC PLACEHOLDER)
+    function showTaskSection(type) {
+      const area = document.getElementById('taskDisplayArea');
+      const title = document.getElementById('sectionTitle');
+      const container = document.getElementById('taskContentContainer');
+      area.classList.add('active');
+
+      if (type === 'islamic') {
+        title.innerHTML = '<i class="fa-solid fa-kaaba"></i> Islamic Ads (Rs. 0.20)';
+        container.innerHTML = `
+          <div class="task-card-item">
+            <h5>Q1: Ar-Rahman ka kya matlab hai?</h5>
+            <p><strong>Detail:</strong> Sahi jawab likhein aur submit karein. Admin ki approval ke baad 0.20 paise aapke account mein add honge.</p>
+            <input type="text" class="task-input-box" placeholder="Apna jawab yahan likhein..." />
+            <button class="btn-submit-task" onclick="submitTaskProof('Islamic Ad Answer')">Submit Answer</button>
+          </div>
+        `;
+      } else if (type === 'review') {
+        title.innerHTML = '<i class="fa-solid fa-star"></i> Review Work (Rs. 12.00)';
+        container.innerHTML = `
+          <div class="task-card-item">
+            <h5>PlayStore App Review</h5>
+            <p><strong>Details:</strong> Neche diye gaye link par ja kar 5-Star review dein aur achha comment likhein.</p>
+            <a href="https://google.com" target="_blank" class="action-link-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Review Link</a>
+            <div class="file-input-wrapper">
+              <label><i class="fa-solid fa-camera"></i> Screenshot Upload Karein:</label>
+              <input type="file" accept="image/*" class="task-input-box" />
+            </div>
+            <button class="btn-submit-task" onclick="submitTaskProof('Review Work')">Submit Proof Screenshot</button>
+          </div>
+        `;
+      } else if (type === 'app') {
+        title.innerHTML = '<i class="fa-solid fa-download"></i> App Download (Rs. 5.00)';
+        container.innerHTML = `
+          <div class="task-card-item">
+            <h5>Download & Install App</h5>
+            <p><strong>Details:</strong> Link se app download karein, open karein aur account banayein.</p>
+            <a href="https://google.com" target="_blank" class="action-link-btn"><i class="fa-solid fa-download"></i> Download App</a>
+            <div class="file-input-wrapper">
+              <label><i class="fa-solid fa-camera"></i> Screenshot Upload Karein:</label>
+              <input type="file" accept="image/*" class="task-input-box" />
+            </div>
+            <button class="btn-submit-task" onclick="submitTaskProof('App Download')">Submit Proof Screenshot</button>
+          </div>
+        `;
+      } else if (type === 'social') {
+        title.innerHTML = '<i class="fa-solid fa-share-nodes"></i> Social Work (Rs. 1.00)';
+        container.innerHTML = `
+          <div class="task-card-item">
+            <h5>YouTube Video Like & Subscribe</h5>
+            <p><strong>Details:</strong> Channel ko subscribe karein aur video like karein.</p>
+            <a href="https://youtube.com" target="_blank" class="action-link-btn"><i class="fa-brands fa-youtube"></i> Open Channel Link</a>
+            <div class="file-input-wrapper">
+              <label><i class="fa-solid fa-camera"></i> Screenshot Upload Karein:</label>
+              <input type="file" accept="image/*" class="task-input-box" />
+            </div>
+            <button class="btn-submit-task" onclick="submitTaskProof('Social Work')">Submit Proof Screenshot</button>
+          </div>
+        `;
       }
     }
 
-    function showChatPopup(senderName, textMsg) {
-      const toast = document.getElementById('chatToast');
-      document.getElementById('toastSender').innerText = senderName;
-      document.getElementById('toastText').innerText = textMsg;
-      toast.style.display = 'flex';
-      
-      setTimeout(() => {
-        toast.style.display = 'none';
-      }, 4000);
-    }
-  </script>
-
-  <!-- FIREBASE INTEGRATION & REALTIME LOGIC SCRIPT -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getDatabase, ref, onValue, set, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAsnATksiqZzMHOPO64i_bKqLJW6yjq9lw",
-      authDomain: "newweb-d50af.firebaseapp.com",
-      databaseURL: "https://newweb-d50af-default-rtdb.firebaseio.com",
-      projectId: "newweb-d50af",
-      storageBucket: "newweb-d50af.firebasestorage.app",
-      messagingSenderId: "358603295768",
-      appId: "1:358603295768:web:82a9666514a7cb468c476d"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // SESSION VERIFICATION
-    const rawSession = localStorage.getItem('sew_session');
-    if (!rawSession) {
-      window.location.replace("index.html");
-    }
-
-    const sessionData = JSON.parse(rawSession || '{}');
-    const userId = sessionData.uid || sessionData.username || sessionData.key;
-    const currentUserName = sessionData.fullName || sessionData.username || "User";
-
-    // RENDER USER PROFILE DATA
-    function renderUserUI(data) {
-      if (!data) return;
-      const displayTitle = data.fullName || data.username || "User";
-      document.getElementById('navUserName').innerText = displayTitle;
-      const initial = displayTitle.charAt(0).toUpperCase();
-      document.getElementById('navAvatar').innerText = initial;
-      document.getElementById('userBalance').innerText = "Rs. " + (data.balance || "0.00");
-
-      document.getElementById('modalAvatar').innerText = initial;
-      document.getElementById('modalFullName').innerText = data.fullName || "User";
-      document.getElementById('modalUsername').innerText = "@" + (data.username || "");
-      document.getElementById('modalMobile').innerText = data.mobile || "N/A";
-      document.getElementById('modalEmail').innerText = data.email || "N/A";
-      document.getElementById('modalCity').innerText = data.city || "N/A";
-      document.getElementById('modalCountry').innerText = data.country || "N/A";
-    }
-
-    renderUserUI(sessionData);
-
-    // REALTIME USER DATA LISTENER
-    if (userId) {
-      const userRef = ref(db, 'users/' + userId);
-      onValue(userRef, (snapshot) => {
-        if (snapshot.exists()) {
-          const freshData = snapshot.val();
-          renderUserUI(freshData);
-          localStorage.setItem('sew_session', JSON.stringify({ ...sessionData, ...freshData }));
-        }
-      });
-    }
-
-    // WINNERS LISTENER FROM FIREBASE REALTIME DB
-    const winnersRef = ref(db, 'winners');
-    onValue(winnersRef, (snapshot) => {
-      if (snapshot.exists()) {
-        const winners = snapshot.val();
-        if (winners.first) {
-          document.getElementById('w1Name').innerText = winners.first.name || 'Winner Name';
-          document.getElementById('w1Prize').innerText = winners.first.prize || 'Rs. 100';
-        }
-        if (winners.second) {
-          document.getElementById('w2Name').innerText = winners.second.name || 'Runner Up';
-          document.getElementById('w2Prize').innerText = winners.second.prize || 'Rs. 50';
-        }
-        if (winners.third) {
-          document.getElementById('w3Name').innerText = winners.third.name || '3rd Place';
-          document.getElementById('w3Prize').innerText = winners.third.prize || 'Rs. 30';
-        }
-      }
-    });
-
-    // REALTIME LIVE CHAT LISTENER
-    let isFirstChatLoad = true;
-    const chatRef = ref(db, 'chat_messages');
-    onValue(chatRef, (snapshot) => {
-      const chatArea = document.getElementById('chatMessagesArea');
-      chatArea.innerHTML = '';
-      let lastSender = '';
-      let lastText = '';
-
-      if (snapshot.exists()) {
-        const messages = snapshot.val();
-        Object.keys(messages).forEach((key) => {
-          const msg = messages[key];
-          const isMe = msg.userId === userId;
-
-          const bubble = document.createElement('div');
-          bubble.className = `msg-bubble ${isMe ? 'my-msg' : ''}`;
-          bubble.innerHTML = `
-            <div class="msg-sender">${msg.senderName}</div>
-            <div class="msg-text">${msg.text}</div>
-            <div class="msg-time">${msg.time || ''}</div>
-          `;
-          chatArea.appendChild(bubble);
-
-          lastSender = msg.senderName;
-          lastText = msg.text;
-        });
-
-        chatArea.scrollTop = chatArea.scrollHeight;
-
-        // Show Toast Popup when a new message arrives from another user
-        if (!isFirstChatLoad && lastSender && lastSender !== currentUserName) {
-          showChatPopup(lastSender, lastText);
-        }
-        isFirstChatLoad = false;
-      }
-    });
-
-    // SEND CHAT MESSAGE FUNCTION
-    window.sendChatMessage = function() {
-      const input = document.getElementById('chatInput');
-      const text = input.value.trim();
-      if (!text) return;
-
-      const now = new Date();
-      const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-      const newMsgRef = push(ref(db, 'chat_messages'));
-      set(newMsgRef, {
-        userId: userId,
-        senderName: currentUserName,
-        text: text,
-        time: timeStr,
-        timestamp: Date.now()
-      }).then(() => {
-        input.value = '';
-      });
-    };
-
-    window.handleChatKeyPress = function(e) {
-      if (e.key === 'Enter') {
-        window.sendChatMessage();
-      }
-    };
-
-    // 9:30 PM TO 10:00 PM AUTOMATIC TASK TIMER LOGIC
-    function checkTaskTiming() {
-      const now = new Date();
-      const hours = now.getHours();
-      const minutes = now.getMinutes();
-      const currentMins = hours * 60 + minutes;
-
-      const startMins = 21 * 60 + 30; // 9:30 PM
-      const endMins = 22 * 60;      // 10:00 PM
-
-      window.isTaskLive = (currentMins >= startMins && currentMins < endMins);
-
-      const taskStatusBadge = document.getElementById('taskStatusBadge');
-      const highTaskBtn = document.getElementById('highTaskBtn');
-      const highTaskBtnIcon = document.getElementById('highTaskBtnIcon');
-
-      if (window.isTaskLive) {
-        if (taskStatusBadge) {
-          taskStatusBadge.className = 'time-badge live';
-          taskStatusBadge.innerHTML = '<i class="fa-solid fa-circle-dot fa-spin"></i> LIVE NOW (Closing at 10:00 PM)';
-        }
-        if (highTaskBtn) {
-          highTaskBtn.classList.remove('locked');
-        }
-        if (highTaskBtnIcon) {
-          highTaskBtnIcon.className = 'fa-solid fa-chevron-right';
-        }
-      } else {
-        if (taskStatusBadge) {
-          taskStatusBadge.className = 'time-badge closed';
-          taskStatusBadge.innerHTML = '<i class="fa-solid fa-clock"></i> Open 9:30 PM - Close 10:00 PM';
-        }
-        if (highTaskBtn) {
-          highTaskBtn.classList.add('locked');
-        }
-        if (highTaskBtnIcon) {
-          highTaskBtnIcon.className = 'fa-solid fa-lock';
-        }
-      }
-    }
-
-    setInterval(checkTaskTiming, 1000);
-    checkTaskTiming();
-
-    // PROOF SUBMISSION HANDLER
-    const submitBtn = document.getElementById('submitProofBtn');
-    if (submitBtn) {
-      submitBtn.addEventListener('click', () => {
-        const msgEl = document.getElementById('submissionStatusMsg');
-        const fileInput = document.getElementById('screenshotFileInput');
-
-        if (!fileInput.files || fileInput.files.length === 0) {
-          alert("Kripya proof ka screenshot select karein!");
-          return;
-        }
-
-        if (userId) {
-          set(ref(db, 'task_submissions/' + userId), {
-            submittedAt: new Date().toISOString(),
-            status: 'pending',
-            username: sessionData.username || sessionData.fullName || 'User'
-          }).then(() => {
-            if (msgEl) {
-              msgEl.style.display = 'block';
-              msgEl.style.background = '#dcfce7';
-              msgEl.style.color = '#15803d';
-              msgEl.innerText = "Proof successfully submit ho gaya hai! Verification ka wait karein.";
-            }
-          });
-        }
-      });
+    function submitTaskProof(taskType) {
+      alert(taskType + " ka proof bhej diya gaya hai. Admin review karne ke baad balance add kar dega.");
     }
   </script>
 </body>

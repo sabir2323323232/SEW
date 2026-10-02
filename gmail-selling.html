@@ -371,7 +371,7 @@
         <div class="balance-val" id="userBalance">Rs. 0.00</div>
       </div>
       <div class="reward-badge">
-        <i class="fa-solid fa-circle-check"></i> +Rs. 45 / Gmail
+        <i class="fa-solid fa-circle-check"></i> +Rs. 35 / Gmail
       </div>
     </div>
 
@@ -475,7 +475,7 @@
 
         if (status === 'approved' || status === 'ok' || status === 'confirmed') {
           badgeClass = 'badge-approved';
-          statusTxt = 'Approved (+Rs. 45)';
+          statusTxt = 'Approved (+Rs. 35)';
         } else if (status === 'rejected') {
           badgeClass = 'badge-rejected';
           statusTxt = 'Rejected';
@@ -580,7 +580,7 @@
           customerEmail: userData.email || 'N/A',
           gmail: gmailInput,
           password: passwordInput,
-          reward: 45,
+          reward: 35,
           status: "Pending",
           createdAt: new Date().toISOString()
         };

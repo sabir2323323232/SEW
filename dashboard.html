@@ -226,164 +226,7 @@
       border-radius: 8px;
     }
 
-    /* TASK CATEGORIES GRID (NEW) */
-    .task-category-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin-top: 4px;
-    }
-
-    .category-card {
-      background: #ffffff;
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 12px 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: var(--shadow-sm);
-      position: relative;
-    }
-
-    .category-card:active {
-      transform: scale(0.97);
-    }
-
-    .category-card .icon-box {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      margin-bottom: 8px;
-      color: #ffffff;
-    }
-
-    .cat-islamic .icon-box { background: linear-gradient(135deg, #10b981, #047857); }
-    .cat-review .icon-box { background: linear-gradient(135deg, #f59e0b, #b45309); }
-    .cat-app .icon-box { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
-    .cat-social .icon-box { background: linear-gradient(135deg, #8b5cf6, #6d28d9); }
-
-    .category-card h4 {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--text-main);
-      margin-bottom: 2px;
-    }
-
-    .category-card p {
-      font-size: 10px;
-      font-weight: 700;
-      color: #10b981;
-    }
-
-    /* WORK DISPLAY AREA */
-    .task-display-area {
-      background: #ffffff;
-      border-radius: 14px;
-      padding: 14px;
-      border: 1px solid var(--border-color);
-      box-shadow: var(--shadow-sm);
-      display: none;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .task-display-area.active {
-      display: flex;
-    }
-
-    .task-display-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 8px;
-    }
-
-    .task-display-title {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--primary);
-    }
-
-    .task-card-item {
-      background: #f8fafc;
-      border: 1px solid var(--border-color);
-      border-radius: 10px;
-      padding: 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .task-card-item h5 {
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--text-main);
-    }
-
-    .task-card-item p {
-      font-size: 10.5px;
-      color: var(--text-muted);
-      line-height: 1.4;
-    }
-
-    .task-input-box {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid var(--border-color);
-      border-radius: 6px;
-      font-size: 11px;
-      outline: none;
-    }
-
-    .action-link-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      background: var(--primary-soft);
-      color: var(--primary);
-      border: 1px solid #bfdbfe;
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 11px;
-      font-weight: 700;
-      text-decoration: none;
-      width: fit-content;
-    }
-
-    .file-input-wrapper {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .file-input-wrapper label {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--text-muted);
-    }
-
-    .btn-submit-task {
-      background: var(--primary);
-      color: #ffffff;
-      border: none;
-      padding: 8px;
-      border-radius: 6px;
-      font-size: 11px;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    /* FLOATING LIVE CHAT BUTTON */
+    /* FLOATING LIVE CHAT BUTTON & POPUP NOTIFICATION */
     .chat-floating-btn {
       position: fixed;
       bottom: 80px;
@@ -400,8 +243,12 @@
       box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
       cursor: pointer;
       z-index: 180;
-      transition: transform 0.2s;
+      transition: transform 0.2s, background 0.2s;
       border: 2px solid #ffffff;
+    }
+
+    .chat-floating-btn:active {
+      transform: scale(0.9);
     }
 
     .chat-badge-dot {
@@ -415,7 +262,153 @@
       border-radius: 50%;
     }
 
-    /* FIXED BOTTOM NAVIGATION */
+    /* CHAT NOTIFICATION POPUP (TOP RIGHT) */
+    .chat-toast {
+      position: fixed;
+      top: 60px;
+      right: 15px;
+      background: #ffffff;
+      border-left: 4px solid var(--primary);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: none;
+      align-items: center;
+      gap: 10px;
+      z-index: 300;
+      max-width: 280px;
+      animation: slideInRight 0.3s ease-out;
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .chat-toast i {
+      font-size: 18px;
+      color: var(--primary);
+    }
+
+    .chat-toast-content strong {
+      display: block;
+      font-size: 11px;
+      color: var(--text-main);
+    }
+
+    .chat-toast-content span {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* CHAT MODAL CONTAINER */
+    .chat-modal-box {
+      background: #ffffff;
+      width: 100%;
+      max-width: 420px;
+      height: 80vh;
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .chat-header {
+      background: var(--primary);
+      color: #ffffff;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-header h3 {
+      font-size: 14px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .chat-messages-area {
+      flex: 1;
+      padding: 12px;
+      overflow-y: auto;
+      background: #f1f5f9;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .msg-bubble {
+      background: #ffffff;
+      padding: 8px 12px;
+      border-radius: 10px;
+      max-width: 80%;
+      font-size: 11px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+      border: 1px solid var(--border-color);
+      align-self: flex-start;
+    }
+
+    .msg-bubble.my-msg {
+      align-self: flex-end;
+      background: #dbeafe;
+      border-color: #bfdbfe;
+    }
+
+    .msg-sender {
+      font-weight: 800;
+      font-size: 9.5px;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+
+    .msg-text {
+      color: var(--text-main);
+      word-wrap: break-word;
+    }
+
+    .msg-time {
+      font-size: 8px;
+      color: var(--text-muted);
+      text-align: right;
+      margin-top: 3px;
+    }
+
+    .chat-input-area {
+      padding: 8px;
+      background: #ffffff;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      gap: 6px;
+    }
+
+    .chat-input-area input {
+      flex: 1;
+      padding: 10px 12px;
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      font-size: 11px;
+      outline: none;
+    }
+
+    .chat-send-btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+
+    /* FIXED BOTTOM SECTION */
     .bottom-nav-container {
       position: fixed;
       bottom: 0;
@@ -457,9 +450,10 @@
       position: relative;
     }
 
-    .earn-btn.locked-btn {
-      opacity: 0.75;
-      background: #f1f5f9;
+    .earn-btn:active, .earn-btn:hover {
+      transform: translateY(-2px);
+      background: var(--primary-soft);
+      border-color: #dbeafe;
     }
 
     .earn-btn i {
@@ -475,6 +469,7 @@
       line-height: 1.1;
     }
 
+    /* ANIMATED BADGES ABOVE EACH BUTTON */
     .badge-common {
       position: absolute;
       top: -12px;
@@ -490,9 +485,40 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
     }
 
-    .lock-badge {
-      background: #475569;
+    .free-ads-badge {
+      background: #64748b;
       color: #ffffff;
+    }
+
+    .referral-badge {
+      background: linear-gradient(90deg, #10b981 0%, #059669 50%, #10b981 100%);
+      background-size: 200% 100%;
+      color: #ffffff;
+      animation: shimmerWave 2s linear infinite;
+    }
+    @keyframes shimmerWave {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    .gmail-badge {
+      background: #2563eb;
+      color: #ffffff;
+      animation: floatBob 1.8s ease-in-out infinite alternate;
+    }
+    @keyframes floatBob {
+      0% { transform: translateX(-50%) translateY(0px); }
+      100% { transform: translateX(-50%) translateY(-5px); }
+    }
+
+    .affiliate-badge {
+      background: linear-gradient(135deg, #f59e0b, #d97706, #b45309);
+      color: #ffffff;
+      animation: goldScale 1.5s ease-in-out infinite alternate;
+    }
+    @keyframes goldScale {
+      0% { transform: translateX(-50%) scale(1); filter: brightness(1); }
+      100% { transform: translateX(-50%) scale(1.06); filter: brightness(1.2); }
     }
 
     /* MODALS */
@@ -551,6 +577,7 @@
       font-size: 11px;
     }
 
+    /* HELPLINE */
     .helpline-option {
       display: flex;
       align-items: center;
@@ -562,6 +589,12 @@
       margin-top: 8px;
       text-decoration: none;
       color: var(--text-main);
+      transition: all 0.2s;
+    }
+
+    .helpline-option:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
     }
 
     .helpline-icon-box {
@@ -577,6 +610,14 @@
 
     .helpline-whatsapp { background: #25D366; }
     .helpline-email { background: #ea4335; }
+
+    .helpline-info-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .helpline-info-text strong { font-size: 11px; }
+    .helpline-info-text span { font-size: 9.5px; color: var(--text-muted); }
   </style>
 </head>
 <body>
@@ -601,7 +642,7 @@
     </div>
   </header>
 
-  <!-- NEWS TICKER BANNER -->
+  <!-- WEEKLY OFFER NEWS TICKER BANNER -->
   <div class="news-banner">
     <i class="fa-solid fa-bullhorn"></i>
     <div class="marquee">
@@ -624,48 +665,6 @@
       </div>
     </section>
 
-    <!-- NEW TASK CATEGORY BUTTONS (BELOW BALANCE) -->
-    <div class="task-category-grid">
-      <!-- 1. ISLAMIC ADS -->
-      <div class="category-card cat-islamic" onclick="showTaskSection('islamic')">
-        <div class="icon-box"><i class="fa-solid fa-kaaba"></i></div>
-        <h4>Islamic Ads</h4>
-        <p>Rs. 0.20 / Ad</p>
-      </div>
-
-      <!-- 2. REVIEW WORK -->
-      <div class="category-card cat-review" onclick="showTaskSection('review')">
-        <div class="icon-box"><i class="fa-solid fa-star"></i></div>
-        <h4>Review Work</h4>
-        <p>Rs. 12.00 / Task</p>
-      </div>
-
-      <!-- 3. APP DOWNLOAD -->
-      <div class="category-card cat-app" onclick="showTaskSection('app')">
-        <div class="icon-box"><i class="fa-solid fa-download"></i></div>
-        <h4>App Download</h4>
-        <p>Rs. 5.00 / App</p>
-      </div>
-
-      <!-- 4. SOCIAL WORK -->
-      <div class="category-card cat-social" onclick="showTaskSection('social')">
-        <div class="icon-box"><i class="fa-solid fa-share-nodes"></i></div>
-        <h4>Social Work</h4>
-        <p>Rs. 1.00 / Task</p>
-      </div>
-    </div>
-
-    <!-- DYNAMIC TASK DISPLAY AREA -->
-    <section class="task-display-area" id="taskDisplayArea">
-      <div class="task-display-header">
-        <div class="task-display-title" id="sectionTitle">Selected Section</div>
-        <button onclick="closeTaskSection()" style="border:none; background:none; font-size:14px; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
-      </div>
-      <div id="taskContentContainer">
-        <!-- Content dynamically injected here -->
-      </div>
-    </section>
-
   </div>
 
   <!-- FLOATING LIVE CHAT BUTTON -->
@@ -674,26 +673,35 @@
     <div class="chat-badge-dot"></div>
   </div>
 
-  <!-- FIXED BOTTOM NAVIGATION WITH LOCKED ADS BUTTON -->
+  <!-- CHAT TOAST POPUP NOTIFICATION -->
+  <div class="chat-toast" id="chatToast">
+    <i class="fa-solid fa-comment-dots"></i>
+    <div class="chat-toast-content">
+      <strong id="toastSender">Sana</strong>
+      <span id="toastText">ne message kiya hai...</span>
+    </div>
+  </div>
+
+  <!-- FIXED BOTTOM SINGLE LINE NAVIGATION WITH ANIMATED BADGES -->
   <div class="bottom-nav-container">
     <div class="earning-grid">
-      <!-- 1. ADS BUTTON (LOCKED) -->
-      <div class="earn-btn locked-btn" onclick="handleLockedAdsClick()">
-        <div class="badge-common lock-badge"><i class="fa-solid fa-lock"></i> Locked</div>
-        <i class="fa-solid fa-lock" style="color:#64748b;"></i>
-        <span>Ads</span>
+      <!-- 1. FREE ADS BUTTON (LOCKED) -->
+      <div class="earn-btn" onclick="alert('Barai mehrubani entezar kare, ads section jald kholega.')">
+        <div class="badge-common free-ads-badge"><i class="fa-solid fa-lock"></i> Locked</div>
+        <i class="fa-solid fa-rectangle-ad"></i>
+        <span>Free Ads</span>
       </div>
 
       <!-- 2. REFERRAL BUTTON -->
       <div class="earn-btn" onclick="navigateTo('referral.html')">
-        <div class="badge-common" style="background:#10b981; color:#fff;">👥 Earn 20</div>
+        <div class="badge-common referral-badge">👥 Earn 20</div>
         <i class="fa-solid fa-users"></i>
         <span>Referral</span>
       </div>
 
       <!-- 3. GMAIL BUTTON -->
       <div class="earn-btn" onclick="navigateTo('gmail-selling.html')">
-        <div class="badge-common" style="background:#2563eb; color:#fff;">📧 Earn 40</div>
+        <div class="badge-common gmail-badge">📧 Earn 40</div>
         <i class="fa-solid fa-envelope"></i>
         <span>Gmail</span>
       </div>
@@ -706,9 +714,30 @@
 
       <!-- 5. AFFILIATE PROGRAM BUTTON -->
       <div class="earn-btn" onclick="navigateTo('free-jobs.html')">
-        <div class="badge-common" style="background:#f59e0b; color:#fff;">🚀 Unlimited</div>
+        <div class="badge-common affiliate-badge">🚀 Unlimited</div>
         <i class="fa-solid fa-briefcase"></i>
-        <span>Affiliate</span>
+        <span>Affiliate Program</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIVE CHATTING MODAL -->
+  <div class="modal-overlay" id="chatModal">
+    <div class="chat-modal-box">
+      <div class="chat-header">
+        <h3><i class="fa-solid fa-comments"></i> Live Community Chat</h3>
+        <button class="close-modal" style="position:static; background:rgba(255,255,255,0.2); color:#fff;" onclick="closeChatModal()">✕</button>
+      </div>
+
+      <div class="chat-messages-area" id="chatMessagesArea">
+        <!-- Live Messages Will Render Here -->
+      </div>
+
+      <div class="chat-input-area">
+        <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChatKeyPress(event)" />
+        <button class="chat-send-btn" onclick="sendChatMessage()">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
       </div>
     </div>
   </div>
@@ -717,6 +746,7 @@
   <div class="modal-overlay" id="helplineModal">
     <div class="modal-box">
       <button class="close-modal" onclick="closeHelplineModal()">✕</button>
+      
       <h3 style="font-size:13px; font-weight:800; text-transform:uppercase; margin-bottom:4px; color:var(--primary);">
         <i class="fa-solid fa-headset"></i> Support & Helpline
       </h3>
@@ -726,9 +756,9 @@
         <div class="helpline-icon-box helpline-whatsapp">
           <i class="fa-brands fa-whatsapp"></i>
         </div>
-        <div style="display:flex; flex-direction:column;">
-          <strong style="font-size:11px;">WhatsApp Helpline</strong>
-          <span style="font-size:9.5px; color:var(--text-muted);">03179774920</span>
+        <div class="helpline-info-text">
+          <strong>WhatsApp Helpline</strong>
+          <span>03179774920</span>
         </div>
       </a>
 
@@ -736,9 +766,9 @@
         <div class="helpline-icon-box helpline-email">
           <i class="fa-solid fa-envelope"></i>
         </div>
-        <div style="display:flex; flex-direction:column;">
-          <strong style="font-size:11px;">Official Email Support</strong>
-          <span style="font-size:9.5px; color:var(--text-muted);">sabirkhansadre@gmail.com</span>
+        <div class="helpline-info-text">
+          <strong>Official Email Support</strong>
+          <span>sabirkhansadre@gmail.com</span>
         </div>
       </a>
     </div>
@@ -748,11 +778,13 @@
   <div class="modal-overlay" id="profileModal">
     <div class="modal-box">
       <button class="close-modal" onclick="closeProfileModal()">✕</button>
+      
       <div style="text-align: center; margin-bottom: 10px;">
         <div class="modal-avatar" id="modalAvatar">U</div>
         <h4 id="modalFullName" style="font-size: 13px; font-weight: 800;">User Name</h4>
         <p id="modalUsername" style="font-size: 10px; color: var(--text-muted);">@username</p>
       </div>
+
       <div class="detail-item"><span style="color:var(--text-muted)">Mobile:</span> <strong id="modalMobile">-</strong></div>
       <div class="detail-item"><span style="color:var(--text-muted)">Email:</span> <strong id="modalEmail">-</strong></div>
       <div class="detail-item"><span style="color:var(--text-muted)">City:</span> <strong id="modalCity">-</strong></div>
@@ -760,6 +792,7 @@
     </div>
   </div>
 
+  <!-- GLOBAL HELPER FUNCTIONS -->
   <script>
     function navigateTo(pageUrl) {
       if (!pageUrl) return;
@@ -769,10 +802,6 @@
     function handleLogout() {
       localStorage.removeItem('sew_session');
       window.location.replace("index.html");
-    }
-
-    function handleLockedAdsClick() {
-      alert("Baraye mehrbani intezar karein, ads section jald kholega.");
     }
 
     function openProfileModal() {
@@ -792,77 +821,29 @@
     }
 
     function openChatModal() {
-      alert("Live Chat section is opening...");
+      document.getElementById('chatModal').style.display = 'flex';
     }
 
-    function closeTaskSection() {
-      document.getElementById('taskDisplayArea').classList.remove('active');
+    function closeChatModal() {
+      document.getElementById('chatModal').style.display = 'none';
     }
 
-    // TASK DISPLAY LOGIC (ADMIN PANEL SYNC PLACEHOLDER)
-    function showTaskSection(type) {
-      const area = document.getElementById('taskDisplayArea');
-      const title = document.getElementById('sectionTitle');
-      const container = document.getElementById('taskContentContainer');
-      area.classList.add('active');
-
-      if (type === 'islamic') {
-        title.innerHTML = '<i class="fa-solid fa-kaaba"></i> Islamic Ads (Rs. 0.20)';
-        container.innerHTML = `
-          <div class="task-card-item">
-            <h5>Q1: Ar-Rahman ka kya matlab hai?</h5>
-            <p><strong>Detail:</strong> Sahi jawab likhein aur submit karein. Admin ki approval ke baad 0.20 paise aapke account mein add honge.</p>
-            <input type="text" class="task-input-box" placeholder="Apna jawab yahan likhein..." />
-            <button class="btn-submit-task" onclick="submitTaskProof('Islamic Ad Answer')">Submit Answer</button>
-          </div>
-        `;
-      } else if (type === 'review') {
-        title.innerHTML = '<i class="fa-solid fa-star"></i> Review Work (Rs. 12.00)';
-        container.innerHTML = `
-          <div class="task-card-item">
-            <h5>PlayStore App Review</h5>
-            <p><strong>Details:</strong> Neche diye gaye link par ja kar 5-Star review dein aur achha comment likhein.</p>
-            <a href="https://google.com" target="_blank" class="action-link-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> Open Review Link</a>
-            <div class="file-input-wrapper">
-              <label><i class="fa-solid fa-camera"></i> Screenshot Upload Karein:</label>
-              <input type="file" accept="image/*" class="task-input-box" />
-            </div>
-            <button class="btn-submit-task" onclick="submitTaskProof('Review Work')">Submit Proof Screenshot</button>
-          </div>
-        `;
-      } else if (type === 'app') {
-        title.innerHTML = '<i class="fa-solid fa-download"></i> App Download (Rs. 5.00)';
-        container.innerHTML = `
-          <div class="task-card-item">
-            <h5>Download & Install App</h5>
-            <p><strong>Details:</strong> Link se app download karein, open karein aur account banayein.</p>
-            <a href="https://google.com" target="_blank" class="action-link-btn"><i class="fa-solid fa-download"></i> Download App</a>
-            <div class="file-input-wrapper">
-              <label><i class="fa-solid fa-camera"></i> Screenshot Upload Karein:</label>
-              <input type="file" accept="image/*" class="task-input-box" />
-            </div>
-            <button class="btn-submit-task" onclick="submitTaskProof('App Download')">Submit Proof Screenshot</button>
-          </div>
-        `;
-      } else if (type === 'social') {
-        title.innerHTML = '<i class="fa-solid fa-share-nodes"></i> Social Work (Rs. 1.00)';
-        container.innerHTML = `
-          <div class="task-card-item">
-            <h5>YouTube Video Like & Subscribe</h5>
-            <p><strong>Details:</strong> Channel ko subscribe karein aur video like karein.</p>
-            <a href="https://youtube.com" target="_blank" class="action-link-btn"><i class="fa-brands fa-youtube"></i> Open Channel Link</a>
-            <div class="file-input-wrapper">
-              <label><i class="fa-solid fa-camera"></i> Screenshot Upload Karein:</label>
-              <input type="file" accept="image/*" class="task-input-box" />
-            </div>
-            <button class="btn-submit-task" onclick="submitTaskProof('Social Work')">Submit Proof Screenshot</button>
-          </div>
-        `;
+    function handleChatKeyPress(event) {
+      if (event.key === 'Enter') {
+        sendChatMessage();
       }
     }
 
-    function submitTaskProof(taskType) {
-      alert(taskType + " ka proof bhej diya gaya hai. Admin review karne ke baad balance add kar dega.");
+    function sendChatMessage() {
+      const input = document.getElementById('chatInput');
+      if (!input.value.trim()) return;
+      const area = document.getElementById('chatMessagesArea');
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'msg-bubble my-msg';
+      msgDiv.innerHTML = `<div class="msg-sender">You</div><div class="msg-text">${input.value}</div>`;
+      area.appendChild(msgDiv);
+      input.value = '';
+      area.scrollTop = area.scrollHeight;
     }
   </script>
 </body>
